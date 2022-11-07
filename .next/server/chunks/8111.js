@@ -263,7 +263,7 @@ function Sidebar(props) {
                         height: "335px",
                         width: "100%"
                     },
-                    src: "https://radio.sittingonclouds.net/widget"
+                    src: "https://www.squid-radio.net/widget"
                 })
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(Ad, {})

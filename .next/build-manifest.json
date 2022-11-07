@@ -5,8 +5,8 @@
   "devFiles": [],
   "ampDevFiles": [],
   "lowPriorityFiles": [
-    "static/L-rE4NfBER9sqUIuXhkOI/_buildManifest.js",
-    "static/L-rE4NfBER9sqUIuXhkOI/_ssgManifest.js"
+    "static/CEss_SkHmf9x4WDD5qTXa/_buildManifest.js",
+    "static/CEss_SkHmf9x4WDD5qTXa/_ssgManifest.js"
   ],
   "rootMainFiles": [],
   "pages": {
@@ -17,7 +17,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/d4aced1ac5d38f45.css",
-      "static/chunks/pages/index-5ab9ff37231dd871.js"
+      "static/chunks/pages/index-3b9b10472bc413a1.js"
     ],
     "/404": [
       "static/chunks/webpack-c452740d5b4b9110.js",
@@ -101,7 +101,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/07fa8445d9591e5c.css",
-      "static/chunks/pages/album/list-65e45acf208e5201.js"
+      "static/chunks/pages/album/list-2308b74f9d894464.js"
     ],
     "/anim": [
       "static/chunks/webpack-c452740d5b4b9110.js",
@@ -124,7 +124,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/07fa8445d9591e5c.css",
-      "static/chunks/pages/anim/list-7c401ad511c1629a.js"
+      "static/chunks/pages/anim/list-40e9f99df7833f5b.js"
     ],
     "/forgor": [
       "static/chunks/webpack-c452740d5b4b9110.js",
@@ -174,7 +174,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/d4aced1ac5d38f45.css",
-      "static/chunks/pages/platform/[id]-f89484de13451f88.js"
+      "static/chunks/pages/platform/[id]-fbf73c4dd9cc6fe1.js"
     ],
     "/platform/list": [
       "static/chunks/webpack-c452740d5b4b9110.js",
@@ -198,7 +198,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/d4aced1ac5d38f45.css",
-      "static/chunks/pages/publisher/[id]-21f72ead132de687.js"
+      "static/chunks/pages/publisher/[id]-ef913ba6221a2082.js"
     ],
     "/publisher/list": [
       "static/chunks/webpack-c452740d5b4b9110.js",
@@ -243,7 +243,7 @@
       "static/chunks/675-c53794ad9e9ca32b.js",
       "static/chunks/100-c6b5890704aa6e2b.js",
       "static/css/d4aced1ac5d38f45.css",
-      "static/chunks/pages/studio/[slug]-c3a137de5a4c1315.js"
+      "static/chunks/pages/studio/[slug]-d922c1087f9d6593.js"
     ],
     "/studio/list": [
       "static/chunks/webpack-c452740d5b4b9110.js",

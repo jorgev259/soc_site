@@ -110,7 +110,7 @@ export default function Sidebar (props) {
 
       {radio && (
         <div className={classNames(styles.socials, 'mt-3 p-2')}>
-          <iframe title='radio' frameBorder='0' style={{ height: '335px', width: '100%' }} src='https://radio.sittingonclouds.net/widget' />
+          <iframe title='radio' frameBorder='0' style={{ height: '335px', width: '100%' }} src='https://www.squid-radio.net/widget' />
         </div>
       )}
 

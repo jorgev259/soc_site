@@ -21,6 +21,7 @@ import { ButtonLoader } from '@/components/Loader'
 import { initializeApollo } from '@/components/ApolloClient'
 import CommentCarrousel from '@/components/CommentsCarrousel'
 import useTranslation, { getTranslation } from '@/components/useTranslation'
+import { DateTime } from 'luxon'
 
 const query = gql`
 query ($id: ID!) {
@@ -249,6 +250,8 @@ export default function Page (props) {
       })
   }
 
+  const releaseDate = DateTime.fromISO(album.releaseDate, { zone: 'utc' })
+
   return (
     <>
       <Row style={{
@@ -282,7 +285,7 @@ export default function Page (props) {
                       <tbody>
                         <tr>
                           <th className='width-row'>{t('Release Date')}</th>
-                          <td>{new Date(album.releaseDate).toLocaleString(undefined, { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                          <td>{releaseDate.toLocaleString({ day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         </tr>
 
                         {album.artists.length > 0 && (

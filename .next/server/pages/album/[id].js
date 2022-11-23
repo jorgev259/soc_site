@@ -73,10 +73,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_8__);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(1664);
 /* harmony import */ var next_link__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(next_link__WEBPACK_IMPORTED_MODULE_9__);
-/* harmony import */ var _styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(7689);
-/* harmony import */ var _styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19__);
-/* harmony import */ var _styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(1525);
-/* harmony import */ var _styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_18__);
+/* harmony import */ var _styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(7689);
+/* harmony import */ var _styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default = /*#__PURE__*/__webpack_require__.n(_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20__);
+/* harmony import */ var _styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(1525);
+/* harmony import */ var _styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_19___default = /*#__PURE__*/__webpack_require__.n(_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_19__);
 /* harmony import */ var _img_assets_vgmdblogo_png__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(4381);
 /* harmony import */ var _components_useUser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2446);
 /* harmony import */ var _components_AlbumBoxes__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(6112);
@@ -85,8 +85,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_ApolloClient__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(2102);
 /* harmony import */ var _components_CommentsCarrousel__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(9139);
 /* harmony import */ var _components_useTranslation__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(6974);
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(2748);
+/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_18___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_18__);
 var __webpack_async_dependencies__ = __webpack_handle_async_dependencies__([_components_ApolloClient__WEBPACK_IMPORTED_MODULE_15__, _components_CommentsCarrousel__WEBPACK_IMPORTED_MODULE_16__, _components_useTranslation__WEBPACK_IMPORTED_MODULE_17__]);
 ([_components_ApolloClient__WEBPACK_IMPORTED_MODULE_15__, _components_CommentsCarrousel__WEBPACK_IMPORTED_MODULE_16__, _components_useTranslation__WEBPACK_IMPORTED_MODULE_17__] = __webpack_async_dependencies__.then ? (await __webpack_async_dependencies__)() : __webpack_async_dependencies__);
+
 
 
 
@@ -236,8 +239,8 @@ function StarCounter(props) {
         const client = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_1__.useApolloClient)();
         const starClass = score >= value || (scoreHover || selfScore) >= value ? "fas fa-star" : score >= value - 0.5 ? "fas fa-star-half" : "far fa-star";
         const goldClass = scoreHover ? scoreHover >= value : selfScore >= value;
-        const className = classnames__WEBPACK_IMPORTED_MODULE_4___default()(starClass, (_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_18___default().star), {
-            [(_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_18___default().gold)]: goldClass,
+        const className = classnames__WEBPACK_IMPORTED_MODULE_4___default()(starClass, (_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_19___default().star), {
+            [(_styles_Stars_module_scss__WEBPACK_IMPORTED_MODULE_19___default().gold)]: goldClass,
             "ps-1": value > 1
         });
         function saveRating() {
@@ -359,6 +362,9 @@ function Page(props) {
             router.replace(router.asPath);
         });
     }
+    const releaseDate = luxon__WEBPACK_IMPORTED_MODULE_18__.DateTime.fromISO(album.releaseDate, {
+        zone: "utc"
+    });
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
         children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Row, {
             style: {
@@ -429,7 +435,7 @@ function Page(props) {
                                                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
                                                     children: [
                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
-                                                            className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("text-center", (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().title)),
+                                                            className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("text-center", (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().title)),
                                                             children: album.title
                                                         }),
                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h6", {
@@ -440,7 +446,7 @@ function Page(props) {
                                                             children: album.subTitle
                                                         }),
                                                         /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("table", {
-                                                            className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().table),
+                                                            className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().table),
                                                             children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tbody", {
                                                                 children: [
                                                                     /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("tr", {
@@ -450,7 +456,7 @@ function Page(props) {
                                                                                 children: t("Release Date")
                                                                             }),
                                                                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("td", {
-                                                                                children: new Date(album.releaseDate).toLocaleString(undefined, {
+                                                                                children: releaseDate.toLocaleString({
                                                                                     day: "numeric",
                                                                                     month: "short",
                                                                                     year: "numeric"
@@ -669,7 +675,7 @@ function Page(props) {
                                             album.stores.length > 0 && /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Row, {
                                                 className: "mt-2 px-3",
                                                 children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
-                                                    className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().stores),
+                                                    className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().stores),
                                                     style: {
                                                         paddingLeft: "15px",
                                                         paddingTop: "10px",
@@ -815,7 +821,7 @@ function DownloadList(props) {
                                             children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Button, {
                                                 target: "_blank",
                                                 variant: "secondary",
-                                                className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().download),
+                                                className: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().download),
                                                 href: url,
                                                 children: t("Download")
                                             })
@@ -845,18 +851,18 @@ function DirectButton(props) {
     const t = (0,_components_useTranslation__WEBPACK_IMPORTED_MODULE_17__/* ["default"] */ .Z)();
     const renderTooltip = (props)=>!directUrl ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Tooltip, {
             ...props,
-            id: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().tooltip),
+            id: (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().tooltip),
             children: t("Become_Donator")
         }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {});
     const ButtonRender = !directUrl ? /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Button, {
         variant: "secondary",
-        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()((_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().download), (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().direct)),
+        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()((_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().download), (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().direct)),
         disabled: !directUrl,
         children: t("Direct")
     }) : /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Button, {
         target: "_blank",
         variant: "secondary",
-        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()((_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().download), (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().direct)),
+        className: classnames__WEBPACK_IMPORTED_MODULE_4___default()((_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().download), (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().direct)),
         href: directUrl,
         children: t("Direct")
     });
@@ -878,7 +884,7 @@ function TrackList(props) {
                 /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Row, {
                     children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("h1", {
-                            className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("text-center text-uppercase", (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_19___default().title)),
+                            className: classnames__WEBPACK_IMPORTED_MODULE_4___default()("text-center text-uppercase", (_styles_Album_module_scss__WEBPACK_IMPORTED_MODULE_20___default().title)),
                             children: t("Tracklist")
                         })
                     })

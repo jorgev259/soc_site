@@ -284,9 +284,11 @@ function Highlight () {
   }
 
   return (
-    <Col md={6} className='mt-3 site-form blackblock p-3'>
-      <Form.Label>Highlight album:</Form.Label>
-      <AlbumSelector options={{ isSingle: true, defaultValue: data?.highlight, onChange: handleHighlight, loading }} />
+    <Col md={6}>
+      <div className='mt-3 site-form blackblock p-3'>
+        <Form.Label>Highlight album:</Form.Label>
+        <AlbumSelector options={{ isSingle: true, defaultValue: data?.highlight, onChange: handleHighlight, loading }} />
+      </div>
     </Col>
   )
 }
@@ -355,28 +357,31 @@ function SelectBanner () {
   }
 
   return (
-    <Col md={12} className='p-0 my-3 site-form blackblock position-relative'>
-      {(loading || loadingQuery) && (
-        <div className='p-0 position-absolute h-100 w-100'>
-          <div className='p-0 blackblock position-absolute h-100 w-100' style={{ backgroundColor: 'black', opacity: 0.65 }} />
-          <Loader className='m-auto' />
+    <Col md={12}>
+      <div className='p-0 my-3 site-form blackblock position-relative'>
+        {(loading || loadingQuery) && (
+          <div className='p-0 position-absolute h-100 w-100'>
+            <div className='p-0 blackblock position-absolute h-100 w-100' style={{ backgroundColor: 'black', opacity: 0.65 }} />
+            <Loader className='m-auto' />
+          </div>
+        )}
+        <div className='p-3'>
+          <Form.Label>Available banners:</Form.Label>
+          {data?.banners.map(b => (
+            <div
+              key={b} className='my-2'
+              onClick={() => handleSelect(b)}
+              style={{
+                cursor: 'pointer',
+                height: '110px',
+                width: '100%',
+                backgroundSize: 'cover',
+                backgroundImage: `url('/_next/image?w=3840&q=25&url=${`https://cdn.sittingonclouds.net/live/${b}`}`
+              }} />
+          ))}
         </div>
-      )}
-      <div className='p-3'>
-        <Form.Label>Available banners:</Form.Label>
-        {data?.banners.map(b => (
-          <div
-            key={b} className='my-2'
-            onClick={() => handleSelect(b)}
-            style={{
-              cursor: 'pointer',
-              height: '110px',
-              width: '100%',
-              backgroundSize: 'cover',
-              backgroundImage: `url('/_next/image?w=3840&q=25&url=${`https://cdn.sittingonclouds.net/live/${b}`}`
-            }} />
-        ))}
       </div>
+      
     </Col>
   )
 }

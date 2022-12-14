@@ -42,19 +42,21 @@ export function BasicCommentCarrousel (props) {
   return (
     <>
       <Row>
-        <Col className='blackblock m-2'>
-          <Row>
-            {comments.length > 1 && <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />}
-            <Col className='py-3' style={{ fontSize: '18px' }}>
-              {current.text}
-              <br />
-              <div className='mt-2'>
-                {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
-                {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
-              </div>
-            </Col>
-            {comments.length > 1 && <SideButton side='right' onClick={plusIndex} />}
-          </Row>
+        <Col className='m-2'>
+          <div className='blackblock'>
+            <Row>
+              {comments.length > 1 && <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />}
+              <Col className='py-3' style={{ fontSize: '18px' }}>
+                {current.text}
+                <br />
+                <div className='mt-2'>
+                  {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
+                  {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
+                </div>
+              </Col>
+              {comments.length > 1 && <SideButton side='right' onClick={plusIndex} />}
+            </Row>
+          </div>
         </Col>
       </Row>
     </>
@@ -153,41 +155,44 @@ export default function CommentCarrousel (props) {
     </Modal>
 
     <Row>
-      <Col className='blackblock m-2'>
-        {current && (
-          <Row>
-            {comments.length > 1 && <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />}
-            <Col className='py-3' style={{ fontSize: '18px' }}>
-              {current.text}
-              <br />
-              <div className='mt-2'>
-                {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
-                {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
-              </div>
-            </Col>
-            {comments.length > 1 && <SideButton side='right' onClick={plusIndex} />}
-          </Row>
-        )}
+      <Col className='m-2'>
+        <div className='blackblock'>
+          {current && (
+            <Row>
+              {comments.length > 1 && <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />}
+              <Col className='py-3' style={{ fontSize: '18px' }}>
+                {current.text}
+                <br />
+                <div className='mt-2'>
+                  {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
+                  {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
+                </div>
+              </Col>
+              {comments.length > 1 && <SideButton side='right' onClick={plusIndex} />}
+            </Row>
+          )}
 
-        {albumId && (
-          <Row className='mt-3 justify-content-center'>
-            {user
-              ? (
-                <Col xs={3}>
-                  <Button onClick={() => user ? setShow(true) : null} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
-                    {t(selfComment ? 'Edit comment' : 'Add comment')}
-                  </Button>
-                </Col>
-              )
-              : (
-                <Col xs='4'>
-                  <Button onClick={() => router.replace(`${router.asPath}?login`)} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
-                    {t('Comment_Login')}
-                  </Button>
-                </Col>
-              )}
-          </Row>
-        )}
+          {albumId && (
+            <Row className='mt-3 justify-content-center'>
+              {user
+                ? (
+                  <Col xs={3}>
+                    <Button onClick={() => user ? setShow(true) : null} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
+                      {t(selfComment ? 'Edit comment' : 'Add comment')}
+                    </Button>
+                  </Col>
+                )
+                : (
+                  <Col xs='4'>
+                    <Button onClick={() => router.replace(`${router.asPath}?login`)} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
+                      {t('Comment_Login')}
+                    </Button>
+                  </Col>
+                )}
+            </Row>
+          )}
+        </div>
+        
       </Col>
     </Row>
   </>

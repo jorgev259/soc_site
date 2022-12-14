@@ -276,171 +276,164 @@ export default function Page (props) {
               <Col lg={5} className="d-flex align-items-center px-0 px-lg-2 mb-3 mb-lg-0">
                 <Image className='rounded' width={300} height={300} style={{ height: 'auto', width: '100%' }} alt={album.title} src={getImageUrl(album.id)} placeholder='blur' blurDataURL={album.placeholder || PLACEHOLDER} />
               </Col>
-              <Col lg={7} className='d-flex flex-column justify-content-center blackblock'>
-                <Row>
-                  <Col>
+              <Col lg={7} className='d-flex flex-column'>
+                <div className='blackblock justify-content-center'>
+                <div>
                     <h1 className={classNames('text-center', styles.title)}>{album.title}</h1>
-                    <h6 className='text-center' style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
-                    <table className={styles.table}>
-                      <tbody>
-                        <tr>
-                          <th className='width-row'>{t('Release Date')}</th>
-                          <td>{releaseDate.toLocaleString({ day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                        </tr>
-
-                        {album.artists.length > 0 && (
+                      <h6 className='text-center' style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
+                      <table className={styles.table}>
+                        <tbody>
                           <tr>
-                            <th>{t('Artists')}</th>
+                            <th className='width-row'>{t('Release Date')}</th>
+                            <td>{releaseDate.toLocaleString({ day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                          </tr>
+
+                          {album.artists.length > 0 && (
+                            <tr>
+                              <th>{t('Artists')}</th>
+                              <td>
+                                {album.artists.map(({ id, name }) => name).join(', ')}
+                              </td>
+                            </tr>
+                          )}
+
+                          <tr>
+                            <th>{t('Classification')}</th>
                             <td>
-                              {album.artists.map(({ id, name }) => name).join(', ')}
+                              {[
+                                album.categories.map(({ name }) => t(`${name} Soundtrack`)).join(' & '),
+                                album.classifications.map(({ name }) => name).join(', ')
+                              ].filter(f => f !== '').join(' - ')}
                             </td>
                           </tr>
-                        )}
+                          {album.label && (
+                            <tr>
+                              <th>{t('Published by')}</th>
+                              <td><a className='btn btn-link p-0' href={`/publisher/${album.label}`}>{album.label}</a></td>
+                            </tr>
+                          )}
+                          {album.platforms.length > 0 && (
+                            <tr>
+                              <th>{t('Platforms')}</th>
+                              <td>
+                                {album.platforms.map(({ id, name }, i) => (
+                                  <Fragment key={id}>
+                                    {id === '29'
+                                      ? <span className='btn p-0' style={{ color: 'white' }}>{name}</span>
+                                      : <a className='btn btn-link p-0' href={`/platform/${id}`}>{name}</a>
+                                    }
+                                    {i !== album.platforms.length - 1 && ', '}
+                                  </Fragment>
+                                ))}
+                              </td>
+                            </tr>
+                          )}
 
-                        <tr>
-                          <th>{t('Classification')}</th>
-                          <td>
-                            {[
-                              album.categories.map(({ name }) => t(`${name} Soundtrack`)).join(' & '),
-                              album.classifications.map(({ name }) => name).join(', ')
-                            ].filter(f => f !== '').join(' - ')}
-                          </td>
-                        </tr>
-                        {album.label && (
+                          {album.games.length > 0 && (
+                            <tr>
+                              <th>{t('Games')}</th>
+                              <td>
+                                {album.games.map(({ slug, name }, i) => (
+                                  <Fragment key={slug}>
+                                    <a className='btn btn-link p-0' href={`/game/${slug}`}>{name}</a>
+                                    {i !== album.games.length - 1 && ', '}
+                                  </Fragment>
+                                ))}
+                              </td>
+                            </tr>
+                          )}
+
+                          {album.animations.length > 0 && (
+                            <tr>
+                              <th>{t('Animations')}</th>
+                              <td>
+                                {album.animations.map(({ id, title }, i) => (
+                                  <Fragment key={id}>
+                                    <a className='btn btn-link p-0' href={`/anim/${id}`}>{title}</a>
+                                    {i !== album.animations.length - 1 && ', '}
+                                  </Fragment>
+                                ))}
+                              </td>
+                            </tr>
+                          )}
+
                           <tr>
-                            <th>{t('Published by')}</th>
-                            <td><a className='btn btn-link p-0' href={`/publisher/${album.label}`}>{album.label}</a></td>
+                            <th>{t('Avg. Rating')}: </th>
+                            <td><StarCounter albumId={album.id} {...album.avgRating} /></td>
                           </tr>
-                        )}
-                        {album.platforms.length > 0 && (
-                          <tr>
-                            <th>{t('Platforms')}</th>
-                            <td>
-                              {album.platforms.map(({ id, name }, i) => (
-                                <Fragment key={id}>
-                                  {id === '29'
-                                    ? <span className='btn p-0' style={{ color: 'white' }}>{name}</span>
-                                    : <a className='btn btn-link p-0' href={`/platform/${id}`}>{name}</a>
-                                  }
-                                  {i !== album.platforms.length - 1 && ', '}
-                                </Fragment>
-                              ))}
-                            </td>
-                          </tr>
-                        )}
 
-                        {album.games.length > 0 && (
-                          <tr>
-                            <th>{t('Games')}</th>
-                            <td>
-                              {album.games.map(({ slug, name }, i) => (
-                                <Fragment key={slug}>
-                                  <a className='btn btn-link p-0' href={`/game/${slug}`}>{name}</a>
-                                  {i !== album.games.length - 1 && ', '}
-                                </Fragment>
-                              ))}
-                            </td>
-                          </tr>
-                        )}
-
-                        {album.animations.length > 0 && (
-                          <tr>
-                            <th>{t('Animations')}</th>
-                            <td>
-                              {album.animations.map(({ id, title }, i) => (
-                                <Fragment key={id}>
-                                  <a className='btn btn-link p-0' href={`/anim/${id}`}>{title}</a>
-                                  {i !== album.animations.length - 1 && ', '}
-                                </Fragment>
-                              ))}
-                            </td>
-                          </tr>
-                        )}
-
-                        <tr>
-                          <th>{t('Avg. Rating')}: </th>
-                          <td><StarCounter albumId={album.id} {...album.avgRating} /></td>
-                        </tr>
-
-                      </tbody>
-                    </table>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
+                        </tbody>
+                      </table>
+                  </div>
+                  <div>
                     <h6 className='text-center'>{album.description}</h6>
-                  </Col>
-                </Row>
-
-                <Row>
-                  <Col>
+                  </div>
+                  <div>
                     <ButtonLoader
                       loading={loadingFavorite} onClick={user ? submitFavorite : () => router.replace(`${router.asPath}?login`)}
                       className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
                       {t(user ? (dataFavorite?.album?.isFavorite ? 'Favorite_Remove' : 'Favorite_Add') : 'Favorite_Login')}
                     </ButtonLoader>
-                  </Col>
-                </Row>
-
-                {user && user.permissions.includes('UPDATE')
+                  </div>
+                  {user && user.permissions.includes('UPDATE')
                   ? (
-                    <Row className='mt-3'>
-                      <Col>
+                      <div className='mt-3'>
                         <Link href={`/admin/album/${album.id}`}>
                           <Button
                             className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
                             {t('Edit this album')}
                           </Button>
                         </Link>
-                      </Col>
-                    </Row>
+                      </div>
                   )
                   : null}
+                </div>
               </Col>
             </Row>
             <hr></hr>
             <Row>
               <TrackList discs={album.discs} />
-              <Col lg={6} className='blackblock'>
-                {album.vgmdb && (
-                  <Row className='mb-2 ms-2'>
-                    <Col xs='auto' className='px-0'>
-                      <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
-                    </Col>
-                    <Col xs='auto' className='d-flex align-items-center ps-0'>
+              <Col lg={6}>
+                <div className='blackblock'>
+                  {album.vgmdb && (
+                    <Row className='mb-2 ms-2'>
+                      <Col xs='auto' className='px-0'>
+                        <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
+                      </Col>
+                      <Col xs='auto' className='d-flex align-items-center ps-0'>
 
-                      <a className='ms-2' target='_blank' rel='noopener noreferrer' href={album.vgmdb}>
-                        <Image width={100} height={30} alt={'VGMdb'} src={vgmdbLogo} />
-                      </a>
+                        <a className='ms-2' target='_blank' rel='noopener noreferrer' href={album.vgmdb}>
+                          <Image width={100} height={30} alt={'VGMdb'} src={vgmdbLogo} />
+                        </a>
 
-                    </Col>
-                  </Row>
-                )}
+                      </Col>
+                    </Row>
+                  )}
 
-                {album.stores.length > 0 && (
-                  <Row className='mt-2 px-3'>
-                    <Col className={styles.stores} style={{ paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '10px' }}>
-                      <h1 className='text-center homeTitle' style={{ fontSize: '30px' }}>{t('Buy_Original')}</h1>
-                      <hr className='style-white w-100 mt-0' />
-                      <Row>
-                        {album.stores.map(({ url, provider }, i) =>
-                          provider === 'SOON'
-                            ? null
-                            : (
-                              <Col md={6} key={i} className='d-flex justify-content-center py-1'>
-                                <a target='_blank' rel='noopener noreferrer' href={url}>
-                                  <Image className="rounded" width={250} height={70} style={{ height: 'auto', width: '100%' }} alt={provider} src={`/img/provider/${provider}.jpg`} />
-                                </a>
-                              </Col>
-                            )
-                        )}
-                      </Row>
-                    </Col>
-                  </Row>)}
-                <hr className='style-white w-100' />
+                  {album.stores.length > 0 && (
+                    <Row className='mt-2 px-3'>
+                      <Col className={styles.stores} style={{ paddingLeft: '15px', paddingTop: '10px', paddingRight: '15px', paddingBottom: '10px' }}>
+                        <h1 className='text-center homeTitle' style={{ fontSize: '30px' }}>{t('Buy_Original')}</h1>
+                        <hr className='style-white w-100 mt-0' />
+                        <Row>
+                          {album.stores.map(({ url, provider }, i) =>
+                            provider === 'SOON'
+                              ? null
+                              : (
+                                <Col md={6} key={i} className='d-flex justify-content-center py-1'>
+                                  <a target='_blank' rel='noopener noreferrer' href={url}>
+                                    <Image className="rounded" width={250} height={70} style={{ height: 'auto', width: '100%' }} alt={provider} src={`/img/provider/${provider}.jpg`} />
+                                  </a>
+                                </Col>
+                              )
+                          )}
+                        </Row>
+                      </Col>
+                    </Row>)}
+                  <hr className='style-white w-100' />
 
-                <DownloadList id={id} initialDownloads={album.downloads} />
+                  <DownloadList id={id} initialDownloads={album.downloads} />
+                </div>
               </Col>
             </Row>
 

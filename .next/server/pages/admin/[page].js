@@ -475,22 +475,24 @@ function Highlight() {
             react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast.error("Failed to update highlighted album");
         });
     }
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
         md: 6,
-        className: "mt-3 site-form blackblock p-3",
-        children: [
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Form.Label, {
-                children: "Highlight album:"
-            }),
-            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Selectors__WEBPACK_IMPORTED_MODULE_9__/* .AlbumSelector */ .Q$, {
-                options: {
-                    isSingle: true,
-                    defaultValue: data?.highlight,
-                    onChange: handleHighlight,
-                    loading
-                }
-            })
-        ]
+        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "mt-3 site-form blackblock p-3",
+            children: [
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Form.Label, {
+                    children: "Highlight album:"
+                }),
+                /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Selectors__WEBPACK_IMPORTED_MODULE_9__/* .AlbumSelector */ .Q$, {
+                    options: {
+                        isSingle: true,
+                        defaultValue: data?.highlight,
+                        onChange: handleHighlight,
+                        loading
+                    }
+                })
+            ]
+        })
     });
 }
 function Banner() {
@@ -564,45 +566,47 @@ function SelectBanner() {
             react_toastify__WEBPACK_IMPORTED_MODULE_3__.toast.error("Failed to update banner");
         });
     }
-    return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
+    return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
         md: 12,
-        className: "p-0 my-3 site-form blackblock position-relative",
-        children: [
-            (loading || loadingQuery) && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "p-0 position-absolute h-100 w-100",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                        className: "p-0 blackblock position-absolute h-100 w-100",
-                        style: {
-                            backgroundColor: "black",
-                            opacity: 0.65
-                        }
-                    }),
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Loader__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
-                        className: "m-auto"
-                    })
-                ]
-            }),
-            /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-                className: "p-3",
-                children: [
-                    /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Form.Label, {
-                        children: "Available banners:"
-                    }),
-                    data?.banners.map((b)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
-                            className: "my-2",
-                            onClick: ()=>handleSelect(b),
+        children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+            className: "p-0 my-3 site-form blackblock position-relative",
+            children: [
+                (loading || loadingQuery) && /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "p-0 position-absolute h-100 w-100",
+                    children: [
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                            className: "p-0 blackblock position-absolute h-100 w-100",
                             style: {
-                                cursor: "pointer",
-                                height: "110px",
-                                width: "100%",
-                                backgroundSize: "cover",
-                                backgroundImage: `url('/_next/image?w=3840&q=25&url=${`https://cdn.sittingonclouds.net/live/${b}`}`
+                                backgroundColor: "black",
+                                opacity: 0.65
                             }
-                        }, b))
-                ]
-            })
-        ]
+                        }),
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(_components_Loader__WEBPACK_IMPORTED_MODULE_10__/* ["default"] */ .Z, {
+                            className: "m-auto"
+                        })
+                    ]
+                }),
+                /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
+                    className: "p-3",
+                    children: [
+                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Form.Label, {
+                            children: "Available banners:"
+                        }),
+                        data?.banners.map((b)=>/*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx("div", {
+                                className: "my-2",
+                                onClick: ()=>handleSelect(b),
+                                style: {
+                                    cursor: "pointer",
+                                    height: "110px",
+                                    width: "100%",
+                                    backgroundSize: "cover",
+                                    backgroundImage: `url('/_next/image?w=3840&q=25&url=${`https://cdn.sittingonclouds.net/live/${b}`}`
+                                }
+                            }, b))
+                    ]
+                })
+            ]
+        })
     });
 }
 

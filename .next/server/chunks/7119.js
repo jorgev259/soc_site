@@ -92,17 +92,6 @@ module.exports = {
 
 /***/ }),
 
-/***/ 7338:
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
-/* harmony export */ });
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/logo.95bde540.png","height":1536,"width":2691,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAFCAMAAABPT11nAAAASFBMVEWtrq7ExMS0tLXLzMx5eXnP0NFMaXGpqai5urqsra24uLiZmZm3uLnZ29sAAQKamprX19iKiYmXlpa4t7fAwMDHyMign597e3sm0SeCAAAAEXRSTlOu2NSsOlwA/MqbvolHIgb5vVM7q9wAAAAJcEhZcwAANdQAADXUAV5l5QgAAAAzSURBVAiZBcEHAoAgDACxU0YpDigF/P9PTShF3xxjZq4V+tcSh4tP4WFsG2aSQM96wf0DKBkBs+OMkb8AAAAASUVORK5CYII=","blurWidth":8,"blurHeight":5});
-
-/***/ }),
-
 /***/ 9694:
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
@@ -111,6 +100,17 @@ module.exports = {
 /* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/logo_es.033876d7.png","height":1444,"width":2595,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAMAAACEE47CAAAAPFBMVEWgn5++v7/U1NS7vLympqaLi4rBw8PBwsKampqfn5+6urrIyMmlpaWFhYW+v7/d4OG4ubmVlZTDxMS4ublCp4G/AAAAEXRSTlP+p+i4/Nd19uDs1YKG91gc0RwALwsAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAqSURBVAiZBcGHAQAgCAOwoiy34P+/moDM6pmyoZZZ3iIMRgSg6N7Ypd0PE14BEUrLexQAAAAASUVORK5CYII=","blurWidth":8,"blurHeight":4});
+
+/***/ }),
+
+/***/ 3336:
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Z": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({"src":"/_next/static/media/winterlogo.873dc1fe.png","height":321,"width":589,"blurDataURL":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAgAAAAECAMAAACEE47CAAAARVBMVEXvnIHjuZKq3f/Q9P9Frv7xknGx5P910/vxtaEujuzjupM3jOpIsf9Jr/xyfJxxxv/H9v+02PV0dpLT7vz9xaf+0ra53/0gSNeiAAAAFnRSTlPf+vinYd2hB+w37VXek/z4V03luv/+zaxIggAAAAlwSFlzAAALEwAACxMBAJqcGAAAACtJREFUCJkFwQkCABAIBMBFVO4r/3+qGXCrxFoYOp5PuxOm2b0uLwQBIuR8GCwBSvvJQnEAAAAASUVORK5CYII=","blurWidth":8,"blurHeight":4});
 
 /***/ }),
 
@@ -149,7 +149,7 @@ __webpack_require__.a(module, async (__webpack_handle_async_dependencies__, __we
 /* harmony import */ var _useUser__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(2446);
 /* harmony import */ var _Loader__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(9738);
 /* harmony import */ var _SubmitButton__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(2628);
-/* harmony import */ var _public_img_assets_logo_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(7338);
+/* harmony import */ var _public_img_assets_winterlogo_png__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(3336);
 /* harmony import */ var _public_img_assets_logo_es_png__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(9694);
 /* harmony import */ var _useTranslation__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(6974);
 /* harmony import */ var _RequestCheck__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(2392);
@@ -667,7 +667,7 @@ function Header() {
                                         href: "/",
                                         children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx((next_legacy_image__WEBPACK_IMPORTED_MODULE_3___default()), {
                                             alt: "SOC Logo",
-                                            src: router.locale === "es" ? _public_img_assets_logo_es_png__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z : _public_img_assets_logo_png__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z,
+                                            src: router.locale === "es" ? _public_img_assets_logo_es_png__WEBPACK_IMPORTED_MODULE_15__/* ["default"] */ .Z : _public_img_assets_winterlogo_png__WEBPACK_IMPORTED_MODULE_14__/* ["default"] */ .Z,
                                             height: 150,
                                             width: 265
                                         })

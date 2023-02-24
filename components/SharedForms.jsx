@@ -39,7 +39,7 @@ export const providersDownload = [
   { value: 'MEGA', label: 'MEGA' },
   { value: 'MEDIAFIRE', label: 'MediaFire' },
   { value: 'GOOGLEDRIVE', label: 'Google Drive' },
-  { value: 'BEDRIVE', label: 'BeDrive' },
+  { value: 'TERABOX', label: 'TeraBox' },
   { value: 'MIRROR', label: 'Mirror' }
 ]
 

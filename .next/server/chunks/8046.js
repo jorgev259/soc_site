@@ -1992,8 +1992,8 @@ const providersDownload = [
         label: "Google Drive"
     },
     {
-        value: "BEDRIVE",
-        label: "BeDrive"
+        value: "TERABOX",
+        label: "TeraBox"
     },
     {
         value: "MIRROR",

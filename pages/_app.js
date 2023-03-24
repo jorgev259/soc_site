@@ -44,7 +44,7 @@ function Analytics () {
       ReactGA.initialize('UA-106185794-1')
     } else {
       console.log('Mode: Prod')
-      const domains = ['www.sittingonclouds.net', 'www.sittingonclouds.com', 'www.sittingonclouds.org', 'www.sittingonclouds.ru']
+      const domains = ['www.sittingonclouds.net', 'www.sittingonclouds.com', 'www.sittingonclouds.org', 'www.sittingonclouds.to', 'www.sittingonclouds.top']
         .filter(url => url !== window.location.host)
       console.log('Link domains: ', domains)
 

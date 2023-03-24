@@ -1250,7 +1250,8 @@ function Analytics() {
                 "www.sittingonclouds.net",
                 "www.sittingonclouds.com",
                 "www.sittingonclouds.org",
-                "www.sittingonclouds.ru"
+                "www.sittingonclouds.to",
+                "www.sittingonclouds.top"
             ].filter((url)=>url !== window.location.host);
             console.log("Link domains: ", domains);
             react_ga__WEBPACK_IMPORTED_MODULE_17___default().initialize("UA-106185794-1", {

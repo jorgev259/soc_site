@@ -5,11 +5,12 @@ import { createUploadLink } from 'apollo-upload-client'
 let apolloClient
 const isSSR = typeof window === 'undefined'
 const isDev = process.env.NODE_ENV === 'development'
+const forcedUri = process.env.FORCE_CLIENT_URI
 
 export const isGithub = process.env.GITHUB_ACTIONS
 const uri = isGithub
   ? 'https://sittingonclouds.net/graphql'
-  : (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://localhost:4000' : `${window.origin}/graphql`)
+  : forcedUri || (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://localhost:4000' : `${window.origin}/graphql`)
 
 function createApolloClient () {
   return new ApolloClient({

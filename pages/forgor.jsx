@@ -1,8 +1,8 @@
 import { useRef, useState } from 'react'
 import { Col, Form, Row, Button } from 'react-bootstrap'
 import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
-import Image from "next/legacy/image";
-import { DateTime } from 'luxon'
+import Image from 'next/legacy/image'
+// import { DateTime } from 'luxon'
 import { gql, useMutation } from '@apollo/client'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
@@ -21,7 +21,7 @@ export async function getServerSideProps ({ query }) {
   // const row = await db.models.forgor.findByPk(key)
   // if (!row) return bigNono
 
-  const now = DateTime.now()
+  // const now = DateTime.now()
   // const expires = DateTime.fromJSDate(row.expires)
 
   // if (now > expires) return bigNono

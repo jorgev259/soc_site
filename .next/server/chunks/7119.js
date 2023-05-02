@@ -470,8 +470,8 @@ function LoginButton(props) {
 function RegisterProfileButton(props) {
     const { navMobile =false  } = props;
     const registerMutation = _apollo_client__WEBPACK_IMPORTED_MODULE_8__.gql`
-    mutation ($username: String!, $email: String!, $pfp: Upload) {
-      registerUser(username: $username, email: $email, pfp: $pfp)
+    mutation ($username: String!, $email: String!, $password: String!, $pfp: Upload) {
+      registerUser(username: $username, email: $email, password: $password, pfp: $pfp)
     }
   `;
     const { user  } = (0,_useUser__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)();

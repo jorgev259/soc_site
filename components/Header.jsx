@@ -218,8 +218,8 @@ function LoginButton (props) {
 function RegisterProfileButton (props) {
   const { navMobile = false } = props
   const registerMutation = gql`
-    mutation ($username: String!, $email: String!, $pfp: Upload) {
-      registerUser(username: $username, email: $email, pfp: $pfp)
+    mutation ($username: String!, $email: String!, $password: String!, $pfp: Upload) {
+      registerUser(username: $username, email: $email, password: $password, pfp: $pfp)
     }
   `
 

@@ -229,7 +229,13 @@ function RegisterProfileButton (props) {
   const t = useTranslation()
   const [mutateRegister, { loading: loadingRegister }] = useMutation(registerMutation)
 
-  const submitRegister = e => {
+  const p1 = useRef(null)
+  const p2 = useRef(null)
+  const [isInvalid, setInvalid] = useState(false)
+
+  const checkInvalid = () => setInvalid(p1?.current?.value !== p2?.current?.value)
+
+  const submitRegister = async e => {
     e.persist()
     e.preventDefault()
 
@@ -298,6 +304,18 @@ function RegisterProfileButton (props) {
                   <Form.Group as={Col} >
                     <Form.Label htmlFor='email' style={{ color: 'black' }}>Email:</Form.Label>
                     <Form.Control required type='text' name='email' />
+                  </Form.Group>
+                </Row>
+                <Row className='mt-3'>
+                  <Form.Group as={Col} >
+                    <Form.Label htmlFor='password' style={{ color: 'black' }}>Password:</Form.Label>
+                    <Form.Control required type='password' name='password' isInvalid={isInvalid} ref={p1} onChange={checkInvalid} />
+                  </Form.Group>
+                </Row>
+                <Row className='mt-3'>
+                  <Form.Group as={Col} >
+                    <Form.Label htmlFor='passwordCheck' style={{ color: 'black' }}>Repeat password:</Form.Label>
+                    <Form.Control required type='password' name='passwordCheck' isInvalid={isInvalid} ref={p2} onChange={checkInvalid} />
                   </Form.Group>
                 </Row>
                 <Row className='mt-3'>

@@ -32,20 +32,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var svg_loaders_svg_smil_loaders_oval_svg__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(5630);
 /* harmony import */ var next_legacy_image__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(9755);
 /* harmony import */ var next_legacy_image__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(next_legacy_image__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(2748);
-/* harmony import */ var luxon__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(luxon__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(9114);
-/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_6__);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1187);
-/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(react_toastify__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(1853);
-/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(9114);
+/* harmony import */ var _apollo_client__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_apollo_client__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(1187);
+/* harmony import */ var react_toastify__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(react_toastify__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(1853);
+/* harmony import */ var next_router__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(next_router__WEBPACK_IMPORTED_MODULE_7__);
 
 
 
 
 
-
+// import { DateTime } from 'luxon'
 
 
 
@@ -55,7 +53,7 @@ const bigNono = {
         destination: "/500"
     }
 };
-const mutation = _apollo_client__WEBPACK_IMPORTED_MODULE_6__.gql`
+const mutation = _apollo_client__WEBPACK_IMPORTED_MODULE_5__.gql`
   mutation updatePass($key: String!, $pass: String!){
     updatePass(key: $key, pass: $pass)
   }
@@ -65,7 +63,7 @@ async function getServerSideProps({ query  }) {
     if (!key) return bigNono;
     // const row = await db.models.forgor.findByPk(key)
     // if (!row) return bigNono
-    const now = luxon__WEBPACK_IMPORTED_MODULE_5__.DateTime.now();
+    // const now = DateTime.now()
     // const expires = DateTime.fromJSDate(row.expires)
     // if (now > expires) return bigNono
     /* else */ return {
@@ -76,8 +74,8 @@ async function getServerSideProps({ query  }) {
 }
 function Forgor({ qKey  }) {
     const key = qKey;
-    const [mutate, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_6__.useMutation)(mutation);
-    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_8__.useRouter)();
+    const [mutate, { loading  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_5__.useMutation)(mutation);
+    const router = (0,next_router__WEBPACK_IMPORTED_MODULE_7__.useRouter)();
     const p1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
     const p2 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
     const [isInvalid, setInvalid] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
@@ -90,11 +88,11 @@ function Forgor({ qKey  }) {
                 pass: p1.current.value
             }
         }).then(()=>{
-            react_toastify__WEBPACK_IMPORTED_MODULE_7__.toast.success("Password changed succesfully!");
+            react_toastify__WEBPACK_IMPORTED_MODULE_6__.toast.success("Password changed succesfully!");
             router.push("/");
         }).catch((err)=>{
             if (false) {}
-            react_toastify__WEBPACK_IMPORTED_MODULE_7__.toast.error("Failed to change password");
+            react_toastify__WEBPACK_IMPORTED_MODULE_6__.toast.error("Failed to change password");
         });
     };
     return /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_2__.Col, {
@@ -180,13 +178,6 @@ function Forgor({ qKey  }) {
 /***/ ((module) => {
 
 module.exports = require("@apollo/client");
-
-/***/ }),
-
-/***/ 2748:
-/***/ ((module) => {
-
-module.exports = require("luxon");
 
 /***/ }),
 

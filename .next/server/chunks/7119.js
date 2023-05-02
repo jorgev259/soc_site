@@ -459,19 +459,6 @@ function LoginButton(props) {
                                         children: t("Login")
                                     })
                                 })
-                            }),
-                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Row, {
-                                className: "mt-2",
-                                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Col, {
-                                    md: 6,
-                                    className: "mx-auto",
-                                    children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Button, {
-                                        onClick: ()=>setForgor(true),
-                                        className: "w-100",
-                                        color: "primary",
-                                        children: t("Recover password")
-                                    })
-                                })
                             })
                         ]
                     })
@@ -492,7 +479,11 @@ function RegisterProfileButton(props) {
     const [showForgor, setForgor] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const t = (0,_useTranslation__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Z)();
     const [mutateRegister, { loading: loadingRegister  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_8__.useMutation)(registerMutation);
-    const submitRegister = (e)=>{
+    const p1 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const p2 = (0,react__WEBPACK_IMPORTED_MODULE_1__.useRef)(null);
+    const [isInvalid, setInvalid] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const checkInvalid = ()=>setInvalid(p1?.current?.value !== p2?.current?.value);
+    const submitRegister = async (e)=>{
         e.persist();
         e.preventDefault();
         const variables = form_serialize__WEBPACK_IMPORTED_MODULE_7___default()(e.target, {
@@ -598,6 +589,52 @@ function RegisterProfileButton(props) {
                                         ]
                                     })
                                 ]
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Row, {
+                                className: "mt-3",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Group, {
+                                    as: react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Col,
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Label, {
+                                            htmlFor: "password",
+                                            style: {
+                                                color: "black"
+                                            },
+                                            children: "Password:"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Control, {
+                                            required: true,
+                                            type: "password",
+                                            name: "password",
+                                            isInvalid: isInvalid,
+                                            ref: p1,
+                                            onChange: checkInvalid
+                                        })
+                                    ]
+                                })
+                            }),
+                            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Row, {
+                                className: "mt-3",
+                                children: /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Group, {
+                                    as: react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Col,
+                                    children: [
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Label, {
+                                            htmlFor: "passwordCheck",
+                                            style: {
+                                                color: "black"
+                                            },
+                                            children: "Repeat password:"
+                                        }),
+                                        /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Form.Control, {
+                                            required: true,
+                                            type: "password",
+                                            name: "passwordCheck",
+                                            isInvalid: isInvalid,
+                                            ref: p2,
+                                            onChange: checkInvalid
+                                        })
+                                    ]
+                                })
                             }),
                             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Row, {
                                 className: "mt-3",

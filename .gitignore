@@ -38,3 +38,5 @@ sequelize-config.json
 .owncloudsync.log
 Desktop.ini
 .sync*
+
+pages_old

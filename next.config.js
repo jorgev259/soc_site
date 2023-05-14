@@ -2,8 +2,8 @@ module.exports = {
   eslint: { ignoreDuringBuilds: true },
   images: {
     domains: ['cdn.sittingonclouds.net']
-  },
-  webpack: config => {
+  }
+  /* webpack: config => {
     config.module.rules.push({
       test: /\.(graphql|gql)$/,
       exclude: /node_modules/,
@@ -20,5 +20,5 @@ module.exports = {
   },
   experimental: {
     newNextLinkBehavior: true
-  }
+  } */
 }

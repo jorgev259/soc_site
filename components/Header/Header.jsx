@@ -1,10 +1,18 @@
-import styles from '../styles/Header.module.scss'
-
-import { useEffect, useState, useRef } from 'react'
-import Link from 'next/link'
-import Image from 'next/legacy/image'
-import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form } from 'react-bootstrap'
 import classNames from 'classnames'
+
+import Link from 'next/link'
+import Image from 'next/image'
+
+import logo from '@/img/assets/winterlogo.png'
+import NavigationBar from './NavigationBar'
+
+import styles from './Header.module.scss'
+
+// import logoEs from '@/img/assets/logo_es.png'
+/*
+import { useEffect, useState, useRef } from 'react'
+
+import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 import serialize from 'form-serialize'
 import { useApolloClient, useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
@@ -14,8 +22,6 @@ import Cookies from 'universal-cookie'
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
 import SubmitButton from './SubmitButton'
-import logo from '../public/img/assets/winterlogo.png'
-import logoES from '../public/img/assets/logo_es.png'
 import useTranslation from './useTranslation'
 import RequestCheck from './RequestCheck'
 
@@ -205,7 +211,7 @@ function LoginButton (props) {
                   <Col md={6} className='mx-auto'>
                     <Button onClick={() => setForgor(true)} className='w-100' color='primary'>{t('Recover password')}</Button>
                   </Col>
-            </Row> */}
+            </Row> *//* }
               </Form>
             )
           }
@@ -336,10 +342,10 @@ function RegisterProfileButton (props) {
       </Modal>
     </>
   )
-}
+} */
 
-export default function Header () {
-  const router = useRouter()
+export default async function Header () {
+  /* const router = useRouter()
 
   const queryHeader = gql`
     query {
@@ -349,11 +355,25 @@ export default function Header () {
     }
   `
 
-  const { data: headerData } = useQuery(queryHeader)
+  const { data: headerData } = useQuery(queryHeader) */
 
-  return <>
-    <header>
-      <div id={styles.bannerBg} style={headerData ? { backgroundImage: `url('/_next/image?w=3840&q=100&url=${`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}` } : {}}>
+  const backgroundImage = 'url(https://www.sittingonclouds.net/_next/image?w=3840&q=100&url=https://cdn.sittingonclouds.net/live/1663108890253.png)'
+
+  return (
+    <div className='container-fluid'>
+      <div className={classNames('row', styles.logoRow)} style={{ backgroundImage }}>
+        <div className='col'>
+          <Link className='ps-5 ms-4' href="/">
+            <Image alt='SOC Logo' src={/* router.locale === 'es' ? logoES : */logo} height={150} width={265} />
+          </Link>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col px-0'>
+          <NavigationBar />
+        </div>
+      </div>
+      {/* <div id={styles.bannerBg} style={headerData ? { backgroundImage: `url('/_next/image?w=3840&q=100&url=${`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}` } : {}}>
         <Container>
           <Row className='h-100'>
             <Col className='my-auto'>
@@ -369,47 +389,12 @@ export default function Header () {
         </Container>
       </div>
 
-      <Navbar expand='sm' bg="dark" variant="dark" className='py-md-0'>
-        <Container>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto d-flex align-items-center">
-              <RegisterProfileButton navMobile />
-              <LoginButton navMobile />
-              <NavLink href='/' name='Home' />
-              <NavLink href='/last-added' name='Last Added_header' />
-              <NavLink href='/album/list' name='Album List' />
-              <Dropdown name='Games' items={[
-                { name: 'Albums', href: '/game' },
-                { name: 'Series', href: '/series/list' },
-                { name: 'Publishers', href: '/publisher/list' },
-                { name: 'Platforms', href: '/platform/list' },
-                { name: 'Game List', href: '/game/list' }
-              ]} />
-              <Dropdown name='Animation' items={[
-                { name: 'Albums', href: '/anim' },
-                { name: 'Animation List', href: '/anim/list' },
-                { name: 'Studios', href: '/studio/list' }
-              ]} />
-
-              <NavLink href='/request' name='Requests' privileged />
-              <SubmitAlbum />
-              <Dropdown name='Admin Grounds' privileged items={[
-                { name: 'Manage Albums', href: '/admin/1' },
-                { name: 'Manage Users', href: '/admin/user' },
-                { name: 'Manage Requests', href: '/admin/request' },
-                { name: 'Manage Submissions', href: '/admin/submission' }
-              ]} />
-            </Nav>
-          </Navbar.Collapse>
-          <SearchBar />
-        </Container>
-      </Navbar>
-    </header>
-  </>
+ */}
+    </div>
+  )
 }
 
-const vgmQuery = gql`
+/* const vgmQuery = gql`
   query ($search: String!){
     vgmdb(search: $search){
       vgmdbUrl
@@ -512,50 +497,6 @@ function SubmitAlbum () {
   )
 }
 
-function Dropdown (props) {
-  const { name, items = [], privileged = false } = props
-
-  const { user } = useUser()
-  const t = useTranslation()
-
-  const pages = user?.pages.map(p => p.url) || []
-  const links = items.filter(i => !privileged || pages.includes(i.href))
-
-  if (links.length === 0) return null
-
-  return (
-    <NavDropdown title={t(name)} className={classNames(styles.navLink, styles.dropMenu)}>
-      {links.map(({ href, name }, i) => (
-        <Link key={i} href={href} passHref legacyBehavior>
-          <NavDropdown.Item>{t(name)}</NavDropdown.Item>
-        </Link>
-      ))}
-    </NavDropdown>
-  )
-}
-
-function NavLink (props) {
-  const { href, name, onClick, className, privileged } = props
-
-  const { user } = useUser()
-  const t = useTranslation()
-
-  const title = t(name)
-  const pages = user?.pages.map(p => p.url) || []
-
-  if (privileged) {
-    if (!user || !pages.includes(href)) return null
-  }
-
-  return onClick
-    ? <a onClick={onClick} className={classNames(styles.navLink, 'nav-link', className)}>{title}</a>
-    : (
-      <Link href={href} passHref legacyBehavior>
-        <Nav.Link className={classNames(styles.navLink, className)}>{title}</Nav.Link>
-      </Link>
-    )
-}
-
 function SearchBar () {
   const ref = useRef(null)
   const [open, setOpen] = useState(false)
@@ -578,3 +519,4 @@ function SearchBar () {
     </div>
   )
 }
+*/

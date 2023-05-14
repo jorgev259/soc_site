@@ -1,0 +1,34 @@
+[
+    {
+        "url": "/request",
+        "perms": []
+    },
+    {
+        "url": "/submit",
+        "perms": []
+    },
+    {
+        "url": "/admin/1",
+        "perms": ["UPDATE"]
+    },
+    {
+        "url": "/admin/user",
+        "perms": ["MANAGE_USER"]
+    },
+    {
+        "url": "/admin/album/add",
+        "perms": ["CREATE", "UPDATE"]
+    },  
+    {
+        "url": "/admin/album/:id",
+        "perms": ["UPDATE"]
+    },
+    {
+        "url": "/admin/request",
+        "perms": ["REQUESTS"]
+    },
+    {
+        "url": "/admin/submission",
+        "perms": ["REQUESTS"]
+    }
+]

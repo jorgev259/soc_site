@@ -1,0 +1,17 @@
+.navLink, .dropMenu, .dropToggle, .dropItem {
+    color: white !important;
+}
+
+.navLink:hover, .dropToggle:hover, .dropItem:hover {
+    background-color: #4f4f4f !important;
+}
+
+.navLink, .dropToggle {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important; 
+}
+
+.dropMenu {
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important
+}
+

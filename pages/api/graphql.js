@@ -6,8 +6,8 @@ import path from 'path'
 
 import resolvers from '@/graphql/resolvers'
 
-const isProd = process.env.NODE_ENV === 'production'
-const schemas = loadFilesSync(path.join(__dirname, './graphql/schemas'))
+// const isProd = process.env.NODE_ENV === 'production'
+const schemas = loadFilesSync(path.join(process.cwd(), './server/graphql/schemas'))
 
 const apolloServer = new ApolloServer({
   typeDefs: mergeTypeDefs(schemas),

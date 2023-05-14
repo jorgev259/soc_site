@@ -1,0 +1,22 @@
+{
+    "permissions": [
+        "CREATE",
+        "UPDATE",
+        "MANAGE_USER",
+        "REQUESTS",
+        "SKIP_ADS",
+        "DIRECT"
+    ],
+    "categories": [
+        "Game",
+        "Animation"
+    ],
+    "classifications": [
+        "Original Soundtrack",
+        "GameRip",
+        "Vocal",
+        "Arrangement",
+        "Drama",
+        "Live Event"
+    ]
+}

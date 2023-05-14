@@ -5,7 +5,11 @@
         "@/components/*": ["components/*"],
         "@/locales/*": ["locales/*"],
         "@/img/*": ["public/img/*"],
-        "@/styles/*": ["styles/*"]
+        "@/styles/*": ["styles/*"],
+        "@/server/*": ["server/*"],
+        "@/graphql/*": ["server/graphql/*"],
+        "@/sequelize/*": ["server/sequelize/*"],
+        "@/utils/*": ["server/utils/*"]
       }
     }
   }

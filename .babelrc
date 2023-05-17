@@ -1,5 +1,4 @@
 {
-  "plugins": [
-    ["import-directory"]
-  ]
+  "presets": ["next/babel"],
+  "plugins": ["import-directory"]
 }

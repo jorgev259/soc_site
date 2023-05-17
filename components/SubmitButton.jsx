@@ -1,10 +1,14 @@
-import { Button } from 'react-bootstrap'
+import { Button } from 'reactstrap'
 import classnames from 'classnames'
 import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image'
 
 export default function SubmitButton (props) {
-  return props.loading
-    ? <Button type={props.type} variant='primary' className={classnames(props.className, 'py-0')} disabled><Image alt='' {...loader} height={35} width={35} /></Button>
-    : <Button type={props.type} variant='primary' className={classnames(props.className)} onClick={props.onClick}>{props.children}</Button>
+  const { loading = false, className, children, ...buttonProps } = props
+
+  return (
+    <Button {...buttonProps} type='submit' color='primary' className={classnames(className, { 'py-0': loading })} disabled={loading}>
+      {loading ? <Image alt='' {...loader} height={35} width={35} /> : children}
+    </Button>
+  )
 }

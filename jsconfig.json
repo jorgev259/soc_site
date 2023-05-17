@@ -9,7 +9,7 @@
         "@/server/*": ["server/*"],
         "@/graphql/*": ["server/graphql/*"],
         "@/sequelize/*": ["server/sequelize/*"],
-        "@/utils/*": ["server/utils/*"]
+        "@/utils/*": ["utils/*"]
       }
     }
   }

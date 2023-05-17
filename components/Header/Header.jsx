@@ -1,10 +1,11 @@
 import classNames from 'classnames'
-
 import Link from 'next/link'
 import Image from 'next/image'
 
 import logo from '@/img/assets/winterlogo.png'
+
 import NavigationBar from './NavigationBar'
+import LoginButton from './LoginButton'
 
 import styles from './Header.module.scss'
 
@@ -362,10 +363,14 @@ export default async function Header () {
   return (
     <div className='container-fluid'>
       <div className={classNames('row', styles.logoRow)} style={{ backgroundImage }}>
-        <div className='col'>
+        <div className='col-auto'>
           <Link className='ps-5 ms-4' href="/">
             <Image alt='SOC Logo' src={/* router.locale === 'es' ? logoES : */logo} height={150} width={265} />
           </Link>
+        </div>
+        <div className='col-auto ms-auto pe-4 me-5'>
+          {/* <RegisterProfileButton /> */}
+          <LoginButton />
         </div>
       </div>
       <div className='row'>
@@ -373,23 +378,6 @@ export default async function Header () {
           <NavigationBar />
         </div>
       </div>
-      {/* <div id={styles.bannerBg} style={headerData ? { backgroundImage: `url('/_next/image?w=3840&q=100&url=${`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}` } : {}}>
-        <Container>
-          <Row className='h-100'>
-            <Col className='my-auto'>
-              <Link href="/">
-                <Image alt='SOC Logo' src={router.locale === 'es' ? logoES : logo} height={150} width={265} />
-              </Link>
-            </Col>
-
-            <LangSelector />
-            <RegisterProfileButton />
-            <LoginButton />
-          </Row>
-        </Container>
-      </div>
-
- */}
     </div>
   )
 }

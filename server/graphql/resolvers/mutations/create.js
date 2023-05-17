@@ -1,9 +1,9 @@
 import { UserInputError } from 'apollo-server-errors'
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
 
-import { img, createLog, createUpdateLog, getImgColor, slugify } from '@/utils/index'
-import { postReddit, postDiscord, discordClient } from '@/utils/plugins'
-import { hasRole } from '@/utils/resolvers'
+import { img, createLog, createUpdateLog, getImgColor, slugify } from '@/utils/server/index'
+import { postReddit, postDiscord, discordClient } from '@/utils/server/plugins'
+import { hasRole } from '@/utils/server/resolvers'
 import { completeRequest } from '@lotus-tree/requestcat/lib/util'
 
 const resolversComposition = { 'Mutation.*': hasRole('CREATE') }

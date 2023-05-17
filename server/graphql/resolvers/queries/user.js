@@ -4,7 +4,7 @@ import { Op } from 'sequelize'
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
 
 import info from '@/utils/config/info.json'
-import { hasRole } from '@/utils/resolvers'
+import { hasRole } from '@/utils/server/resolvers'
 
 const { permissions } = info
 
@@ -17,8 +17,6 @@ const resolvers = {
 
       const valid = await bcrypt.compare(password, user.password)
       if (!valid) throw new UserInputError()
-
-      console.log(req.session)
 
       req.session.username = user.username
       req.session.permissions = (await user.getRoles()).map(r => r.permissions).flat()

@@ -1,6 +1,6 @@
 // import GraphQLUpload from 'graphql-upload/public/GraphQLUpload.js'
 
-import { headerColor, placeholder, solveRating } from '@/utils/resolvers'
+import { headerColor, placeholder, solveRating } from '@/utils/server/resolvers'
 
 const resolvers = {
   // saUpload: GraphQLUpload,

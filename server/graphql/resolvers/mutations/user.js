@@ -9,8 +9,8 @@ import fs from 'fs-extra'
 import sharp from 'sharp'
 
 // import { createForgor } from '../../../utils/forgor'
-import { hasRole, isAuthed } from '@/utils/resolvers'
-import { processImage } from '@/utils/index'
+import { hasRole, isAuthed } from '@/utils/server/resolvers'
+import { processImage } from '@/utils/server/index'
 
 const resolversComposition = {
   'Mutation.*': hasRole('MANAGE_USER'),

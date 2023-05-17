@@ -1,7 +1,7 @@
 import fg from 'fast-glob'
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
 
-import { hasRole } from '@/utils/resolvers'
+import { hasRole } from '@/utils/server/resolvers'
 
 const resolversComposition = { 'Query.banners': hasRole('UPDATE') }
 const resolvers = {

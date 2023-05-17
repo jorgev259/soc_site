@@ -1,10 +1,10 @@
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
 import { completeRequest } from '@lotus-tree/requestcat/lib/util'
 
-import { img, createLog, createUpdateLog, getImgColor, slugify } from '@/utils/index'
-import { postReddit, postDiscord, discordClient } from '@/utils/plugins'
+import { img, createLog, createUpdateLog, getImgColor, slugify } from '@/utils/server/index'
+import { postReddit, postDiscord, discordClient } from '@/utils/server/plugins'
 
-import { hasRole } from '@/utils/resolvers'
+import { hasRole } from '@/utils/server/resolvers'
 
 const resolversComposition = { 'Mutation.*': hasRole('UPDATE') }
 const resolvers = {

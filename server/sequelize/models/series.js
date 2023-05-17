@@ -1,5 +1,5 @@
 import { DataTypes } from 'sequelize'
-import { PLACEHOLDER } from '@/utils/index'
+import { PLACEHOLDER } from '@/utils/server/index'
 
 const model = sequelize => {
   const Series = sequelize.define('series', {

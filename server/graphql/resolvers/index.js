@@ -1,10 +1,7 @@
+import mutations from './mutations'
+import queries from './queries'
+import types from './types'
 
-import mutations from './mutations/*'
-import queries from './queries/*'
-import types from './types/*'
-
-const listResolvers = obj => Object.entries(obj).map(([_, value]) => value)
-
-const resolvers = [...listResolvers(mutations), ...listResolvers(queries), ...listResolvers(types)]
+const resolvers = { ...mutations, ...queries, ...types }
 
 export default resolvers

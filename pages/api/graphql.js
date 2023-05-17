@@ -6,7 +6,7 @@ import path from 'path'
 
 import resolvers from '@/graphql/resolvers'
 import db from '@/sequelize/startDB'
-import { withSessionApiRoute } from '@/utils/session'
+import { withSessionApiRoute } from '@/utils/server/session'
 
 const schemas = loadFilesSync(path.join(process.cwd(), './server/graphql/schemas'))
 

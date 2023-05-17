@@ -1,5 +1,5 @@
 import { Op, literal } from 'sequelize'
-import getVGMDB from '@/utils/vgmdb'
+import getVGMDB from '@/utils/server/vgmdb'
 
 const resolvers = {
   Query: {

@@ -1,10 +1,10 @@
 import { composeResolvers } from '@graphql-tools/resolvers-composition'
 import { UserInputError } from 'apollo-server-errors'
+import { mergeResolvers } from '@graphql-tools/merge'
 import { holdRequest, completeRequest, rejectRequest } from '@lotus-tree/requestcat/lib/util'
 
-import { hasRole, isAuthed } from '@/utils/resolvers'
-import { discordClient } from '@/utils/plugins'
-import { mergeResolvers } from '@graphql-tools/merge'
+import { hasRole, isAuthed } from '@/utils/server/resolvers'
+import { discordClient } from '@/utils/server/plugins'
 
 const resolvers = {
   Mutation: {

@@ -1,39 +1,33 @@
-import { useMemo } from 'react'
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+'use client'
+import { ApolloClient, ApolloLink, HttpLink, SuspenseCache } from '@apollo/client'
+import { ApolloNextAppProvider, NextSSRInMemoryCache, SSRMultipartLink } from '@apollo/experimental-nextjs-app-support/ssr'
 
-import { isSSR } from '@/utils/shared/constants'
+import { isSSR, graphQLUri } from '@/utils/shared/constants'
 
-let apolloClient
-const forcedUri = process.env.FORCE_CLIENT_URI || ''
+function makeClient () {
+  const httpLink = new HttpLink({
+    uri: graphQLUri,
+    fetchOptions: { cache: 'no-store' }
+  })
 
-const isGithub = process.env.GITHUB_ACTIONS
-const uri = isGithub
-  ? 'https://sittingonclouds.net/api/graphql'
-  : forcedUri || '/api/graphql'
-
-function createApolloClient () {
   return new ApolloClient({
-    ssrMode: isSSR,
-    uri,
-    credentials: 'include',
-    cache: new InMemoryCache()
+    cache: new NextSSRInMemoryCache(),
+    link: isSSR
+      ? ApolloLink.from([new SSRMultipartLink({ stripDefer: true }), httpLink])
+      : httpLink
   })
 }
 
-export function initializeApollo (initialState = null) {
-  const _apolloClient = apolloClient ?? createApolloClient()
-
-  if (initialState) _apolloClient.cache.restore(initialState)
-
-  // For SSG and SSR always create a new Apollo Client
-  if (isSSR) return _apolloClient
-  // Create the Apollo Client once in the client
-  if (!apolloClient) apolloClient = _apolloClient
-
-  return _apolloClient
+// also have a function to create a suspense cache
+function makeSuspenseCache () {
+  return new SuspenseCache()
 }
 
-export function useApollo (initialState) {
-  const store = useMemo(() => initializeApollo(initialState), [initialState])
-  return store
+// you need to create a component to wrap your app in
+export function ApolloWrapper ({ children }) {
+  return (
+    <ApolloNextAppProvider makeClient={makeClient} makeSuspenseCache={makeSuspenseCache}>
+      {children}
+    </ApolloNextAppProvider>
+  )
 }

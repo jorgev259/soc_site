@@ -4,8 +4,9 @@ import { ApolloWrapper } from '@/components/ApolloClient'
 import Header from '@/components/Header'
 
 import '@/styles/layout.scss'
+import UserContextProvider from '@/components/useUser'
 
-export default function Layout (props) {
+function Layout (props) {
   const { children } = props
 
   return (
@@ -13,10 +14,14 @@ export default function Layout (props) {
       <body>
         <ToastContainer newestOnTop />
         <ApolloWrapper>
-          <Header />
-          {children}
+          <UserContextProvider>
+            <Header />
+            {children}
+          </UserContextProvider>
         </ApolloWrapper>
       </body>
     </html>
   )
 }
+
+export default Layout

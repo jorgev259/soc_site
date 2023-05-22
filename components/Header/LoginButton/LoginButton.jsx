@@ -1,25 +1,35 @@
 'use client'
-
 import { Button, Form, Modal, ModalBody, Row, Col, Label, Input, FormGroup } from 'reactstrap'
 import classNames from 'classnames'
-import { useCallback, useState } from 'react'
-import { gql, useLazyQuery } from '@apollo/client'
+import { useCallback, useContext, useEffect, useState } from 'react'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
 import styles from './LoginButton.module.scss'
 
 import SubmitButton from '@/components/SubmitButton'
+// import { useRouter } from 'next/router'
+import { UserContext } from '@/components/useUser'
+
+const btnProps = { color: 'primary', className: classNames(styles.button, 'me-4') }
 
 export default function LoginButton () {
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
+  const { isAU, logout: [logoutQuery, { loading }] } = useContext(UserContext)
 
   const toggleShow = useCallback(event => { setShow(!show) }, [show])
 
+  useEffect(() => {
+    if (!show) setForgor(false)
+  }, [show])
+
   return (
     <>
-      <Button color='primary' className={classNames(styles.button, 'me-4')} onClick={toggleShow}>Login</Button>
+      {isAU
+        ? <SubmitButton {...btnProps} loading={loading} onClick={logoutQuery}>Logout</SubmitButton>
+        : <Button {...btnProps} onClick={toggleShow}>Login</Button>
+      }
       <Modal centered isOpen={show} toggle={toggleShow}>
         <ModalBody className='m-3'>
           {showForgor ? <ForgorForm /> : <LoginForm setShow={setShow} />}
@@ -31,40 +41,20 @@ export default function LoginButton () {
 
 function LoginForm (props) {
   const { setShow } = props
-
-  const loginQuery = gql`
-    query Login($username: String!, $password: String!){
-      login(username: $username, password: $password)
-    }
-  `
-
-  const [queryLogin, { loading }] = useLazyQuery(loginQuery)
+  const { login: [queryLogin, { loading }] } = useContext(UserContext)
 
   const submit = e => {
     e.persist()
     e.preventDefault()
     const variables = serialize(e.target, { hash: true })
 
-    queryLogin({ variables })
-      .then(res => {
-        const { error } = res
-        if (error) {
-          const { graphQLErrors } = error
-          let message = 'Unknown error'
-
-          if (graphQLErrors && graphQLErrors.length > 0) {
-            const { code } = graphQLErrors[0].extensions
-            if (code === 'BAD_USER_INPUT') message = 'Invalid_Login'
-          }
-
-          console.error(error)
-          toast.error(message)
-        } else {
-          // refetch()
-          setShow(false)
-        }
+    queryLogin(variables)
+      .then(() => {
+        setShow(false)
       })
-      .catch(error => console.error('An unexpected error happened:', error))
+      .catch(err => {
+        toast.error(err.message)
+      })
   }
 
   return (

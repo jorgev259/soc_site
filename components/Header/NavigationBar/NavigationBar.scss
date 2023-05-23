@@ -1,0 +1,5 @@
+$hover-color: #4f4f4f;
+
+.dropdown.show a {
+    background-color: $hover-color !important;
+}

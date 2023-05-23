@@ -15,6 +15,7 @@ import {
 } from 'reactstrap'
 
 import styles from './NavigationBar.module.scss'
+import './NavigationBar.scss'
 import SearchBar from '../SearchBar'
 
 function Dropdown (props) {
@@ -30,7 +31,7 @@ function Dropdown (props) {
 
   return (
     <>
-      <UncontrolledDropdown nav inNavbar >
+      <UncontrolledDropdown nav inNavbar>
         <DropdownToggle nav caret className={classNames(styles.dropToggle)}>{name}</DropdownToggle>
         <DropdownMenu end className={classNames(styles.dropMenu)}>
           {items.map(({ href, name }, i) => (
@@ -72,7 +73,7 @@ export default function NavigationBar () {
     <Navbar color='dark' dark full="true" expand="sm" className='py-md-0'>
       <NavbarToggler onClick={toggle} />
       <Collapse isOpen={isOpen} navbar>
-        <Nav className="ps-md-5 ms-md-4" navbar>
+        <Nav className="ps-md-5 ms-md-4 mt-2 mt-md-0" navbar>
           {/*
             <RegisterProfileButton navMobile />
               <LoginButton navMobile />

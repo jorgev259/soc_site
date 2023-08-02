@@ -3,7 +3,7 @@ import styles from '../styles/Header.module.scss'
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/legacy/image'
-import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form } from 'react-bootstrap'
+import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form, ModalBody } from 'react-bootstrap'
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import serialize from 'form-serialize'
@@ -226,6 +226,7 @@ function RegisterProfileButton (props) {
   const { user } = useUser()
   const [showRegister, setRegister] = useState(false)
   const [showForgor, setForgor] = useState(false)
+  const [showSuccess, setSuccess] = useState(false)
   const t = useTranslation()
   const [mutateRegister, { loading: loadingRegister }] = useMutation(registerMutation)
 
@@ -239,7 +240,7 @@ function RegisterProfileButton (props) {
     mutateRegister({ variables })
       .then(res => {
         setRegister(false)
-        setForgor(true)
+        setSuccess(true)
       })
       .catch(error => {
         const { graphQLErrors } = error
@@ -283,6 +284,11 @@ function RegisterProfileButton (props) {
             <Button onClick={() => setRegister(true)} className='me-0' variant="primary">{t('Register')}</Button>
           )}
       </Col>
+      <Modal show={showSuccess} centered onHide={() => setSuccess(false)}>
+        <ModalBody style={{ color: 'black' }}>
+          {t('Email_Sent')}
+        </ModalBody>
+      </Modal>
       <Modal show={showRegister} centered onHide={() => setRegister(false)}>
         <Modal.Body className='m-3'>
           {showForgor

@@ -490,6 +490,7 @@ function RegisterProfileButton(props) {
     const { user  } = (0,_useUser__WEBPACK_IMPORTED_MODULE_11__/* ["default"] */ .Z)();
     const [showRegister, setRegister] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const [showForgor, setForgor] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
+    const [showSuccess, setSuccess] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const t = (0,_useTranslation__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Z)();
     const [mutateRegister, { loading: loadingRegister  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_8__.useMutation)(registerMutation);
     const submitRegister = async (e)=>{
@@ -503,7 +504,7 @@ function RegisterProfileButton(props) {
             variables
         }).then((res)=>{
             setRegister(false);
-            setForgor(true);
+            setSuccess(true);
         }).catch((error)=>{
             const { graphQLErrors  } = error;
             let message = "Unknown error";
@@ -548,6 +549,17 @@ function RegisterProfileButton(props) {
                     className: "me-0",
                     variant: "primary",
                     children: t("Register")
+                })
+            }),
+            /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Modal, {
+                show: showSuccess,
+                centered: true,
+                onHide: ()=>setSuccess(false),
+                children: /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.ModalBody, {
+                    style: {
+                        color: "black"
+                    },
+                    children: t("Email_Sent")
                 })
             }),
             /*#__PURE__*/ react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx(react_bootstrap__WEBPACK_IMPORTED_MODULE_4__.Modal, {

@@ -74,8 +74,6 @@ export default function MyApp (context) {
     if (lang && lang !== router.locale) router.push(router.route, router.asPath, { locale: lang })
   }, [])
 
-  console.log('whatever')
-
   return (
     <LocaleContext.Provider value={localeStrings}>
       <Head>

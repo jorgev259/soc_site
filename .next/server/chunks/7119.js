@@ -492,13 +492,7 @@ function RegisterProfileButton(props) {
     const [showForgor, setForgor] = (0,react__WEBPACK_IMPORTED_MODULE_1__.useState)(false);
     const t = (0,_useTranslation__WEBPACK_IMPORTED_MODULE_16__/* ["default"] */ .Z)();
     const [mutateRegister, { loading: loadingRegister  }] = (0,_apollo_client__WEBPACK_IMPORTED_MODULE_8__.useMutation)(registerMutation);
-    /*
-  const p1 = useRef(null)
-  const p2 = useRef(null)
-  const [isInvalid, setInvalid] = useState(false)
-
-  const checkInvalid = () => setInvalid(p1?.current?.value !== p2?.current?.value)
-  */ const submitRegister = async (e)=>{
+    const submitRegister = async (e)=>{
         e.persist();
         e.preventDefault();
         const variables = form_serialize__WEBPACK_IMPORTED_MODULE_7___default()(e.target, {
@@ -1288,7 +1282,6 @@ function MyApp(context) {
             locale: lang
         });
     }, []);
-    console.log("whatever");
     return /*#__PURE__*/ (0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(LocaleContext.Provider, {
         value: localeStrings,
         children: [

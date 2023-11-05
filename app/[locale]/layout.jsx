@@ -4,7 +4,7 @@ import { NextIntlClientProvider } from 'next-intl'
 
 import Header from '@/components/Header'
 import { ApolloWrapper } from '@/components/ApolloProvider'
-import locales from '@/utils/locales.json'
+import locales from '@/locales/langs.json'
 
 import '@/styles/layout.scss'
 

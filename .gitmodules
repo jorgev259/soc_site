@@ -5,3 +5,4 @@
 [submodule "server"]
 	path = server
 	url = https://github.com/jorgev259/soc_server
+	branch = tech-rework

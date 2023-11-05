@@ -15,7 +15,7 @@ export const metadata = {
   description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive'
 }
 
-export default function Page () {
+export default function Page (props) {
   return (
     <>
       <MetadataTags />

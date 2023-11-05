@@ -1,22 +1,24 @@
 'use client'
 import { Button, Form, Modal, ModalBody, Row, Col, Label, Input, FormGroup } from 'reactstrap'
 import classNames from 'classnames'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
 import styles from './LoginButton.module.scss'
 
 import SubmitButton from '@/components/SubmitButton'
-// import { useRouter } from 'next/router'
-import { UserContext } from '@/components/useUser'
+import useUser from '@/components/useUser'
 
 const btnProps = { color: 'primary', className: classNames(styles.button, 'me-4') }
 
-export default function LoginButton () {
+export default function LoginButton (props) {
+  const { username } = props
+  const isFAU = username !== undefined
+
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
-  const { isAU, logout: [logoutQuery, { loading }] } = useContext(UserContext)
+  const { logout: [logoutQuery, { loading }] } = useUser()
 
   const toggleShow = useCallback(event => { setShow(!show) }, [show])
 
@@ -26,7 +28,7 @@ export default function LoginButton () {
 
   return (
     <>
-      {isAU
+      {isFAU
         ? <SubmitButton {...btnProps} loading={loading} onClick={logoutQuery}>Logout</SubmitButton>
         : <Button {...btnProps} onClick={toggleShow}>Login</Button>
       }
@@ -41,7 +43,7 @@ export default function LoginButton () {
 
 function LoginForm (props) {
   const { setShow } = props
-  const { login: [queryLogin, { loading }] } = useContext(UserContext)
+  const { login: [queryLogin, { loading }] } = useUser()
 
   const submit = e => {
     e.persist()

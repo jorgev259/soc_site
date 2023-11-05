@@ -1,6 +1,5 @@
 'use client'
 import { gql, useLazyQuery, useQuery } from '@apollo/client'
-import { useRouter } from 'next/navigation'
 import { createContext, useEffect, useState } from 'react'
 
 export const UserContext = createContext(null)
@@ -42,10 +41,26 @@ const userQuery = gql`
 
 const fetchPolicy = 'network-only'
 
-export default function useUser (props) {
+export default function UserContextProvider (props) {
+  const { children } = props
+
+  const { data: userData, refetch: fetchUser } = useQuery(userQuery, { fetchPolicy })
   const [queryLogin, loginResult] = useLazyQuery(loginQuery, { fetchPolicy })
   const [queryLogout, logoutResult] = useLazyQuery(logoutQuery, { fetchPolicy })
-  const router = useRouter()
+
+  const [status, setStatus] = useState(null)
+
+  const user = userData?.me
+  const isFAU = status === 'FAU'
+  const isPAU = status === 'PAU'
+  const isNAU = status === null || status === 'NAU'
+
+  useEffect(() => {
+    if (user === undefined) return
+
+    if (!user) setStatus('NAU')
+    else setStatus(status === null ? 'PAU' : 'FAU')
+  }, [user])
 
   async function login (variables) {
     const res = await queryLogin({ variables })
@@ -61,23 +76,35 @@ export default function useUser (props) {
         if (code === 'BAD_USER_INPUT') message = 'Invalid_Login'
       }
 
-      // throw TypeError(message)
+      throw TypeError(message)
     } else {
-      router.refresh()
+      fetchUser()
     }
   }
 
   function logout () {
     return queryLogout()
       .then(res => {
-        router.refresh()
+        fetchUser()
       })
       .catch(error => console.error('An unexpected error happened:', error))
   }
 
-  return {
-    // user: userData,
+  const value = {
+    user,
+    status,
+    isNAU,
+    isFAU,
+    isPAU,
+    isAU: isFAU || isPAU,
     login: [login, loginResult],
-    logout: [logout, logoutResult]
+    logout: [logout, logoutResult],
+    fetchUser
   }
+
+  return (
+    <UserContext.Provider value={value}>
+      {children}
+    </UserContext.Provider>
+  )
 }

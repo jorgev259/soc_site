@@ -1,7 +1,7 @@
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import path from 'path'
 
-import { withSessionSsr } from './session'
+import { withSessionSsr } from '../components/session'
 import { getImgColor, processImage } from './utils'
 
 export const isAuthed = next => (root, args, context, info) => {

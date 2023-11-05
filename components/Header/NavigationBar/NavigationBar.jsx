@@ -13,17 +13,18 @@ import {
   DropdownMenu,
   DropdownItem
 } from 'reactstrap'
+import { useTranslations } from 'next-intl'
 
 import styles from './NavigationBar.module.scss'
 import './NavigationBar.scss'
+
 import SearchBar from '../SearchBar'
 
 function Dropdown (props) {
   const { name, items = [], privileged = false } = props
+  const t = useTranslations('header')
 
-  /* const { user } = useUser()
-  const t = useTranslation() */
-
+  // const { user } = useUser()
   // const pages = user?.pages.map(p => p.url) || []
   // const links = items.filter(i => !privileged || pages.includes(i.href))
 
@@ -32,10 +33,10 @@ function Dropdown (props) {
   return (
     <>
       <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav caret className={classNames(styles.dropToggle)}>{name}</DropdownToggle>
+        <DropdownToggle nav caret className={classNames(styles.dropToggle)}>{t(name)}</DropdownToggle>
         <DropdownMenu end className={classNames(styles.dropMenu)}>
           {items.map(({ href, name }, i) => (
-            <DropdownItem key={i} className={classNames(styles.dropItem)}>{name}</DropdownItem>
+            <DropdownItem key={i} className={classNames(styles.dropItem)}>{t(name)}</DropdownItem>
           ))}
         </DropdownMenu>
       </UncontrolledDropdown>
@@ -45,11 +46,9 @@ function Dropdown (props) {
 
 function NavLinkWrapper (props) {
   const { href, name, onClick, className, privileged } = props
+  const t = useTranslations('header')
 
   // const { user } = useUser()
-  // const t = useTranslation()
-
-  // const title = t(name)
   // const pages = user?.pages.map(p => p.url) || []
 
   /* if (privileged) {
@@ -57,15 +56,15 @@ function NavLinkWrapper (props) {
     } */
 
   return onClick
-    ? <a onClick={onClick} className={classNames(styles.navLink, 'nav-link', className)}>{name}</a>
+    ? <a onClick={onClick} className={classNames(styles.navLink, 'nav-link', className)}>{t(name)}</a>
     : (
       <NavItem className={classNames(styles.navItem, 'mx-1')}>
-        <NavLink className={classNames(styles.navLink, className)} href={href}>{name}</NavLink>
+        <NavLink className={classNames(styles.navLink, className)} href={href}>{t(name)}</NavLink>
       </NavItem>
     )
 }
 
-export default function NavigationBar () {
+export default function NavigationBar (props) {
   const [isOpen, setIsOpen] = useState(false)
   const toggle = () => setIsOpen(!isOpen)
 
@@ -79,7 +78,7 @@ export default function NavigationBar () {
               <LoginButton navMobile />
               */}
           <NavLinkWrapper href='/' name='Home' />
-          <NavLinkWrapper href='/last-added' name='Last Added_header' />
+          <NavLinkWrapper href='/last-added' name='Last Added' />
           <NavLinkWrapper href='/album/list' name='Album List' />
           <Dropdown name='Games' items={[
             { name: 'Albums', href: '/game' },

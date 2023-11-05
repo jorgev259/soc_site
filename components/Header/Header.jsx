@@ -1,15 +1,18 @@
 import classNames from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
+import { gql } from '@apollo/client'
 
 import logo from '@/img/assets/winterlogo.png'
+import logoES from '@/img/assets/logo_es.png'
 
 import NavigationBar from './NavigationBar'
 import LoginButton from './LoginButton'
+import { getClient } from '@/components/ApolloClient'
 
 import styles from './Header.module.scss'
+import { getServerActionSession } from '@/components/session'
 
-// import logoEs from '@/img/assets/logo_es.png'
 /*
 import { useEffect, useState, useRef } from 'react'
 
@@ -345,32 +348,64 @@ function RegisterProfileButton (props) {
   )
 } */
 
-export default async function Header () {
-  /* const router = useRouter()
+const bannerQuery = gql`
+  query getBanner{
+    config(name: "banner"){
+      value
+    }
+  }
+`
 
-  const queryHeader = gql`
-    query {
-      config(name: "banner"){
-        value
+const pagesQuery = gql`
+  query getPages{
+    me {
+      pages {
+        url
       }
     }
-  `
+  }
+`
 
-  const { data: headerData } = useQuery(queryHeader) */
+async function LogoCol (props) {
+  const { locale } = props
+  const client = getClient()
+  const { data: headerData } = await client.query({ query: bannerQuery })
 
-  const backgroundImage = 'url(https://www.sittingonclouds.net/_next/image?w=3840&q=100&url=https://cdn.sittingonclouds.net/live/1663108890253.png)'
+  return (
+    <>
+      <div className={classNames(styles.bgImage)}>
+        <Image
+          fill priority alt=''
+          src={`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}
+          quality={50}
+          style={{ objectFit: 'cover' }}/>
+      </div>
+      <div className='col-auto'>
+        <Link className='ps-5 ms-4' href="/">
+          <Image alt='SOC Logo' src={locale === 'es' ? logoES : logo} height={150} width={265} />
+        </Link>
+      </div>
+    </>
+  )
+}
+
+export default async function Header (props) {
+  const { locale } = props
+  const client = getClient()
+
+  const session = await getServerActionSession()
+  const { username } = session
+  const { data: pagesData } = await client.query({ query: pagesQuery })
+
+  console.log({ pagesData })
 
   return (
     <div className='container-fluid'>
-      <div className={classNames('row', styles.logoRow)} style={{ backgroundImage }}>
-        <div className='col-auto'>
-          <Link className='ps-5 ms-4' href="/">
-            <Image alt='SOC Logo' src={/* router.locale === 'es' ? logoES : */logo} height={150} width={265} />
-          </Link>
-        </div>
+      <div className={classNames('row', styles.logoRow)}>
+        <LogoCol locale={locale} />
         <div className='col-auto ms-auto pe-4 me-5'>
           {/* <RegisterProfileButton /> */}
-          <LoginButton />
+          <LoginButton username={username}/>
         </div>
       </div>
       <div className='row'>
@@ -485,26 +520,4 @@ function SubmitAlbum () {
   )
 }
 
-function SearchBar () {
-  const ref = useRef(null)
-  const [open, setOpen] = useState(false)
-  const router = useRouter()
-
-  const onKeyDownHandler = e => {
-    const query = ref.current.value.trim()
-    if (e.keyCode === 13 && ref.current && query.length > 0) {
-      router.push({ pathname: '/search', query: { q: query } })
-      setOpen(false)
-    }
-  }
-
-  useEffect(() => { if (open) ref.current.focus() }, [open])
-
-  return (
-    <div id={styles.search} className={classNames({ 'w-100': open })}>
-      <input ref={ref} onBlur={() => setOpen(false)} onKeyDown={onKeyDownHandler} type='text' style={{ display: open ? 'block' : 'none' }} />
-      <i className={`fas fa-${open ? 'times' : 'search'}`} style={{ cursor: 'pointer' }} onClick={() => setOpen(!open)} />
-    </div>
-  )
-}
 */

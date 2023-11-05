@@ -1,12 +1,20 @@
-import { withIronSessionSsr, withIronSessionApiRoute } from 'iron-session/next'
+import { getIronSession, getServerActionIronSession } from 'iron-session'
+import { cookies } from 'next/headers'
 
-const options = {
+export const sessionOptions = {
   password: process.env.IRONCLAD,
-  cookieName: 'socuser'
+  cookieName: 'socuser',
+  cookieOptions: {
+    secure: process.env.NODE_ENV === 'production'
+  }
 }
 
-export const withSessionApi = handler =>
-  withIronSessionApiRoute(handler, options)
+export const getSession = async (req, res) => {
+  const session = getIronSession(req, res, sessionOptions)
+  return session
+}
 
-export const withSessionSsr = handler =>
-  withIronSessionSsr(handler, options)
+export const getServerActionSession = async () => {
+  const session = getServerActionIronSession(sessionOptions, cookies())
+  return session
+}

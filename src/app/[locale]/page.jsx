@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { Container } from 'reactstrap'
 
 const MetadataTags = () => (
   <Head>
@@ -19,7 +20,9 @@ export default function Page (props) {
   return (
     <>
       <MetadataTags />
-      <div />
+      <Container>
+        123
+      </Container>
     </>
   )
 }

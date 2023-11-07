@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 import Header from '@/components/Header'
-import { ApolloWrapper } from '@/components/ApolloProvider'
+import { ApolloWrapper } from '@/components/ApolloClientProvider'
 import locales from '@/locales/langs.json'
 
 import '@/styles/layout.scss'
@@ -16,7 +16,7 @@ async function Layout (props) {
   const { children, params: { locale } } = props
   let messages
   try {
-    messages = (await import(`../../locales/langs/${locale}.json`)).default
+    messages = (await import(`@/locales/langs/${locale}.json`)).default
   } catch (error) {
     notFound()
   }

@@ -3,26 +3,27 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
 import { loadFilesSync } from '@graphql-tools/load-files'
 import path from 'path'
+import { unsealData } from 'iron-session'
 
 import resolvers from '@/server/graphql/resolvers'
 import db from '@/server/sequelize/startDB'
-import { getServerActionSession, getSession } from '@/components/session'
+import { sessionOptions } from '@/lib/session'
 
-const schemas = loadFilesSync(path.join(process.cwd(), './server/graphql/schemas'))
+const schemas = loadFilesSync(path.join(process.cwd(), 'src/server/graphql/schemas'))
 const server = new ApolloServer({
   typeDefs: mergeTypeDefs(schemas),
-  resolvers: mergeResolvers(resolvers)
+  resolvers: mergeResolvers(resolvers),
+  introspection: process.env.NODE_ENV !== 'production'
 })
 
 const handler = startServerAndCreateNextHandler(server, {
   context: async (req, res) => {
-    const newRes = {
-      ...res,
-      getHeader: (name) => res.headers?.get(name),
-      setHeader: (name, value) => res.headers?.set(name, value)
-    }
+    const token = req.headers.get('authorization')
+    const session = await unsealData(token, sessionOptions) || {}
+    const { username } = session
+    const user = username && await db.models.user.findByPk(username)
 
-    return { db, req, res: newRes }
+    return { db, req, res, username, user, session }
   }
 })
 

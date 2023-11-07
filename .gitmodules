@@ -2,7 +2,7 @@
 	path = locales
 	url = https://github.com/jorgev259/soc_site_i18n
 	branch = tech-rework
-[submodule "server"]
+[submodule "src/server"]
 	path = src/server
 	url = https://github.com/jorgev259/soc_server
 	branch = tech-rework

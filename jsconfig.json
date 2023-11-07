@@ -2,14 +2,13 @@
     "compilerOptions": {
       "baseUrl": ".",
       "paths": {
-        "@/components/*": ["components/*"],
         "@/locales/*": ["locales/*"],
         "@/img/*": ["public/img/*"],
         "@/styles/*": ["styles/*"],
-        "@/server/*": ["server/*"],
-        "@/graphql/*": ["server/graphql/*"],
-        "@/sequelize/*": ["server/sequelize/*"],
-        "@/utils/*": ["utils/*"]
+        "@/server/*": ["src/server/*"],
+        "@/graphql/*": ["src/server/graphql/*"],
+        "@/sequelize/*": ["src/server/sequelize/*"],
+        "@/*": ["src/*"]
       }
     }
   }

@@ -20,9 +20,6 @@ export default function Page (props) {
   return (
     <>
       <MetadataTags />
-      <Container>
-        123
-      </Container>
     </>
   )
 }

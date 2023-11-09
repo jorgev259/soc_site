@@ -1,25 +1,6 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true,
-        "node": true
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "standard",
-        "next/core-web-vitals"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "indent": ["error", 2]
-    }
+  "extends": ["next/core-web-vitals", "standard"],
+  "rules": {
+    "indent": ["error", 2]
+  } 
 }

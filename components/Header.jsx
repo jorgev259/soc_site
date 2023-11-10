@@ -10,7 +10,6 @@ import { useRouter } from 'next/router'
 import serialize from 'form-serialize'
 import { useApolloClient, useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
 import { toast } from 'react-toastify'
-import Cookies from 'universal-cookie'
 
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
@@ -20,14 +19,10 @@ import logoES from '../public/img/assets/logo_es.png'
 import { useTranslations } from 'next-intl'
 import RequestCheck from './RequestCheck'
 
-const cookies = new Cookies()
-
 function LangSelector () {
   const router = useRouter()
   const handleLocaleChange = event => {
     const { value } = event.target
-
-    cookies.set('lang', value)
     router.push(router.route, router.asPath, { locale: value })
   }
 

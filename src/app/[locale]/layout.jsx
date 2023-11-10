@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 
 // import Header from '@/components/Header'
-// import { ApolloWrapper } from '@/components/ApolloClientProvider'
+import { ApolloWrapper } from '@/next/components/ApolloClientProvider'
 import locales from '@/next/locales/langs.json'
 
 import '@/styles/layout.scss'
@@ -13,7 +13,7 @@ export function generateStaticParams () {
 }
 
 async function Layout (props) {
-  const { /* children, */ params: { locale } } = props
+  const { children, params: { locale } } = props
   let messages
   try {
     messages = (await import(`@/next/locales/langs/${locale}.json`)).default
@@ -25,17 +25,14 @@ async function Layout (props) {
     <html lang="en">
       <body>
         <NextIntlClientProvider locale={locale} messages={messages} timeZone='Europe/Berlin'>
-          <ToastContainer newestOnTop />
-        </NextIntlClientProvider>
-        {/* <ApolloWrapper>
-           */}
-        {/* <Header locale={locale} /> */}
-
-        {/* <Container fluid className='flex-grow-1'>
+          <ApolloWrapper>
+            <ToastContainer newestOnTop />
+            {/* <Header locale={locale} /> */}
+            <div className='flex-grow-1 container-fluid'>
               {children}
-            </Container>
-
-  </ApolloWrapper>  */}
+            </div>
+          </ApolloWrapper>
+        </NextIntlClientProvider>
       </body>
     </html>
   )

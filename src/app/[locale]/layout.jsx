@@ -16,7 +16,7 @@ async function Layout (props) {
   const { children, params: { locale } } = props
   let messages
   try {
-    messages = (await import(`@/next/locales/langs/${locale}.json`)).default
+    messages = (await import(`@/locales/langs/${locale}.json`)).default
   } catch (error) {
     notFound()
   }

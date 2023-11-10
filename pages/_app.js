@@ -15,7 +15,7 @@ import { ToastContainer } from 'react-toastify'
 import { useEffect, useRef } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import SSRProvider from 'react-bootstrap/SSRProvider'
-import { useRouter } from 'next/router'
+import { useRouter, withRouter } from 'next/router'
 import ReactGA from 'react-ga'
 import { Settings } from 'luxon'
 // import Script from 'next/script'
@@ -59,14 +59,15 @@ function Analytics () {
 
   return null
 }
+function App (context) {
+  const { Component, pageProps, router } = context
+  const { localeStrings = {} } = pageProps
 
-export default function MyApp (context) {
-  const { Component, pageProps } = context
-  const { localeStrings = {}, locale = 'en' } = pageProps
+  const locale = (router.query?.locale) ?? 'en'
   const client = useApollo()
 
   return (
-    <NextIntlClientProvider messages={localeStrings} locale={locale}>
+    <NextIntlClientProvider messages={localeStrings} locale={locale} timeZone='Europe/Berlin'>
       <Head>
         <title>Sitting on Clouds</title>
         <meta property="og:type" content="website" />
@@ -126,3 +127,5 @@ function FooterAd () {
     </div>
   )
 }
+
+export default withRouter(App)

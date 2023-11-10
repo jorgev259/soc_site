@@ -1,6 +1,4 @@
 'use client'
-
-import { graphQLUri } from '@/utils/constants'
 import { HttpLink, ApolloLink } from '@apollo/client'
 import {
   NextSSRApolloClient,
@@ -8,6 +6,8 @@ import {
   NextSSRInMemoryCache,
   SSRMultipartLink
 } from '@apollo/experimental-nextjs-app-support/ssr'
+
+import { graphQLUri } from '../constants/env'
 
 function makeClient () {
   const httpLink = new HttpLink({ uri: graphQLUri })

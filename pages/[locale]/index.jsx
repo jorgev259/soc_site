@@ -38,7 +38,7 @@ query searchAlbum($limit: Int){
 `
 
 export async function getServerSideProps (context) {
-  const { locale } = context
+  const { locale = 'en' } = context
   const client = initializeApollo()
   const { data } = await client.query({ query, variables: { limit } })
 

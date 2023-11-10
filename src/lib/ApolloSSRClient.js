@@ -4,7 +4,7 @@ import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rs
 import { setContext } from '@apollo/client/link/context'
 import { sealData } from 'iron-session'
 
-import { graphQLUri } from '@/utils/constants'
+import { graphQLUri } from '../constants/env'
 import { getServerActionSession, sessionOptions } from './session'
 
 const httpLink = new HttpLink({ uri: graphQLUri, credentials: 'same-origin' })

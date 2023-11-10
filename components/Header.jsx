@@ -10,38 +10,16 @@ import { useRouter } from 'next/router'
 import serialize from 'form-serialize'
 import { useApolloClient, useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
 import { toast } from 'react-toastify'
+import { useTranslations } from 'next-intl'
+
+import logo from '../public/img/assets/winterlogo.png'
+import logoES from '../public/img/assets/logo_es.png'
 
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
 import SubmitButton from './SubmitButton'
-import logo from '../public/img/assets/winterlogo.png'
-import logoES from '../public/img/assets/logo_es.png'
-import { useTranslations } from 'next-intl'
 import RequestCheck from './RequestCheck'
-
-function LangSelector () {
-  const router = useRouter()
-  const handleLocaleChange = event => {
-    const { value } = event.target
-    router.push(router.route, router.asPath, { locale: value })
-  }
-
-  return (
-    <Col xs='auto' className={classNames(styles.login, styles.blueBullet, 'ms-sm-auto mb-sm-5 py-2')}>
-      <select onChange={handleLocaleChange} value={router.locale}>
-        <option value="en">🇺🇸 English</option>
-        <option value="es">🇪🇸 Español</option>
-        <option value="de">🇩🇪 Deutsch</option>
-        <option value="pt-pt">🇵🇹 Português</option>
-        <option value="pt-br">🇧🇷 Português</option>
-        <option value="it">🇮🇹 Italiano</option>
-        <option value="fr">🇫🇷 Français</option>
-        <option value="ca">🇨🇦 Canadian</option>
-        <option value="id">🇮🇩 Indonesian</option>
-      </select>
-    </Col>
-  )
-}
+// import LangSelector from '@/next/components/Header/LangSelector'
 
 function ForgorForm (props) {
   const { defaultValue = false } = props
@@ -346,7 +324,7 @@ export default function Header () {
               </Link>
             </Col>
 
-            <LangSelector />
+            {/* <LangSelector /> */}
             <RegisterProfileButton />
             <LoginButton />
           </Row>

@@ -20,7 +20,8 @@ import { getImageUrl, PLACEHOLDER } from '@/components/utils'
 import { ButtonLoader } from '@/components/Loader'
 import { initializeApollo } from '@/components/ApolloClient'
 import CommentCarrousel from '@/components/CommentsCarrousel'
-import useTranslation, { getTranslation } from '@/components/useTranslation'
+import { getTranslation } from '@/components/useTranslation'
+import { useTranslations } from 'next-intl'
 import { DateTime } from 'luxon'
 
 const query = gql`
@@ -144,7 +145,7 @@ function StarCounter (props) {
   function Star (props) {
     const { value } = props
 
-    const t = useTranslation()
+    const t = useTranslations('common')
     const client = useApolloClient()
 
     const starClass = score >= value || (scoreHover || selfScore) >= value ? 'fas fa-star' : (score >= value - 0.5 ? 'fas fa-star-half' : 'far fa-star')
@@ -219,7 +220,7 @@ const removeFavorite = favoriteTemplate('remove')
 export default function Page (props) {
   const { id, album, imageUrl } = props
 
-  const t = useTranslation()
+  const t = useTranslations('common')
   const router = useRouter()
   const { user } = useUser()
   const [loadingFavorite, setLoading] = useState(false)
@@ -278,92 +279,92 @@ export default function Page (props) {
               </Col>
               <Col lg={7} className='d-flex flex-column'>
                 <div className='blackblock justify-content-center'>
-                <div>
+                  <div>
                     <h1 className={classNames('text-center', styles.title)}>{album.title}</h1>
-                      <h6 className='text-center' style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
-                      <table className={styles.table}>
-                        <tbody>
-                          <tr>
-                            <th className='width-row'>{t('Release Date')}</th>
-                            <td>{releaseDate.toLocaleString({ day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                          </tr>
+                    <h6 className='text-center' style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
+                    <table className={styles.table}>
+                      <tbody>
+                        <tr>
+                          <th className='width-row'>{t('Release Date')}</th>
+                          <td>{releaseDate.toLocaleString({ day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        </tr>
 
-                          {album.artists.length > 0 && (
-                            <tr>
-                              <th>{t('Artists')}</th>
-                              <td>
-                                {album.artists.map(({ id, name }) => name).join(', ')}
-                              </td>
-                            </tr>
-                          )}
-
+                        {album.artists.length > 0 && (
                           <tr>
-                            <th>{t('Classification')}</th>
+                            <th>{t('Artists')}</th>
                             <td>
-                              {[
-                                album.categories.map(({ name }) => t(`${name} Soundtrack`)).join(' & '),
-                                album.classifications.map(({ name }) => name).join(', ')
-                              ].filter(f => f !== '').join(' - ')}
+                              {album.artists.map(({ id, name }) => name).join(', ')}
                             </td>
                           </tr>
-                          {album.label && (
-                            <tr>
-                              <th>{t('Published by')}</th>
-                              <td><a className='btn btn-link p-0' href={`/publisher/${album.label}`}>{album.label}</a></td>
-                            </tr>
-                          )}
-                          {album.platforms.length > 0 && (
-                            <tr>
-                              <th>{t('Platforms')}</th>
-                              <td>
-                                {album.platforms.map(({ id, name }, i) => (
-                                  <Fragment key={id}>
-                                    {id === '29'
-                                      ? <span className='btn p-0' style={{ color: 'white' }}>{name}</span>
-                                      : <a className='btn btn-link p-0' href={`/platform/${id}`}>{name}</a>
-                                    }
-                                    {i !== album.platforms.length - 1 && ', '}
-                                  </Fragment>
-                                ))}
-                              </td>
-                            </tr>
-                          )}
+                        )}
 
-                          {album.games.length > 0 && (
-                            <tr>
-                              <th>{t('Games')}</th>
-                              <td>
-                                {album.games.map(({ slug, name }, i) => (
-                                  <Fragment key={slug}>
-                                    <a className='btn btn-link p-0' href={`/game/${slug}`}>{name}</a>
-                                    {i !== album.games.length - 1 && ', '}
-                                  </Fragment>
-                                ))}
-                              </td>
-                            </tr>
-                          )}
-
-                          {album.animations.length > 0 && (
-                            <tr>
-                              <th>{t('Animations')}</th>
-                              <td>
-                                {album.animations.map(({ id, title }, i) => (
-                                  <Fragment key={id}>
-                                    <a className='btn btn-link p-0' href={`/anim/${id}`}>{title}</a>
-                                    {i !== album.animations.length - 1 && ', '}
-                                  </Fragment>
-                                ))}
-                              </td>
-                            </tr>
-                          )}
-
+                        <tr>
+                          <th>{t('Classification')}</th>
+                          <td>
+                            {[
+                              album.categories.map(({ name }) => t(`${name} Soundtrack`)).join(' & '),
+                              album.classifications.map(({ name }) => name).join(', ')
+                            ].filter(f => f !== '').join(' - ')}
+                          </td>
+                        </tr>
+                        {album.label && (
                           <tr>
-                            <th>{t('Avg. Rating')}: </th>
-                            <td><StarCounter albumId={album.id} {...album.avgRating} /></td>
+                            <th>{t('Published by')}</th>
+                            <td><a className='btn btn-link p-0' href={`/publisher/${album.label}`}>{album.label}</a></td>
                           </tr>
+                        )}
+                        {album.platforms.length > 0 && (
+                          <tr>
+                            <th>{t('Platforms')}</th>
+                            <td>
+                              {album.platforms.map(({ id, name }, i) => (
+                                <Fragment key={id}>
+                                  {id === '29'
+                                    ? <span className='btn p-0' style={{ color: 'white' }}>{name}</span>
+                                    : <a className='btn btn-link p-0' href={`/platform/${id}`}>{name}</a>
+                                  }
+                                  {i !== album.platforms.length - 1 && ', '}
+                                </Fragment>
+                              ))}
+                            </td>
+                          </tr>
+                        )}
 
-                        </tbody>
-                      </table>
+                        {album.games.length > 0 && (
+                          <tr>
+                            <th>{t('Games')}</th>
+                            <td>
+                              {album.games.map(({ slug, name }, i) => (
+                                <Fragment key={slug}>
+                                  <a className='btn btn-link p-0' href={`/game/${slug}`}>{name}</a>
+                                  {i !== album.games.length - 1 && ', '}
+                                </Fragment>
+                              ))}
+                            </td>
+                          </tr>
+                        )}
+
+                        {album.animations.length > 0 && (
+                          <tr>
+                            <th>{t('Animations')}</th>
+                            <td>
+                              {album.animations.map(({ id, title }, i) => (
+                                <Fragment key={id}>
+                                  <a className='btn btn-link p-0' href={`/anim/${id}`}>{title}</a>
+                                  {i !== album.animations.length - 1 && ', '}
+                                </Fragment>
+                              ))}
+                            </td>
+                          </tr>
+                        )}
+
+                        <tr>
+                          <th>{t('Avg. Rating')}: </th>
+                          <td><StarCounter albumId={album.id} {...album.avgRating} /></td>
+                        </tr>
+
+                      </tbody>
+                    </table>
                   </div>
                   <div>
                     <h6 className='text-center'>{album.description}</h6>
@@ -376,7 +377,7 @@ export default function Page (props) {
                     </ButtonLoader>
                   </div>
                   {user && user.permissions.includes('UPDATE')
-                  ? (
+                    ? (
                       <div className='mt-3'>
                         <Link href={`/admin/album/${album.id}`}>
                           <Button
@@ -385,8 +386,8 @@ export default function Page (props) {
                           </Button>
                         </Link>
                       </div>
-                  )
-                  : null}
+                    )
+                    : null}
                 </div>
               </Col>
             </Row>
@@ -460,7 +461,7 @@ function DownloadList (props) {
   const { id, initialDownloads } = props
   const { data, refetch } = useQuery(queryDownload, { variables: { id } })
 
-  const t = useTranslation()
+  const t = useTranslations('common')
   const { user } = useUser()
 
   useEffect(() => { refetch({ variables: { id } }) }, [user, id, refetch])
@@ -508,7 +509,7 @@ function DownloadList (props) {
 
 function DirectButton (props) {
   const { directUrl } = props
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   const renderTooltip = props => (
     !directUrl
@@ -530,7 +531,7 @@ function DirectButton (props) {
 function TrackList (props) {
   const { discs } = props
   const [current, setCurrent] = useState(0)
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   return (
     <Col lg={6}>

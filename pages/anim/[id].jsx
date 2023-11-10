@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import { Col, Row, Container } from 'react-bootstrap'
 import { Fragment } from 'react'
-import Image from "next/legacy/image";
+import Image from 'next/legacy/image'
 import classNames from 'classnames'
 import Head from 'next/head'
 
@@ -10,7 +10,8 @@ import styles from '../../styles/Album.module.scss'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { getImageUrl } from '@/components/utils'
 import { initializeApollo } from '@/components/ApolloClient'
-import useTranslation, { getTranslation } from '@/components/useTranslation'
+import { getTranslation } from '@/components/useTranslation'
+import { useTranslations } from 'next-intl'
 
 const query = gql`
 query animation ($id: ID) {
@@ -77,7 +78,7 @@ export default function Page (props) {
   const { animation, imageUrl } = props
   const { id, title, subTitle, releaseDate, studios, albums = [], placeholder, headerColor } = animation
 
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   return (
     <>

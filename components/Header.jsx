@@ -17,7 +17,7 @@ import { ButtonLoader } from './Loader'
 import SubmitButton from './SubmitButton'
 import logo from '../public/img/assets/winterlogo.png'
 import logoES from '../public/img/assets/logo_es.png'
-import useTranslation from './useTranslation'
+import { useTranslations } from 'next-intl'
 import RequestCheck from './RequestCheck'
 
 const cookies = new Cookies()
@@ -50,7 +50,7 @@ function LangSelector () {
 
 function ForgorForm (props) {
   const { defaultValue = false } = props
-  const t = useTranslation()
+  const t = useTranslations('common')
   const forgorMutation = gql`
     mutation createForgorLink($key: String!){
       createForgorLink(key: $key)
@@ -117,7 +117,7 @@ function LoginButton (props) {
 
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   function setUrl (value) {
     const url = value ? `${router.asPath}?login` : router.asPath.replace('?login', '')
@@ -228,7 +228,7 @@ function RegisterProfileButton (props) {
   const [showRegister, setRegister] = useState(false)
   const [showForgor, setForgor] = useState(false)
   const [showSuccess, setSuccess] = useState(false)
-  const t = useTranslation()
+  const t = useTranslations('common')
   const [mutateRegister, { loading: loadingRegister }] = useMutation(registerMutation)
 
   const submitRegister = async e => {
@@ -505,7 +505,7 @@ function Dropdown (props) {
   const { name, items = [], privileged = false } = props
 
   const { user } = useUser()
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   const pages = user?.pages.map(p => p.url) || []
   const links = items.filter(i => !privileged || pages.includes(i.href))
@@ -527,7 +527,7 @@ function NavLink (props) {
   const { href, name, onClick, className, privileged } = props
 
   const { user } = useUser()
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   const title = t(name)
   const pages = user?.pages.map(p => p.url) || []

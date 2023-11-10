@@ -1,12 +1,8 @@
 [submodule "locales"]
 	path = locales
 	url = https://github.com/jorgev259/soc_site_i18n
-	branch = dist
+	branch = main
 [submodule "src/server"]
 	path = src/server
 	url = https://github.com/jorgev259/soc_server
-	branch = tech-rework
-[submodule "src/locales"]
-	path = src/locales
-	url = https://github.com/jorgev259/soc_site_i18n
 	branch = tech-rework

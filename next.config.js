@@ -1,6 +1,6 @@
-// const withNextIntl = require('next-intl/plugin')('./i18n.js')
+const withNextIntl = require('next-intl/plugin')('./i18n.js')
 
-module.exports = /* withNextIntl( */{
+module.exports = withNextIntl({
   eslint: { ignoreDuringBuilds: true },
   images: {
     remotePatterns: [
@@ -13,4 +13,4 @@ module.exports = /* withNextIntl( */{
     locales: ['en', 'es', 'de', 'it', 'pt-br', 'pt-pt', 'fr', 'ca', 'id'],
     localeDetection: false
   }
-}/* ) */
+})

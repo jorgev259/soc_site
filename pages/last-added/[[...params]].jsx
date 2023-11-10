@@ -10,7 +10,8 @@ import classNames from 'classnames'
 
 import { getFullPageList, getPageList } from '@/components/utils'
 import { initializeApollo } from '@/components/ApolloClient'
-import useTranslation, { getTranslation } from '@/components/useTranslation'
+import { getTranslation } from '@/components/useTranslation'
+import { useTranslations } from 'next-intl'
 
 const limit = 80
 const limitMD = 15
@@ -61,7 +62,7 @@ export async function getServerSideProps (context) {
 }
 
 export default function LastAdded (props) {
-  const t = useTranslation()
+  const t = useTranslations('common')
   const router = useRouter()
   const { params = ['1'] } = router.query
   const [page] = params

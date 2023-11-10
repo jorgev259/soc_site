@@ -17,11 +17,11 @@ import { skipAds } from './utils'
 import Loader from './Loader'
 import AlbumBox from './AlbumBoxes'
 import useUser from './useUser'
-import useTranslation from './useTranslation'
+import { useTranslations } from 'next-intl'
 import { CommentCarrouselSidebar } from './CommentsCarrousel'
 
 function GetLucky () {
-  const t = useTranslation()
+  const t = useTranslations('common')
   const query = gql`
   query {
     getRandomAlbum {
@@ -47,7 +47,7 @@ function GetLucky () {
 
 export default function Sidebar (props) {
   const { radio = false, index = false } = props
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   return (
     <Col md={3} className={classNames(styles.root, 'p-3 ms-md-auto d-flex flex-column col-md-3')}>
@@ -120,7 +120,7 @@ export default function Sidebar (props) {
 }
 
 function AlbumCount () {
-  const t = useTranslation()
+  const t = useTranslations('common')
   const query = gql`query {
     albumCount
     categories {
@@ -144,7 +144,7 @@ function AlbumCount () {
 }
 
 function Highlight () {
-  const t = useTranslation()
+  const t = useTranslations('common')
   const query = gql`query {
     highlight{
       id

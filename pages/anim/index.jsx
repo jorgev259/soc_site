@@ -4,7 +4,8 @@ import Link from 'next/link'
 
 import { initializeApollo } from '@/components/ApolloClient'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
-import useTranslation, { getTranslation } from '@/components/useTranslation'
+import { getTranslation } from '@/components/useTranslation'
+import { useTranslations } from 'next-intl'
 
 export async function getServerSideProps (context) {
   const { locale } = context
@@ -33,7 +34,7 @@ export async function getServerSideProps (context) {
 
 function Button (props) {
   const { name, href } = props
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   return (
     <Col md={3} className='mt-3  flex-grow-1'>
@@ -48,7 +49,7 @@ function Button (props) {
 
 export default function GameHome (props) {
   const { rows } = props
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   return (
     <Container>

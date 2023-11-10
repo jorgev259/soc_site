@@ -7,7 +7,7 @@ import { useRouter } from 'next/router'
 
 import useUser from './useUser'
 import Loader, { ButtonLoader } from './Loader'
-import useTranslation from './useTranslation'
+import { useTranslations } from 'next-intl'
 
 import styles from '../styles/Profile.module.scss'
 import stylesSidebar from '../styles/Sidebar.module.scss'
@@ -88,7 +88,7 @@ export default function CommentCarrousel (props) {
   const { albumId, comments: initialComments = [] } = props
 
   const router = useRouter()
-  const t = useTranslation()
+  const t = useTranslations('common')
 
   const [show, setShow] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -192,7 +192,7 @@ export default function CommentCarrousel (props) {
             </Row>
           )}
         </div>
-        
+
       </Col>
     </Row>
   </>

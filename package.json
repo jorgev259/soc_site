@@ -22,6 +22,7 @@
     "luxon": "^2.0.2",
     "moment": "^2.29.3",
     "next": "^14.0.2",
+    "next-intl": "^3.0.0-rc.6",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
@@ -34,8 +35,7 @@
     "sass": "^1.43.4",
     "sharp": "^0.30.5",
     "slugify": "^1.6.2",
-    "svg-loaders": "^0.2.0",
-    "universal-cookie": "^4.0.4"
+    "svg-loaders": "^0.2.0"
   },
   "devDependencies": {
     "eslint": "^8.22.0",

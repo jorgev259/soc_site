@@ -12,7 +12,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import Head from 'next/head'
 import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
-import { createContext, useEffect, useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { ApolloProvider } from '@apollo/client'
 import SSRProvider from 'react-bootstrap/SSRProvider'
 import { useRouter } from 'next/router'
@@ -24,7 +24,7 @@ import { useApollo } from '@/components/ApolloClient'
 import useUser from '@/components/useUser'
 import { skipAds } from '@/components/utils'
 import Header from '@/components/Header'
-import Cookies from 'universal-cookie'
+import { NextIntlClientProvider } from 'next-intl'
 // import SpookyGhosts from '../components/SpookyGhosts'
 
 Settings.defaultLocale = 'en-US'
@@ -60,22 +60,13 @@ function Analytics () {
   return null
 }
 
-export const LocaleContext = createContext()
-const cookies = new Cookies()
-
 export default function MyApp (context) {
   const { Component, pageProps } = context
-  const { localeStrings = {} } = pageProps
+  const { localeStrings = {}, locale = 'en' } = pageProps
   const client = useApollo()
-  const router = useRouter()
-
-  useEffect(() => {
-    const lang = cookies.get('lang')
-    if (lang && lang !== router.locale) router.push(router.route, router.asPath, { locale: lang })
-  }, [])
 
   return (
-    <LocaleContext.Provider value={localeStrings}>
+    <NextIntlClientProvider messages={localeStrings} locale={locale}>
       <Head>
         <title>Sitting on Clouds</title>
         <meta property="og:type" content="website" />
@@ -99,7 +90,7 @@ export default function MyApp (context) {
           <FooterAd />
         </SSRProvider>
       </ApolloProvider>
-    </LocaleContext.Provider>
+    </NextIntlClientProvider>
   )
 }
 

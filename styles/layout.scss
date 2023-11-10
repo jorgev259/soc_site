@@ -1,0 +1,14 @@
+@import "~normalize.css/normalize.css";
+@import "~bootstrap/scss/bootstrap";
+
+@import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
+@import '~@fortawesome/fontawesome-free/scss/solid.scss';
+@import '~@fortawesome/fontawesome-free/scss/regular.scss';
+@import '~@fortawesome/fontawesome-free/scss/brands.scss';
+
+html, body { 
+    min-height: 100%;
+    width: 100%;
+    color: white;
+    background-color: #4b7667;
+}

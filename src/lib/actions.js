@@ -1,7 +1,10 @@
 'use server'
 import { gql } from '@apollo/client'
+import bcrypt from 'bcrypt'
+
 import { getClient } from './ApolloSSRClient'
 import { getServerActionSession } from './session'
+import db from '../server/sequelize/startDB'
 
 const pagesQuery = gql`
   query getPages{
@@ -20,11 +23,22 @@ export async function getPages () {
   return pagesData
 }
 
-export async function login (username) {
+const loginError = new Error('Incorrect username or password')
+
+export async function login (formData) {
   const session = await getServerActionSession()
   const client = await getClient()
 
-  session.username = username
+  const username = formData.get('username')
+  const password = formData.get('password')
+
+  const user = await db.models.user.findByPk(username)
+  if (!user) throw loginError
+
+  const valid = await bcrypt.compare(password, user.password)
+  if (!valid) throw loginError
+
+  session.username = user.username
   await session.save()
   client.resetStore()
 }

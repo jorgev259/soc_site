@@ -3,11 +3,14 @@ import { NextSSRInMemoryCache, NextSSRApolloClient } from '@apollo/experimental-
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import { setContext } from '@apollo/client/link/context'
 import { sealData } from 'iron-session'
+// import { SchemaLink } from '@apollo/client/link/schema'
 
 import { graphQLUri } from '../constants/env'
 import { getServerActionSession, sessionOptions } from './session'
+// import { schema } from './graphql'
 
 const httpLink = new HttpLink({ uri: graphQLUri, credentials: 'same-origin' })
+// const schemaLink = new SchemaLink({ schema })
 const authLink = setContext(async (_, { headers }) => {
   const session = await getServerActionSession()
   const seal = await sealData(session, sessionOptions)

@@ -1,0 +1,31 @@
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/variables";
+
+$hover-color: #4f4f4f;
+
+.navLink, .dropMenu, .dropToggle, .dropItem {
+    color: white !important;
+}
+
+.navLink:hover, .dropToggle:hover, .dropItem:hover {
+    background-color: $hover-color !important;
+}
+
+.navLink, .dropToggle {
+    padding-top: 1rem !important;
+    padding-bottom: 1rem !important; 
+
+    @include media-breakpoint-down(md) {
+        padding-left: .5rem !important;
+    }
+}
+
+.dropMenu {
+    background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important
+}
+
+.dropMenu :global(.dropdown.show) a {
+    background-color: $hover-color !important;
+} 
+

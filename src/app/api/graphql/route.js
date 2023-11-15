@@ -1,18 +1,14 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
-import { loadFilesSync } from '@graphql-tools/load-files'
 import { unsealData } from 'iron-session'
-import path from 'path'
 
-import resolvers from '@/next/server/graphql/resolvers'
 import db from '@/next/server/sequelize/startDB'
 import { sessionOptions } from '@/next/lib/session'
+import { typeDefs, resolvers } from '@/next/lib/graphql'
 
-const schemas = loadFilesSync(path.join(process.cwd(), 'src/server/graphql/schemas'))
 const server = new ApolloServer({
-  typeDefs: mergeTypeDefs(schemas),
-  resolvers: mergeResolvers(resolvers),
+  typeDefs,
+  resolvers,
   introspection: process.env.NODE_ENV !== 'production'
 })
 

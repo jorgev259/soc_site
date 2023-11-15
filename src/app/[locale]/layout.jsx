@@ -3,9 +3,9 @@ import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import Script from 'next/script'
 
-// import Header from '@/components/Header'
-import { ApolloWrapper } from '@/next/components/ApolloClientProvider'
-import locales from '@/next/locales/langs.json'
+import Header from '@/next/components/server/Header'
+import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
+import locales from '@/locales/langs.json'
 
 import '@/styles/layout.scss'
 
@@ -23,12 +23,13 @@ async function Layout (props) {
   }
 
   return (
-    <html lang="en">
+    <html lang="en" data-bs-theme="dark">
       <body>
         <NextIntlClientProvider locale={locale} messages={messages} timeZone='Europe/Berlin'>
           <ApolloWrapper>
             <ToastContainer newestOnTop />
-            {/* <Header locale={locale} /> */}
+            <div id="modal" />
+            <Header locale={locale} />
             <div className='flex-grow-1 container-fluid'>
               {children}
             </div>

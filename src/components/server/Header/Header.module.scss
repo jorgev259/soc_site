@@ -1,0 +1,21 @@
+.logoRow {
+    position: relative;
+    height: 150px;
+
+    background-position: top center;
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    div {
+        z-index: 1;
+    }
+}
+
+.bgImage {
+    position: absolute;
+    z-index: 0;
+    height: 100%;
+    width: 100%;
+    padding-right: 0 !important;
+    padding-left: 0 !important;
+}

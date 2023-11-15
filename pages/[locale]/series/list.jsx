@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 import { initializeApollo } from '@/components/ApolloClient'
 import { getImageUrl } from '@/components/utils'
-import style from '../../styles/letter.module.scss'
+import style from '@/styles/letter.module.scss'
 
 export async function getServerSideProps () {
   const client = initializeApollo()

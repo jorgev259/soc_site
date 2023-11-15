@@ -1,5 +1,5 @@
 'use client'
-import styles from '../styles/Header.module.scss'
+import styles from '@/styles/Header.module.scss'
 
 import { useEffect, useState, useRef } from 'react'
 import Link from 'next/link'
@@ -23,7 +23,7 @@ import RequestCheck from './RequestCheck'
 
 function ForgorForm (props) {
   const { defaultValue = false } = props
-  const t = useTranslations('common')
+  const t = useTranslations('login')
   const forgorMutation = gql`
     mutation createForgorLink($key: String!){
       createForgorLink(key: $key)
@@ -90,7 +90,7 @@ function LoginButton (props) {
 
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
-  const t = useTranslations('common')
+  const t = useTranslations('login')
 
   function setUrl (value) {
     const url = value ? `${router.asPath}?login` : router.asPath.replace('?login', '')
@@ -201,7 +201,7 @@ function RegisterProfileButton (props) {
   const [showRegister, setRegister] = useState(false)
   const [showForgor, setForgor] = useState(false)
   const [showSuccess, setSuccess] = useState(false)
-  const t = useTranslations('common')
+  const t = useTranslations('login')
   const [mutateRegister, { loading: loadingRegister }] = useMutation(registerMutation)
 
   const submitRegister = async e => {
@@ -339,7 +339,7 @@ export default function Header () {
               <RegisterProfileButton navMobile />
               <LoginButton navMobile />
               <NavLink href='/' name='Home' />
-              <NavLink href='/last-added' name='Last Added_header' />
+              <NavLink href='/last-added' name='Last Added' />
               <NavLink href='/album/list' name='Album List' />
               <Dropdown name='Games' items={[
                 { name: 'Albums', href: '/game' },
@@ -478,7 +478,7 @@ function Dropdown (props) {
   const { name, items = [], privileged = false } = props
 
   const { user } = useUser()
-  const t = useTranslations('common')
+  const t = useTranslations('header')
 
   const pages = user?.pages.map(p => p.url) || []
   const links = items.filter(i => !privileged || pages.includes(i.href))
@@ -500,7 +500,7 @@ function NavLink (props) {
   const { href, name, onClick, className, privileged } = props
 
   const { user } = useUser()
-  const t = useTranslations('common')
+  const t = useTranslations('header')
 
   const title = t(name)
   const pages = user?.pages.map(p => p.url) || []

@@ -3,7 +3,7 @@ import { useRouter } from 'next/router'
 import { Container, Col, Row } from 'react-bootstrap'
 import Link from 'next/link'
 
-import styles from '../../styles/LastAdded.module.scss'
+import styles from '@/styles/LastAdded.module.scss'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import React from 'react'
 import classNames from 'classnames'

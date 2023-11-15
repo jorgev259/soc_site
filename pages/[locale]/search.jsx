@@ -6,7 +6,7 @@ import Image from 'next/legacy/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
 
-import styles from '../styles/Search.module.scss'
+import styles from '@/styles/Search.module.scss'
 import { getImageUrl } from '../components/utils'
 import Loader from '../components/Loader'
 import { useEffect, useState } from 'react'

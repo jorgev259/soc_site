@@ -9,7 +9,7 @@ import classNames from 'classnames'
 import { initializeApollo } from '@/components/ApolloClient'
 import { getImageUrl } from '@/components/utils'
 
-import AlbumBoxStyles from '../../styles/AlbumBoxes.module.scss'
+import AlbumBoxStyles from '@/styles/AlbumBoxes.module.scss'
 
 const query = gql`
   query seriesOne ($slug: String) {

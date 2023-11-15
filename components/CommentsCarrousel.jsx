@@ -9,8 +9,8 @@ import useUser from './useUser'
 import Loader, { ButtonLoader } from './Loader'
 import { useTranslations } from 'next-intl'
 
-import styles from '../styles/Profile.module.scss'
-import stylesSidebar from '../styles/Sidebar.module.scss'
+import styles from '@/styles/Profile.module.scss'
+import stylesSidebar from '@/styles/Sidebar.module.scss'
 import classNames from 'classnames'
 
 function SideButton (props) {

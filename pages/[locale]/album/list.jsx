@@ -6,7 +6,7 @@ import classname from 'classnames'
 import Link from 'next/link'
 import { initializeApollo } from '@/components/ApolloClient'
 
-import style from '../../styles/letter.module.scss'
+import style from '@/styles/letter.module.scss'
 
 export async function getServerSideProps () {
   const albums = {}
@@ -32,7 +32,7 @@ export async function getServerSideProps () {
     else albums[letter].push(album)
   })
 
-  return { props: { albums: albums, letters: Object.keys(albums).sort() }/*, revalidate: 60 */ }
+  return { props: { albums, letters: Object.keys(albums).sort() }/*, revalidate: 60 */ }
 }
 
 export default function AlbumList ({ albums, letters }) {

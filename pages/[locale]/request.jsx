@@ -7,7 +7,7 @@ import classNames from 'classnames'
 import { SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
 
-import styles from '../styles/Request.module.scss'
+import styles from '@/styles/Request.module.scss'
 import { isAuthedPage } from '@/components/resolvers'
 
 export const getServerSideProps = isAuthedPage

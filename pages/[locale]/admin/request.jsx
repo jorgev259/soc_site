@@ -9,7 +9,7 @@ import { SimpleSelector } from '@/components/Selectors'
 import Loader, { ButtonLoader } from '@/components/Loader'
 import { hasRolePage } from '@/components/resolvers'
 
-import styles from '../../styles/Request.module.scss'
+import styles from '@/styles/Request.module.scss'
 
 export const getServerSideProps = hasRolePage(['REQUESTS'])
 const stateOptions = ['Complete', 'Pending', 'Hold'].map(label => ({ label, value: label.toLowerCase() }))

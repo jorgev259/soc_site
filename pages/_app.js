@@ -5,8 +5,8 @@ import '@fortawesome/fontawesome-free/css/solid.css'
 import '@fortawesome/fontawesome-free/css/regular.css'
 import '@fortawesome/fontawesome-free/css/brands.css'
 
-import '../styles/globals.scss'
-import '../styles/anim.css'
+import '@/styles/globals.scss'
+import '@/styles/anim.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 import Head from 'next/head'

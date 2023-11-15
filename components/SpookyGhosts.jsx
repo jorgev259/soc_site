@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
-import styles from '../styles/Spooky.module.scss'
+import styles from '@/styles/Spooky.module.scss'
 
 const size = 55
 const negSize = 0 - size

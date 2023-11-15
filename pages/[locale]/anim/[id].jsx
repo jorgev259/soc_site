@@ -5,7 +5,7 @@ import Image from 'next/legacy/image'
 import classNames from 'classnames'
 import Head from 'next/head'
 
-import styles from '../../styles/Album.module.scss'
+import styles from '@/styles/Album.module.scss'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { getImageUrl } from '@/components/utils'

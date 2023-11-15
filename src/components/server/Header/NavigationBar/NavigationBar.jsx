@@ -64,7 +64,7 @@ export default function NavigationBar (props) {
 
             {/*
             <RegisterProfileButton navMobile />
-              <LoginButton navMobile />
+              <Login navMobile />
               */}
             <NavLinkWrapper href='/' name='Home' />
             <NavLinkWrapper href='/last-added' name='Last Added' />

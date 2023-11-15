@@ -1,6 +1,6 @@
 import { ApolloServer } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { unsealData } from 'iron-session'
+import { unsealData } from 'iron-session-v8'
 
 import db from '@/next/server/sequelize/startDB'
 import { sessionOptions } from '@/next/lib/session'

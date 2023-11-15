@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { gql, useLazyQuery } from '@apollo/client'
 import { Row, Col, Nav, Container } from 'react-bootstrap'
@@ -5,13 +6,13 @@ import classNames from 'classnames'
 import Image from 'next/legacy/image'
 import Link from 'next/link'
 import { toast } from 'react-toastify'
+import { useTranslations } from 'next-intl'
 
 import styles from '@/styles/Search.module.scss'
-import { getImageUrl } from '../components/utils'
-import Loader from '../components/Loader'
-import { useEffect, useState } from 'react'
+
+import { getImageUrl } from '@/components/utils'
+import Loader from '@/components/Loader'
 import { getTranslation } from '@/components/useTranslation'
-import { useTranslations } from 'next-intl'
 
 const limit = 30
 const queryHeader = 'query Search($title: String!, $limit: Int!, $page: Int!)'

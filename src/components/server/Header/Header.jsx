@@ -7,7 +7,7 @@ import logo from '@/img/assets/winterlogo.png'
 import logoES from '@/img/assets/logo_es.png'
 
 import NavigationBar from './NavigationBar'
-import LoginButton from './LoginButton'
+import Login from './Login'
 // import LangSelector from './LangSelector'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 
@@ -258,7 +258,7 @@ export default async function Header (props) {
         {/* <LangSelector /> */}
         <div className='col-auto ms-auto pe-4 me-5'>
           {/* <RegisterProfileButton /> */}
-          <LoginButton />
+          <Login />
         </div>
       </div>
       <div className='row'>

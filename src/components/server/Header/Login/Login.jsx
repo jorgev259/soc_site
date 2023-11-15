@@ -7,7 +7,7 @@ import { getServerActionSession } from '@/next/lib/session'
 import { login, logout } from '@/next/lib/actions'
 import LoginForm from './LoginForm/LoginForm'
 
-export default async function LoginButton (props) {
+export default async function Login (props) {
   const session = await getServerActionSession()
   const { username } = session
   const isFAU = username !== undefined

@@ -1,4 +1,4 @@
-import { getIronSession, getServerActionIronSession } from 'iron-session'
+import { getIronSession, getServerActionIronSession } from 'iron-session-v8'
 import { cookies } from 'next/headers'
 
 export const sessionOptions = {

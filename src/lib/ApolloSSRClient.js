@@ -2,7 +2,7 @@ import { HttpLink } from '@apollo/client'
 import { NextSSRInMemoryCache, NextSSRApolloClient } from '@apollo/experimental-nextjs-app-support/ssr'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
 import { setContext } from '@apollo/client/link/context'
-import { sealData } from 'iron-session'
+import { sealData } from 'iron-session-v8'
 // import { SchemaLink } from '@apollo/client/link/schema'
 
 import { graphQLUri } from '../constants/env'

@@ -1,6 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
+import Script from 'next/script'
 
 // import Header from '@/components/Header'
 import { ApolloWrapper } from '@/next/components/ApolloClientProvider'
@@ -33,6 +34,7 @@ async function Layout (props) {
             </div>
           </ApolloWrapper>
         </NextIntlClientProvider>
+        <Script src='/js/bootstrap.bundle.js' />
       </body>
     </html>
   )

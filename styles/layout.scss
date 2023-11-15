@@ -1,5 +1,8 @@
 @import "~normalize.css/normalize.css";
-@import "~bootstrap/scss/bootstrap";
+
+$dropdown-spacer: 0;
+
+@import "~bootstrap/scss/bootstrap.scss";
 
 @import '~@fortawesome/fontawesome-free/scss/fontawesome.scss';
 @import '~@fortawesome/fontawesome-free/scss/solid.scss';

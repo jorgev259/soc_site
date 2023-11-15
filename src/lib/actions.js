@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 import bcrypt from 'bcrypt'
 
 import { getClient } from './ApolloSSRClient'
-import { getServerActionSession } from './session'
+import getServerActionSession from './getServerActionSession'
 import db from '../server/sequelize/startDB'
 
 const pagesQuery = gql`

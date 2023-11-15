@@ -3,7 +3,7 @@ import classNames from 'classnames'
 import styles from './Login.module.scss'
 
 import SubmitButton from '@/next/components/server/SubmitButton'
-import { getServerActionSession } from '@/next/lib/session'
+import getServerActionSession from '@/next/lib/getServerActionSession'
 import { login, logout } from '@/next/lib/actions'
 import LoginForm from './LoginForm/LoginForm'
 

@@ -14,7 +14,6 @@ import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import { useEffect, useRef } from 'react'
 import { ApolloProvider } from '@apollo/client'
-import SSRProvider from 'react-bootstrap/SSRProvider'
 import { useRouter, withRouter } from 'next/router'
 import ReactGA from 'react-ga'
 import { Settings } from 'luxon'
@@ -83,13 +82,11 @@ function App (context) {
       <ToastContainer newestOnTop />
 
       <ApolloProvider client={client}>
-        <SSRProvider>
-          <Header />
-          <Container fluid className='flex-grow-1'>
-            <Component {...pageProps} />
-          </Container>
-          <FooterAd />
-        </SSRProvider>
+        <Header />
+        <Container fluid className='flex-grow-1'>
+          <Component {...pageProps} />
+        </Container>
+        <FooterAd />
       </ApolloProvider>
     </NextIntlClientProvider>
   )

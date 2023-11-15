@@ -6,7 +6,8 @@ import { sealData } from 'iron-session-v8'
 // import { SchemaLink } from '@apollo/client/link/schema'
 
 import { graphQLUri } from '../constants/env'
-import { getServerActionSession, sessionOptions } from './session'
+import getServerActionSession from './getServerActionSession'
+import sessionOptions from './sessionOptions'
 // import { schema } from './graphql'
 
 const httpLink = new HttpLink({ uri: graphQLUri, credentials: 'same-origin' })

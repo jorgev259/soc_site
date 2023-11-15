@@ -2,6 +2,8 @@ import { ToastContainer } from 'react-toastify'
 import { notFound } from 'next/navigation'
 import { NextIntlClientProvider } from 'next-intl'
 import Script from 'next/script'
+// eslint-disable-next-line camelcase
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 import Header from '@/next/components/server/Header'
 import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
@@ -15,6 +17,10 @@ export function generateStaticParams () {
 
 async function Layout (props) {
   const { children, params: { locale } } = props
+
+  if (!locales.includes(locale)) notFound()
+  unstable_setRequestLocale(locale)
+
   let messages
   try {
     messages = (await import(`@/locales/langs/${locale}.json`)).default

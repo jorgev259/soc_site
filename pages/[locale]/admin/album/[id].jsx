@@ -3,7 +3,6 @@ import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import { Col, Row, Form, FormControl, Container } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
-import { withSessionSsr } from '@/components/session'
 import { AlbumSelector, GameSelector, PlatformSelector, AnimSelector, SimpleSelector } from '@/components/Selectors'
 import { Navigation, SharedForms, DiscList, StoreDownloads, Downloads } from '@/components/SharedForms'
 import SubmitButton from '@/components/SubmitButton'
@@ -94,7 +93,7 @@ query downloads ($id: ID!) {
 }
 `
 
-export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
+export const getServerSideProps = async ({ params }) => {
   const { id } = params
 
   /* const {username} = req.session
@@ -109,7 +108,7 @@ export const getServerSideProps = withSessionSsr(async ({ params, req }) => {
   if (album === null) return { redirect: { destination: '/404', permanent: false } }
 
   return { props: { id, album, categories, classifications }/*, revalidate: 60 */ }
-})
+}
 
 const mutation = gql`
     mutation updateAlbum(

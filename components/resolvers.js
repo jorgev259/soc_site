@@ -1,7 +1,6 @@
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import path from 'path'
 
-import { withSessionSsr } from './session'
 import { getImgColor, processImage } from './utils'
 
 export const isAuthed = next => (root, args, context, info) => {
@@ -18,23 +17,22 @@ const hasPerm = perm => next => async (root, args, context, info) => {
 }
 
 export const hasRole = role => [isAuthed, hasPerm(role)]
-export const hasRolePage = allowedRoles => withSessionSsr(
+export const hasRolePage = allowedRoles =>
   async context => {
-    const { req } = context
-    const { permissions } = req.session
+    const { session } = context
+    const { permissions } = session
 
     if (!permissions.some(p => allowedRoles.includes(p))) return { redirect: { destination: '/404', permanent: false } }
     return { props: {} }
   }
-)
-export const isAuthedPage = withSessionSsr(
-  async context => {
-    const { req } = context
 
-    if (!req.session?.username) return { redirect: { destination: '/404', permanent: false } }
+export const isAuthedPage =
+  async context => {
+    const { session } = context
+
+    if (!session.username) return { redirect: { destination: '/404', permanent: false } }
     else return { props: {} }
   }
-)
 
 export const placeholder = (parent, folder) => {
   if (!parent.placeholder) solvePlaceholder(parent, folder)

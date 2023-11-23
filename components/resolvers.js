@@ -2,6 +2,10 @@ import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import path from 'path'
 
 import { getImgColor, processImage } from './utils'
+import sessionOptions from '@/next/lib/sessionOptions'
+import { getIronSession } from 'iron-session'
+
+const getSession = (req, res) => getIronSession(req, res, sessionOptions)
 
 export const isAuthed = next => (root, args, context, info) => {
   if (!context.user) throw new AuthenticationError()
@@ -19,8 +23,9 @@ const hasPerm = perm => next => async (root, args, context, info) => {
 export const hasRole = role => [isAuthed, hasPerm(role)]
 export const hasRolePage = allowedRoles =>
   async context => {
-    const { session } = context
-    const { permissions } = session
+    const { req, res } = context
+    const session = await getSession(req, res)
+    const { permissions = [] } = session
 
     if (!permissions.some(p => allowedRoles.includes(p))) return { redirect: { destination: '/404', permanent: false } }
     return { props: {} }
@@ -28,7 +33,8 @@ export const hasRolePage = allowedRoles =>
 
 export const isAuthedPage =
   async context => {
-    const { session } = context
+    const { req, res } = context
+    const session = await getSession(req, res)
 
     if (!session.username) return { redirect: { destination: '/404', permanent: false } }
     else return { props: {} }

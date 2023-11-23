@@ -7,7 +7,7 @@ import {
   SSRMultipartLink
 } from '@apollo/experimental-nextjs-app-support/ssr'
 
-import { graphQLUri } from '../../constants/env'
+import { graphQLUri } from '@/next/constants/env'
 
 function makeClient () {
   const httpLink = new HttpLink({ uri: graphQLUri })

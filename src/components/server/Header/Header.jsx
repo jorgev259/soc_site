@@ -1,7 +1,6 @@
 import classNames from 'classnames'
 import Link from 'next/link'
 import Image from 'next/image'
-import { gql } from '@apollo/client'
 
 import logo from '@/img/assets/winterlogo.png'
 import logoES from '@/img/assets/logo_es.png'
@@ -9,9 +8,9 @@ import logoES from '@/img/assets/logo_es.png'
 import NavigationBar from './NavigationBar'
 import Login from './Login'
 // import LangSelector from './LangSelector'
-import { getClient } from '@/next/lib/ApolloSSRClient'
 
 import styles from './Header.module.scss'
+import { getBanner } from '@/next/lib/actions'
 
 /*
 import { useEffect, useState, useRef } from 'react'
@@ -204,35 +203,16 @@ function RegisterProfileButton (props) {
   )
 } */
 
-const bannerQuery = gql`
-  query getBanner{
-    config(name: "banner"){
-      value
-    }
-  }
-`
-
-const pagesQuery = gql`
-  query getPages{
-    me {
-      pages {
-        url
-      }
-    }
-  }
-`
-
 async function LogoCol (props) {
   const { locale } = props
-  const client = getClient()
-  const { data: headerData } = await client.query({ query: bannerQuery })
+  const banner = await getBanner()
 
   return (
     <>
       <div className={classNames(styles.bgImage)}>
         <Image
           fill priority alt=''
-          src={`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}
+          src={`https://cdn.sittingonclouds.net/live/${banner}.png`}
           quality={50}
           style={{ objectFit: 'cover' }}/>
       </div>
@@ -247,9 +227,6 @@ async function LogoCol (props) {
 
 export default async function Header (props) {
   const { locale } = props
-  const client = getClient()
-
-  const { data: pagesData } = await client.query({ query: pagesQuery })
 
   return (
     <div className='container-fluid'>
@@ -263,7 +240,7 @@ export default async function Header (props) {
       </div>
       <div className='row'>
         <div className='col px-0'>
-          <NavigationBar pages={pagesData?.me?.pages || []} />
+          <NavigationBar />
         </div>
       </div>
     </div>

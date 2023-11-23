@@ -2,5 +2,8 @@
   "extends": ["next/core-web-vitals", "standard"],
   "rules": {
     "indent": ["error", 2]
-  } 
+  },
+  "globals": {
+    "bootstrap":"readonly"
+  }
 }

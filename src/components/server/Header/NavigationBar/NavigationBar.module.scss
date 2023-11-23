@@ -2,14 +2,12 @@
 @import "~bootstrap/scss/mixins";
 @import "~bootstrap/scss/variables";
 
-$hover-color: #4f4f4f;
-
 .navLink, .dropMenu, .dropToggle, .dropItem {
     color: white !important;
 }
 
-.navLink:hover, .dropToggle:hover, .dropItem:hover {
-    background-color: $hover-color !important;
+.navLink:hover, .dropToggle:hover {
+    background-color: $dropdown-link-hover-bg !important;
 }
 
 .navLink, .dropToggle {
@@ -25,7 +23,6 @@ $hover-color: #4f4f4f;
     background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important
 }
 
-.dropMenu :global(.dropdown.show) a {
-    background-color: $hover-color !important;
-} 
-
+.dropMenu :global(.dropdown.nav-item):has(:global(.dropdown-menu.show)) {
+    background-color:red;
+}

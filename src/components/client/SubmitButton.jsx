@@ -1,6 +1,7 @@
+'use client'
 import classnames from 'classnames'
-import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
 import Image from 'next/image'
+import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
 
 export default function SubmitButton (props) {
   const { loading = false, className, children, ...buttonProps } = props

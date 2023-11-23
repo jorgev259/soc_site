@@ -1,17 +1,16 @@
-'use client'
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
 
 import styles from './NavigationBar.module.scss'
 
-import SearchBar from '../../../client/SearchBar'
+import SearchBar from '@/next/components/client/SearchBar'
+import Privileged from './Privileged'
 
-function Dropdown (props) {
-  const { name, items = [], privileged = false, pages = [] } = props
+export function Dropdown (props) {
+  const { name, items = [] } = props
   const t = useTranslations('header')
-  const links = privileged ? items.filter(i => pages.includes(i.href)) : items
 
-  return links.length > 0
+  return items.length > 0
     ? (
       <li className="nav-item dropdown">
         <a className={classNames(styles.dropToggle, 'nav-link dropdown-toggle mt-0')} href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -29,7 +28,7 @@ function Dropdown (props) {
     : null
 }
 
-function NavLinkWrapper (props) {
+export function NavLinkWrapper (props) {
   const { href, name, onClick, className } = props
   const t = useTranslations('header')
 
@@ -38,30 +37,21 @@ function NavLinkWrapper (props) {
   return onClick
     ? <a onClick={onClick} className={linkStyles}>{t(name)}</a>
     : (
-      <div className={classNames(styles.navItem, 'nav-item mx-1')}>
+      <div className={classNames(styles.navItem, 'nav-item')}>
         <a className={linkStyles} href={href}>{t(name)}</a>
       </div>
     )
 }
 
-function Privileged (props) {
-  const { children, pages, href } = props
-  return pages.includes(href) ? children : null
-}
-
 export default function NavigationBar (props) {
-  const { pages: pageObjects } = props
-  const pages = pageObjects.map(p => p.url)
-
   return (
     <nav className='navbar navbar-expand-sm bg-dark py-md-0' id="navbar">
-      <div className="container-fluid">
+      <div className="container">
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className= "collapse navbar-collapse" id="navbarToggle">
           <ul className="navbar-nav">
-
             {/*
             <RegisterProfileButton navMobile />
               <Login navMobile />
@@ -81,17 +71,7 @@ export default function NavigationBar (props) {
               { name: 'Animation List', href: '/anim/list' },
               { name: 'Studios', href: '/studio/list' }
             ]} />
-
-            <Privileged href='/request' pages={pages}>
-              <NavLinkWrapper href='/request' name='Requests' />
-            </Privileged>
-            {/* <SubmitAlbum /> */}
-            <Dropdown name='Admin Grounds' privileged pages={pages} items={[
-              { name: 'Manage Albums', href: '/admin/1' },
-              { name: 'Manage Users', href: '/admin/user' },
-              { name: 'Manage Requests', href: '/admin/request' },
-              { name: 'Manage Submissions', href: '/admin/submission' }
-            ]} />
+            <Privileged />
           </ul>
         </div>
         <SearchBar />

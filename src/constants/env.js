@@ -4,5 +4,5 @@ const isGithub = process.env.GITHUB_ACTIONS
 export const isSSR = typeof window === 'undefined'
 export const isDev = process.env.NODE_ENV === 'development'
 export const graphQLUri = isGithub
-  ? 'https://sittingonclouds.net/api/graphql'
-  : forcedUri || 'http://localhost:3000/api/graphql'
+  ? 'https://sittingonclouds.net/api'
+  : forcedUri || '/api'

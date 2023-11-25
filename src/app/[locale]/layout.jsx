@@ -16,6 +16,24 @@ export function generateStaticParams () {
   return locales.map(locale => ({ locale }))
 }
 
+export const metadata = {
+  metadataBase: new URL('https://sittingonclouds.net'),
+  title: 'Sitting on Clouds',
+  description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
+  default: {
+    title: 'Sitting on Clouds'
+  },
+  openGraph: {
+    type: 'website',
+    url: '/',
+    title: 'Sitting on Clouds — High Quality soundtrack library',
+    description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
+    images: [
+      { url: '/img/assets/clouds_thumb.png', width: 200, height: 200 }
+    ]
+  }
+}
+
 async function Layout (props) {
   const { children, params: { locale } } = props
 

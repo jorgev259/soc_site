@@ -1,0 +1,1 @@
+export { CommentCarrouselSidebar } from './CommentCarrousel'

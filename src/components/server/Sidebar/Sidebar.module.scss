@@ -1,7 +1,9 @@
 .root {
     background-color: rgb(var(--bs-dark-rgb));
-    padding: 17px;
-    color: white; 
+
+    @media (min-width: 768px) {
+        max-width: 300px;
+    }
 
     h1 {
         font-weight: 700;
@@ -23,28 +25,31 @@
         }      
     }
 
-    .socials {
+    .section{
         background-color: #3F3F3F;
         border-radius: 8px;
         padding: 15px;
+        position: relative;
 
         h5 {
-        font-weight: 700;
-        text-transform: uppercase;
-        text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        font-family: 'Rubik', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            font-family: 'Rubik', sans-serif;
+        }
+
+        span:hover {
+            opacity: .9 !important;
+            cursor: pointer;
         }
     }
-
-    .socials span:hover {
-        opacity: .9 !important;
-        cursor: pointer;
-    }
-  }
-
-@media (min-width: 768px) {
-    .root {
-      max-width: 300px;
-    }
 }
-    
+
+.discord {
+    height: auto;
+     width: auto; 
+     max-height: 100px;
+     max-width: 100%;
+     border-radius: 10px;
+}
+

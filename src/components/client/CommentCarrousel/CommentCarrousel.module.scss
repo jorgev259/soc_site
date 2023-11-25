@@ -1,0 +1,14 @@
+.albumSpan {
+  color: white;
+  text-decoration: none;
+}
+
+.albumSpan:hover {
+    color: #00d4ff !important;
+    text-decoration: underline;
+  }
+
+.comments:global(.loadingAnim){
+  height: 200px;
+  overflow: hidden;
+}

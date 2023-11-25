@@ -10,7 +10,7 @@ const forcedUri = process.env.FORCE_CLIENT_URI
 export const isGithub = process.env.GITHUB_ACTIONS
 const uri = isGithub
   ? 'https://sittingonclouds.net/graphql'
-  : forcedUri || (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://localhost:4000' : `${window.origin}/graphql`)
+  : forcedUri || (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://127.0.0.1:4000' : `${window.origin}/graphql`)
 
 function createApolloClient () {
   return new ApolloClient({

@@ -1,0 +1,81 @@
+@import "@/styles/variables.scss";
+
+.albumBoxContainer {
+    position: relative;
+
+    @media (min-width: 2000px) { 
+        width: calc(100% / 6);
+    }
+}
+
+.albumBoxContainer.anim {
+    @media (min-width: 2000px) { 
+        width: calc(100% / 10);
+    }
+
+    @media (min-width: 3000px) { 
+        width: calc(100% / 12);
+    }
+}
+
+.albumBox {
+    position: relative;
+    border-radius: 8px;
+    background-color: rgba(17,17,17,.85);
+    opacity: 1;
+    height: 100%;
+
+    font-size: 17px;
+    font-weight: bold;
+
+    a {
+        color: white;
+        text-decoration: none;
+    }
+
+
+    .img {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        transition: transform .2s, border-radius .3s;
+        transform: scale(.97);
+    }
+
+    .img, img { border-radius: 8px 8px }
+
+    img {
+        position: static !important;
+        max-height: 350px !important;
+        max-width: 98% !important;
+        min-height: unset !important;
+        min-width: unset !important;
+        height: unset !important;
+        width: unset !important;
+        box-shadow: 0 0 3px 0 rgba(0,0,0,.75);       
+    }
+}
+
+.albumBox:global(.loadingAnim) {
+    height: 275px;
+    overflow: hidden;
+}
+
+.albumBox.coming {
+    opacity: .7;
+}
+
+.albumBox:not(.coming):not(:global(.loadingAnim)) {
+    cursor:pointer;
+}
+
+.albumBox:not(.coming):not(:global(.loadingAnim)):hover {
+    background-color: rgba(50, 50, 50, 0.7);
+
+    a {
+        color: $link-color;
+        text-decoration: underline;
+    }
+
+    .img { transform: scale(1) }
+}

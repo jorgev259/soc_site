@@ -80,7 +80,53 @@ function ForgorForm (props) {
     )
 }
 
-function RegisterProfileButton (props) {
+   */
+
+async function LogoCol (props) {
+  const { locale } = props
+  const banner = await getBanner()
+
+  return (
+    <>
+      <div className={classNames(styles.bgImage)}>
+        <Image
+          fill priority alt=''
+          src={`https://cdn.sittingonclouds.net/live/${banner}.png`}
+          quality={50}
+          style={{ objectFit: 'cover' }}/>
+      </div>
+      <div className='col-auto'>
+        <Link className='ps-5 ms-4' href="/">
+          <Image alt='SOC Logo' src={locale === 'es' ? logoES : logo} height={150} width={265} />
+        </Link>
+      </div>
+    </>
+  )
+}
+
+export default async function Header (props) {
+  const { locale } = props
+
+  return (
+    <div className='container-fluid'>
+      <div className={classNames('row', styles.logoRow)}>
+        <LogoCol locale={locale} />
+        {/* <LangSelector /> */}
+        <div className='col-auto ms-auto pe-4 me-5'>
+          {/* <RegisterProfileButton /> */}
+          <Login />
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col px-0'>
+          <NavigationBar />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+/* function RegisterProfileButton (props) {
   const { navMobile = false } = props
   const registerMutation = gql`
     mutation ($username: String!, $email: String!, $password: String!, $pfp: Upload) {
@@ -142,7 +188,6 @@ function RegisterProfileButton (props) {
         )
     )
   }
-
   return (
     <>
       <Col xs='auto' className={classNames(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}>
@@ -202,51 +247,6 @@ function RegisterProfileButton (props) {
     </>
   )
 } */
-
-async function LogoCol (props) {
-  const { locale } = props
-  const banner = await getBanner()
-
-  return (
-    <>
-      <div className={classNames(styles.bgImage)}>
-        <Image
-          fill priority alt=''
-          src={`https://cdn.sittingonclouds.net/live/${banner}.png`}
-          quality={50}
-          style={{ objectFit: 'cover' }}/>
-      </div>
-      <div className='col-auto'>
-        <Link className='ps-5 ms-4' href="/">
-          <Image alt='SOC Logo' src={locale === 'es' ? logoES : logo} height={150} width={265} />
-        </Link>
-      </div>
-    </>
-  )
-}
-
-export default async function Header (props) {
-  const { locale } = props
-
-  return (
-    <div className='container-fluid'>
-      <div className={classNames('row', styles.logoRow)}>
-        <LogoCol locale={locale} />
-        {/* <LangSelector /> */}
-        <div className='col-auto ms-auto pe-4 me-5'>
-          {/* <RegisterProfileButton /> */}
-          <Login />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col px-0'>
-          <NavigationBar />
-        </div>
-      </div>
-    </div>
-  )
-}
-
 /* const vgmQuery = gql`
   query ($search: String!){
     vgmdb(search: $search){

@@ -95,8 +95,8 @@ async function LogoCol (props) {
           quality={50}
           style={{ objectFit: 'cover' }}/>
       </div>
-      <div className='col-auto'>
-        <Link className='ps-5 ms-4' href="/">
+      <div className='col-12 col-sm-auto d-flex justify-content-center'>
+        <Link className='ps-sm-5 ms-sm-4' href="/">
           <Image alt='SOC Logo' src={locale === 'es' ? logoES : logo} height={150} width={265} />
         </Link>
       </div>

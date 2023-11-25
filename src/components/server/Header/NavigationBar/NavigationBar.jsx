@@ -47,10 +47,10 @@ export default function NavigationBar (props) {
   return (
     <nav className='navbar navbar-expand-sm bg-dark py-md-0' id="navbar">
       <div className="container">
-        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarTogglerDemo01" aria-expanded="false" aria-label="Toggle navigation">
+        <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggler" aria-controls="navbarToggler" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
-        <div className= "collapse navbar-collapse" id="navbarToggle">
+        <div className= "collapse navbar-collapse mt-2 mt-sm-0" id="navbarToggler">
           <ul className="navbar-nav">
             {/*
             <RegisterProfileButton navMobile />

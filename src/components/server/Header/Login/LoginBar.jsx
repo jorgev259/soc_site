@@ -25,7 +25,7 @@ function LoggedOut (props) {
 
   return (
     <>
-      <button className={classNames(styles.button, 'btn btn-primary me-4')} data-bs-toggle="modal" data-bs-target="#loginModal">{t('Login')}</button>
+      <button className={classNames(styles.button, 'd-none d-sm-block btn btn-primary me-4')} data-bs-toggle="modal" data-bs-target="#loginModal">{t('Login')}</button>
       <LoginModal />
       <ForgorModal />
     </>

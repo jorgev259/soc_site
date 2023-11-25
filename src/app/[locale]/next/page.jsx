@@ -15,6 +15,21 @@ import { getClient } from '@/next/lib/ApolloSSRClient'
 const albumClassName = 'col-6 col-md-3'
 const limit = 12
 
+function AlbumFallback () {
+  return (
+    <>
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+      <AlbumBox className={albumClassName} status='loading' />
+    </>
+  )
+}
+
 const releaseQuery = gql`
   query Released($limit: Int){
     released: searchAlbum(
@@ -32,26 +47,37 @@ const releaseQuery = gql`
   }
 `
 
-function AlbumFallback () {
-  return (
-    <>
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-    </>
-  )
-}
-
-async function LastReleases () {
+async function RecentReleases () {
   const client = await getClient()
   const { data } = await client.query({ query: releaseQuery, variables: { limit } })
   const { released } = data
   const { rows } = released
+
+  return (
+    rows.map(row => (
+      <AlbumBox key={row.id} className={albumClassName} {...row} />
+    ))
+  )
+}
+
+const addedQuery = gql`
+  query LastAdde ($limit: Int){
+    added: searchAlbum(limit: $limit, status: ["show"]){
+      rows{
+        id
+        status
+        title
+        placeholder
+      }
+    }
+  }
+`
+
+async function LastAdded () {
+  const client = await getClient()
+  const { data } = await client.query({ query: addedQuery, variables: { limit } })
+  const { added } = data
+  const { rows } = added
 
   return (
     rows.map(row => (
@@ -76,7 +102,7 @@ export default function Home (props) {
         </div>
         <div className='row'>
           <Suspense fallback={<AlbumFallback />}>
-            <LastReleases />
+            <RecentReleases />
           </Suspense>
         </div>
         <div className='row'>
@@ -96,12 +122,12 @@ export default function Home (props) {
 
         <div className='row'>
           <div className='col'>
-            <h1 className={classNames(styles.title, 'p-3')}>{t('Last Added')}</h1>
+            <h1 className={classNames(styles.title, 'p-3')} id='last-added'>{t('Last Added')}</h1>
           </div>
         </div>
         <div className='row'>
           <Suspense fallback={<AlbumFallback />}>
-            <LastReleases />
+            <LastAdded />
           </Suspense>
         </div>
         <div className='row'>

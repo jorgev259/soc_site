@@ -94,7 +94,7 @@ async function AlbumCount () {
 function SidebarAd () {
   return (
     <Ad>
-      <div className='row flex-grow-1'>
+      <div className={classNames(styles.ad, 'row flex-grow-1 mt-3')}>
         <div className='col'>
           <iframe title='play-asia' id='id01_909824' src='https://www.play-asia.com/38/190%2C000000%2Cnone%2C0%2C0%2C0%2C0%2CFFFFFF%2C000000%2Cleft%2C0%2C0-762s-70joq4-062-783c-29466-901vq93-33iframe_banner-44140px' style={{ height: '100%', width: '100%', borderStyle: 'none', borderWidth: '0px', borderColor: '#000000', padding: 0, margin: 0, scrolling: 'no', frameborder: 0 }} />
         </div>

@@ -2,44 +2,89 @@
 import { useCallback } from 'react'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
-import { useRouter } from 'next/navigation'
-import { gql, useApolloClient, useMutation } from '@apollo/client'
+import { gql, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
 
 import styles from './LoginForm.module.scss'
 
 import SubmitButton from '@/next/components/client/SubmitButton'
-import { hideModal } from '@/next/lib/modal'
+import { hideModal, showModal } from '@/next/lib/modal'
+import useRefresh from '@/next/lib/useRefresh'
+import useLogout from '@/next/lib/useLogout'
 
-function useRefresh () {
-  const router = useRouter()
-  const client = useApolloClient()
-
-  function refresh () {
-    client.resetStore()
-    router.refresh()
+const registerMutation = gql`
+  mutation ($username: String!, $email: String!, $pfp: Upload) {
+    registerUser(username: $username, email: $email, pfp: $pfp)
   }
-
-  return refresh
-}
+`
 
 const loginMutation = gql`
-    mutation Login($username: String!, $password: String!){
-      login(username: $username, password: $password)
-    }
-  `
+  mutation Login($username: String!, $password: String!){
+    login(username: $username, password: $password)
+  }
+`
 
-export function LoginForm (props) {
+const forgorMutation = gql`
+  mutation createForgorLink($key: String!){
+    createForgorLink(key: $key)
+  }
+`
+
+export function RegisterForm (props) {
   const t = useTranslations('login')
-  const [loginMutate, { loading }] = useMutation(loginMutation)
-  const refresh = useRefresh()
+  const [mutate, { loading }] = useMutation(registerMutation)
 
   const handleSubmit = useCallback(ev => {
-    ev.persist()
     ev.preventDefault()
     const variables = serialize(ev.target, { hash: true })
 
-    loginMutate({ variables })
+    mutate({ variables })
+      .then(() => {
+        hideModal('#registerModal')
+        showModal('#emailSentModal')
+      })
+      .catch(err => {
+        console.log(err)
+      })
+  }, [mutate])
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div className='row'>
+        <div className='col'>
+          <label className="form-label" htmlFor='username'>{t('Username')}:</label>
+          <input className="form-control"required type='text' name='username' />
+        </div>
+        <div className='col'>
+          <label className="form-label" htmlFor='email'>{t('Email')}:</label>
+          <input className="form-control" required type='text' name='email' />
+        </div>
+      </div>
+      <div className='row mt-3'>
+        <div className='col' >
+          <label className="form-label" htmlFor='pfp'>{t('Profile pic')}:</label>
+          <input className="form-control" type='file' name='pfp' />
+        </div>
+      </div>
+      <div className='row mt-4'>
+        <div className='col-md-4 mx-auto'>
+          <SubmitButton type='submit' className='w-100' color='primary' loading={loading}>{t('Register')}</SubmitButton>
+        </div>
+      </div>
+    </form>
+  )
+}
+
+export function LoginForm (props) {
+  const t = useTranslations('login')
+  const [mutate, { loading }] = useMutation(loginMutation)
+  const refresh = useRefresh()
+
+  const handleSubmit = useCallback(ev => {
+    ev.preventDefault()
+    const variables = serialize(ev.target, { hash: true })
+
+    mutate({ variables })
       .then(() => {
         hideModal('#loginModal')
         refresh()
@@ -47,7 +92,7 @@ export function LoginForm (props) {
       .catch(err => {
         console.log(err)
       })
-  }, [loginMutate, refresh])
+  }, [mutate, refresh])
 
   return (
     <form onSubmit={handleSubmit}>
@@ -76,37 +121,45 @@ export function LoginForm (props) {
 }
 
 export function ForgorForm (props) {
-  return (
-    <form>
-
-    </form>
-  )
-}
-
-const logoutMutation = gql`
-    mutation Logout {
-      logout
-    }
-  `
-
-export function LogoutForm (props) {
   const t = useTranslations('login')
-  const [logoutMutate, { loading }] = useMutation(logoutMutation)
-  const refresh = useRefresh()
+  const [mutate, { loading }] = useMutation(forgorMutation)
 
-  const handleLogout = useCallback(ev => {
+  const handleSubmit = useCallback(ev => {
     ev.preventDefault()
+    const variables = serialize(ev.target, { hash: true })
 
-    logoutMutate()
+    mutate({ variables })
       .then(() => {
-        refresh()
+        hideModal('#forgorModal')
+        showModal('#emailSentModal')
       })
       .catch(err => {
         console.log(err)
       })
-  }, [logoutMutate, refresh])
+  }, [mutate])
 
   return (
-    <SubmitButton className={classNames(styles.button, 'me-4')} loading={loading} onClick={handleLogout}>{t('Logout')}</SubmitButton>
+    <form onSubmit={handleSubmit}>
+      <div className='row'>
+        <div className='col' >
+          <label className="form-label" htmlFor='username' >{t('Username or email')}:</label>
+          <input className="form-control" required type='text' name='key' />
+        </div>
+      </div>
+      <div className='row mt-4'>
+        <div className='col-md-6 mx-auto'>
+          <SubmitButton type='submit' className='w-100' color='primary' loading={loading}>{t('Recover password')}</SubmitButton>
+        </div>
+      </div>
+    </form>
+  )
+}
+
+export function LogoutForm (props) {
+  const t = useTranslations('login')
+  const { handleLogout, loading } = useLogout()
+
+  return (
+    <SubmitButton className={classNames(styles.button, 'd-none d-sm-block me-4')} loading={loading} onClick={handleLogout}>{t('Logout')}</SubmitButton>
   )
 }

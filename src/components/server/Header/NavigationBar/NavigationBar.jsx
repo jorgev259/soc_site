@@ -4,6 +4,7 @@ import { useTranslations } from 'next-intl'
 import styles from './NavigationBar.module.scss'
 
 import SearchBar from '@/next/components/client/SearchBar'
+import MobileNav from '@/next/components/client/MobileNav'
 import Privileged from './Privileged'
 
 export function Dropdown (props) {
@@ -44,6 +45,8 @@ export function NavLinkWrapper (props) {
 }
 
 export default function NavigationBar (props) {
+  const { isFAU, username } = props
+
   return (
     <nav className='navbar navbar-expand-sm bg-dark py-md-0' id="navbar">
       <div className="container">
@@ -52,10 +55,7 @@ export default function NavigationBar (props) {
         </button>
         <div className= "collapse navbar-collapse mt-2 mt-sm-0" id="navbarToggler">
           <ul className="navbar-nav">
-            {/*
-            <RegisterProfileButton navMobile />
-              <Login navMobile />
-              */}
+            <MobileNav isFAU={isFAU} username={username} />
             <NavLinkWrapper href='/' name='Home' />
             <NavLinkWrapper href='/last-added' name='Last Added' />
             <NavLinkWrapper href='/album/list' name='Album List' />

@@ -14,7 +14,10 @@ export default function AlbumBox (props) {
   const commonContent = (
     <>
       <div className={classNames(styles.img, 'pt-1')}>
-        <Image alt={title} src={getImageUrl(id, type)} placeholder='blur' blurDataURL={placeholder} quality={30} fill />
+        <Image
+          sizes="25vw"
+          alt={title} src={getImageUrl(id, type)}
+          placeholder='blur' blurDataURL={placeholder} quality={30} fill />
       </div>
       <div className='text-wrap text-center p-2'>
         {coming ? 'Coming Soon' : title}

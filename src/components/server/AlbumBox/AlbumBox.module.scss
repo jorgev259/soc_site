@@ -35,6 +35,7 @@
 
 
     .img {
+        position: relative;
         display: flex;
         justify-content: center;
         width: 100%;
@@ -42,7 +43,9 @@
         transform: scale(.97);
     }
 
-    .img, img { border-radius: 8px 8px }
+    .img, img { 
+        border-radius: 8px 8px;
+    }
 
     img {
         position: static !important;

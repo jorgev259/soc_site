@@ -29,7 +29,7 @@ export const metadata = {
     title: 'Sitting on Clouds — High Quality soundtrack library',
     description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
     images: [
-      { url: '/img/assets/clouds_thumb.png', width: 200, height: 200 }
+      { url: '/img/assets/clouds_thumb.png' }
     ]
   }
 }

@@ -6,6 +6,8 @@ import styles from './NavigationBar.module.scss'
 import SearchBar from '@/next/components/client/SearchBar'
 import MobileNav from '@/next/components/client/MobileNav'
 import Privileged from './Privileged'
+import { ModalTemplate } from '../../Modal'
+import SubmitAlbumForm from '@/next/components/client/SubmitAlbumForm'
 
 export function Dropdown (props) {
   const { name, items = [] } = props
@@ -44,6 +46,21 @@ export function NavLinkWrapper (props) {
     )
 }
 
+function SubmitAlbum () {
+  const t = useTranslations('header')
+
+  return (
+    <>
+      <ModalTemplate id="submitAlbumModal">
+        <SubmitAlbumForm />
+      </ModalTemplate>
+      <div className={classNames(styles.navItem, 'nav-item')}>
+        <button className={classNames(styles.navLink, 'nav-link w-100 text-start')} data-bs-toggle="modal" data-bs-target="#submitAlbumModal">{t('Submit Album')}</button>
+      </div>
+    </>
+  )
+}
+
 export default function NavigationBar (props) {
   const { isFAU, username } = props
 
@@ -71,7 +88,9 @@ export default function NavigationBar (props) {
               { name: 'Animation List', href: '/anim/list' },
               { name: 'Studios', href: '/studio/list' }
             ]} />
-            <Privileged />
+            <Privileged>
+              {isFAU ? <SubmitAlbum /> : null}
+            </Privileged>
           </ul>
         </div>
         <SearchBar />

@@ -21,22 +21,24 @@ function DropdownWrapper (props) {
 }
 
 export default function Privileged (props) {
+  const { children } = props
   const { data } = useQuery(pagesQuery)
-  if (!data) return null
-
-  const pages = data.me?.pages?.map(p => p.url) || []
-  if (pages.length === 0) return null
+  const pages = data?.me?.pages?.map(p => p.url) || []
 
   return (
     <>
-      {pages.includes('/request') ? <NavLinkWrapper href='/request' name='Requests' /> : null}
-      {/* <SubmitAlbum /> */}
-      <DropdownWrapper pages={pages} name='Admin Grounds' items={[
-        { name: 'Manage Albums', href: '/admin/1' },
-        { name: 'Manage Users', href: '/admin/user' },
-        { name: 'Manage Requests', href: '/admin/request' },
-        { name: 'Manage Submissions', href: '/admin/submission' }
-      ]} />
+      {data && pages.includes('/request') ? <NavLinkWrapper href='/request' name='Requests' /> : null}
+      {children}
+      {data
+        ? (
+          <DropdownWrapper pages={pages} name='Admin Grounds' items={[
+            { name: 'Manage Albums', href: '/admin/1' },
+            { name: 'Manage Users', href: '/admin/user' },
+            { name: 'Manage Requests', href: '/admin/request' },
+            { name: 'Manage Submissions', href: '/admin/submission' }
+          ]} />
+        )
+        : null }
     </>
   )
 }

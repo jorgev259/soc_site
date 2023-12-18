@@ -126,7 +126,7 @@ export default function Profile (props) {
           </Col>
         </Row>
         <Row className='justify-content-center'>
-          <AlbumBoxList colProps={{ md: 3, xs: 6 }} items={albumList.sort((a, b) => a.title > b.title)} />
+          <AlbumBoxList colProps={{ md: 3, xs: 6 }} items={albumList} />
         </Row>
       </Container>
     </>

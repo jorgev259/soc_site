@@ -32,12 +32,12 @@ export const hasRolePage = allowedRoles =>
   }
 
 export const isAuthedPage =
-  async context => {
+  async (context, props) => {
     const { req, res } = context
     const session = await getSession(req, res)
 
     if (!session.username) return { redirect: { destination: '/404', permanent: false } }
-    else return { props: {} }
+    else return { props }
   }
 
 export const placeholder = (parent, folder) => {

@@ -35,7 +35,7 @@
     "moment": "^2.29.3",
     "mysql2": "^3.6.3",
     "next": "^14.0.2",
-    "next-intl": "^3.0.1",
+    "next-intl": "^3.3.2",
     "nodemailer": "^6.9.7",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",

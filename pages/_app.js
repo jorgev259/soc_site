@@ -17,6 +17,7 @@ import { ApolloProvider } from '@apollo/client'
 import { useRouter, withRouter } from 'next/router'
 import ReactGA from 'react-ga'
 import { Settings } from 'luxon'
+import App from 'next/app'
 // import Script from 'next/script'
 
 import { useApollo } from '@/components/ApolloClient'
@@ -58,15 +59,30 @@ function Analytics () {
 
   return null
 }
-function App (context) {
-  const { Component, pageProps, router } = context
-  const { localeStrings = {} } = pageProps
 
-  const locale = (router.query?.locale) ?? 'en'
+async function getTranslation (locale = 'en') {
+  const bundle = await import(`@/locales/langs/${locale}.json`)
+  return bundle.default || bundle
+}
+
+async function getInitialProps (context) {
+  const ctx = await App.getInitialProps(context)
+
+  const { router } = context
+  const locale = router.query?.locale ?? 'en'
+  const messages = await getTranslation(locale)
+
+  return { ...ctx, messages }
+}
+
+function MyApp (context) {
+  const { Component, pageProps, router, messages } = context
+
   const client = useApollo()
+  const locale = router.query?.locale ?? 'en'
 
   return (
-    <NextIntlClientProvider messages={localeStrings} locale={locale} timeZone='Europe/Berlin'>
+    <NextIntlClientProvider messages={messages} locale={locale} timeZone='Europe/Berlin'>
       <Head>
         <title>Sitting on Clouds</title>
         <meta property="og:type" content="website" />
@@ -125,4 +141,5 @@ function FooterAd () {
   )
 }
 
-export default withRouter(App)
+MyApp.getInitialProps = getInitialProps
+export default withRouter(MyApp)

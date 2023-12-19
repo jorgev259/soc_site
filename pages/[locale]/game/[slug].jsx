@@ -8,7 +8,6 @@ import Image from 'next/legacy/image'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { initializeApollo } from '@/components/ApolloClient'
 import { getImageUrl } from '@/components/utils'
-import { getTranslation } from '@/components/useTranslation'
 
 const query = gql`
     query game ($slug: String) {
@@ -51,9 +50,7 @@ export async function getServerSideProps ({ params, locale }) {
 
   if (game === null) return { redirect: { destination: '/404', permanent: false } }
 
-  const localeStrings = await getTranslation(locale)
-
-  return { props: { game, imageUrl: fullImage(slug, 50), localeStrings }/*, revalidate: 60 */ }
+  return { props: { game, imageUrl: fullImage(slug, 50) } }
 }
 
 const fullImage = (id, quality = 75) => `/_next/image?w=3840&q=${quality}&url=${getImageUrl(id, 'game')}`

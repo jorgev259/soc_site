@@ -3,6 +3,8 @@ import { Col, Row, Button, OverlayTrigger, Tooltip, Container } from 'react-boot
 import { Fragment, useEffect, useState } from 'react'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
+import { useTranslations } from 'next-intl'
+import { DateTime } from 'luxon'
 
 import Head from 'next/head'
 import Image from 'next/image'
@@ -20,9 +22,6 @@ import { getImageUrl, PLACEHOLDER } from '@/components/utils'
 import { ButtonLoader } from '@/components/Loader'
 import { initializeApollo } from '@/components/ApolloClient'
 import CommentCarrousel from '@/components/CommentsCarrousel'
-import { getTranslation } from '@/components/useTranslation'
-import { useTranslations } from 'next-intl'
-import { DateTime } from 'luxon'
 
 const query = gql`
 query ($id: ID!) {
@@ -188,21 +187,18 @@ function StarCounter (props) {
 }
 
 export async function getServerSideProps (context) {
-  const { params, locale } = context
+  const { params } = context
   const { id } = params
   const client = initializeApollo()
   const { data } = await client.query({ query, variables: { id } })
 
   if (data.album === null || data.album.status !== 'show') return { redirect: { destination: '/404', permanent: false } }
 
-  const localeStrings = await getTranslation(locale)
-
   return {
     props: {
       id,
       album: data.album,
-      imageUrl: fullImage(data.album.id, 50),
-      localeStrings
+      imageUrl: fullImage(data.album.id, 50)
     }
   }
 }

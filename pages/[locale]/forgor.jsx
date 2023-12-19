@@ -6,7 +6,6 @@ import Image from 'next/legacy/image'
 import { gql, useMutation } from '@apollo/client'
 import { toast } from 'react-toastify'
 import { useRouter } from 'next/router'
-import { getTranslation } from '@/components/useTranslation'
 
 const bigNono = { redirect: { permanent: false, destination: '/500' } }
 const mutation = gql`
@@ -16,11 +15,9 @@ const mutation = gql`
 `
 
 export async function getServerSideProps (context) {
-  const { query, locale } = context
+  const { query } = context
   const { key } = query
   if (!key) return bigNono
-
-  const localeStrings = await getTranslation(locale)
 
   // const row = await db.models.forgor.findByPk(key)
   // if (!row) return bigNono
@@ -29,7 +26,7 @@ export async function getServerSideProps (context) {
   // const expires = DateTime.fromJSDate(row.expires)
 
   // if (now > expires) return bigNono
-  /* else */ return { props: { qKey: key, localeStrings } }
+  /* else */ return { props: { qKey: key } }
 }
 
 export default function Forgor ({ qKey }) {

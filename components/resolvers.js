@@ -32,7 +32,7 @@ export const hasRolePage = allowedRoles =>
   }
 
 export const isAuthedPage =
-  async (context, props) => {
+  async (context, props = {}) => {
     const { req, res } = context
     const session = await getSession(req, res)
 

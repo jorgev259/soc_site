@@ -1,14 +1,12 @@
 import { gql } from '@apollo/client'
 import { Container, Col, Row } from 'react-bootstrap'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import { initializeApollo } from '@/components/ApolloClient'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
-import { getTranslation } from '@/components/useTranslation'
-import { useTranslations } from 'next-intl'
 
 export async function getServerSideProps (context) {
-  const { locale } = context
   const client = initializeApollo()
   const { data } = await client.query({
     query: gql`
@@ -28,8 +26,7 @@ export async function getServerSideProps (context) {
 
   })
 
-  const localeStrings = await getTranslation(locale)
-  return { props: { ...data.result, localeStrings }/*, revalidate: 60 */ }
+  return { props: { ...data.result } }
 }
 
 function Button (props) {

@@ -9,16 +9,12 @@ import Loader from '@/components/Loader'
 
 import styles from '@/styles/Request.module.scss'
 import { isAuthedPage } from '@/components/resolvers'
-import { getTranslation } from '@/components/useTranslation'
 
 const limit = 15
 const stateOptions = ['Complete', 'Pending', 'Hold'].map(label => ({ label, value: label.toLowerCase() }))
 const userOptions = ['Donators', 'Members'].map(label => ({ label, value: label === 'Donators' }))
 
-export async function getServerSideProps (context) {
-  const localeStrings = await getTranslation(context.locale)
-  return await isAuthedPage(context, { localeStrings })
-}
+export const getServerSideProps = isAuthedPage
 
 export default function AlbumAdmin () {
   return (

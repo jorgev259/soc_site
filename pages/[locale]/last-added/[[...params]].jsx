@@ -2,6 +2,7 @@ import { gql } from '@apollo/client'
 import { useRouter } from 'next/router'
 import { Container, Col, Row } from 'react-bootstrap'
 import Link from 'next/link'
+import { useTranslations } from 'next-intl'
 
 import styles from '@/styles/LastAdded.module.scss'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
@@ -10,8 +11,6 @@ import classNames from 'classnames'
 
 import { getFullPageList, getPageList } from '@/components/utils'
 import { initializeApollo } from '@/components/ApolloClient'
-import { getTranslation } from '@/components/useTranslation'
-import { useTranslations } from 'next-intl'
 
 const limit = 80
 const limitMD = 15
@@ -27,7 +26,7 @@ const limitXS = 5
 } */
 
 export async function getServerSideProps (context) {
-  const { params, locale } = context
+  const { params } = context
   const paramList = params?.params || []
   const page = paramList[0] || '1'
 
@@ -56,9 +55,7 @@ export async function getServerSideProps (context) {
     variables: { limit, page: page - 1 }
   })
 
-  const localeStrings = await getTranslation(locale)
-
-  return { props: { ...data.searchAlbum, localeStrings/*, revalidate: 60 */ } }
+  return { props: { ...data.searchAlbum } }
 }
 
 export default function LastAdded (props) {

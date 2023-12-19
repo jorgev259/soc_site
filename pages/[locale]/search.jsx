@@ -12,17 +12,9 @@ import styles from '@/styles/Search.module.scss'
 
 import { getImageUrl } from '@/components/utils'
 import Loader from '@/components/Loader'
-import { getTranslation } from '@/components/useTranslation'
 
 const limit = 30
 const queryHeader = 'query Search($title: String!, $limit: Int!, $page: Int!)'
-
-export async function getServerSideProps (context) {
-  const { locale } = context
-  const localeStrings = await getTranslation(locale)
-
-  return { props: { localeStrings } }
-}
 
 export default function Search () {
   const t = useTranslations('common')

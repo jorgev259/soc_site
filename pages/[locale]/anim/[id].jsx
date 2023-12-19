@@ -4,14 +4,13 @@ import { Fragment } from 'react'
 import Image from 'next/legacy/image'
 import classNames from 'classnames'
 import Head from 'next/head'
+import { useTranslations } from 'next-intl'
 
 import styles from '@/styles/Album.module.scss'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { getImageUrl } from '@/components/utils'
 import { initializeApollo } from '@/components/ApolloClient'
-import { getTranslation } from '@/components/useTranslation'
-import { useTranslations } from 'next-intl'
 
 const query = gql`
 query animation ($id: ID) {
@@ -36,31 +35,8 @@ query animation ($id: ID) {
   }
 }`
 
-/* export async function getStaticPaths () {
-  const client = initializeApollo()
-const { data } = await client.query({
-    query: gql`
-      query searchAlbum($limit: Int, $page: Int ){
-        searchAlbum(
-          limit: $limit
-          page: $page
-        ){
-          rows { id }
-        }
-      }
-    `,
-    variables: { limit: 100 }
-  })
-
-  const paths = data.searchAlbum.rows.map(({ id }) => ({
-    params: { id }
-  }))
-
-  return { paths, fallback: 'blocking' }
-} */
-
 export async function getServerSideProps (context) {
-  const { params, locale } = context
+  const { params } = context
   const { id } = params
   const client = initializeApollo()
   const { data } = await client.query({ query, variables: { id } })
@@ -68,8 +44,7 @@ export async function getServerSideProps (context) {
 
   if (animation === null) return { redirect: { destination: '/404', permanent: false } }
 
-  const localeStrings = await getTranslation(locale)
-  return { props: { animation, imageUrl: fullImage(id, 50), localeStrings }/*, revalidate: 60 */ }
+  return { props: { animation, imageUrl: fullImage(id, 50) } }
 }
 
 const fullImage = (id, quality = 75) => `/_next/image?w=3840&q=${quality}&url=${getImageUrl(id, 'anim')}`

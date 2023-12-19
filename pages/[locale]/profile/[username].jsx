@@ -4,16 +4,15 @@ import { Container, Col, Row, Modal, Form, Button } from 'react-bootstrap'
 import { DateTime } from 'luxon'
 import Image from 'next/legacy/image'
 // import ConfettiExplosion from 'react-confetti-explosion'
+import serialize from 'form-serialize'
+import { toast } from 'react-toastify'
+import Head from 'next/head'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { initializeApollo } from '@/components/ApolloClient'
 import { BasicCommentCarrousel } from '@/components/CommentsCarrousel'
 import { ButtonLoader } from '@/components/Loader'
-import serialize from 'form-serialize'
-import { toast } from 'react-toastify'
 import useUser from '@/components/useUser'
-import Head from 'next/head'
-import { getTranslation } from '@/components/useTranslation'
 
 const query = gql`
     query ($username: String!) {
@@ -49,9 +48,7 @@ export async function getServerSideProps (context) {
 
   if (user === null) return { redirect: { destination: '/404', permanent: false } }
 
-  const localeStrings = await getTranslation(context.locale)
-
-  return { props: { userProfile: user, localeStrings } }
+  return { props: { userProfile: user } }
 }
 
 /* function Explosion (props) {

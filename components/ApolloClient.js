@@ -6,9 +6,10 @@ let apolloClient
 const isSSR = typeof window === 'undefined'
 const forcedUri = process.env.FORCE_CLIENT_URI || ''
 const isGithub = process.env.GITHUB_ACTIONS
+const isDev = process.env.NODE_ENV === 'development'
 const graphQLUri = isGithub
   ? 'https://sittingonclouds.net/api'
-  : forcedUri || 'http://localhost:3000/api'
+  : forcedUri || (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://localhost:3000/api' : `${window.origin}/api`)
 
 function createApolloClient () {
   return new ApolloClient({

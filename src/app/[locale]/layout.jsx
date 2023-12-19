@@ -19,11 +19,15 @@ export const metadata = {
   openGraph: {
     type: 'website',
     url: '/',
+    siteName: 'Sitting on Clouds',
     title: 'Sitting on Clouds — High Quality soundtrack library',
     description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
     images: [
-      { url: '/img/assets/clouds_thumb.png' }
+      { url: '/img/assets/clouds_thumb.png', width: 250, height: 250 }
     ]
+  },
+  twitter: {
+    card: 'summary'
   }
 }
 

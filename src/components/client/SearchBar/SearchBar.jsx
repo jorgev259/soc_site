@@ -14,8 +14,9 @@ export default function SearchBar () {
 
   const onKeyDownHandler = e => {
     const query = ref.current.value.trim()
+
     if (e.keyCode === 13 && ref.current && query.length > 0) {
-      router.push({ pathname: '/search', query: { q: query } })
+      router.push(`/search?q=${query}`)
       setOpen(false)
     }
   }

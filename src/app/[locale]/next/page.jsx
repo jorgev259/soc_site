@@ -3,8 +3,6 @@ import { Suspense } from 'react'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
 import Link from 'next/link'
-// eslint-disable-next-line camelcase
-import { unstable_setRequestLocale } from 'next-intl/server'
 
 import styles from './home.module.scss'
 
@@ -87,10 +85,7 @@ async function LastAdded () {
 }
 
 export default function Home (props) {
-  const { params: { locale } } = props
   const t = useTranslations('home')
-
-  unstable_setRequestLocale(locale)
 
   return (
     <div className='row h-100'>
@@ -142,3 +137,5 @@ export default function Home (props) {
     </div>
   )
 }
+
+// export const revalidate = 600

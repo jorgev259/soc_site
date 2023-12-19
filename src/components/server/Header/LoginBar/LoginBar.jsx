@@ -1,6 +1,7 @@
 import classNames from 'classnames'
-import { useTranslations } from 'next-intl'
+import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
 import Link from 'next/link'
+import pick from 'lodash/pick'
 
 import styles from './LoginBar.module.scss'
 
@@ -19,6 +20,7 @@ export default async function LoginBar (props) {
 function LoggedIn (props) {
   const { username } = props
   const t = useTranslations('login')
+  const messages = useMessages()
 
   return (
     <>
@@ -26,7 +28,9 @@ function LoggedIn (props) {
         <Link href={`/profile/${username}`} className={classNames(styles.button, 'd-none d-sm-block btn btn-primary')}>{t('Profile')}</Link>
       </div>
       <div className='col-auto pe-sm-5 me-sm-4'>
-        <LogoutForm />
+        <NextIntlClientProvider messages={pick(messages, 'login')}>
+          <LogoutForm />
+        </NextIntlClientProvider>
       </div>
     </>
   )
@@ -71,17 +75,25 @@ function RegisterModal () {
 }
 
 function LoginModal () {
+  const messages = useMessages()
+
   return (
     <ModalTemplate id="loginModal">
-      <LoginForm />
+      <NextIntlClientProvider messages={pick(messages, 'login')}>
+        <LoginForm />
+      </NextIntlClientProvider>
     </ModalTemplate>
   )
 }
 
 function ForgorModal () {
+  const messages = useMessages()
+
   return (
     <ModalTemplate id='forgorModal'>
-      <ForgorForm />
+      <NextIntlClientProvider messages={pick(messages, 'login')}>
+        <ForgorForm />
+      </NextIntlClientProvider>
     </ModalTemplate>
   )
 }

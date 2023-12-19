@@ -1,5 +1,6 @@
 import classNames from 'classnames'
-import { useTranslations } from 'next-intl'
+import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
+import pick from 'lodash/pick'
 
 import styles from './NavigationBar.module.scss'
 
@@ -63,6 +64,7 @@ function SubmitAlbum () {
 
 export default function NavigationBar (props) {
   const { isFAU, username } = props
+  const messages = useMessages()
 
   return (
     <nav className='navbar navbar-expand-sm bg-dark py-md-0' id="navbar">
@@ -72,25 +74,29 @@ export default function NavigationBar (props) {
         </button>
         <div className= "collapse navbar-collapse mt-2 mt-sm-0" id="navbarToggler">
           <ul className="navbar-nav">
-            <MobileNav isFAU={isFAU} username={username} />
-            <NavLinkWrapper href='/' name='Home' />
-            <NavLinkWrapper href='/last-added' name='Last Added' />
-            <NavLinkWrapper href='/album/list' name='Album List' />
-            <Dropdown name='Games' items={[
-              { name: 'Albums', href: '/game' },
-              { name: 'Series', href: '/series/list' },
-              { name: 'Publishers', href: '/publisher/list' },
-              { name: 'Platforms', href: '/platform/list' },
-              { name: 'Game List', href: '/game/list' }
-            ]} />
-            <Dropdown name='Animation' items={[
-              { name: 'Albums', href: '/anim' },
-              { name: 'Animation List', href: '/anim/list' },
-              { name: 'Studios', href: '/studio/list' }
-            ]} />
-            <Privileged>
-              {isFAU ? <SubmitAlbum /> : null}
-            </Privileged>
+            <NextIntlClientProvider messages={pick(messages, 'login')}>
+              <MobileNav isFAU={isFAU} username={username} />
+            </NextIntlClientProvider>
+            <NextIntlClientProvider messages={pick(messages, 'header')}>
+              <NavLinkWrapper href='/' name='Home' />
+              <NavLinkWrapper href='/last-added' name='Last Added' />
+              <NavLinkWrapper href='/album/list' name='Album List' />
+              <Dropdown name='Games' items={[
+                { name: 'Albums', href: '/game' },
+                { name: 'Series', href: '/series/list' },
+                { name: 'Publishers', href: '/publisher/list' },
+                { name: 'Platforms', href: '/platform/list' },
+                { name: 'Game List', href: '/game/list' }
+              ]} />
+              <Dropdown name='Animation' items={[
+                { name: 'Albums', href: '/anim' },
+                { name: 'Animation List', href: '/anim/list' },
+                { name: 'Studios', href: '/studio/list' }
+              ]} />
+              <Privileged>
+                {isFAU ? <SubmitAlbum /> : null}
+              </Privileged>
+            </NextIntlClientProvider>
           </ul>
         </div>
         <SearchBar />

@@ -57,11 +57,17 @@ async function Highlight () {
   const { data } = await client.query({ query: higlightQuery })
 
   return (
-    <div className={classNames(styles.section, 'mt-3 p-1')}>
-      <h4 className='text-center text-uppercase py-1' style={{ fontWeight: 700 }}>{t('Highlight Soundtrack')}</h4>
-      <Suspense fallback={<AlbumBox className='col-xs-12' status='loading' />}>
-        <AlbumBox className='col-xs-12' {...data?.highlight} />
-      </Suspense>
+    <div className='row mt-3 px-3'>
+      <div className={classNames(styles.section, 'col py-0')}>
+        <div className='row'>
+          <h4 className='text-center text-uppercase pt-1' style={{ fontWeight: 700 }}>{t('Highlight Soundtrack')}</h4>
+        </div>
+        <div className='row'>
+          <Suspense fallback={<AlbumBox className='col-xs-12' status='loading' />}>
+            <AlbumBox className='col-xs-12' {...data?.highlight} />
+          </Suspense>
+        </div>
+      </div>
     </div>
   )
 }

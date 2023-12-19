@@ -5,6 +5,7 @@ import Script from 'next/script'
 import Header from '@/next/components/server/Header'
 import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
 import Ad from '@/next/components/server/Ad'
+import { isDev } from '@/next/constants/env'
 
 import '@/styles/layout.scss'
 
@@ -42,7 +43,7 @@ async function Layout (props) {
           </div>
           <Footer />
         </ApolloWrapper>
-        <Script src='/js/bootstrap.bundle.js' />
+        <Script src={isDev ? '/js/bootstrap.bundle.js' : '/js/bootstrap.bundle.min.js'} />
       </body>
     </html>
   )

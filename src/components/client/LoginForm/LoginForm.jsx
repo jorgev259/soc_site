@@ -13,7 +13,7 @@ import useRefresh from '@/next/lib/useRefresh'
 import useLogout from '@/next/lib/useLogout'
 
 const registerMutation = gql`
-  mutation ($username: String!, $email: String!, $pfp: Upload) {
+  mutation Register($username: String!, $email: String!, $pfp: Upload) {
     registerUser(username: $username, email: $email, pfp: $pfp)
   }
 `

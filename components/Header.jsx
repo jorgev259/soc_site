@@ -8,7 +8,7 @@ import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form, Mod
 import classNames from 'classnames'
 import { useRouter } from 'next/router'
 import serialize from 'form-serialize'
-import { useApolloClient, useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
+import { useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
 import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
 
@@ -71,22 +71,25 @@ function ForgorForm (props) {
     )
 }
 
+const loginMutation = gql`
+  mutation Login($username: String!, $password: String!){
+    login(username: $username, password: $password)
+  }
+`
+const logoutMutation = gql`
+  mutation Logout {
+    logout
+  }
+`
+
 function LoginButton (props) {
   const { navMobile = false } = props
-  const loginQuery = gql`
-    query Login($username: String!, $password: String!){
-      login(username: $username, password: $password)
-    }
-  `
-  const logoutQuery = gql`
-    query {
-      logout
-    }
-  `
+
   const router = useRouter()
   const { user, refetch } = useUser()
-  const client = useApolloClient()
-  const [queryLogin, { loading: loadingLogin }] = useLazyQuery(loginQuery)
+
+  const [loginMutate, { loading: loadingLogin }] = useMutation(loginMutation)
+  const [logoutMutate/*, { loading: loadingLogout } */] = useMutation(logoutMutation)
 
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
@@ -108,7 +111,7 @@ function LoginButton (props) {
 
   const handleLogin = () => {
     if (user) {
-      client.query({ query: logoutQuery })
+      logoutMutate()
         .then(() => {
           refetch()
           setUrl(false)
@@ -122,7 +125,7 @@ function LoginButton (props) {
     e.preventDefault()
     const variables = serialize(e.target, { hash: true })
 
-    queryLogin({ variables })
+    loginMutate({ variables })
       .then(res => {
         const { error } = res
         if (error) {

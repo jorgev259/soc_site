@@ -27,6 +27,11 @@ export const metadata = {
   }
 }
 
+export const viewport = {
+  themeColor: '#ffffff',
+  colorScheme: 'dark'
+}
+
 async function Layout (props) {
   const { children } = props
   const locale = useLocale()

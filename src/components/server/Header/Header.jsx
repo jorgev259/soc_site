@@ -8,10 +8,10 @@ import logoES from '@/img/assets/logo_es.png'
 import NavigationBar from './NavigationBar'
 import LoginBar from './LoginBar'
 // import LangSelector from './LangSelector'
-
-import styles from './Header.module.scss'
 import { getBanner } from '@/next/lib/actions'
 import getSession from '@/next/lib/getSession'
+
+import styles from './Header.module.scss'
 
 async function LogoCol (props) {
   const { locale } = props
@@ -24,7 +24,7 @@ async function LogoCol (props) {
           fill priority alt=''
           src={`https://cdn.sittingonclouds.net/live/${banner}.png`}
           quality={50}
-          style={{ objectFit: 'cover' }}/>
+        />
       </div>
       <div className='col-12 col-sm-auto d-flex justify-content-center'>
         <Link className='ps-sm-5 ms-sm-4' href="/">

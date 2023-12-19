@@ -67,9 +67,13 @@ function EmailSentModal () {
 }
 
 function RegisterModal () {
+  const messages = useMessages()
+
   return (
     <ModalTemplate id="registerModal">
-      <RegisterForm />
+      <NextIntlClientProvider messages={pick(messages, 'login')}>
+        <RegisterForm />
+      </NextIntlClientProvider>
     </ModalTemplate>
   )
 }

@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import styles from './AlbumBox.module.scss'
 

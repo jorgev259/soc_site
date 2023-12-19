@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { CommentCarrouselSidebar } from '@/next/components/client/CommentCarrousel'

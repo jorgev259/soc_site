@@ -1,7 +1,7 @@
 'use client'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import styles from '@/next/components/server/Header/NavigationBar/NavigationBar.module.scss'
 import useLogout from '@/next/lib/useLogout'

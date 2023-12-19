@@ -1,9 +1,10 @@
 'use client'
 import { useCallback, useRef, useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
 import classNames from 'classnames'
 
 import styles from './SearchBar.module.scss'
+
+import { useRouter } from '@/next/lib/navigation'
 
 export default function SearchBar () {
   const [open, setOpen] = useState(false)

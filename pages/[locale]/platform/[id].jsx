@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import { Row, Col } from 'react-bootstrap'
 import Sidebar from '@/components/Sidebar'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import { initializeApollo } from '@/components/ApolloClient'
 
 export async function getServerSideProps ({ params }) {

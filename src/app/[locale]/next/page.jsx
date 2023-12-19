@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import styles from './home.module.scss'
 

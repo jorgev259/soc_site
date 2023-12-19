@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client'
 import { Container, Col, Row } from 'react-bootstrap'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import { initializeApollo } from '@/components/ApolloClient'
 import { AlbumBoxList } from '@/components/AlbumBoxes'

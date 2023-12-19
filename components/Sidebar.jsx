@@ -3,8 +3,6 @@ import classNames from 'classnames'
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import styles from '@/styles/Sidebar.module.scss'
 
@@ -13,6 +11,7 @@ import kofi from '@/img/assets/ko-fi-donate-button.png'
 import yt from '@/img/assets/yt.png'
 import twitter from '@/img/assets/twitter.png'
 
+import { Link, useRouter } from '@/next/lib/navigation'
 import { skipAds } from './utils'
 import Loader from './Loader'
 import AlbumBox from './AlbumBoxes'

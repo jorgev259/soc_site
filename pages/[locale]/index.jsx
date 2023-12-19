@@ -1,6 +1,6 @@
 import { Col, Row } from 'react-bootstrap'
 import { gql } from '@apollo/client'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import Sidebar from '@/components/Sidebar'
 import { AlbumBoxList } from '@/components/AlbumBoxes'

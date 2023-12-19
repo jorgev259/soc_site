@@ -1,7 +1,7 @@
 'use client'
 import { useRef } from 'react'
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import serialize from 'form-serialize'
 import classNames from 'classnames'
 

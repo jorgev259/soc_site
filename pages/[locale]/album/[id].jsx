@@ -5,17 +5,15 @@ import classNames from 'classnames'
 import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
 import { DateTime } from 'luxon'
-
 import Head from 'next/head'
 import Image from 'next/image'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
 
 import styles from '@/styles/Album.module.scss'
 import starStyles from '@/styles/Stars.module.scss'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 
+import { useRouter, Link, usePathname } from '@/next/lib/navigation'
 import useUser from '@/components/useUser'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { getImageUrl, PLACEHOLDER } from '@/components/utils'
@@ -221,6 +219,8 @@ export default function Page (props) {
   const { user } = useUser()
   const [loadingFavorite, setLoading] = useState(false)
   const client = useApolloClient()
+  const pathname = usePathname()
+
   const getFavorite = gql`
   query ($albumId: ID!) {
     album(id: $albumId){
@@ -243,7 +243,7 @@ export default function Page (props) {
       .finally(() => {
         setLoading(false)
         refetchFavorite()
-        router.replace(router.asPath)
+        router.replace(pathname)
       })
   }
 
@@ -367,7 +367,7 @@ export default function Page (props) {
                   </div>
                   <div>
                     <ButtonLoader
-                      loading={loadingFavorite} onClick={user ? submitFavorite : () => router.replace(`${router.asPath}?login`)}
+                      loading={loadingFavorite} onClick={user ? submitFavorite : () => router.replace(`${pathname}?login`)}
                       className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
                       {t(user ? (dataFavorite?.album?.isFavorite ? 'Favorite_Remove' : 'Favorite_Add') : 'Favorite_Login')}
                     </ButtonLoader>

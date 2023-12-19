@@ -5,7 +5,8 @@ import Image from 'next/legacy/image'
 // import { DateTime } from 'luxon'
 import { gql, useMutation } from '@apollo/client'
 import { toast } from 'react-toastify'
-import { useRouter } from 'next/router'
+
+import { useRouter } from '@/next/lib/navigation'
 
 const bigNono = { redirect: { permanent: false, destination: '/500' } }
 const mutation = gql`

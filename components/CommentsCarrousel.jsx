@@ -2,16 +2,15 @@ import { Col, Button, Modal, Form, Row, FormControl } from 'react-bootstrap'
 import { useEffect, useRef, useState } from 'react'
 import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import serialize from 'form-serialize'
-import Link from 'next/link'
-import { useRouter } from 'next/router'
+import { useTranslations } from 'next-intl'
+import classNames from 'classnames'
 
+import { useRouter, Link, usePathname } from '@/next/lib/navigation'
 import useUser from './useUser'
 import Loader, { ButtonLoader } from './Loader'
-import { useTranslations } from 'next-intl'
 
 import styles from '@/styles/Profile.module.scss'
 import stylesSidebar from '@/styles/Sidebar.module.scss'
-import classNames from 'classnames'
 
 function SideButton (props) {
   const { side, onClick } = props
@@ -89,6 +88,7 @@ export default function CommentCarrousel (props) {
 
   const router = useRouter()
   const t = useTranslations('common')
+  const pathname = usePathname()
 
   const [show, setShow] = useState(false)
   const [currentIndex, setCurrentIndex] = useState(0)
@@ -184,7 +184,7 @@ export default function CommentCarrousel (props) {
                 )
                 : (
                   <Col xs='4'>
-                    <Button onClick={() => router.replace(`${router.asPath}?login`)} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
+                    <Button onClick={() => router.replace(`${pathname}?login`)} className='w-100 rounded-3' variant="outline-light" style={{ fontSize: '18px' }}>
                       {t('Comment_Login')}
                     </Button>
                   </Col>

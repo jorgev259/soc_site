@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import { gql, useQuery } from '@apollo/client'
 
 import styles from './CommentCarrousel.module.scss'

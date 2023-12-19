@@ -2,11 +2,10 @@
 import styles from '@/styles/Header.module.scss'
 
 import { useEffect, useState, useRef } from 'react'
-import Link from 'next/link'
 import Image from 'next/legacy/image'
 import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form, ModalBody } from 'react-bootstrap'
 import classNames from 'classnames'
-import { useRouter } from 'next/router'
+import { useSearchParams } from 'next/navigation'
 import serialize from 'form-serialize'
 import { useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
 import { toast } from 'react-toastify'
@@ -15,10 +14,12 @@ import { useTranslations } from 'next-intl'
 import logo from '../public/img/assets/winterlogo.png'
 import logoES from '../public/img/assets/logo_es.png'
 
+import { Link, usePathname, useRouter } from '@/next/lib/navigation'
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
 import SubmitButton from './SubmitButton'
 import RequestCheck from './RequestCheck'
+
 // import LangSelector from '@/next/components/Header/LangSelector'
 
 function ForgorForm (props) {
@@ -87,6 +88,8 @@ function LoginButton (props) {
 
   const router = useRouter()
   const { user, refetch } = useUser()
+  const searchParams = useSearchParams()
+  const pathname = usePathname()
 
   const [loginMutate, { loading: loadingLogin }] = useMutation(loginMutation)
   const [logoutMutate/*, { loading: loadingLogout } */] = useMutation(logoutMutation)
@@ -95,8 +98,10 @@ function LoginButton (props) {
   const [show, setShow] = useState(false)
   const t = useTranslations('login')
 
+  const loginParam = searchParams.get('login')
+
   function setUrl (value) {
-    const url = value ? `${router.asPath}?login` : router.asPath.replace('?login', '')
+    const url = value ? `${pathname}?login` : pathname.replace('?login', '')
     router.replace(url, url, { scroll: false })
   }
 
@@ -105,9 +110,9 @@ function LoginButton (props) {
   }, [show])
 
   useEffect(() => {
-    const flag = router.query.login !== undefined
+    const flag = loginParam !== null
     if (flag !== show) setShow(flag)
-  }, [router.query.login])
+  }, [loginParam])
 
   const handleLogin = () => {
     if (user) {

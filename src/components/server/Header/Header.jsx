@@ -1,5 +1,5 @@
 import classNames from 'classnames'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import Image from 'next/image'
 
 import logo from '@/img/assets/winterlogo.png'

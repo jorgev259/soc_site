@@ -1,7 +1,7 @@
 import { Col } from 'react-bootstrap'
 import classNames from 'classnames'
 import Image from 'next/legacy/image'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 
 import styles from '@/styles/AlbumBoxes.module.scss'
 

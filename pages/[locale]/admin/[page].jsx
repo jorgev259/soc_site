@@ -4,9 +4,9 @@ import { toast } from 'react-toastify'
 import moment from 'moment'
 import classNames from 'classnames'
 import { gql, useQuery, useMutation } from '@apollo/client'
-import { useRouter } from 'next/router'
-import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 
+import { Link } from '@/next/lib/navigation'
 import { AlbumSelector, SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
 import { hasRolePage } from '@/components/resolvers'
@@ -44,8 +44,8 @@ export default function AlbumAdmin () {
 }
 
 function AlbumTable () {
-  const router = useRouter()
-  const page = parseInt(router.query.page || '1')
+  const searchParams = useSearchParams()
+  const page = searchParams.get('page') || '1'
 
   const mutation = gql`
     mutation deleteAlbum($id: ID!){
@@ -381,7 +381,7 @@ function SelectBanner () {
           ))}
         </div>
       </div>
-      
+
     </Col>
   )
 }

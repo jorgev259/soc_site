@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
-import Link from 'next/link'
+import { Link } from '@/next/lib/navigation'
 import pick from 'lodash/pick'
 
 import styles from './LoginBar.module.scss'

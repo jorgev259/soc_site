@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client'
-import { useRouter } from 'next/router'
 import { Container, Col, Row } from 'react-bootstrap'
-import Link from 'next/link'
 import { useTranslations } from 'next-intl'
-
-import styles from '@/styles/LastAdded.module.scss'
-import { AlbumBoxList } from '@/components/AlbumBoxes'
 import React from 'react'
 import classNames from 'classnames'
+import { useSearchParams } from 'next/navigation'
 
+import styles from '@/styles/LastAdded.module.scss'
+
+import { Link } from '@/next/lib/navigation'
+import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { getFullPageList, getPageList } from '@/components/utils'
 import { initializeApollo } from '@/components/ApolloClient'
 
@@ -60,8 +60,9 @@ export async function getServerSideProps (context) {
 
 export default function LastAdded (props) {
   const t = useTranslations('common')
-  const router = useRouter()
-  const { params = ['1'] } = router.query
+  const searchParams = useSearchParams()
+
+  const params = searchParams.get('params') || ['1']
   const [page] = params
   const { rows, count } = props
   const fullPageList = getFullPageList(count, limit)

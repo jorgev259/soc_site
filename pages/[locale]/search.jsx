@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
-import { useRouter } from 'next/router'
 import { gql, useLazyQuery } from '@apollo/client'
 import { Row, Col, Nav, Container } from 'react-bootstrap'
 import classNames from 'classnames'
 import Image from 'next/legacy/image'
-import Link from 'next/link'
 import { toast } from 'react-toastify'
 import { useTranslations } from 'next-intl'
+import { useSearchParams } from 'next/navigation'
 
 import styles from '@/styles/Search.module.scss'
 
+import { Link } from '@/next/lib/navigation'
 import { getImageUrl } from '@/components/utils'
 import Loader from '@/components/Loader'
 
@@ -18,9 +18,9 @@ const queryHeader = 'query Search($title: String!, $limit: Int!, $page: Int!)'
 
 export default function Search () {
   const t = useTranslations('common')
-  const router = useRouter()
-  const search = router.query.q
+  const searchParams = useSearchParams()
 
+  const search = searchParams.get('q')
   const categories = {
     byTitle: {
       query: 'searchAlbum(title: $title, limit: $limit, page: $page){ count, items: rows { id, title, categories { name }, releaseDate, placeholder } }',
@@ -85,7 +85,7 @@ export default function Search () {
         <Container>
           <Row>
             <Col md={12} className='my-1 px-4 py-3' style={{ backgroundColor: '#33353e' }}>
-              <h2 className='searchTitle'>{t('Search Results for')}: {router.query.q}</h2>
+              <h2 className='searchTitle'>{t('Search Results for')}: {search}</h2>
             </Col>
           </Row>
           {loading && (

@@ -1,5 +1,5 @@
-import { useRouter } from 'next/navigation'
 import { useApolloClient } from '@apollo/client'
+import { useRouter } from '@/next/lib/navigation'
 
 export default function useRefresh () {
   const router = useRouter()

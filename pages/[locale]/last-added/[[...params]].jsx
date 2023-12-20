@@ -133,7 +133,7 @@ export default function LastAdded (props) {
           </Col>
         </Row>
         <Row className='justify-content-center px-1 px-md-5'>
-          <AlbumBoxList colProps={{ xs: 6, md: 3 }} items={rows} />
+          <AlbumBoxList colProps={{ xs: 6, md: 3 }} items={rows} quality={30} />
         </Row>
       </Container>
 

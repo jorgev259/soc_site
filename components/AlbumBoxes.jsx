@@ -15,7 +15,7 @@ export default function AlbumBox (props) {
   const BoxContent = () => (
     <>
       <div className={styles.img}>
-        <Image alt={title}src={getImageUrl(id, type)} layout='responsive' width={width} height={height} placeholder='blur' blurDataURL={blurDataURL} quality={quality} />
+        <Image alt={title}src={getImageUrl(id, type)} layout='responsive' width={width} height={height} placeholder='blur' blurDataURL={blurDataURL} quality={30} />
       </div>
       <div className='text-wrap text-center p-2'>
         {coming ? 'Coming Soon' : title}

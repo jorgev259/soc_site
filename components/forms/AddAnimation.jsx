@@ -1,9 +1,10 @@
 import { gql, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
 import { Col, Row, Form, FormControl } from 'react-bootstrap'
-import { StudioSelector } from '../Selectors'
 import { toast } from 'react-toastify'
-import SubmitButton from '../SubmitButton'
+
+import SubmitButton from '@/next/components/server/SubmitButton'
+import { StudioSelector } from '../Selectors'
 
 const mutation = gql`
 mutation CreateAnimation($cover:Upload, $subTitle:String, $releaseDate:String!, $title:String!, $studios: [String]!){

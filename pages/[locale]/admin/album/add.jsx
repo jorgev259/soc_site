@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { AlbumSelector, GameSelector, PlatformSelector, AnimSelector, SimpleSelector } from '@/components/Selectors'
 import { Navigation, SharedForms, Downloads, StoreDownloads, DiscList } from '@/components/SharedForms'
-import SubmitButton from '@/components/SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import { hasRolePage } from '@/components/resolvers'
 import { prepareForm } from '@/components/utils'
 import { ButtonLoader } from '@/components/Loader'

@@ -5,7 +5,7 @@ import { toast } from 'react-toastify'
 
 import { AlbumSelector, GameSelector, PlatformSelector, AnimSelector, SimpleSelector } from '@/components/Selectors'
 import { Navigation, SharedForms, DiscList, StoreDownloads, Downloads } from '@/components/SharedForms'
-import SubmitButton from '@/components/SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import useUser from '@/components/useUser'
 import { initializeApollo } from '@/components/ApolloClient'
 import { prepareForm } from '@/components/utils'

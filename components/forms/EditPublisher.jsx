@@ -5,7 +5,7 @@ import serialize from 'form-serialize'
 import { gql, useMutation } from '@apollo/client'
 
 import { PublisherSelector } from '../Selectors'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 
 const mutationUpdate = gql`
     mutation UpdatePublisher($id: ID!, $name:String!){

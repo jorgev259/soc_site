@@ -7,7 +7,7 @@ import serialize from 'form-serialize'
 
 import styles from './LoginForm.module.scss'
 
-import SubmitButton from '@/next/components/client/SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import { hideModal, showModal } from '@/next/lib/modal'
 import useRefresh from '@/next/lib/useRefresh'
 import useLogout from '@/next/lib/useLogout'

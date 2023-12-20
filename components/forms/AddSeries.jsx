@@ -4,7 +4,7 @@ import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import { slugify } from '../utils'
 
 const mutation = gql`

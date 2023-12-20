@@ -3,7 +3,7 @@ import { gql, useMutation, useLazyQuery } from '@apollo/client'
 import serialize from 'form-serialize'
 import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import { StudioSelector, AnimSelector } from '../Selectors'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import { toast } from 'react-toastify'
 
 const query = gql`

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify'
 import serialize from 'form-serialize'
 import { PlatformSelector } from '../Selectors'
 import { gql, useMutation, useLazyQuery, useQuery } from '@apollo/client'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 
 const query = gql`
   query Platform($key: ID!){

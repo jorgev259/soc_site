@@ -6,7 +6,7 @@ import { SeriesSelector, PublisherSelector, PlatformSelector } from '../Selector
 import { toast } from 'react-toastify'
 
 import { slugify } from '../utils'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 
 const mutation = gql`
 mutation CreateGame($cover:Upload!, $releaseDate:String!, $slug:String!, $name:String!, $series: [String]!, $publishers:[ID]!, $platforms:[ID]){

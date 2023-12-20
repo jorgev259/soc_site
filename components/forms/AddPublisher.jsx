@@ -1,6 +1,6 @@
 import { Row, FormControl, Form, Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 
 import { gql, useMutation } from '@apollo/client'
 const mutation = gql`

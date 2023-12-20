@@ -6,7 +6,7 @@ import serialize from 'form-serialize'
 import classNames from 'classnames'
 
 import { hideModal } from '@/next/lib/modal'
-import SubmitButton from './SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import RequestCheck from './RequestCheck'
 
 const vgmQuery = gql`

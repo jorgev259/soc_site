@@ -17,7 +17,7 @@ import logoES from '../public/img/assets/logo_es.png'
 import { Link, usePathname, useRouter } from '@/next/lib/navigation'
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
-import SubmitButton from './SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import RequestCheck from './RequestCheck'
 
 // import LangSelector from '@/next/components/Header/LangSelector'

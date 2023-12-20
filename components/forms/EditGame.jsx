@@ -3,7 +3,7 @@ import { gql, useMutation, useLazyQuery } from '@apollo/client'
 import serialize from 'form-serialize'
 import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import { SeriesSelector, PublisherSelector, PlatformSelector, GameSelector } from '../Selectors'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import { toast } from 'react-toastify'
 
 const query = gql`
@@ -120,7 +120,7 @@ export default function EditGame () {
             <Col md={4}>
               <Form.Group>
                 <Form.Label htmlFor='publishers'>Publishers:</Form.Label>
-                <PublisherSelector options={{ loading: loading, name: 'publishers', defaultValue: data?.game.publishers }} />
+                <PublisherSelector options={{ loading, name: 'publishers', defaultValue: data?.game.publishers }} />
               </Form.Group>
             </Col>
             <Col md={4}>

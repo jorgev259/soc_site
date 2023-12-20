@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import { Row, FormControl, Form, Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import { StudioSelector } from '../Selectors'
-import SubmitButton from '../SubmitButton'
+import SubmitButton from '@/next/components/server/SubmitButton'
 import serialize from 'form-serialize'
 import { gql, useMutation } from '@apollo/client'
 

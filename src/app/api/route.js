@@ -3,6 +3,7 @@ import { ApolloServer, HeaderMap } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { getIronSession } from 'iron-session'
 import { processRequest } from 'graphql-upload-minimal'
+import { Readable } from 'stream'
 
 import db from '@/next/server/sequelize/startDB'
 import sessionOptions from '@/next/lib/sessionOptions'
@@ -22,7 +23,10 @@ async function context (req, res) {
 const handler = startServerAndCreateNextHandler(server, { context })
 
 async function createGraphqlRequest (req, res) {
-  const body = await processRequest(req, res, { environment: 'next' })
+  const readStream = Readable.fromWeb(req.body)
+  readStream.headers = Object.fromEntries(req.headers.entries())
+
+  const body = await processRequest(readStream, res)
   const headers = new HeaderMap()
 
   for (const [key, value] of req.headers.entries()) {
@@ -43,24 +47,24 @@ async function createGraphqlRequest (req, res) {
 }
 
 async function createHttpResponse (req, res) {
-    const httpGraphQLResponse = await server.executeHTTPGraphQLRequest({
-      httpGraphQLRequest: await createGraphqlRequest(req, res),
-      context: () => context(req, res)
-    })
+  const httpGraphQLResponse = await server.executeHTTPGraphQLRequest({
+    httpGraphQLRequest: await createGraphqlRequest(req, res),
+    context: () => context(req, res)
+  })
 
   const bodyArray = []
-    if (httpGraphQLResponse.body.kind === 'complete') {
+  if (httpGraphQLResponse.body.kind === 'complete') {
     bodyArray.push(httpGraphQLResponse.body.string)
-    } else {
-      for await (const chunk of httpGraphQLResponse.body.asyncIterator) {
+  } else {
+    for await (const chunk of httpGraphQLResponse.body.asyncIterator) {
       bodyArray.push(chunk)
-      }
     }
+  }
 
-    const headers = {}
-    for (const [key, value] of httpGraphQLResponse.headers) {
-      headers[key] = value
-    }
+  const headers = {}
+  for (const [key, value] of httpGraphQLResponse.headers) {
+    headers[key] = value
+  }
 
   const body = bodyArray.join('')
   const response = new Response(body, { headers, status: httpGraphQLResponse.status || 200 })

@@ -37,6 +37,7 @@ export function RegisterForm (props) {
   const handleSubmit = useCallback(ev => {
     ev.preventDefault()
     const variables = serialize(ev.target, { hash: true })
+    variables.pfp = ev.target.elements.pfp.files[0]
 
     mutate({ variables })
       .then(() => {

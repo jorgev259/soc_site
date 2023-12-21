@@ -1,5 +1,6 @@
 'use client'
-import { HttpLink, ApolloLink } from '@apollo/client'
+import { ApolloLink } from '@apollo/client'
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 import {
   NextSSRApolloClient,
   ApolloNextAppProvider,
@@ -9,14 +10,13 @@ import {
 
 import { graphQLUri } from '@/next/constants/env'
 
-function makeClient () {
-  const httpLink = new HttpLink({ uri: graphQLUri })
+const httpLink = createUploadLink({ uri: graphQLUri, headers: { 'Apollo-Require-Preflight': true } })
+const ssrLink = ApolloLink.from([new SSRMultipartLink({ stripDefer: true }), httpLink])
 
+function makeClient () {
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
-    link: typeof window === 'undefined'
-      ? ApolloLink.from([new SSRMultipartLink({ stripDefer: true }), httpLink])
-      : httpLink
+    link: typeof window === 'undefined' ? ssrLink : httpLink
   })
 }
 

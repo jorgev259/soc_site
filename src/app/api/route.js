@@ -42,20 +42,18 @@ async function createGraphqlRequest (req, res) {
   return httpGraphQLRequest
 }
 
-export async function POST (req, res) {
-  const contentType = req.headers.get('content-type')
-  if (contentType && contentType.includes('multipart/form-data')) {
+async function createHttpResponse (req, res) {
     const httpGraphQLResponse = await server.executeHTTPGraphQLRequest({
       httpGraphQLRequest: await createGraphqlRequest(req, res),
       context: () => context(req, res)
     })
 
-    const body = []
+  const bodyArray = []
     if (httpGraphQLResponse.body.kind === 'complete') {
-      body.push(httpGraphQLResponse.body.string)
+    bodyArray.push(httpGraphQLResponse.body.string)
     } else {
       for await (const chunk of httpGraphQLResponse.body.asyncIterator) {
-        body.push(chunk)
+      bodyArray.push(chunk)
       }
     }
 
@@ -64,11 +62,16 @@ export async function POST (req, res) {
       headers[key] = value
     }
 
-    const response = new Response(
-      body.join(''),
-      { headers, status: httpGraphQLResponse.status || 200 }
-    )
+  const body = bodyArray.join('')
+  const response = new Response(body, { headers, status: httpGraphQLResponse.status || 200 })
 
+  return response
+}
+
+export async function POST (req, res) {
+  const contentType = req.headers.get('content-type')
+  if (contentType && contentType.includes('multipart/form-data')) {
+    const response = await createHttpResponse(req, res)
     return response
   } else {
     return handler(req, res)

@@ -1,5 +1,6 @@
 'use client'
-import { gql, useQuery } from '@apollo/client'
+import { gql } from '@apollo/client'
+import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 
 import { NavLinkWrapper, Dropdown } from './NavigationBar'
 

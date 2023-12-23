@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useRef, useState } from 'react'
 import classNames from 'classnames'
 import { Link } from '@/next/lib/navigation'
-import { gql, useQuery } from '@apollo/client'
+import { gql, useSuspenseQuery } from '@apollo/client'
 
 import styles from './CommentCarrousel.module.scss'
 
@@ -32,12 +32,13 @@ const getRecentComments = gql`
   }
 `
 
+const sideBarClassnames = classNames('col', sidebarStyles.section, styles.comments)
+
 export function CommentCarrouselSidebar () {
   const [currentIndex, setCurrentIndex] = useState(0)
-
   const timeoutRef = useRef(null)
-  const { data, loading } = useQuery(getRecentComments)
 
+  const { data } = useSuspenseQuery(getRecentComments)
   const comments = data?.recentComments || []
 
   useEffect(() => {
@@ -50,29 +51,25 @@ export function CommentCarrouselSidebar () {
 
   return (
     <div className='row mt-3 px-3'>
-      <div className={classNames('col', sidebarStyles.section, styles.comments, { loadingAnim: loading })}>
-        {!loading || current
-          ? (
-            <>
-              <div className='row'>
-                <div className='col pb-3' style={{ fontSize: '18px' }}>
-                  {current.text}
-                  <br />
-                  <div className='mt-2'>
-                    {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
-                    {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
-                  </div>
-                </div>
+      <Suspense fallback={<div className={classNames(sideBarClassnames, 'loadingAnim')} />}>
+        <div className={sideBarClassnames}>
+          <div className='row'>
+            <div className='col pb-3' style={{ fontSize: '18px' }}>
+              {current.text}
+              <br />
+              <div className='mt-2'>
+                {current.album && <span> - <Link href={`/album/${current.album.id}`} className={styles.albumSpan}>{current.album.title}</Link></span>}
+                {!current.album && current.username && <span> - <Link href={`/profile/${current.username}`} className={styles.albumSpan}>{current.username}</Link></span>}
               </div>
-              <div className='row d-flex justify-content-between'>
-                <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />
-                <div className='col d-flex align-items-center justify-content-center'><div>{currentIndex + 1} / {comments.length}</div></div>
-                <SideButton side='right' onClick={plusIndex} />
-              </div>
-            </>
-          )
-          : null}
-      </div>
+            </div>
+          </div>
+          <div className='row d-flex justify-content-between'>
+            <SideButton side='left' onClick={() => setCurrentIndex(currentIndex === 0 ? comments.length - 1 : currentIndex - 1)} />
+            <div className='col d-flex align-items-center justify-content-center'><div>{currentIndex + 1} / {comments.length}</div></div>
+            <SideButton side='right' onClick={plusIndex} />
+          </div>
+        </div>
+      </Suspense>
     </div>
   )
 }

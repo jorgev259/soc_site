@@ -1,12 +1,13 @@
 'use client'
 import { useRef } from 'react'
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
-import { Link } from '@/next/lib/navigation'
 import serialize from 'form-serialize'
 import classNames from 'classnames'
+import { toast } from 'react-toastify'
 
 import { hideModal } from '@/next/lib/modal'
 import SubmitButton from '@/next/components/server/SubmitButton'
+import { Link } from '@/next/lib/navigation'
 import RequestCheck from './RequestCheck'
 
 const vgmQuery = gql`
@@ -61,7 +62,8 @@ export default function SubmitAlbumForm () {
     const variables = serialize(ev.target, { hash: true })
     submitMutation({ variables })
       .then(() => {
-        // toast.success('Album submitted for review!')
+        // Missing translation
+        toast.success('Album submitted for review!')
         ev.target.reset()
         hideModal('#submitAlbumModal')
       })

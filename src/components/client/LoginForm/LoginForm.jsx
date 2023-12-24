@@ -76,6 +76,11 @@ export function RegisterForm (props) {
   )
 }
 
+function showForgor () {
+  hideModal('#loginModal')
+  showModal('#forgorModal')
+}
+
 export function LoginForm (props) {
   const t = useTranslations('login')
   const [mutate, { loading }] = useMutation(loginMutation)
@@ -114,7 +119,7 @@ export function LoginForm (props) {
       </div>
       <div className='row mt-2'>
         <div className='col-md-6 mx-auto'>
-          <button className='w-100 btn btn-primary' data-bs-toggle="modal" data-bs-target="#forgorModal">{t('Recover password')}</button>
+          <button className='w-100 btn btn-primary' onClick={showForgor}>{t('Recover password')}</button>
         </div>
       </div>
     </form>

@@ -9,7 +9,7 @@ import NavigationBar from './NavigationBar'
 import LoginBar from './LoginBar'
 // import LangSelector from './LangSelector'
 import { getBanner } from '@/next/lib/actions'
-import getSession from '@/next/lib/getSession'
+import { useSession } from '@/next/lib/getSession'
 
 import styles from './Header.module.scss'
 
@@ -37,9 +37,9 @@ async function LogoCol (props) {
 
 export default async function Header (props) {
   const { locale } = props
-  const session = await getSession()
+
+  const { session, isFAU } = await useSession()
   const { username } = session
-  const isFAU = username !== undefined
 
   return (
     <div className='container-fluid'>

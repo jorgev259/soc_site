@@ -73,6 +73,8 @@ async function createHttpResponse (req, res) {
 }
 
 export async function POST (req, res) {
+  const cookieStore = cookies()
+
   const contentType = req.headers.get('content-type')
   if (contentType && contentType.includes('multipart/form-data')) {
     const response = await createHttpResponse(req, res)

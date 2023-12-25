@@ -1,9 +1,11 @@
 'use server'
-import { HttpLink } from '@apollo/client'
 import { NextSSRInMemoryCache, NextSSRApolloClient } from '@apollo/experimental-nextjs-app-support/ssr'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
+import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 
-const httpLink = new HttpLink({ uri: 'http://127.0.0.1:3000/api' })
+import { graphQLUri } from '../constants/env'
+
+const httpLink = createUploadLink({ uri: graphQLUri, headers: { 'Apollo-Require-Preflight': true }, credentials: 'include' })
 
 export const { getClient } = registerApolloClient(() => {
   return new NextSSRApolloClient({

@@ -8,14 +8,26 @@ import logoES from '@/img/assets/logo_es.png'
 import NavigationBar from './NavigationBar'
 import LoginBar from './LoginBar'
 // import LangSelector from './LangSelector'
-import { getBanner } from '@/next/lib/actions'
 import { useSession } from '@/next/lib/getSession'
 
 import styles from './Header.module.scss'
+import { gql } from '@apollo/client'
+import { getClient } from '@/next/lib/ApolloSSRClient'
+
+const bannerQuery = gql`
+  query GetBanner {
+    config(name: "banner"){
+      value
+    }
+  }
+`
 
 async function LogoCol (props) {
   const { locale } = props
-  const banner = await getBanner()
+  const client = await getClient()
+  const { data } = await client.query({ query: bannerQuery })
+
+  const banner = data.config.value
 
   return (
     <>

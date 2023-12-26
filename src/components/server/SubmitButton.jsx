@@ -10,8 +10,8 @@ export default function SubmitButton (props) {
       {loading
         ? (
           <>
-            <span class="spinner-border spinner-border" aria-hidden="true" style={{ width: size, height: size }}></span>
-            <span class="visually-hidden" role="status">Loading...</span>
+            <span className="spinner-border spinner-border" aria-hidden="true" style={{ width: size, height: size }}></span>
+            <span className="visually-hidden" role="status">Loading...</span>
           </>
         )
         : children}

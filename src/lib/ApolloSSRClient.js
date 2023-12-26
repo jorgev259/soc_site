@@ -1,15 +1,30 @@
 'use server'
-import { NextSSRInMemoryCache, NextSSRApolloClient } from '@apollo/experimental-nextjs-app-support/ssr'
+import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 import { registerApolloClient } from '@apollo/experimental-nextjs-app-support/rsc'
-import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
+import { setContext } from '@apollo/client/link/context'
+import { cookies } from 'next/headers'
 
 import { graphQLUri } from '../constants/env'
+import sessionOptions from './sessionOptions'
 
-const httpLink = createUploadLink({ uri: graphQLUri, headers: { 'Apollo-Require-Preflight': true }, credentials: 'include' })
+const httpLink = new HttpLink({ uri: graphQLUri })
+const authLink = setContext((_, context) => {
+  const { headers } = context
+  const cookieStore = cookies()
+  const token = cookieStore.get(sessionOptions.cookieName)?.value
+
+  if (token) {
+    return {
+      headers: { ...headers, authorization: token ? `Bearer ${token}` : '' }
+    }
+  } else {
+    return headers
+  }
+})
 
 export const { getClient } = registerApolloClient(() => {
-  return new NextSSRApolloClient({
-    cache: new NextSSRInMemoryCache(),
-    link: httpLink
+  return new ApolloClient({
+    cache: new InMemoryCache(),
+    link: authLink.concat(httpLink)
   })
 })

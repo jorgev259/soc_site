@@ -1,4 +1,4 @@
-import { cookies } from 'next/headers'
+import { cookies, headers } from 'next/headers'
 import { ApolloServer, HeaderMap } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { getIronSession } from 'iron-session'
@@ -12,8 +12,7 @@ import { schema } from '@/next/lib/graphql'
 const server = new ApolloServer({ schema, introspection: process.env.NODE_ENV !== 'production' })
 
 async function context (req, res) {
-  const cookieStore = cookies()
-  const session = await getIronSession(cookieStore, sessionOptions)
+  const session = await getIronSession(cookies(), sessionOptions)
   const { username } = session
   const user = username && await db.models.user.findByPk(username)
 
@@ -73,7 +72,14 @@ async function createHttpResponse (req, res) {
 }
 
 export async function POST (req, res) {
+  const headerStore = headers()
   const cookieStore = cookies()
+  const { cookieName } = sessionOptions
+
+  if (headerStore.has('authorization')) {
+    const token = headerStore.get('authorization').replace('Bearer ', '')
+    cookieStore.set(cookieName, token)
+  }
 
   const contentType = req.headers.get('content-type')
   if (contentType && contentType.includes('multipart/form-data')) {

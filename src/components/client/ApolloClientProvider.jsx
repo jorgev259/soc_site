@@ -10,10 +10,10 @@ import {
 
 import { graphQLUri, isSSR } from '@/next/constants/env'
 
-const httpLink = createUploadLink({ uri: graphQLUri, headers: { 'Apollo-Require-Preflight': true }, credentials: 'include' })
-const ssrLink = ApolloLink.from([new SSRMultipartLink({ stripDefer: true }), httpLink])
-
 function makeClient () {
+  const httpLink = createUploadLink({ uri: graphQLUri, headers: { 'Apollo-Require-Preflight': true }, credentials: 'include' })
+  const ssrLink = ApolloLink.from([new SSRMultipartLink({ stripDefer: true }), httpLink])
+
   return new NextSSRApolloClient({
     cache: new NextSSRInMemoryCache(),
     link: isSSR ? ssrLink : httpLink

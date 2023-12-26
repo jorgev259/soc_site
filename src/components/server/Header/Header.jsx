@@ -8,7 +8,6 @@ import logoES from '@/img/assets/logo_es.png'
 import NavigationBar from './NavigationBar'
 import LoginBar from './LoginBar'
 // import LangSelector from './LangSelector'
-import { useSession } from '@/next/lib/getSession'
 
 import styles from './Header.module.scss'
 import { gql } from '@apollo/client'
@@ -50,9 +49,6 @@ async function LogoCol (props) {
 export default async function Header (props) {
   const { locale } = props
 
-  const { session, isFAU } = await useSession()
-  const { username } = session
-
   return (
     <div className='container-fluid'>
       <div className={classNames('row', styles.logoRow)}>
@@ -62,7 +58,7 @@ export default async function Header (props) {
       </div>
       <div className='row'>
         <div className='col px-0'>
-          <NavigationBar isFAU={isFAU} username={username} />
+          <NavigationBar />
         </div>
       </div>
     </div>

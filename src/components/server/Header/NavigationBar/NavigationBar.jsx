@@ -1,14 +1,17 @@
 import classNames from 'classnames'
-import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
-import pick from 'lodash/pick'
+import { useTranslations } from 'next-intl'
+import { gql } from '@apollo/client'
+import Link from 'next/link'
+import { getTranslations } from 'next-intl/server'
 
 import styles from './NavigationBar.module.scss'
 
 import SearchBar from '@/next/components/client/SearchBar'
-import MobileNav from '@/next/components/client/MobileNav'
-import Privileged from './Privileged'
 import { ModalTemplate } from '../../Modal'
 import SubmitAlbumForm from '@/next/components/client/SubmitAlbumForm'
+import { getClient } from '@/next/lib/ApolloSSRClient'
+import MobileLogoutBtn from '@/next/components/client/MobileLogoutBtn'
+import { useSession } from '@/next/lib/getSession'
 
 export function Dropdown (props) {
   const { name, items = [] } = props
@@ -62,9 +65,52 @@ function SubmitAlbum () {
   )
 }
 
-export default function NavigationBar (props) {
-  const { isFAU, username } = props
-  const messages = useMessages()
+async function MobileNav (props) {
+  const t = await getTranslations('login')
+  const { isFAU, session } = await useSession()
+  const { username } = session
+
+  return isFAU
+    ? (
+      <>
+        <MobileLogoutBtn>{t('Logout')}</MobileLogoutBtn>
+        <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+          <Link href={`/profile/${username}`} className={classNames(styles.navLink, 'nav-link w-100 text-start')}>{t('Profile')}</Link>
+        </div>
+      </>
+    )
+    : (
+      <>
+        <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+          <button className={classNames(styles.navLink, 'nav-link w-100 text-start')} data-bs-toggle="modal" data-bs-target="#loginModal">{t('Login')}</button>
+        </div>
+        <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+          <button className={classNames(styles.navLink, 'nav-link w-100 text-start')} data-bs-toggle="modal" data-bs-target="#registerModal">{t('Register')}</button>
+        </div>
+      </>
+    )
+}
+
+const pagesQuery = gql`
+  query Me{
+    me {
+      pages {url}
+    }
+  }
+`
+
+export default async function NavigationBar (props) {
+  const { isFAU } = await useSession()
+  const client = await getClient()
+  const { data } = await client.query({ query: pagesQuery })
+
+  const pages = data.me?.pages?.map(p => p.url) || []
+  const adminPages = [
+    { name: 'Manage Albums', href: '/admin/1' },
+    { name: 'Manage Users', href: '/admin/user' },
+    { name: 'Manage Requests', href: '/admin/request' },
+    { name: 'Manage Submissions', href: '/admin/submission' }
+  ].filter(p => pages.includes(p.href))
 
   return (
     <nav className='navbar navbar-expand-sm bg-dark py-md-0' id="navbar">
@@ -74,29 +120,25 @@ export default function NavigationBar (props) {
         </button>
         <div className= "collapse navbar-collapse mt-2 mt-sm-0" id="navbarToggler">
           <ul className="navbar-nav">
-            <NextIntlClientProvider messages={pick(messages, 'login')}>
-              <MobileNav isFAU={isFAU} username={username} />
-            </NextIntlClientProvider>
-            <NextIntlClientProvider messages={pick(messages, 'header')}>
-              <NavLinkWrapper href='/' name='Home' />
-              <NavLinkWrapper href='/last-added' name='Last Added' />
-              <NavLinkWrapper href='/album/list' name='Album List' />
-              <Dropdown name='Games' items={[
-                { name: 'Albums', href: '/game' },
-                { name: 'Series', href: '/series/list' },
-                { name: 'Publishers', href: '/publisher/list' },
-                { name: 'Platforms', href: '/platform/list' },
-                { name: 'Game List', href: '/game/list' }
-              ]} />
-              <Dropdown name='Animation' items={[
-                { name: 'Albums', href: '/anim' },
-                { name: 'Animation List', href: '/anim/list' },
-                { name: 'Studios', href: '/studio/list' }
-              ]} />
-              <Privileged>
-                {isFAU ? <SubmitAlbum /> : null}
-              </Privileged>
-            </NextIntlClientProvider>
+            <MobileNav />
+            <NavLinkWrapper href='/' name='Home' />
+            <NavLinkWrapper href='/last-added' name='Last Added' />
+            <NavLinkWrapper href='/album/list' name='Album List' />
+            <Dropdown name='Games' items={[
+              { name: 'Albums', href: '/game' },
+              { name: 'Series', href: '/series/list' },
+              { name: 'Publishers', href: '/publisher/list' },
+              { name: 'Platforms', href: '/platform/list' },
+              { name: 'Game List', href: '/game/list' }
+            ]} />
+            <Dropdown name='Animation' items={[
+              { name: 'Albums', href: '/anim' },
+              { name: 'Animation List', href: '/anim/list' },
+              { name: 'Studios', href: '/studio/list' }
+            ]} />
+            {pages.includes('/request') ? <NavLinkWrapper href='/request' name='Requests' /> : null}
+            {isFAU ? <SubmitAlbum /> : null}
+            <Dropdown name='Admin Grounds' items={adminPages} />
           </ul>
         </div>
         <SearchBar />

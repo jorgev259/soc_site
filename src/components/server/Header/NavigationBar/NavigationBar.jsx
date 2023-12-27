@@ -1,11 +1,11 @@
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
-import Link from 'next/link'
 import { getTranslations } from 'next-intl/server'
 
 import styles from './NavigationBar.module.scss'
 
+import { Link } from '@/next/lib/navigation'
 import SearchBar from '@/next/components/client/SearchBar'
 import { ModalTemplate } from '../../Modal'
 import SubmitAlbumForm from '@/next/components/client/SubmitAlbumForm'

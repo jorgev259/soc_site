@@ -11,7 +11,7 @@ import { ModalTemplate } from '../../Modal'
 import SubmitAlbumForm from '@/next/components/client/SubmitAlbumForm'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 import MobileLogoutBtn from '@/next/components/client/MobileLogoutBtn'
-import { useSession } from '@/next/lib/getSession'
+import getSessionInfo from '@/next/lib/getSession'
 
 export function Dropdown (props) {
   const { name, items = [] } = props
@@ -67,7 +67,7 @@ function SubmitAlbum () {
 
 async function MobileNav (props) {
   const t = await getTranslations('login')
-  const { isFAU, session } = await useSession()
+  const { isFAU, session } = await getSessionInfo()
   const { username } = session
 
   return isFAU
@@ -100,7 +100,7 @@ const pagesQuery = gql`
 `
 
 export default async function NavigationBar (props) {
-  const { isFAU } = await useSession()
+  const { isFAU } = await getSessionInfo()
   const client = await getClient()
   const { data } = await client.query({ query: pagesQuery })
 

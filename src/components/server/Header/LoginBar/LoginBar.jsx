@@ -7,10 +7,10 @@ import styles from './LoginBar.module.scss'
 
 import { ForgorForm, LoginForm, LogoutForm, RegisterForm } from '@/next/components/client/LoginForm/LoginForm'
 import { ModalTemplate } from '@/next/components/server/Modal'
-import { useSession } from '@/next/lib/getSession'
+import getSessionInfo from '@/next/lib/getSession'
 
 export default async function LoginBar (props) {
-  const { session, isFAU } = await useSession()
+  const { session, isFAU } = await getSessionInfo()
   const { username } = session
 
   return isFAU ? <LoggedIn username={username} /> : <LoggedOut />

@@ -1,8 +1,9 @@
-import getSession from '@/next/lib/getSession'
+import getSessionInfo from '@/next/lib/getSession'
 
 export default async function Ad (props) {
   const { children } = props
-  const { permissions = [] } = await getSession()
+  const { session } = await getSessionInfo()
+  const { permissions = [] } = session
 
   return permissions.includes('SKIP_ADS') ? null : children
 }

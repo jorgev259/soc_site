@@ -1,10 +1,8 @@
-import { Client, GatewayIntentBits } from 'discord.js'
+import { Client, Intents } from 'discord.js'
 import axios from 'axios'
 
 const discordToken = process.env.DISCORD
-export const discordClient = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMessages, GatewayIntentBits.GuildMembers]
-})
+export const discordClient = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MEMBERS] })
 
 if (discordToken) {
   discordClient.login(discordToken)

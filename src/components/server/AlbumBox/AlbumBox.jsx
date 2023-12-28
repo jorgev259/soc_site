@@ -8,7 +8,10 @@ const getImageUrl = (id, type = 'album') => `https://cdn.sittingonclouds.net/${t
 
 export function AlbumFallback (props) {
   const { count, ...rest } = props
-  return Array(count).map((_, i) => <AlbumBox key={i} {...rest} status='loading' />)
+  const result = Array(count).fill(2)
+    .map((_, i) => <AlbumBox key={i} {...rest} status='loading' />)
+
+  return <>{result}</>
 }
 
 export default function AlbumBox (props) {

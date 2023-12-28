@@ -1,5 +1,7 @@
 @import "~normalize.css/normalize.css";
 
+@import "~bootstrap/scss/functions";
+
 $dropdown-spacer: 0;
 $dropdown-bg: #3f3f3f;
 $dropdown-link-hover-bg: #4f4f4f;
@@ -21,6 +23,10 @@ html, body {
 body {
     display: flex;
     flex-direction: column;
+}
+
+#navbar {
+  z-index: 5;
 }
 
 footer {

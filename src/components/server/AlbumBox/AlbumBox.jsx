@@ -6,6 +6,11 @@ import styles from './AlbumBox.module.scss'
 
 const getImageUrl = (id, type = 'album') => `https://cdn.sittingonclouds.net/${type}/${id}.png`
 
+export function AlbumFallback (props) {
+  const { count, ...rest } = props
+  return Array(count).map((_, i) => <AlbumBox key={i} {...rest} status='loading' />)
+}
+
 export default function AlbumBox (props) {
   const { id, title, type = 'album', status, placeholder, style, className } = props
   const coming = status === 'coming'

@@ -7,26 +7,11 @@ import { Link } from '@/next/lib/navigation'
 import styles from './home.module.scss'
 
 import Sidebar from '@/next/components/server/Sidebar'
-import AlbumBox from '@/next/components/server/AlbumBox/AlbumBox'
+import AlbumBox, { AlbumFallback } from '@/next/components/server/AlbumBox/AlbumBox'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3'
 const limit = 12
-
-function AlbumFallback () {
-  return (
-    <>
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-      <AlbumBox className={albumClassName} status='loading' />
-    </>
-  )
-}
 
 const releaseQuery = gql`
   query Released($limit: Int){
@@ -96,7 +81,7 @@ export default function Home (props) {
           </div>
         </div>
         <div className='row'>
-          <Suspense fallback={<AlbumFallback />}>
+          <Suspense fallback={<AlbumFallback count={8} className={albumClassName} />}>
             <RecentReleases />
           </Suspense>
         </div>
@@ -121,7 +106,7 @@ export default function Home (props) {
           </div>
         </div>
         <div className='row'>
-          <Suspense fallback={<AlbumFallback />}>
+          <Suspense fallback={<AlbumFallback count={8} className={albumClassName} />}>
             <LastAdded />
           </Suspense>
         </div>

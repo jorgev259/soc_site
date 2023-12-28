@@ -73,7 +73,7 @@ export default function Home (props) {
   const t = useTranslations('home')
 
   return (
-    <div className='row h-100'>
+    <div className={classNames('row', styles.container)}>
       <div className='col p-3 mx-3'>
         <div className='row'>
           <div className='col'>

@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
 // eslint-disable-next-line camelcase
-import { unstable_setRequestLocale } from 'next-intl/server'
+// import { unstable_setRequestLocale } from 'next-intl/server'
 
 import styles from './home.module.scss'
 
@@ -72,12 +72,12 @@ async function LastAdded () {
 }
 
 export default function Home (props) {
-  const { params } = props
-  const { locale } = params
+  // const { params } = props
+  // const { locale } = params
 
   const t = useTranslations('home')
 
-  unstable_setRequestLocale(locale)
+  // unstable_setRequestLocale(locale)
 
   return (
     <div className={classNames('row', styles.container)}>

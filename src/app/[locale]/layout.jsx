@@ -1,7 +1,7 @@
 import { ToastContainer } from 'react-toastify'
 import Script from 'next/script'
 // eslint-disable-next-line camelcase
-import { unstable_setRequestLocale } from 'next-intl/server'
+// import { unstable_setRequestLocale } from 'next-intl/server'
 
 import Header from '@/next/components/server/Header'
 import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
@@ -46,7 +46,7 @@ async function Layout (props) {
   const { children, params } = props
   const { locale } = params
 
-  unstable_setRequestLocale(locale)
+  // unstable_setRequestLocale(locale)
 
   return (
     <html lang={locale} data-bs-theme="dark">

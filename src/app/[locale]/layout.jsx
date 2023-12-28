@@ -1,11 +1,13 @@
 import { ToastContainer } from 'react-toastify'
-import { useLocale } from 'next-intl'
 import Script from 'next/script'
+// eslint-disable-next-line camelcase
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 import Header from '@/next/components/server/Header'
 import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
 import Ad from '@/next/components/server/Ad'
 import { isDev } from '@/next/constants/env'
+import { locales } from '@/next/lib/navigation'
 
 import '@/styles/layout.scss'
 
@@ -36,9 +38,15 @@ export const viewport = {
   colorScheme: 'dark'
 }
 
+export function generateStaticParams () {
+  return locales.map((locale) => ({ locale }))
+}
+
 async function Layout (props) {
-  const { children } = props
-  const locale = useLocale()
+  const { children, params } = props
+  const { locale } = params
+
+  unstable_setRequestLocale(locale)
 
   return (
     <html lang={locale} data-bs-theme="dark">

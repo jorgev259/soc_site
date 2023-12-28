@@ -1,7 +1,8 @@
 import Image from 'next/image'
 import classNames from 'classnames'
 import { gql } from '@apollo/client'
-import { getTranslations } from 'next-intl/server'
+// eslint-disable-next-line camelcase
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { pick } from 'lodash'
 
@@ -124,7 +125,12 @@ export async function generateViewport (context) {
 }
 
 export default function AlbumPageWrapper (context) {
+  const { params } = context
+  const { locale } = params
+
   const messages = useMessages()
+
+  unstable_setRequestLocale(locale)
 
   return (
     <NextIntlClientProvider messages={pick(messages, 'albumPage')}>

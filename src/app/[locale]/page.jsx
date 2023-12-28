@@ -2,10 +2,12 @@ import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 import { useTranslations } from 'next-intl'
 import classNames from 'classnames'
-import { Link } from '@/next/lib/navigation'
+// eslint-disable-next-line camelcase
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 import styles from './home.module.scss'
 
+import { Link } from '@/next/lib/navigation'
 import Sidebar from '@/next/components/server/Sidebar'
 import AlbumBox, { AlbumFallback } from '@/next/components/server/AlbumBox/AlbumBox'
 import { getClient } from '@/next/lib/ApolloSSRClient'
@@ -70,7 +72,12 @@ async function LastAdded () {
 }
 
 export default function Home (props) {
+  const { params } = props
+  const { locale } = params
+
   const t = useTranslations('home')
+
+  unstable_setRequestLocale(locale)
 
   return (
     <div className={classNames('row', styles.container)}>

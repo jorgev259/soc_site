@@ -7,7 +7,7 @@ import Header from '@/next/components/server/Header'
 import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
 import Ad from '@/next/components/server/Ad'
 import { isDev } from '@/next/constants/env'
-import { locales } from '@/next/lib/navigation'
+// import { locales } from '@/next/lib/navigation'
 
 import '@/styles/layout.scss'
 
@@ -38,9 +38,9 @@ export const viewport = {
   colorScheme: 'dark'
 }
 
-export function generateStaticParams () {
+/* export function generateStaticParams () {
   return locales.map((locale) => ({ locale }))
-}
+} */
 
 async function Layout (props) {
   const { children, params } = props

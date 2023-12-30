@@ -1,30 +1,21 @@
 import classNames from 'classnames'
-import NextIntlClientProvider, { useMessages } from 'next-intl'
-import { pick } from 'lodash'
+import Image from 'next/image'
 
 import styles from './AlbumPage.module.scss'
+import cover from '@/img/album/default.png'
 
-import HeroCover from '@/next/components/client/AlbumPage/HeroCover'
-import { UserButtons } from './page'
-import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentCarrousel'
-import Related from '@/next/components/client/AlbumPage/Related'
+import { PLACEHOLDER } from '@/next/constants'
 
-export default function Loading (context) {
-  const { params } = context
-  const { id } = params
-
-  const messages = useMessages()
-
+export default function Loading () {
   return (
-    <NextIntlClientProvider messages={pick(messages, 'albumPage')}>
+    <>
       <div className='row px-0 px-md-5'>
         <div className='col col-12 col-lg-5 d-flex align-items-center px-lg-2 mb-3 mb-lg-0'>
-          <HeroCover id={id} />
+          <HeroCover />
         </div>
         <div className='col col-12 col-lg-7'>
           <div className='blackBox'>
             <div className='loadingAnim' style={{ height: '350px' }} />
-            <UserButtons id={id} />
           </div>
         </div>
       </div>
@@ -46,14 +37,14 @@ export default function Loading (context) {
           </div>
         </div>
       </div>
+    </>
+  )
+}
 
-      <div className='row'>
-        <div className='col my-3'>
-          <CommentCarrousel isFAU={false} id={id} />
-        </div>
-      </div>
-
-      <Related id={id} />
-    </NextIntlClientProvider>
+function HeroCover () {
+  return (
+    <div className={styles.coverContainer}>
+      <Image quality={80} sizes ='40vw' className='rounded' fill alt='Album cover' src={cover} placeholder='blur' blurDataURL={PLACEHOLDER} />
+    </div>
   )
 }

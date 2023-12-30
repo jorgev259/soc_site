@@ -2,6 +2,22 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+.coverContainer {
+  height: 100%;
+  width: 100%;
+  position: relative;
+
+  img {
+      object-fit: contain;
+      
+      @include media-breakpoint-down(lg) { 
+          position: relative !important;
+          height:auto !important;
+          width: 100% !important;
+      }
+  }
+}
+
 .container {
     min-height: 100%;
     position: relative;

@@ -233,7 +233,7 @@ async function Content (context) {
   )
 }
 
-export async function UserButtons (props) {
+async function UserButtons (props) {
   const { id } = props
 
   const { session, isFAU } = await getSessionInfo()
@@ -271,7 +271,7 @@ export async function UserButtons (props) {
   )
 }
 
-export async function ProviderBox (props) {
+async function ProviderBox (props) {
   const { stores, children } = props
   const filterStores = stores.filter(s => s.provider !== 'SOON')
 

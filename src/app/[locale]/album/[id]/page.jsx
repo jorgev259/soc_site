@@ -20,7 +20,6 @@ import DownloadList from '@/next/components/server/AlbumPage/DownloadSection'
 import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentCarrousel'
 import Related from '@/next/components/client/AlbumPage/Related'
 import HeroCover from '@/next/components/client/AlbumPage/HeroCover'
-import { showModal } from '@/next/lib/modal'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 
@@ -249,7 +248,7 @@ export async function UserButtons (props) {
           {isFAU
             ? <AddFavoriteButton id={id} />
             : (
-              <button type="button" className="w-100 rounded-3 btn btn-outline-light" onClick={() => showModal('#loginModal')}>
+              <button type="button" className="w-100 rounded-3 btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
                 {t('Favorite_Login')}
               </button>
             )}

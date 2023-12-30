@@ -5,11 +5,12 @@ import { ModalPortal } from '@/next/components/server/Modal'
 
 import { getCDNUrl } from '@/next/lib/getCDN'
 import { showModal } from '@/next/lib/modal'
+import { PLACEHOLDER } from '@/next/constants/index'
 
 import styles from './HeroCover.module.scss'
 
 export default function HeroCover (props) {
-  const { id, title, placeholder } = props
+  const { id, title = 'Album', placeholder = PLACEHOLDER } = props
 
   return (
     <>

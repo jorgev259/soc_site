@@ -20,6 +20,7 @@ import DownloadList from '@/next/components/server/AlbumPage/DownloadSection'
 import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentCarrousel'
 import Related from '@/next/components/client/AlbumPage/Related'
 import HeroCover from '@/next/components/client/AlbumPage/HeroCover'
+import { showModal } from '@/next/lib/modal'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 
@@ -124,22 +125,154 @@ export async function generateViewport (context) {
   }
 }
 
-export default function AlbumPageWrapper (context) {
-  // const { params } = context
-  // const { locale } = params
+export default function AlbumPage (context) {
+  const { params } = context
+  const { /* locale, */ id } = params
 
   const messages = useMessages()
 
   // unstable_setRequestLocale(locale)
 
   return (
-    <NextIntlClientProvider messages={pick(messages, 'albumPage')}>
-      <AlbumPage {...context} />
-    </NextIntlClientProvider>
+    <div className={classNames('row', styles.container)}>
+      <div className={classNames('col px-0', styles.backgroundContainer)}>
+        <div>
+          <Image sizes='100vw' src={getCDNUrl(id, 'album')} alt='' aria-hidden='true' fill quality={80} />
+        </div>
+      </div>
+
+      <div className={classNames('col px-0 px-md-5 pt-3', styles.content)}>
+        <NextIntlClientProvider messages={pick(messages, 'albumPage')}>
+          <Content {...context} />
+        </NextIntlClientProvider>
+      </div>
+    </div>
   )
 }
 
-async function ProviderBox (props) {
+async function Content (context) {
+  const { params } = context
+  const { id } = params
+
+  const t = await getTranslations('albumPage')
+  const { isFAU } = await getSessionInfo()
+  const { data } = await getClient().query({ query: getAlbumQuery(pageFields), variables: { id } })
+  const { album } = data
+
+  return (
+    <>
+      <div className='row px-0 px-md-5'>
+        <div className='col col-12 col-lg-5 d-flex align-items-center px-lg-2 mb-3 mb-lg-0'>
+          <HeroCover {...album} />
+        </div>
+        <div className='col col-12 col-lg-7'>
+          <div className='blackBox'>
+            <div className='row'>
+              <div className='col'>
+                <h1 className={styles.title}>{album.title}</h1>
+                <h6 className={styles.subTitle} style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
+              </div>
+            </div>
+            <div className='row'>
+              <div className='col'><InfoTable album={album} /></div>
+            </div>
+            <UserButtons id={album.id} />
+          </div>
+        </div>
+      </div>
+      <hr />
+      <div className='row'>
+        <div className={classNames('col col-12 col-lg-6', styles.trackList)}>
+          <div className='blackBox h-100 d-flex flex-column'>
+            <div className='row'>
+              <div className='col'>
+                <h1 className={classNames('text-center text-uppercase', styles.title)}>{t('Tracklist')}</h1>
+              </div>
+            </div>
+            <div className='row px-3 flex-grow-1 '>
+              <div className='col d-flex flex-column'>
+                <TrackList discs={album.discs} tDisc={t('Disc')} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className='col mt-3 mt-lg-0 col-12 col-lg-6'>
+          <div className='blackBox'>
+            {album.vgmdb && (
+              <div className='row mt-2 mb-3 ms-2'>
+                <div className='col col-auto px-0'>
+                  <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
+                </div>
+                <div xs='auto' className='col col-auto d-flex align-items-center ps-0'>
+                  <Link href={album.vgmdb} className='ms-2' target='_blank' rel='noopener noreferrer' >
+                    <Image width={100} height={30} alt={'VGMdb'} src={vgmdbLogo} />
+                  </Link>
+                </div>
+              </div>
+            )}
+            {album.stores.length > 0 && (
+              <div className='row mt-2 px-3'>
+                <ProviderBox stores={album.stores}>
+                  {t('Buy_Original')}
+                </ProviderBox>
+              </div>)}
+            <hr />
+            <DownloadList downloads={album.downloads} />
+          </div>
+        </div>
+      </div>
+
+      <div className='row'>
+        <div className='col my-3'>
+          <CommentCarrousel isFAU={isFAU} id={album.id} />
+        </div>
+      </div>
+
+      <Related id={album.id} />
+    </>
+  )
+}
+
+export async function UserButtons (props) {
+  const { id } = props
+
+  const { session, isFAU } = await getSessionInfo()
+  const { permissions } = session
+
+  const t = await getTranslations('albumPage')
+
+  return (
+    <>
+      <div className='row mt-2'>
+        <div className='col'>
+          {isFAU
+            ? <AddFavoriteButton id={id} />
+            : (
+              <button type="button" className="w-100 rounded-3 btn btn-outline-light" onClick={() => showModal('#loginModal')}>
+                {t('Favorite_Login')}
+              </button>
+            )}
+        </div>
+      </div>
+      {isFAU && permissions.includes('UPDATE')
+        ? (
+          <div className='row mt-3'>
+            <div className='col'>
+              <Link href={`/admin/album/${id}`}>
+                <button type="button" className="w-100 rounded-3 btn btn-outline-light">
+                  {t('Edit this album')}
+                </button>
+              </Link>
+            </div>
+          </div>
+        )
+        : null}
+    </>
+  )
+}
+
+export async function ProviderBox (props) {
   const { stores, children } = props
   const filterStores = stores.filter(s => s.provider !== 'SOON')
 
@@ -166,135 +299,5 @@ async function ProviderBox (props) {
         </>)
         : null}
     </div>
-  )
-}
-
-async function AlbumPage (context) {
-  const { params } = context
-  const { id } = params
-
-  const t = await getTranslations('albumPage')
-  const { isFAU } = await getSessionInfo()
-  const { data } = await getClient().query({ query: getAlbumQuery(pageFields), variables: { id } })
-  const { album } = data
-
-  return (
-    <div className={classNames('row', styles.container)}>
-      <div className={classNames('col px-0', styles.backgroundContainer)}>
-        <div>
-          <Image sizes='100vw' src={getCDNUrl(id, 'album')} alt={`${album.title} cover`} fill quality={80} />
-        </div>
-      </div>
-
-      <div className={classNames('col px-0 px-md-5 pt-3', styles.content)}>
-        <div className='row px-0 px-md-5'>
-          <div className='col col-12 col-lg-5 d-flex align-items-center px-lg-2 mb-3 mb-lg-0'>
-            <HeroCover {...album} />
-          </div>
-          <div className='col col-12 col-lg-7'>
-            <div className='blackBox'>
-              <div className='row'>
-                <div className='col'>
-                  <h1 className={styles.title}>{album.title}</h1>
-                  <h6 className={styles.subTitle} style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
-                </div>
-              </div>
-              <div className='row'>
-                <div className='col'><InfoTable album={album} /></div>
-              </div>
-              <UserButtons id={album.id} />
-            </div>
-          </div>
-        </div>
-        <hr />
-        <div className='row'>
-          <div className={classNames('col col-12 col-lg-6', styles.trackList)}>
-            <div className='blackBox h-100 d-flex flex-column'>
-              <div className='row'>
-                <div className='col'>
-                  <h1 className={classNames('text-center text-uppercase', styles.title)}>{t('Tracklist')}</h1>
-                </div>
-              </div>
-              <div className='row px-3 flex-grow-1 '>
-                <div className='col d-flex flex-column'>
-                  <TrackList discs={album.discs} tDisc={t('Disc')} />
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div className='col mt-3 mt-lg-0 col-12 col-lg-6'>
-            <div className='blackBox'>
-              {album.vgmdb && (
-                <div className='row mt-2 mb-3 ms-2'>
-                  <div className='col col-auto px-0'>
-                    <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
-                  </div>
-                  <div xs='auto' className='col col-auto d-flex align-items-center ps-0'>
-                    <Link href={album.vgmdb} className='ms-2' target='_blank' rel='noopener noreferrer' >
-                      <Image width={100} height={30} alt={'VGMdb'} src={vgmdbLogo} />
-                    </Link>
-                  </div>
-                </div>
-              )}
-              {album.stores.length > 0 && (
-                <div className='row mt-2 px-3'>
-                  <ProviderBox stores={album.stores}>
-                    {t('Buy_Original')}
-                  </ProviderBox>
-                </div>)}
-              <hr />
-              <DownloadList downloads={album.downloads} />
-            </div>
-          </div>
-        </div>
-
-        <div className='row'>
-          <div className='col my-3'>
-            <CommentCarrousel isFAU={isFAU} id={album.id} />
-          </div>
-        </div>
-
-        <Related id={album.id} />
-      </div>
-    </div>
-  )
-}
-
-async function UserButtons (props) {
-  const { id } = props
-
-  const { session, isFAU } = await getSessionInfo()
-  const { permissions } = session
-
-  const t = await getTranslations('albumPage')
-
-  return (
-    <>
-      <div className='row mt-2'>
-        <div className='col'>
-          {isFAU
-            ? <AddFavoriteButton id={id} />
-            : (
-              <button type="button" className="w-100 rounded-3 btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
-                {t('Favorite_Login')}
-              </button>
-            )}
-        </div>
-      </div>
-      {isFAU && permissions.includes('UPDATE')
-        ? (
-          <div className='row mt-3'>
-            <div className='col'>
-              <Link href={`/admin/album/${id}`}>
-                <button type="button" className="w-100 rounded-3 btn btn-outline-light">
-                  {t('Edit this album')}
-                </button>
-              </Link>
-            </div>
-          </div>
-        )
-        : null}
-    </>
   )
 }

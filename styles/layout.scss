@@ -39,6 +39,11 @@ footer {
     }
 }
 
+.loadingAnim{
+  position: relative;
+  overflow: hidden;
+}
+
 .loadingAnim:after {
     content: "";
     transform: translateX(-100%) rotate(140deg);

@@ -12,6 +12,7 @@ import LoginBar from './LoginBar'
 import styles from './Header.module.scss'
 import { gql } from '@apollo/client'
 import { getClient } from '@/next/lib/ApolloSSRClient'
+import { useLocale } from 'next-intl'
 
 const bannerQuery = gql`
   query GetBanner {
@@ -22,9 +23,10 @@ const bannerQuery = gql`
 `
 
 async function LogoCol (props) {
-  const { locale } = props
   const client = await getClient()
   const { data } = await client.query({ query: bannerQuery })
+
+  const { locale } = useLocale()
 
   const banner = data.config.value
 
@@ -47,12 +49,10 @@ async function LogoCol (props) {
 }
 
 export default async function Header (props) {
-  const { locale } = props
-
   return (
     <div className='container-fluid'>
       <div className={classNames('row', styles.logoRow)}>
-        <LogoCol locale={locale} />
+        <LogoCol />
         {/* <LangSelector /> */}
         <LoginBar />
       </div>

@@ -54,7 +54,7 @@ async function Layout (props) {
         <ApolloWrapper>
           <ToastContainer newestOnTop />
           <div id="modal" />
-          <Header locale={locale} />
+          <Header />
           <div className='flex-grow-1 container-fluid'>
             {children}
           </div>

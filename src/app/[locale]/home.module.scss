@@ -1,8 +1,9 @@
-@import "@/styles/variables.scss";
+@import "../../../styles/variables.scss";
 
 .container {
   height: 100%;
-  background-color: #4b7667;
+  background-color: $green-bg;
+  max-width: 2059px;
 }
 
 .title {

@@ -140,7 +140,7 @@ export default function AlbumPage (context) {
         </div>
       </div>
 
-      <div className={classNames('col px-0 px-md-5 pt-3', styles.content)}>
+      <div className={classNames('col px-0 px-md-5 pt-3 mx-auto', styles.content)}>
         <NextIntlClientProvider messages={pick(messages, 'albumPage')}>
           <Content {...context} />
         </NextIntlClientProvider>

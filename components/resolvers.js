@@ -1,9 +1,9 @@
 import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import path from 'path'
-
-import { getImgColor, processImage } from './utils'
-import sessionOptions from '@/next/lib/sessionOptions'
 import { getIronSession } from 'iron-session'
+
+import sessionOptions from '@/next/lib/sessionOptions'
+import { processImage, getImgColor } from '@/next/server/utils'
 
 const getSession = (req, res) => getIronSession(req, res, sessionOptions)
 

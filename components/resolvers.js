@@ -3,7 +3,7 @@ import path from 'path'
 import { getIronSession } from 'iron-session'
 
 import sessionOptions from '@/next/lib/sessionOptions'
-import { processImage, getImgColor } from '@/next/server/utils'
+import { processImage, getImgColor } from '@/next/server/utils/image'
 
 const getSession = (req, res) => getIronSession(req, res, sessionOptions)
 
@@ -34,9 +34,9 @@ export const hasRolePage = allowedRoles =>
 export const isAuthedPage =
   async (context, props = {}) => {
     const { req, res } = context
-    const session = await getSession(req, res)
+    const { username = null } = await getSession(req, res)
 
-    if (!session.username) return { redirect: { destination: '/404', permanent: false } }
+    if (!username) return { redirect: { destination: '/404', permanent: false } }
     else return { props }
   }
 

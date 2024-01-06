@@ -1,7 +1,6 @@
 import { cookies, headers } from 'next/headers'
 import { ApolloServer, HeaderMap } from '@apollo/server'
 import { startServerAndCreateNextHandler } from '@as-integrations/next'
-import { getIronSession } from 'iron-session'
 import { processRequest } from 'graphql-upload-minimal'
 import { Readable } from 'stream'
 
@@ -10,15 +9,7 @@ import sessionOptions from '@/next/lib/sessionOptions'
 import { schema } from '@/next/lib/graphql'
 
 const server = new ApolloServer({ schema, introspection: process.env.NODE_ENV !== 'production' })
-
-async function context (req, res) {
-  const session = await getIronSession(cookies(), sessionOptions)
-  const { username } = session
-  const user = username && await db.models.user.findByPk(username)
-
-  return { db, username, user, session, req, res }
-}
-
+const context = (req, res) => ({ db, req, res })
 const handler = startServerAndCreateNextHandler(server, { context })
 
 async function createGraphqlRequest (req, res) {

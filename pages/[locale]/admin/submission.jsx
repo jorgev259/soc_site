@@ -211,13 +211,13 @@ function RequestTable (props) {
 
   if (error) {
     console.log(error)
-    toast.error('Failed to fetch requests')
+    toast.error('Failed to fetch submissions')
   }
 
   function Rows () {
     return (
       data.submissions
-        .filter(({ title, link }) => title?.toLowerCase().includes(search) || link?.toLowerCase() === search)
+        .filter(row => row?.title?.toLowerCase().includes(search) || row?.link?.toLowerCase() === search)
         .map(submission => {
           const { id, title, vgmdb, submitter, request } = submission
 

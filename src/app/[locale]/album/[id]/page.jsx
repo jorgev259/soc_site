@@ -5,6 +5,7 @@ import { gql } from '@apollo/client'
 import { getTranslations/*, unstable_setRequestLocale */ } from 'next-intl/server'
 import { NextIntlClientProvider, useMessages } from 'next-intl'
 import { pick } from 'lodash'
+import { notFound } from 'next/navigation'
 
 import styles from './AlbumPage.module.scss'
 
@@ -117,6 +118,8 @@ export async function generateViewport (context) {
 
   const { data } = await getClient().query({ query: getAlbumQuery(viewportFields), variables: { id } })
   const { album } = data
+
+  if (!album) return notFound()
   const { headerColor } = album
 
   return {
@@ -155,8 +158,11 @@ async function Content (context) {
 
   const t = await getTranslations('albumPage')
   const { isFAU } = await getSessionInfo()
+
   const { data } = await getClient().query({ query: getAlbumQuery(pageFields), variables: { id } })
   const { album } = data
+
+  if (!album) return notFound()
 
   return (
     <>

@@ -53,8 +53,7 @@
     "sequelize": "^6.34.0",
     "sharp": "^0.30.5",
     "slugify": "^1.6.2",
-    "svg-loaders": "^0.2.0",
-    "zlib-sync": "^0.1.9"
+    "svg-loaders": "^0.2.0"
   },
   "devDependencies": {
     "eslint": "^8.22.0",

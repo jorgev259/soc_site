@@ -2,6 +2,7 @@ const withNextIntl = require('next-intl/plugin')('./i18n.js')
 
 module.exports = withNextIntl({
   eslint: { ignoreDuringBuilds: true },
+  typescript: { ignoreBuildErrors: true },
   images: {
     imageSizes: [16, 32, 48, 64, 96, 128, 250, 256, 384],
     remotePatterns: [

@@ -38,3 +38,6 @@ sequelize-config.json
 .owncloudsync.log
 Desktop.ini
 .sync*
+
+# Typescript
+next-env.d.ts

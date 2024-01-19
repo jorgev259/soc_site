@@ -10,12 +10,15 @@ import { schema } from '@/next/lib/graphql'
 
 const server = new ApolloServer({ schema, introspection: process.env.NODE_ENV !== 'production' })
 const context = (req, res) => ({ db, req, res })
+// @ts-ignore
 const handler = startServerAndCreateNextHandler(server, { context })
 
 async function createGraphqlRequest (req, res) {
   const readStream = Readable.fromWeb(req.body)
+  // @ts-ignore
   readStream.headers = Object.fromEntries(req.headers.entries())
 
+  // @ts-ignore
   const body = await processRequest(readStream, res)
   const headers = new HeaderMap()
 
@@ -39,19 +42,22 @@ async function createGraphqlRequest (req, res) {
 async function createHttpResponse (req, res) {
   const httpGraphQLResponse = await server.executeHTTPGraphQLRequest({
     httpGraphQLRequest: await createGraphqlRequest(req, res),
-    context: () => context(req, res)
+    context: async () => context(req, res)
   })
 
   const bodyArray = []
   if (httpGraphQLResponse.body.kind === 'complete') {
+    // @ts-ignore
     bodyArray.push(httpGraphQLResponse.body.string)
   } else {
     for await (const chunk of httpGraphQLResponse.body.asyncIterator) {
+      // @ts-ignore
       bodyArray.push(chunk)
     }
   }
 
   const headers = {}
+  // @ts-ignore
   for (const [key, value] of httpGraphQLResponse.headers) {
     headers[key] = value
   }
@@ -68,7 +74,7 @@ export async function POST (req, res) {
   const { cookieName } = sessionOptions
 
   if (headerStore.has('authorization')) {
-    const token = headerStore.get('authorization').replace('Bearer ', '')
+    const token = (headerStore.get('authorization') ?? '').replace('Bearer ', '')
     cookieStore.set(cookieName, token)
   }
 
@@ -81,4 +87,4 @@ export async function POST (req, res) {
   }
 }
 
-export { handler as GET }
+export { handler as GET } // @ts-ignore

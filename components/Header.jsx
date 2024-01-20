@@ -380,10 +380,9 @@ export default function Header () {
 }
 
 const vgmQuery = gql`
-  query ($search: String!){
-    vgmdb(search: $search){
-      vgmdbUrl
-      name
+  query ($url: String!){
+    vgmdb(url: $url){
+      title
       subTitle
       releaseDate
       artists
@@ -414,15 +413,8 @@ function SubmitAlbum () {
   const [submitMutation, { loading: loadingSubmit }] = useMutation(submitQuery)
 
   async function fetchInfo () {
-    const { data } = await getVgmdb({ variables: { search: vgmdbRef.current.value } })
-
-    if (data?.vgmdb) {
-      const { vgmdb } = data
-      const { vgmdbUrl, name } = vgmdb
-
-      vgmdbRef.current.value = vgmdbUrl
-      titleRef.current.value = name
-    }
+    const { data } = await getVgmdb({ variables: { url: vgmdbRef.current.value } })
+    titleRef.current.value = data?.vgmdb?.title
   }
 
   function submit (ev) {

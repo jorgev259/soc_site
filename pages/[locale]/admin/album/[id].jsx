@@ -159,10 +159,9 @@ const mutation = gql`
   `
 
 const vgmQuery = gql`
-  query ($search: String!){
-    vgmdb(search: $search){
-      vgmdbUrl
-      name
+  query ($url: String!){
+    vgmdb(url: $url){
+      title
       subTitle
       releaseDate
       artists
@@ -225,15 +224,14 @@ function EditAlbumForm ({ id, album, categories, classifications }) {
   }
 
   async function fetchInfo () {
-    const { data } = await getVgmdb({ variables: { search: vgmdbRef.current.value } })
+    const { data } = await getVgmdb({ variables: { url: vgmdbRef.current.value } })
 
     if (data?.vgmdb) {
       const { vgmdb } = data
-      const { vgmdbUrl, name, subTitle, releaseDate, artists, categories, classifications, tracklist } = vgmdb
+      const { title, subTitle, releaseDate, artists, categories, classifications, tracklist } = vgmdb
 
       releaseRef.current.value = releaseDate
-      vgmdbRef.current.value = vgmdbUrl
-      titleRef.current.value = name
+      titleRef.current.value = title
       subTitleRef.current.value = subTitle
       artistsRef.current.value = artists.join(',')
 

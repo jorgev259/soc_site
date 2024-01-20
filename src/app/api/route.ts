@@ -4,7 +4,7 @@ import { startServerAndCreateNextHandler } from '@as-integrations/next'
 import { processRequest } from 'graphql-upload-minimal'
 import { Readable } from 'stream'
 
-import db from '@/next/server/sequelize/startDB'
+import db from '@/server/sequelize/startDB'
 import sessionOptions from '@/next/lib/sessionOptions'
 import { schema } from '@/next/lib/graphql'
 

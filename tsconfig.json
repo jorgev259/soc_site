@@ -5,7 +5,7 @@
       "@/components/*": ["components/*"],
       "@/locales/*": ["locales/*"],
       "@/next/*":["src/*"],
-      "@/meta/*":["src/app/api/meta/*"],
+      "@/server/*":["src/server/*"],
       "@/img/*": ["public/img/*"],
       "@/styles/*": ["styles/*"]
     },

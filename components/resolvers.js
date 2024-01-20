@@ -3,7 +3,7 @@ import path from 'path'
 import { getIronSession } from 'iron-session'
 
 import sessionOptions from '@/next/lib/sessionOptions'
-import { processImage, getImgColor } from '@/next/server/utils/image'
+import { processImage, getImgColor } from '@/server/utils/image'
 
 const getSession = (req, res) => getIronSession(req, res, sessionOptions)
 

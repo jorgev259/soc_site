@@ -4,7 +4,7 @@ import { loadFilesSync } from '@graphql-tools/load-files'
 import { mergeTypeDefs, mergeResolvers } from '@graphql-tools/merge'
 import { makeExecutableSchema } from '@graphql-tools/schema'
 
-import resolverArray from '@/next/server/graphql/resolvers'
+import resolverArray from '@/server/graphql/resolvers'
 
 const typeDefArray = loadFilesSync(path.join(process.cwd(), 'src/server/graphql/schemas'))
 

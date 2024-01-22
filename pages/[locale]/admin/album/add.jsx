@@ -292,7 +292,23 @@ function AddAlbum (props) {
         <hr className='style2 style-white' />
         <StoreDownloads />
         <hr className='style2 style-white' />
-        <Downloads />
+        <Downloads defaults={[
+          {
+            title: 'MP3',
+            small: false,
+            links: [
+              { url: '', provider: 'MEGA', custom: null, directUrl: '' },
+              { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' }
+            ]
+          },
+          {
+            title: 'FLAC',
+            small: false,
+            links: [
+              { url: '', provider: 'MEGA', custom: null, directUrl: '' }
+            ]
+          }
+        ]} />
         <hr className='style2 style-white' />
         <RequestCheck element={vgmdbRef.current} />
         <hr className='style2 style-white' />

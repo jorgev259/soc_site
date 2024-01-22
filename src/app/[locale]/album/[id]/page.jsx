@@ -3,8 +3,7 @@ import classNames from 'classnames'
 import { gql } from '@apollo/client'
 // eslint-disable-next-line camelcase
 import { getTranslations/*, unstable_setRequestLocale */ } from 'next-intl/server'
-import { NextIntlClientProvider, useMessages } from 'next-intl'
-import { pick } from 'lodash'
+import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
 
 import styles from './AlbumPage.module.scss'
@@ -13,6 +12,7 @@ import { Link } from '@/next/lib/navigation'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 import { getNextCDNUrl, getCDNUrl } from '@/next/lib/getCDN'
 import getSessionInfo from '@/next/lib/getSession'
+import { getMessageObject } from '@/next/lib/transl'
 
 import AddFavoriteButton from '@/next/components/AlbumPage/AddFavoriteButton'
 import HeroCover from '@/next/components/AlbumPage/HeroCover'
@@ -132,8 +132,6 @@ export default function AlbumPage (context) {
   const { params } = context
   const { /* locale, */ id } = params
 
-  const messages = useMessages()
-
   // unstable_setRequestLocale(locale)
 
   return (
@@ -145,9 +143,7 @@ export default function AlbumPage (context) {
       </div>
 
       <div className={classNames('col px-0 px-md-5 pt-3 mx-auto', styles.content)}>
-        <NextIntlClientProvider messages={pick(messages, 'albumPage')}>
-          <Content {...context} />
-        </NextIntlClientProvider>
+        <Content {...context} />
       </div>
     </div>
   )
@@ -158,6 +154,7 @@ async function Content (context) {
   const { id } = params
 
   const t = await getTranslations('albumPage')
+  const tComment = await getTranslations('albumPage.comment')
   const { isFAU } = await getSessionInfo()
 
   const { data } = await getClient().query({ query: getAlbumQuery(pageFields), variables: { id } })
@@ -231,7 +228,11 @@ async function Content (context) {
 
       <div className='row'>
         <div className='col my-3'>
-          <CommentCarrousel isFAU={isFAU} id={album.id} />
+          <NextIntlClientProvider messages={getMessageObject(tComment, [
+            'Comment_Login', 'Comment_Anon', 'Save comment', 'Add comment', 'Edit comment', 'Comment_error'
+          ])}>
+            <CommentCarrousel isFAU={isFAU} id={album.id} />
+          </NextIntlClientProvider>
         </div>
       </div>
 

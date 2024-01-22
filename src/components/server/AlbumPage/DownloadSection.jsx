@@ -1,15 +1,16 @@
 import { Fragment } from 'react'
-import { useTranslations } from 'next-intl'
+import { NextIntlClientProvider, useTranslations } from 'next-intl'
 import classNames from 'classnames'
 
 import styles from '@/styles/DownloadSection.module.scss'
 
 import { Link } from '@/next/lib/navigation'
 import DirectButton from '../../client/AlbumPage/DirectButton'
+import { getMessageObject } from '@/next/lib/transl'
 
 export default function DownloadSection (props) {
   const { downloads = [] } = props
-  const t = useTranslations('albumPage')
+  const t = useTranslations('albumPage.download')
 
   return (
     downloads.map((download, di) => {
@@ -38,7 +39,9 @@ export default function DownloadSection (props) {
                       </Link>
                     </div>
                     <div className='col py-2'>
-                      <DirectButton directUrl={directUrl} />
+                      <NextIntlClientProvider messages={getMessageObject(t, ['Become_Donator', 'Direct'])}>
+                        <DirectButton directUrl={directUrl} />
+                      </NextIntlClientProvider>
                     </div>
                   </div>
                 </Fragment>

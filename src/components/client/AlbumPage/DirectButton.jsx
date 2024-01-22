@@ -9,7 +9,7 @@ import { Link } from '@/next/lib/navigation'
 
 export default function DirectButton (props) {
   const { directUrl } = props
-  const t = useTranslations('albumPage')
+  const t = useTranslations('')
 
   const elementRef = useRef()
   const tooltipRef = useRef()

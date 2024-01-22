@@ -55,7 +55,7 @@ function Star (props) {
   const { id, position, scoreHover = 0, selfScore = 0, setHover, refetch, avgRating = {}, isFAU } = props
   const { score = 0 } = avgRating
 
-  const t = useTranslations('albumPage')
+  const t = useTranslations('')
   const client = useApolloClient()
 
   const maxScore = Math.max(score, scoreHover, selfScore)

@@ -31,7 +31,7 @@ const forgorMutation = gql`
 `
 
 export function RegisterForm (props) {
-  const t = useTranslations('login')
+  const t = useTranslations('')
   const [mutate, { loading }] = useMutation(registerMutation)
 
   const handleSubmit = useCallback(ev => {
@@ -82,7 +82,7 @@ function showForgor () {
 }
 
 export function LoginForm (props) {
-  const t = useTranslations('login')
+  const t = useTranslations('')
   const [mutate, { loading }] = useMutation(loginMutation)
   const refresh = useRefresh()
 
@@ -127,7 +127,7 @@ export function LoginForm (props) {
 }
 
 export function ForgorForm (props) {
-  const t = useTranslations('login')
+  const t = useTranslations('')
   const [mutate, { loading }] = useMutation(forgorMutation)
 
   const handleSubmit = useCallback(ev => {
@@ -162,7 +162,7 @@ export function ForgorForm (props) {
 }
 
 export function LogoutForm (props) {
-  const t = useTranslations('login')
+  const t = useTranslations('')
   const { handleLogout, loading } = useLogout()
 
   return (

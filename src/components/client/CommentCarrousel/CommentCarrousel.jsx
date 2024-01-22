@@ -76,7 +76,7 @@ export default function CommentCarrousel (props) {
 
   const [updateComment, { loading }] = useMutation(mutateComment)
 
-  const t = useTranslations('albumPage.comment')
+  const t = useTranslations('')
   const [currentIndex, setCurrentIndex] = useState(0)
   const [defaultValue, setDefaultValue] = useState()
   const timeoutRef = useRef(null)

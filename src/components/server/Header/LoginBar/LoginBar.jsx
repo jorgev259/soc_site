@@ -1,25 +1,35 @@
 import classNames from 'classnames'
-import { NextIntlClientProvider, useMessages, useTranslations } from 'next-intl'
+import { NextIntlClientProvider, useTranslations } from 'next-intl'
 import { Link } from '@/next/lib/navigation'
-import pick from 'lodash/pick'
+import { getTranslations } from 'next-intl/server'
 
 import styles from './LoginBar.module.scss'
 
 import { ForgorForm, LoginForm, LogoutForm, RegisterForm } from '@/next/components/client/LoginForm/LoginForm'
 import { ModalTemplate } from '@/next/components/server/Modal'
 import getSessionInfo from '@/next/lib/getSession'
+import { getMessageObject } from '@/next/lib/transl'
 
 export default async function LoginBar (props) {
+  const t = await getTranslations('login')
   const { session, isFAU } = await getSessionInfo()
   const { username } = session
 
-  return isFAU ? <LoggedIn username={username} /> : <LoggedOut />
+  return (
+    <>
+      <NextIntlClientProvider messages={getMessageObject(t, [
+        'Username', 'Email', 'Password', 'Profile pic', 'Register', 'Login', 'Logout',
+        'Recover password', 'Username or email'
+      ])}>
+        {isFAU ? <LoggedIn username={username} /> : <LoggedOut />}
+      </NextIntlClientProvider>
+    </>
+  )
 }
 
 function LoggedIn (props) {
   const { username } = props
   const t = useTranslations('login')
-  const messages = useMessages()
 
   return (
     <>
@@ -27,9 +37,7 @@ function LoggedIn (props) {
         <Link href={`/profile/${username}`} className={classNames(styles.button, 'd-none d-sm-block btn btn-primary')}>{t('Profile')}</Link>
       </div>
       <div className='col-auto pe-sm-5 me-sm-4'>
-        <NextIntlClientProvider messages={pick(messages, 'login')}>
-          <LogoutForm />
-        </NextIntlClientProvider>
+        <LogoutForm />
       </div>
     </>
   )
@@ -66,37 +74,25 @@ function EmailSentModal () {
 }
 
 function RegisterModal () {
-  const messages = useMessages()
-
   return (
     <ModalTemplate id="registerModal">
-      <NextIntlClientProvider messages={pick(messages, 'login')}>
-        <RegisterForm />
-      </NextIntlClientProvider>
+      <RegisterForm />
     </ModalTemplate>
   )
 }
 
 function LoginModal () {
-  const messages = useMessages()
-
   return (
     <ModalTemplate id="loginModal">
-      <NextIntlClientProvider messages={pick(messages, 'login')}>
-        <LoginForm />
-      </NextIntlClientProvider>
+      <LoginForm />
     </ModalTemplate>
   )
 }
 
 function ForgorModal () {
-  const messages = useMessages()
-
   return (
     <ModalTemplate id='forgorModal'>
-      <NextIntlClientProvider messages={pick(messages, 'login')}>
-        <ForgorForm />
-      </NextIntlClientProvider>
+      <ForgorForm />
     </ModalTemplate>
   )
 }

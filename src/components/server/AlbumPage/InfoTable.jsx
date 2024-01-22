@@ -1,9 +1,11 @@
 import { getLocale, getTranslations } from 'next-intl/server'
 import { Fragment } from 'react'
+import { NextIntlClientProvider } from 'next-intl'
 
 import styles from './InfoTable.module.scss'
 
 import getSessionInfo from '@/next/lib/getSession'
+import { getMessageObject } from '@/next/lib/transl'
 import StarCounter from '@/next/components/client/AlbumPage/StarCounter'
 
 export async function InfoTable (props) {
@@ -12,6 +14,7 @@ export async function InfoTable (props) {
   const locale = await getLocale()
   const tCommon = await getTranslations('common')
   const tPage = await getTranslations('albumPage')
+  const tRating = await getTranslations('albumPage.rating')
   const { isFAU } = await getSessionInfo()
 
   const date = new Date(album.releaseDate)
@@ -100,9 +103,11 @@ export async function InfoTable (props) {
         )}
 
         <tr>
-          <th>{tPage('Avg Rating')}: </th>
+          <th>{tRating('Avg Rating')}: </th>
           <td>
-            <StarCounter albumId={album.id} isFAU={isFAU} />
+            <NextIntlClientProvider messages={getMessageObject(tRating, ['Rating saved!', 'Failed to save rating'])}>
+              <StarCounter albumId={album.id} isFAU={isFAU} />
+            </NextIntlClientProvider>
           </td>
         </tr>
       </tbody>

@@ -1,9 +1,9 @@
-'use client'
 import { useTranslations } from 'next-intl'
-import { useSuspenseQuery, gql } from '@apollo/client'
+import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 
-import AlbumBox, { AlbumFallback } from '../../server/AlbumBox/AlbumBox'
+import AlbumBox, { AlbumFallback } from '../server/AlbumBox/AlbumBox'
+import { getClient } from '@/next/lib/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3 px-0'
 const getRelatedQuery = gql`
@@ -20,11 +20,7 @@ const getRelatedQuery = gql`
 `
 
 export default function Related (props) {
-  const { id } = props
-
   const t = useTranslations('albumPage')
-  const { data } = useSuspenseQuery(getRelatedQuery, { variables: { id } })
-  const { related } = data.album
 
   return (
     <>
@@ -34,12 +30,20 @@ export default function Related (props) {
         </div>
         <div className='row justify-content-center'>
           <Suspense fallback={<AlbumFallback count={8} className={albumClassName} />}>
-            {related.map(row => (
-              <AlbumBox key={row.id} className={albumClassName} {...row} />
-            ))}
+            <RelatedFetch {...props} />
           </Suspense>
         </div>
       </div>
     </>
   )
+}
+
+async function RelatedFetch (props) {
+  const { id } = props
+  const { data } = await getClient().query({ query: getRelatedQuery, variables: { id } })
+  const { related } = data.album
+
+  return related.map(row => (
+    <AlbumBox key={row.id} className={albumClassName} {...row} />
+  ))
 }

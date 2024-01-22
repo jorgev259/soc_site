@@ -1,10 +1,8 @@
-'use client'
 import Image from 'next/image'
 
 import { ModalPortal } from '@/next/components/server/Modal'
 
 import { getCDNUrl } from '@/next/lib/getCDN'
-import { showModal } from '@/next/lib/modal'
 import { PLACEHOLDER } from '@/next/constants/index'
 
 import styles from './HeroCover.module.scss'
@@ -20,7 +18,7 @@ export default function HeroCover (props) {
         </div>
       </ModalPortal>
 
-      <div className={styles.coverContainer} onClick={() => showModal(`#${styles.coverModal}`)}>
+      <div className={styles.coverContainer} data-bs-toggle="modal" data-bs-target={`#${styles.coverModal}`}>
         <Image quality={80} sizes ='40vw' className='rounded' fill alt={`${title} cover`} src={getCDNUrl(id, 'album')} placeholder='blur' blurDataURL={placeholder} />
       </div>
     </>

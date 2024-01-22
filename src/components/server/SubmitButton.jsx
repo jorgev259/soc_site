@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 
-import Loading from './Loading'
+import Loading from '../shared/Loading'
 
 export default function SubmitButton (props) {
   const { loading = false, className, children, ...buttonProps } = props

@@ -9,18 +9,19 @@ import { notFound } from 'next/navigation'
 
 import styles from './AlbumPage.module.scss'
 
+import { Link } from '@/next/lib/navigation'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 import { getNextCDNUrl, getCDNUrl } from '@/next/lib/getCDN'
 import getSessionInfo from '@/next/lib/getSession'
 
-import { Link } from '@/next/lib/navigation'
-import AddFavoriteButton from '@/next/components/client/AlbumPage/AddFavoriteButton'
+import AddFavoriteButton from '@/next/components/AlbumPage/AddFavoriteButton'
+import HeroCover from '@/next/components/AlbumPage/HeroCover'
+import Related from '@/next/components/AlbumPage/Related'
+
 import TrackList from '@/next/components/client/AlbumPage/TrackList'
 import { InfoTable } from '@/next/components/server/AlbumPage/InfoTable'
 import DownloadList from '@/next/components/server/AlbumPage/DownloadSection'
 import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentCarrousel'
-import Related from '@/next/components/client/AlbumPage/Related'
-import HeroCover from '@/next/components/client/AlbumPage/HeroCover'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 

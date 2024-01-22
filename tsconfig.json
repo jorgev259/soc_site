@@ -6,6 +6,7 @@
       "@/locales/*": ["locales/*"],
       "@/next/*":["src/*"],
       "@/server/*":["src/server/*"],
+      "@/actions/*":["src/actions/*"],
       "@/img/*": ["public/img/*"],
       "@/styles/*": ["styles/*"]
     },

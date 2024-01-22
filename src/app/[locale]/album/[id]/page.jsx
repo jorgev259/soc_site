@@ -248,6 +248,7 @@ async function UserButtons (props) {
   const { permissions } = session
 
   const t = await getTranslations('albumPage')
+  const tFav = await getTranslations('albumPage.favorite')
 
   return (
     <>
@@ -257,7 +258,7 @@ async function UserButtons (props) {
             ? <FavoriteSection id={id} />
             : (
               <button type="button" className="w-100 rounded-3 btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
-                {t('Favorite_Login')}
+                {tFav('Favorite_Login')}
               </button>
             )}
         </div>

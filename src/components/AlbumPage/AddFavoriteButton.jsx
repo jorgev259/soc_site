@@ -1,36 +1,47 @@
-import { gql } from '@apollo/client'
-import { getTranslations } from 'next-intl/server'
+'use client'
+import { useFormState, useFormStatus } from 'react-dom'
+import { useTranslations } from 'next-intl'
+import { useEffect } from 'react'
+import { toast } from 'react-toastify'
 
-import { getClient } from '@/next/lib/ApolloSSRClient'
 import { toggleFavorite } from '@/actions/albumPage'
 
-import FormLoading from '@/next/components/shared/FormLoading'
+import Loading from '../shared/Loading'
 
-const favoriteQuery = gql`
-  query IsFavorite ($id: ID!) {
-    album(id: $id){
-        isFavorite
+export default function AddFavoriteButton (props) {
+  const { id, isFavorite } = props
+
+  const t = useTranslations('')
+  const [state, formAction] = useFormState(toggleFavorite, { ok: null })
+
+  useEffect(() => {
+    if (state.ok === null) return
+    if (state.ok) toast.success(t(isFavorite ? 'Favorite_Added' : 'Favorite_Removed'))
+    else {
+      console.log(state.error)
+      toast.error(t(`Favorite_Error_${isFavorite ? 'Remove' : 'Add'}`))
     }
-  }
-`
-
-export default async function AddFavoriteButton (props) {
-  const { id } = props
-
-  const { data } = await getClient().query({ query: favoriteQuery, variables: { id } })
-  const t = await getTranslations('albumPage.favorite')
-
-  const isFavorite = data.album.isFavorite ?? false
+  }, [state])
 
   return (
-    <form action={toggleFavorite}>
+    <form action={formAction}>
       <input hidden name='id' value={id} required readOnly />
       <input hidden name='current' type='checkbox' checked={isFavorite} required readOnly />
-      <button type="submit" className="w-100 rounded-3 btn btn-outline-light">
-        <FormLoading>
-          {t(isFavorite ? 'Favorite_Remove' : 'Favorite_Add')}
-        </FormLoading>
-      </button>
+      <SubmitButton isFavorite={isFavorite} />
     </form>
+  )
+}
+
+function SubmitButton (props) {
+  const { isFavorite } = props
+  const { pending } = useFormStatus()
+  const t = useTranslations('')
+
+  return (
+    <button type="submit" className="w-100 rounded-3 btn btn-outline-light">
+      <Loading loading={pending}>
+        {t(isFavorite ? 'Favorite_Remove' : 'Favorite_Add')}
+      </Loading>
+    </button>
   )
 }

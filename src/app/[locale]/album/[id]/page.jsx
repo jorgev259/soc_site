@@ -14,7 +14,7 @@ import { getNextCDNUrl, getCDNUrl } from '@/next/lib/getCDN'
 import getSessionInfo from '@/next/lib/getSession'
 import { getMessageObject } from '@/next/lib/transl'
 
-import AddFavoriteButton from '@/next/components/AlbumPage/AddFavoriteButton'
+import FavoriteSection from '@/next/components/AlbumPage/FavoriteSection'
 import HeroCover from '@/next/components/AlbumPage/HeroCover'
 import Related from '@/next/components/AlbumPage/Related'
 
@@ -254,7 +254,7 @@ async function UserButtons (props) {
       <div className='row mt-2'>
         <div className='col'>
           {isFAU
-            ? <AddFavoriteButton id={id} />
+            ? <FavoriteSection id={id} />
             : (
               <button type="button" className="w-100 rounded-3 btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
                 {t('Favorite_Login')}

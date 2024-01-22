@@ -11,10 +11,25 @@ const favoriteTemplate = query => gql`
 const addFavorite = favoriteTemplate('add')
 const removeFavorite = favoriteTemplate('remove')
 
-export async function toggleFavorite (prevState: any, formData: FormData) {
-  const id = formData.get('id')
-  const isFavorite = formData.get('current') === 'on' ?? false
+function removeEmpty (obj) {
+  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
+}
 
-  const mutation = isFavorite ? removeFavorite : addFavorite
-  return serverMutate({ mutation, variables: { id } })
+export async function toggleFavorite (currState:any, formData: FormData) {
+  try {
+    const id = formData.get('id')
+    const isFavorite = formData.get('current') === 'on' ?? false
+
+    const mutation = isFavorite ? removeFavorite : addFavorite
+    const response = await serverMutate({ mutation, variables: { id } })
+
+    return response
+  } catch (error) {
+    const { message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors } = error
+
+    return {
+      ok: false,
+      error: removeEmpty({ message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors })
+    }
+  }
 }

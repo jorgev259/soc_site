@@ -1,6 +1,5 @@
 'use client'
 import { useApolloClient, gql, useQuery } from '@apollo/client'
-import { useEffect, useState } from 'react'
 import { toast } from 'react-toastify'
 import classNames from 'classnames'
 import { useTranslations } from 'next-intl'
@@ -26,70 +25,55 @@ const getScore = gql`
   }
 `
 
+const keys = [...Array(5).keys()]
+
 export default function StarCounter (props) {
   const { albumId, isFAU } = props
   const { data, refetch } = useQuery(getScore, { variables: { id: albumId } })
   const [scoreHover, setHover] = useState(0)
 
   const { album = {} } = data ?? {}
-  const { avgRating = {} } = album
+  const { avgRating = {}, selfScore = 0 } = album ?? {}
   const { score = 0, users = 0 } = avgRating
 
-  useEffect(() => {
-    if (!isFAU) setHover(0)
-  }, [isFAU])
+  const solidScore = Math.max(selfScore, score)
 
-  const starProps = { scoreHover, setHover, refetch, ...props, ...album }
-  const stars = [...Array(5).keys()]
-    .map(i => <Star key={i} position={i} {...starProps} />)
+  const starStyles = i => classNames(
+    styles.star, 'pe-1',
+    { [styles.gold]: isFAU && selfScore > i },
+    solidScore > i ? 'fas' : 'far',
+    solidScore > i && i + 0.5 === solidScore ? 'fa-star-half-alt' : 'fa-star'
+  )
 
   return (
-    <>
-      {stars}
+    <div className={classNames(styles.container, { [styles.active]: isFAU })}>
+      {keys.map(i => (
+        <Star className={starStyles(i)} key={i} position={i} albumId={albumId} refetch={refetch} isFAU={isFAU} />)
+      )}
       <span className='ms-1'>({score} by {users} users)</span> {/* Missing translation */}
-    </>
+    </div>
   )
 }
 
 function Star (props) {
-  const { id, position, scoreHover = 0, selfScore = 0, setHover, refetch, avgRating = {}, isFAU } = props
-  const { score = 0 } = avgRating
+  const { className, position, albumId, refetch, isFAU } = props
 
   const t = useTranslations('')
   const client = useApolloClient()
 
-  const maxScore = Math.max(score, scoreHover, selfScore)
-  const goldScore = scoreHover > 0 ? scoreHover : selfScore
-
-  const isSolid = maxScore >= position + 1
-  const isHalf = !isSolid && maxScore >= position + 0.5
-
-  const fill = isSolid ? 'fas fa-star' : (isHalf ? 'fas fa-star-half-alt' : 'far fa-star')
-
   function saveRating () {
-    client.mutate({ mutation: mutationRating, variables: { id, score: position + 1 } })
+    client.mutate({ mutation: mutationRating, variables: { id: albumId, score: position + 1 } })
       .then(() => {
-        toast.success(t['Rating saved!'])
+        toast.success(t('Rating saved!'))
         refetch()
       })
       .catch(err => {
         console.log(err)
-        toast.error(t['Failed to save rating'])
+        toast.error(t('Failed to save rating'))
       })
   }
 
-  const className = classNames(styles.star, fill, 'pe-1', { [styles.gold]: goldScore > position, [styles.active]: isFAU })
-
   return isFAU
-    ? (
-      <span
-        className={className}
-        onMouseOver={() => setHover(position + 1)}
-        onMouseOut={() => setHover(0)}
-        onClick={saveRating}
-      />
-    )
-    : (
-      <span className={className} />
-    )
+    ? <span className={className} onClick={saveRating} />
+    : <span className={className} />
 }

@@ -1,7 +1,21 @@
-.star.active:hover {
-  cursor: pointer
+.container {
+  .star {
+    color: white;
+  }
+
+  .star.gold {
+    color: goldenrod;
+  }
 }
 
-span.star.gold {
-  color: goldenrod;
+.container.active:hover{
+  cursor: pointer;
+
+  .star {
+    color: goldenrod;
+  }
+
+  .star:hover ~ .star {
+    color: white;
+  }
 }

@@ -1,16 +1,14 @@
-'use client'
-import { useApolloClient, gql, useQuery } from '@apollo/client'
-import { toast } from 'react-toastify'
+import { gql } from '@apollo/client'
 import classNames from 'classnames'
-import { useTranslations } from 'next-intl'
+import { NextIntlClientProvider } from 'next-intl'
+import { getTranslations } from 'next-intl/server'
 
 import styles from './StarCounter.module.scss'
 
-const mutationRating = gql`
-  mutation ($id: ID!, $score: Int!){
-    rateAlbum(albumId: $id, score: $score)
-  }
-`
+import Star from './Star'
+import { getClient } from '@/next/lib/ApolloSSRClient'
+import getSessionInfo from '@/next/lib/getSession'
+import { getMessageObject } from '@/next/lib/transl'
 
 const getScore = gql`
   query AlbumScore ($id: ID!) {
@@ -27,10 +25,12 @@ const getScore = gql`
 
 const keys = [...Array(5).keys()]
 
-export default function StarCounter (props) {
-  const { albumId, isFAU } = props
-  const { data, refetch } = useQuery(getScore, { variables: { id: albumId } })
-  const [scoreHover, setHover] = useState(0)
+export default async function StarCounter (props) {
+  const { albumId } = props
+
+  const { isFAU } = await getSessionInfo()
+  const { data } = await getClient().query({ query: getScore, variables: { id: albumId } })
+  const t = await getTranslations('albumPage.rating')
 
   const { album = {} } = data ?? {}
   const { avgRating = {}, selfScore = 0 } = album ?? {}
@@ -47,33 +47,10 @@ export default function StarCounter (props) {
 
   return (
     <div className={classNames(styles.container, { [styles.active]: isFAU })}>
-      {keys.map(i => (
-        <Star className={starStyles(i)} key={i} position={i} albumId={albumId} refetch={refetch} isFAU={isFAU} />)
-      )}
+      <NextIntlClientProvider messages={getMessageObject(t, ['Rating saved!', 'Failed to save rating'])}>
+        {keys.map(i => <Star className={starStyles(i)} key={i} position={i} albumId={albumId} isFAU={isFAU} />)}
+      </NextIntlClientProvider>
       <span className='ms-1'>({score} by {users} users)</span> {/* Missing translation */}
     </div>
   )
-}
-
-function Star (props) {
-  const { className, position, albumId, refetch, isFAU } = props
-
-  const t = useTranslations('')
-  const client = useApolloClient()
-
-  function saveRating () {
-    client.mutate({ mutation: mutationRating, variables: { id: albumId, score: position + 1 } })
-      .then(() => {
-        toast.success(t('Rating saved!'))
-        refetch()
-      })
-      .catch(err => {
-        console.log(err)
-        toast.error(t('Failed to save rating'))
-      })
-  }
-
-  return isFAU
-    ? <span className={className} onClick={saveRating} />
-    : <span className={className} />
 }

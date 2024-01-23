@@ -15,6 +15,15 @@ function removeEmpty (obj) {
   return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
 }
 
+function handleError (error) {
+  const { message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors } = error
+
+  return {
+    ok: false,
+    error: removeEmpty({ message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors })
+  }
+}
+
 export async function toggleFavorite (currState:any, formData: FormData) {
   try {
     const id = formData.get('id')
@@ -25,11 +34,21 @@ export async function toggleFavorite (currState:any, formData: FormData) {
 
     return response
   } catch (error) {
-    const { message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors } = error
+    return handleError(error)
+  }
+}
 
-    return {
-      ok: false,
-      error: removeEmpty({ message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors })
-    }
+const mutationRating = gql`
+  mutation ($id: ID!, $score: Int!){
+    rateAlbum(albumId: $id, score: $score)
+  }
+`
+
+export async function setRating (id: string | number, score: number) {
+  try {
+    const response = await serverMutate({ mutation: mutationRating, variables: { id, score } })
+    return response
+  } catch (error) {
+    return handleError(error)
   }
 }

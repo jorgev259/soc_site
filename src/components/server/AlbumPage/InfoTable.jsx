@@ -3,7 +3,7 @@ import { Fragment } from 'react'
 
 import styles from './InfoTable.module.scss'
 
-import StarCounter from '@/next/components/client/AlbumPage/StarCounter'
+import StarCounter from '@/next/components/AlbumPage/StarCounter'
 
 export async function InfoTable (props) {
   const { album } = props

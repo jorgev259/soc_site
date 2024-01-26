@@ -13,7 +13,7 @@ import sidebarStyles from '@/next/components/server/Sidebar/Sidebar.module.scss'
 import { ModalTemplate } from '@/next/components/server/Modal'
 import SubmitButton from '@/next/components/server/SubmitButton'
 
-import { hideModal, showModal } from '@/next/lib/modal'
+import { hideModal, showModal } from '@/next/components/server/Modal'
 
 function SideButton (props) {
   const { side, onClick } = props

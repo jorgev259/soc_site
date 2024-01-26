@@ -5,7 +5,7 @@ import serialize from 'form-serialize'
 import classNames from 'classnames'
 import { toast } from 'react-toastify'
 
-import { hideModal } from '@/next/lib/modal'
+import { hideModal } from '@/next/components/server/Modal'
 import SubmitButton from '@/next/components/server/SubmitButton'
 import { Link } from '@/next/lib/navigation'
 import RequestCheck from './RequestCheck'

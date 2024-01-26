@@ -11,31 +11,12 @@ const favoriteTemplate = query => gql`
 const addFavorite = favoriteTemplate('add')
 const removeFavorite = favoriteTemplate('remove')
 
-function removeEmpty (obj) {
-  return Object.fromEntries(Object.entries(obj).filter(([_, v]) => v != null))
-}
-
-function handleError (error) {
-  const { message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors } = error
-
-  return {
-    ok: false,
-    error: removeEmpty({ message, stack, clientErrors, GraphQLErrors, name, networkError, protocolErrors })
-  }
-}
-
 export async function toggleFavorite (currState:any, formData: FormData) {
-  try {
-    const id = formData.get('id')
-    const isFavorite = formData.get('current') === 'on' ?? false
+  const id = formData.get('id')
+  const isFavorite = formData.get('current') === 'on' ?? false
+  const mutation = isFavorite ? removeFavorite : addFavorite
 
-    const mutation = isFavorite ? removeFavorite : addFavorite
-    const response = await serverMutate({ mutation, variables: { id } })
-
-    return response
-  } catch (error) {
-    return handleError(error)
-  }
+  return serverMutate({ mutation, variables: { id } })
 }
 
 const mutationRating = gql`
@@ -45,10 +26,5 @@ const mutationRating = gql`
 `
 
 export async function setRating (id: string | number, score: number) {
-  try {
-    const response = await serverMutate({ mutation: mutationRating, variables: { id, score } })
-    return response
-  } catch (error) {
-    return handleError(error)
-  }
+  return serverMutate({ mutation: mutationRating, variables: { id, score } })
 }

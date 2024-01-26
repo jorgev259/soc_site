@@ -9,7 +9,7 @@ fs.outputJSONSync('sequelize-config.json', JSON.parse(process.env.SEQUELIZE) || 
 
 module.exports = {
   'config': path.resolve('sequelize-config.json'),
-  'models-path': path.resolve('sequelize/models'),
-  'seeders-path': path.resolve('sequelize/seeders'),
-  'migrations-path': path.resolve('sequelize/migrations')
+  'models-path': path.resolve('src/server/sequelize/models'),
+  'seeders-path': path.resolve('src/server/sequelize/seeders'),
+  'migrations-path': path.resolve('src/server/sequelize/migrations')
 }

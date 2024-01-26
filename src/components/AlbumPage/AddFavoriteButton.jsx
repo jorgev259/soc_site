@@ -1,12 +1,12 @@
 'use client'
-import { useFormState, useFormStatus } from 'react-dom'
+import { useFormState } from 'react-dom'
 import { useTranslations } from 'next-intl'
 import { useEffect } from 'react'
 import { toast } from 'react-toastify'
 
 import { toggleFavorite } from '@/actions/albumPage'
 
-import Loading from '../shared/Loading'
+import PendingButton from '../shared/PendingButton'
 
 export default function AddFavoriteButton (props) {
   const { id, isFavorite } = props
@@ -27,21 +27,9 @@ export default function AddFavoriteButton (props) {
     <form action={formAction}>
       <input hidden name='id' value={id} required readOnly />
       <input hidden name='current' type='checkbox' checked={isFavorite} required readOnly />
-      <SubmitButton isFavorite={isFavorite} />
-    </form>
-  )
-}
-
-function SubmitButton (props) {
-  const { isFavorite } = props
-  const { pending } = useFormStatus()
-  const t = useTranslations('')
-
-  return (
-    <button type="submit" className="w-100 rounded-3 btn btn-outline-light">
-      <Loading loading={pending}>
+      <PendingButton type="submit" className="w-100 rounded-3 btn-outline-light">
         {t(isFavorite ? 'Favorite_Remove' : 'Favorite_Add')}
-      </Loading>
-    </button>
+      </PendingButton>
+    </form>
   )
 }

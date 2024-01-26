@@ -1,15 +1,5 @@
-import classnames from 'classnames'
-
-import Loading from '../shared/Loading'
+import LoadingButton from '../shared/LoadingButton'
 
 export default function SubmitButton (props) {
-  const { loading = false, className, children, ...buttonProps } = props
-
-  return (
-    <button {...buttonProps} type='submit' className={classnames('btn btn-primary', className)} disabled={loading}>
-      <Loading>
-        {children}
-      </Loading>
-    </button>
-  )
+  return <LoadingButton type='submit' className='btn-primary' {...props} />
 }

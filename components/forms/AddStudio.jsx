@@ -4,7 +4,7 @@ import { Button, Col, Row, Form, FormControl } from 'react-bootstrap'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
-import { slugify } from '../utils'
+import { slugify } from '@/next/lib/utils'
 
 const mutation = gql`
 mutation CreateStudio($slug:String!, $name:String!){

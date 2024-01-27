@@ -5,16 +5,17 @@ import Portal from '../client/Portal'
 const getSelector = selector => selector[0] === '#' ? selector : `#${selector}`
 const getElement = selector => document.querySelector(getSelector(selector))
 
+export function showModal (selector) {
+  console.log(selector)
+  const element = getElement(selector)
+  const modal = bootstrap.Modal.getOrCreateInstance(element)
+  modal.show()
+}
+
 export function hideModal (selector) {
   const element = getElement(selector)
   const modal = bootstrap.Modal.getInstance(element)
   modal.hide()
-}
-
-export function showModal (selector) {
-  const element = getElement(selector)
-  const modal = bootstrap.Modal.getOrCreateInstance(element)
-  modal.show()
 }
 
 export default function Modal (props) {

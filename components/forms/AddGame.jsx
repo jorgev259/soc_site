@@ -5,7 +5,7 @@ import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import { SeriesSelector, PublisherSelector, PlatformSelector } from '../Selectors'
 import { toast } from 'react-toastify'
 
-import { slugify } from '../utils'
+import { slugify } from '@/next/lib/utils'
 import SubmitButton from '@/next/components/server/SubmitButton'
 
 const mutation = gql`

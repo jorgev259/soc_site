@@ -1,8 +1,5 @@
 {
-  "extends": ["next/core-web-vitals", "standard"],
-  "rules": {
-    "indent": ["error", 2]
-  },
+  "extends": ["next/core-web-vitals", "standard", "prettier"],
   "globals": {
     "bootstrap":"readonly"
   }

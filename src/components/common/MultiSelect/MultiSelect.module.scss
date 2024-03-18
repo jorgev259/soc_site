@@ -1,0 +1,147 @@
+$gray: #aaa;
+
+.container {
+  height: 40px; 
+  width: 100%;
+  color: black;
+  position: relative;
+
+
+  .box {
+    background-color: white;
+    border-radius: 4px;
+  }
+
+      
+  .icon {
+    color: gray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    svg {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke-width: 2px;
+      stroke: currentColor;
+    }
+  }
+
+  .arrow {
+    svg {
+      transition: transform 0.2s;
+    }
+  }
+
+  .arrow.open {
+    svg {
+      transform: rotate(180deg);
+    }
+  }
+
+  .main {
+    height: 100%;
+    cursor: pointer;
+
+
+    .label {
+      display: flex;
+      flex-grow: 1;      
+      align-items: center;
+  
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .label.empty {
+      color: $gray;
+    }
+  }
+
+  .secondary {
+    display: flex;
+    flex-flow: column;
+
+    position: absolute;
+    height: 300px;
+    width: 100%;
+
+    .search {
+      display: flex;
+      position: relative;
+
+      border-bottom: lightgray 2px solid;
+
+      input {
+        border: 0;
+        color: black;
+        background-color: white;
+        flex-grow: 1;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      input:focus {
+        outline: 0;
+      }
+    }
+
+    .loading {
+      position: absolute;
+      right: 0;
+      height: 20px;
+      width: 20px;
+    }
+
+    .options {
+      position: relative;
+      flex-grow: 1;
+      width: 100%;
+      overflow-y: auto;
+
+      .item {
+        display: flex;
+        position: relative;
+        z-index: 10;
+        width: 100%;
+        align-items: center;
+
+        .label{
+          display: flex;
+          flex-grow: 1;
+          align-items: center;
+          line-height: auto;
+
+          svg {
+            flex-shrink: 0;
+            color: blue;
+          }
+        }
+
+        .edit {
+          display: none;
+          justify-content: center;
+
+          height: 100%;
+        }
+      }
+
+      .item:hover {
+        cursor:pointer;
+        background-color: lightgray;
+
+        .edit {
+          display: flex;
+        }
+      }
+    }
+  }
+
+  .secondary:not(.show) {
+    display: none;
+  }
+
+}

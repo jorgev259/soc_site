@@ -1,0 +1,24 @@
+.discTab {
+  border-width: 2px;
+
+  & {
+    transform: translateY(2px);
+  }
+}
+
+.discTab:disabled {
+  color: white;
+  opacity: 1;
+  border-bottom-width: 0px;
+}
+
+.trackBox {
+  padding: 5px;
+  border-style: solid;
+  border-width: 0px 2px 2px 2px;
+  border-color: #efefef;
+
+  td {
+    padding: 8px;
+  }
+}

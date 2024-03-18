@@ -3,9 +3,9 @@ import Script from 'next/script'
 // eslint-disable-next-line camelcase
 // import { unstable_setRequestLocale } from 'next-intl/server'
 
-import Header from '@/next/components/server/Header'
-import { ApolloWrapper } from '@/next/components/client/ApolloClientProvider'
-import Ad from '@/next/components/server/Ad'
+import Header from '@/next/components/Header'
+import { ApolloWrapper } from '@/next/components/common/ApolloClientProvider'
+import Ad from '@/next/components/common/Ad'
 import { isDev } from '@/next/constants/env'
 // import { locales } from '@/next/lib/navigation'
 

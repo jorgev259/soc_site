@@ -10,21 +10,45 @@ const valueRenderer = (selected, _options) => {
     : 'Select...'
 }
 
-function HiddenInputs (props) {
+function HiddenInputs(props) {
   const { isSingle = false, value = [], required = false, name } = props
 
-  return isSingle
-    ? (
-      <input value={value[0] ? value[0].value : ''} name={name} required={required} hidden readOnly />
-    )
-    : (
-      value.map(s => <input key={s.value} value={s.value} name={name ? `${name}[]` : undefined} hidden readOnly />)
-    )
+  return isSingle ? (
+    <input
+      value={value[0] ? value[0].value : ''}
+      name={name}
+      required={required}
+      hidden
+      readOnly
+    />
+  ) : (
+    value.map((s) => (
+      <input
+        key={s.value}
+        value={s.value}
+        name={name ? `${name}[]` : undefined}
+        hidden
+        readOnly
+      />
+    ))
+  )
 }
 
-export function BaseSelector (props) {
-  const { startQuery, changeQuery, rowsFn, options: selectorOptions = {} } = props
-  const { defaultValue, isSingle = false, required = false, loading: loadingProp = false, name, onChange } = selectorOptions
+export function BaseSelector(props) {
+  const {
+    startQuery,
+    changeQuery,
+    rowsFn,
+    options: selectorOptions = {}
+  } = props
+  const {
+    defaultValue,
+    isSingle = false,
+    required = false,
+    loading: loadingProp = false,
+    name,
+    onChange
+  } = selectorOptions
 
   const client = useApolloClient()
   const stubElement = useRef(null)
@@ -34,13 +58,21 @@ export function BaseSelector (props) {
 
   const filterOptions = async (_, filter) => {
     setLoading(true)
-    const { data } = await client.query({ query: filter.length === 0 && startQuery ? startQuery : changeQuery, variables: { filter, limit } })
+    const { data } = await client.query({
+      query: filter.length === 0 && startQuery ? startQuery : changeQuery,
+      variables: { filter, limit }
+    })
     setOptions(getOptions(data))
     setLoading(false)
 
     return _
   }
-  const getOptions = data => data ? (rowsFn ? rowsFn(data[Object.keys(data)[0]]) : data[Object.keys(data)[0]]) : []
+  const getOptions = (data) =>
+    data
+      ? rowsFn
+        ? rowsFn(data[Object.keys(data)[0]])
+        : data[Object.keys(data)[0]]
+      : []
   const onChangeFn = (items = []) => {
     const result = isSingle ? items.slice(-1) : items
 
@@ -49,14 +81,18 @@ export function BaseSelector (props) {
   }
 
   useEffect(() => {
-    const form = stubElement.current.closest('form')
-    form?.addEventListener('reset', () => setValue(defaultValue || []))
+    if (stubElement?.current) {
+      const form = stubElement.current
+      // @ts-ignore Fix later
+      form?.addEventListener('reset', () => setValue(defaultValue || []))
+    }
   }, [])
 
   useEffect(() => {
     if (startQuery) {
       setLoading(true)
-      client.query({ query: startQuery, variables: { limit } })
+      client
+        .query({ query: startQuery, variables: { limit } })
         .then(({ data }) => setOptions(getOptions(data)))
         .finally(() => setLoading(false))
     }
@@ -75,38 +111,45 @@ export function BaseSelector (props) {
         onChange={onChangeFn}
         hasSelectAll={!isSingle}
         isLoading={loading || loadingProp}
-        value={value} options={options}
+        value={value}
+        options={options}
+        labelledBy={name}
       />
-      <HiddenInputs isSingle={isSingle} required={required} value={value} name={name} />
+      <HiddenInputs
+        isSingle={isSingle}
+        required={required}
+        value={value}
+        name={name}
+      />
     </>
   )
 }
 
-export function RequestSelector (props) {
+export function RequestSelector(props) {
   return (
     <BaseSelector
       {...props}
-      rowsFn={data => data.rows}
+      rowsFn={(data) => data.rows}
       startQuery={gql`
         query {
-          searchRequests (state: ["pending"], donator: [false]) {
+          searchRequests(state: ["pending"], donator: [false]) {
             rows {
               value: id
               label: title
             }
           }
-        }`
-      }
+        }
+      `}
       changeQuery={gql`
         query ($filter: String) {
-          searchRequests (state: ["pending", "hold"], filter: $filter) {
+          searchRequests(state: ["pending", "hold"], filter: $filter) {
             rows {
               value: id
               label: title
             }
           }
-        }`
-      }
+        }
+      `}
     />
   )
 }

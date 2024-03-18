@@ -8,8 +8,8 @@ import classNames from 'classnames'
 import styles from './home.module.scss'
 
 import { Link } from '@/next/lib/navigation'
-import Sidebar from '@/next/components/server/Sidebar'
-import AlbumBox, { AlbumFallback } from '@/next/components/server/AlbumBox/AlbumBox'
+import Sidebar from '@/next/components/common/Sidebar'
+import AlbumBox, { AlbumFallback } from '@/next/components/common/AlbumBox'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3'
@@ -42,8 +42,8 @@ async function RecentReleases() {
   const { rows } = released
 
   return rows.map((row) => (
-      <AlbumBox key={row.id} className={albumClassName} {...row} />
-    ))
+    <AlbumBox key={row.id} className={albumClassName} {...row} />
+  ))
 }
 
 const addedQuery = gql`
@@ -69,8 +69,8 @@ async function LastAdded() {
   const { rows } = added
 
   return rows.map((row) => (
-      <AlbumBox key={row.id} className={albumClassName} {...row} />
-    ))
+    <AlbumBox key={row.id} className={albumClassName} {...row} />
+  ))
 }
 
 export default function Home(props) {

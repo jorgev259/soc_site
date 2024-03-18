@@ -1,16 +1,21 @@
 'use client'
 import classNames from 'classnames'
 
-import styles from '@/next/components/server/Header/NavigationBar/NavigationBar.module.scss'
+import styles from './NavigationBar.module.scss'
 import useLogout from '@/next/lib/useLogout'
 
-export default function MobileLogoutBtn (props) {
+export default function MobileLogoutBtn(props) {
   const { children } = props
   const { handleLogout } = useLogout()
 
   return (
     <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
-      <button className={classNames(styles.navLink, 'nav-link w-100 text-start')} onClick={handleLogout}>{children}</button>
+      <button
+        className={classNames(styles.navLink, 'nav-link w-100 text-start')}
+        onClick={handleLogout}
+      >
+        {children}
+      </button>
     </div>
   )
 }

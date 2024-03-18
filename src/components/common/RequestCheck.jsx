@@ -3,7 +3,7 @@ import { useApolloClient, gql } from '@apollo/client'
 import { useEffect, useState } from 'react'
 // import { toast } from 'react-toastify'
 
-import { RequestSelector } from './Selectors'
+// import { RequestSelector } from './Selectors'
 import classNames from 'classnames'
 
 const requestQuery = gql`
@@ -16,7 +16,7 @@ const requestQuery = gql`
   }
 `
 
-export default function RequestCheck (props) {
+export default function RequestCheck(props) {
   const { element, className, hideTag = false } = props
 
   const client = useApolloClient()
@@ -26,11 +26,12 @@ export default function RequestCheck (props) {
     if (!element) return
 
     element.addEventListener('input', () => {
-      client.query({ query: requestQuery, variables: { link: element.value } })
+      client
+        .query({ query: requestQuery, variables: { link: element.value } })
         .then(({ data }) => {
           if (data.request) setSelected(data.request)
         })
-        .catch(err => {
+        .catch((err) => {
           console.log(err)
           // toast.error(err.message, { autoclose: false })
         })
@@ -41,20 +42,26 @@ export default function RequestCheck (props) {
     <>
       <div className={classNames('row', className)}>
         <div className='col'>
-          <label className="form-label" htmlFor='request'>Request:</label>
+          <label className='form-label' htmlFor='request'>
+            Request:
+          </label>
         </div>
       </div>
       <div className='row'>
         <div className='col'>
-          <RequestSelector options={{ isSingle: true, name: 'request', defaultValue: selected }} onChange={setSelected} />
+          {/* <RequestSelector options={{ isSingle: true, name: 'request', defaultValue: selected }} onChange={setSelected} /> */}
         </div>
-        {!hideTag
-          ? (
-            <div className='col d-flex align-items-center ps-0'>
-              {selected && <span className="">{selected.state === 'complete' ? 'Request found!  Already complete tho ¯\\_(ツ)_/¯' : 'Request found!'}</span>}
-            </div>
-          )
-          : null}
+        {!hideTag ? (
+          <div className='col d-flex align-items-center ps-0'>
+            {selected && (
+              <span className=''>
+                {selected.state === 'complete'
+                  ? 'Request found!  Already complete tho ¯\\_(ツ)_/¯'
+                  : 'Request found!'}
+              </span>
+            )}
+          </div>
+        ) : null}
       </div>
     </>
   )

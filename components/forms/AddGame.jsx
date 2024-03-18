@@ -2,33 +2,45 @@ import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
 import { Col, Row, Form, FormControl } from 'react-bootstrap'
-import { SeriesSelector, PublisherSelector, PlatformSelector } from '../Selectors'
+import {
+  SeriesSelector,
+  PublisherSelector,
+  PlatformSelector
+} from '../Selectors'
 import { toast } from 'react-toastify'
 
 import { slugify } from '@/next/lib/utils'
-import SubmitButton from '@/next/components/server/SubmitButton'
+import SubmitButton from '@/next/components/common/SubmitButton'
 
 const mutation = gql`
-mutation CreateGame($cover:Upload!, $releaseDate:String!, $slug:String!, $name:String!, $series: [String]!, $publishers:[ID]!, $platforms:[ID]){
-  createGame(
-    name: $name
-    slug: $slug
-    series: $series
-    publishers: $publishers   
-    releaseDate: $releaseDate
-    cover: $cover,
-    platforms: $platforms
+  mutation CreateGame(
+    $cover: Upload!
+    $releaseDate: String!
+    $slug: String!
+    $name: String!
+    $series: [String]!
+    $publishers: [ID]!
+    $platforms: [ID]
   ) {
+    createGame(
+      name: $name
+      slug: $slug
+      series: $series
+      publishers: $publishers
+      releaseDate: $releaseDate
+      cover: $cover
+      platforms: $platforms
+    ) {
       slug
     }
   }
 `
 
-export default function AddGame () {
+export default function AddGame() {
   const [slug, setSlug] = useState('')
   const [mutate, { loading }] = useMutation(mutation)
 
-  function handleSubmitForm (e) {
+  function handleSubmitForm(e) {
     e.preventDefault()
     e.persist()
     const game = serialize(e.target, { hash: true })
@@ -40,10 +52,11 @@ export default function AddGame () {
     if (!game.platforms) game.platforms = []
 
     mutate({ mutation, variables: game })
-      .then(results => {
+      .then((results) => {
         toast.success(`Added "${game.name}" game succesfully!`)
         e.target.reset()
-      }).catch(err => {
+      })
+      .catch((err) => {
         console.log(err)
         toast.error(err.message, { autoclose: false })
       })
@@ -51,7 +64,9 @@ export default function AddGame () {
 
   return (
     <>
-      <div id='addGame' className='mb-2 mt-3'>Add Game</div>
+      <div id='addGame' className='mb-2 mt-3'>
+        Add Game
+      </div>
       <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
         <Row>
           <Col md={4}>
@@ -63,7 +78,11 @@ export default function AddGame () {
           <Col md={4}>
             <Form.Group>
               <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl type='text' name='name' onChange={e => setSlug(slugify(e.target.value))} />
+              <FormControl
+                type='text'
+                name='name'
+                onChange={(e) => setSlug(slugify(e.target.value))}
+              />
             </Form.Group>
           </Col>
           <Col md={4}>
@@ -89,7 +108,10 @@ export default function AddGame () {
           <Col md={4}>
             <Form.Group>
               <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
-              <PlatformSelector categories={['Game']} options={{ name: 'platforms' }} />
+              <PlatformSelector
+                categories={['Game']}
+                options={{ name: 'platforms' }}
+              />
             </Form.Group>
           </Col>
         </Row>
@@ -103,7 +125,9 @@ export default function AddGame () {
         </Row>
         <Row>
           <Col className='m-auto'>
-            <SubmitButton loading={loading} type='submit' color='primary'>Add Game</SubmitButton>
+            <SubmitButton loading={loading} type='submit' color='primary'>
+              Add Game
+            </SubmitButton>
           </Col>
         </Row>
       </Form>

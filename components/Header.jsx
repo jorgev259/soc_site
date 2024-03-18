@@ -3,7 +3,18 @@ import styles from '@/styles/Header.module.scss'
 
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/legacy/image'
-import { Row, Col, Container, Button, Navbar, Nav, NavDropdown, Modal, Form, ModalBody } from 'react-bootstrap'
+import {
+  Row,
+  Col,
+  Container,
+  Button,
+  Navbar,
+  Nav,
+  NavDropdown,
+  Modal,
+  Form,
+  ModalBody
+} from 'react-bootstrap'
 import classNames from 'classnames'
 import { useSearchParams } from 'next/navigation'
 import serialize from 'form-serialize'
@@ -17,23 +28,23 @@ import logoES from '../public/img/assets/logo_es.png'
 import { Link, usePathname, useRouter } from '@/next/lib/navigation'
 import useUser from './useUser'
 import { ButtonLoader } from './Loader'
-import SubmitButton from '@/next/components/server/SubmitButton'
+import SubmitButton from '@/next/components/common/SubmitButton'
 import RequestCheck from './RequestCheck'
 
 // import LangSelector from '@/next/components/Header/LangSelector'
 
-function ForgorForm (props) {
+function ForgorForm(props) {
   const { defaultValue = false } = props
   const t = useTranslations('login')
   const forgorMutation = gql`
-    mutation createForgorLink($key: String!){
+    mutation createForgorLink($key: String!) {
       createForgorLink(key: $key)
     }
   `
   const [mutateForgor, { loading: loadingForgor }] = useMutation(forgorMutation)
   const [showForgorMessage, setForgorMessage] = useState(defaultValue)
 
-  const handleForgor = ev => {
+  const handleForgor = (ev) => {
     ev.preventDefault()
     const variables = serialize(ev.target, { hash: true })
 
@@ -41,39 +52,44 @@ function ForgorForm (props) {
       .then(() => {
         setForgorMessage(true)
       })
-      .catch(err => {
+      .catch((err) => {
         if (process.env.NODE_ENV === 'development') console.log(err)
         toast.error(t('Failed_Recover'))
       })
   }
 
-  return showForgorMessage
-    ? (
+  return showForgorMessage ? (
+    <Row>
+      <Col style={{ color: 'black' }}>{t('Email_Sent')}</Col>
+    </Row>
+  ) : (
+    <Form onSubmit={handleForgor}>
       <Row>
-        <Col style={{ color: 'black' }}>
-          {t('Email_Sent')}
+        <Form.Group as={Col}>
+          <Form.Label htmlFor='username' style={{ color: 'black' }}>
+            {t('Username or email')}:
+          </Form.Label>
+          <Form.Control required type='text' name='key' />
+        </Form.Group>
+      </Row>
+      <Row className='mt-4'>
+        <Col md={6} className='mx-auto'>
+          <ButtonLoader
+            loading={loadingForgor}
+            type='submit'
+            className='w-100'
+            color='primary'
+          >
+            {t('Recover password')}
+          </ButtonLoader>
         </Col>
       </Row>
-    )
-    : (
-      <Form onSubmit={handleForgor}>
-        <Row>
-          <Form.Group as={Col} >
-            <Form.Label htmlFor='username' style={{ color: 'black' }}>{t('Username or email')}:</Form.Label>
-            <Form.Control required type='text' name='key' />
-          </Form.Group>
-        </Row>
-        <Row className='mt-4'>
-          <Col md={6} className='mx-auto'>
-            <ButtonLoader loading={loadingForgor} type='submit' className='w-100' color='primary'>{t('Recover password')}</ButtonLoader>
-          </Col>
-        </Row>
-      </Form>
-    )
+    </Form>
+  )
 }
 
 const loginMutation = gql`
-  mutation Login($username: String!, $password: String!){
+  mutation Login($username: String!, $password: String!) {
     login(username: $username, password: $password)
   }
 `
@@ -83,7 +99,7 @@ const logoutMutation = gql`
   }
 `
 
-function LoginButton (props) {
+function LoginButton(props) {
   const { navMobile = false } = props
 
   const router = useRouter()
@@ -92,7 +108,8 @@ function LoginButton (props) {
   const pathname = usePathname()
 
   const [loginMutate, { loading: loadingLogin }] = useMutation(loginMutation)
-  const [logoutMutate/*, { loading: loadingLogout } */] = useMutation(logoutMutation)
+  const [logoutMutate /*, { loading: loadingLogout } */] =
+    useMutation(logoutMutation)
 
   const [showForgor, setForgor] = useState(false)
   const [show, setShow] = useState(false)
@@ -100,7 +117,7 @@ function LoginButton (props) {
 
   const loginParam = searchParams.get('login')
 
-  function setUrl (value) {
+  function setUrl(value) {
     const url = value ? `${pathname}?login` : pathname.replace('?login', '')
     router.replace(url, url, { scroll: false })
   }
@@ -121,17 +138,17 @@ function LoginButton (props) {
           refetch()
           setUrl(false)
         })
-        .catch(error => console.error('An unexpected error happened:', error))
+        .catch((error) => console.error('An unexpected error happened:', error))
     } else setUrl(true)
   }
 
-  const submit = e => {
+  const submit = (e) => {
     e.persist()
     e.preventDefault()
     const variables = serialize(e.target, { hash: true })
 
     loginMutate({ variables })
-      .then(res => {
+      .then((res) => {
         const { error } = res
         if (error) {
           const { graphQLErrors } = error
@@ -149,55 +166,79 @@ function LoginButton (props) {
           setUrl(false)
         }
       })
-      .catch(error => console.error('An unexpected error happened:', error))
+      .catch((error) => console.error('An unexpected error happened:', error))
   }
 
   if (navMobile) {
-    return <NavLink onClick={handleLogin} name={user ? 'Logout' : 'Login'} className='d-block d-sm-none' />
+    return (
+      <NavLink
+        onClick={handleLogin}
+        name={user ? 'Logout' : 'Login'}
+        className='d-block d-sm-none'
+      />
+    )
   }
 
   return (
     <>
-      <Col xs='auto' className={classNames(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}>
-        <Button onClick={handleLogin} variant="primary">{t(user ? 'Logout' : 'Login')}</Button>
+      <Col
+        xs='auto'
+        className={classNames(
+          styles.login,
+          'd-none d-sm-block ms-sm-auto mb-sm-5'
+        )}
+      >
+        <Button onClick={handleLogin} variant='primary'>
+          {t(user ? 'Logout' : 'Login')}
+        </Button>
       </Col>
       <Modal show={show} centered onHide={() => setUrl(false)}>
         <Modal.Body className='m-3'>
-          {showForgor
-            ? <ForgorForm />
-            : (
-              <Form onSubmit={submit}>
-                <Row>
-                  <Form.Group as={Col} >
-                    <Form.Label htmlFor='username' style={{ color: 'black' }}>{t('Username')}:</Form.Label>
-                    <Form.Control required type='text' name='username' />
-                  </Form.Group>
+          {showForgor ? (
+            <ForgorForm />
+          ) : (
+            <Form onSubmit={submit}>
+              <Row>
+                <Form.Group as={Col}>
+                  <Form.Label htmlFor='username' style={{ color: 'black' }}>
+                    {t('Username')}:
+                  </Form.Label>
+                  <Form.Control required type='text' name='username' />
+                </Form.Group>
 
-                  <Form.Group as={Col} >
-                    <Form.Label htmlFor='password' style={{ color: 'black' }}>{t('Password')}:</Form.Label>
-                    <Form.Control required type='password' name='password' />
-                  </Form.Group>
-                </Row>
-                <Row className='mt-4'>
-                  <Col md={4} className='mx-auto'>
-                    <SubmitButton loading={loadingLogin} type='submit' className='w-100' color='primary'>{t('Login')}</SubmitButton>
-                  </Col>
-                </Row>
-                {/* <Row className='mt-2'>
+                <Form.Group as={Col}>
+                  <Form.Label htmlFor='password' style={{ color: 'black' }}>
+                    {t('Password')}:
+                  </Form.Label>
+                  <Form.Control required type='password' name='password' />
+                </Form.Group>
+              </Row>
+              <Row className='mt-4'>
+                <Col md={4} className='mx-auto'>
+                  <SubmitButton
+                    loading={loadingLogin}
+                    type='submit'
+                    className='w-100'
+                    color='primary'
+                  >
+                    {t('Login')}
+                  </SubmitButton>
+                </Col>
+              </Row>
+              {/* <Row className='mt-2'>
                   <Col md={6} className='mx-auto'>
                     <Button onClick={() => setForgor(true)} className='w-100' color='primary'>{t('Recover password')}</Button>
                   </Col>
             </Row> */}
-              </Form>
-            )
-          }
+            </Form>
+          )}
         </Modal.Body>
       </Modal>
     </>
   )
 }
 
-function RegisterProfileButton (props) {
+function RegisterProfileButton(props) {
   const { navMobile = false } = props
   const registerMutation = gql`
     mutation ($username: String!, $email: String!, $pfp: Upload) {
@@ -210,9 +251,10 @@ function RegisterProfileButton (props) {
   const [showForgor, setForgor] = useState(false)
   const [showSuccess, setSuccess] = useState(false)
   const t = useTranslations('login')
-  const [mutateRegister, { loading: loadingRegister }] = useMutation(registerMutation)
+  const [mutateRegister, { loading: loadingRegister }] =
+    useMutation(registerMutation)
 
-  const submitRegister = async e => {
+  const submitRegister = async (e) => {
     e.persist()
     e.preventDefault()
 
@@ -220,11 +262,11 @@ function RegisterProfileButton (props) {
     variables.pfp = e.target.elements.pfp.files[0]
 
     mutateRegister({ variables })
-      .then(res => {
+      .then((res) => {
         setRegister(false)
         setSuccess(true)
       })
-      .catch(error => {
+      .catch((error) => {
         const { graphQLErrors } = error
         let message = 'Unknown error'
 
@@ -244,76 +286,102 @@ function RegisterProfileButton (props) {
   }, [showRegister])
 
   if (navMobile) {
-    return (
-      user
-        ? (
-          <NavLink href={`/profile/${user.username}`} name='Profile' className='d-block d-sm-none' />
-        )
-        : (
-          <NavLink onClick={() => setRegister(true)} name='Register' className='d-block d-sm-none' />
-        )
+    return user ? (
+      <NavLink
+        href={`/profile/${user.username}`}
+        name='Profile'
+        className='d-block d-sm-none'
+      />
+    ) : (
+      <NavLink
+        onClick={() => setRegister(true)}
+        name='Register'
+        className='d-block d-sm-none'
+      />
     )
   }
 
   return (
     <>
-      <Col xs='auto' className={classNames(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}>
-        {user
-          ? (
-            <Link href={`/profile/${user.username}`}><Button variant="primary">{t('Profile')}</Button></Link>
-          )
-          : (
-            <Button onClick={() => setRegister(true)} className='me-0' variant="primary">{t('Register')}</Button>
-          )}
+      <Col
+        xs='auto'
+        className={classNames(
+          styles.login,
+          'd-none d-sm-block ms-sm-auto mb-sm-5'
+        )}
+      >
+        {user ? (
+          <Link href={`/profile/${user.username}`}>
+            <Button variant='primary'>{t('Profile')}</Button>
+          </Link>
+        ) : (
+          <Button
+            onClick={() => setRegister(true)}
+            className='me-0'
+            variant='primary'
+          >
+            {t('Register')}
+          </Button>
+        )}
       </Col>
       <Modal show={showSuccess} centered onHide={() => setSuccess(false)}>
-        <ModalBody style={{ color: 'black' }}>
-          {t('Email_Sent')}
-        </ModalBody>
+        <ModalBody style={{ color: 'black' }}>{t('Email_Sent')}</ModalBody>
       </Modal>
       <Modal show={showRegister} centered onHide={() => setRegister(false)}>
         <Modal.Body className='m-3'>
-          {showForgor
-            ? <ForgorForm defaultValue={true} />
-            : (
-              <Form onSubmit={submitRegister}>
-                <Row>
-                  <Form.Group as={Col} >
-                    <Form.Label htmlFor='username' style={{ color: 'black' }}>Username:</Form.Label>
-                    <Form.Control required type='text' name='username' />
-                  </Form.Group>
+          {showForgor ? (
+            <ForgorForm defaultValue={true} />
+          ) : (
+            <Form onSubmit={submitRegister}>
+              <Row>
+                <Form.Group as={Col}>
+                  <Form.Label htmlFor='username' style={{ color: 'black' }}>
+                    Username:
+                  </Form.Label>
+                  <Form.Control required type='text' name='username' />
+                </Form.Group>
 
-                  <Form.Group as={Col} >
-                    <Form.Label htmlFor='email' style={{ color: 'black' }}>Email:</Form.Label>
-                    <Form.Control required type='text' name='email' />
-                  </Form.Group>
-                </Row>
-                <Row className='mt-3'>
-                  <Form.Group as={Col} >
-                    <Form.Label htmlFor='pfp' style={{ color: 'black' }}>Profile pic:</Form.Label>
-                    <Form.Control type='file' name='pfp' />
-                  </Form.Group>
-                </Row>
-                <Row className='mt-4'>
-                  <Col md={4} className='mx-auto'>
-                    <SubmitButton loading={loadingRegister} type='submit' className='w-100' color='primary'>Register</SubmitButton>
-                  </Col>
-                </Row>
-              </Form>
-            )
-          }
+                <Form.Group as={Col}>
+                  <Form.Label htmlFor='email' style={{ color: 'black' }}>
+                    Email:
+                  </Form.Label>
+                  <Form.Control required type='text' name='email' />
+                </Form.Group>
+              </Row>
+              <Row className='mt-3'>
+                <Form.Group as={Col}>
+                  <Form.Label htmlFor='pfp' style={{ color: 'black' }}>
+                    Profile pic:
+                  </Form.Label>
+                  <Form.Control type='file' name='pfp' />
+                </Form.Group>
+              </Row>
+              <Row className='mt-4'>
+                <Col md={4} className='mx-auto'>
+                  <SubmitButton
+                    loading={loadingRegister}
+                    type='submit'
+                    className='w-100'
+                    color='primary'
+                  >
+                    Register
+                  </SubmitButton>
+                </Col>
+              </Row>
+            </Form>
+          )}
         </Modal.Body>
       </Modal>
     </>
   )
 }
 
-export default function Header () {
+export default function Header() {
   const router = useRouter()
 
   const queryHeader = gql`
     query {
-      config(name: "banner"){
+      config(name: "banner") {
         value
       }
     }
@@ -321,67 +389,93 @@ export default function Header () {
 
   const { data: headerData } = useQuery(queryHeader)
 
-  return <>
-    <header>
-      <div id={styles.bannerBg} style={headerData ? { backgroundImage: `url('/_next/image?w=3840&q=100&url=${`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}` } : {}}>
-        <Container>
-          <Row className='h-100'>
-            <Col className='my-auto'>
-              <Link href="/">
-                <Image alt='SOC Logo' src={router.locale === 'es' ? logoES : logo} height={150} width={265} />
-              </Link>
-            </Col>
+  return (
+    <>
+      <header>
+        <div
+          id={styles.bannerBg}
+          style={
+            headerData
+              ? {
+                  backgroundImage: `url('/_next/image?w=3840&q=100&url=${`https://cdn.sittingonclouds.net/live/${headerData.config.value}.png`}`
+                }
+              : {}
+          }
+        >
+          <Container>
+            <Row className='h-100'>
+              <Col className='my-auto'>
+                <Link href='/'>
+                  <Image
+                    alt='SOC Logo'
+                    src={router.locale === 'es' ? logoES : logo}
+                    height={150}
+                    width={265}
+                  />
+                </Link>
+              </Col>
 
-            {/* <LangSelector /> */}
-            <RegisterProfileButton />
-            <LoginButton />
-          </Row>
-        </Container>
-      </div>
+              {/* <LangSelector /> */}
+              <RegisterProfileButton />
+              <LoginButton />
+            </Row>
+          </Container>
+        </div>
 
-      <Navbar expand='sm' bg="dark" variant="dark" className='py-md-0'>
-        <Container>
-          <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-          <Navbar.Collapse id="responsive-navbar-nav">
-            <Nav className="me-auto d-flex align-items-center">
-              <RegisterProfileButton navMobile />
-              <LoginButton navMobile />
-              <NavLink href='/' name='Home' />
-              <NavLink href='/last-added' name='Last Added' />
-              <NavLink href='/album/list' name='Album List' />
-              <Dropdown name='Games' items={[
-                { name: 'Albums', href: '/game' },
-                { name: 'Series', href: '/series/list' },
-                { name: 'Publishers', href: '/publisher/list' },
-                { name: 'Platforms', href: '/platform/list' },
-                { name: 'Game List', href: '/game/list' }
-              ]} />
-              <Dropdown name='Animation' items={[
-                { name: 'Albums', href: '/anim' },
-                { name: 'Animation List', href: '/anim/list' },
-                { name: 'Studios', href: '/studio/list' }
-              ]} />
+        <Navbar expand='sm' bg='dark' variant='dark' className='py-md-0'>
+          <Container>
+            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
+            <Navbar.Collapse id='responsive-navbar-nav'>
+              <Nav className='me-auto d-flex align-items-center'>
+                <RegisterProfileButton navMobile />
+                <LoginButton navMobile />
+                <NavLink href='/' name='Home' />
+                <NavLink href='/last-added' name='Last Added' />
+                <NavLink href='/album/list' name='Album List' />
+                <Dropdown
+                  name='Games'
+                  items={[
+                    { name: 'Albums', href: '/game' },
+                    { name: 'Series', href: '/series/list' },
+                    { name: 'Publishers', href: '/publisher/list' },
+                    { name: 'Platforms', href: '/platform/list' },
+                    { name: 'Game List', href: '/game/list' }
+                  ]}
+                />
+                <Dropdown
+                  name='Animation'
+                  items={[
+                    { name: 'Albums', href: '/anim' },
+                    { name: 'Animation List', href: '/anim/list' },
+                    { name: 'Studios', href: '/studio/list' }
+                  ]}
+                />
 
-              <NavLink href='/request' name='Requests' privileged />
-              <SubmitAlbum />
-              <Dropdown name='Admin Grounds' privileged items={[
-                { name: 'Manage Albums', href: '/admin/1' },
-                { name: 'Manage Users', href: '/admin/user' },
-                { name: 'Manage Requests', href: '/admin/request' },
-                { name: 'Manage Submissions', href: '/admin/submission' }
-              ]} />
-            </Nav>
-          </Navbar.Collapse>
-          <SearchBar />
-        </Container>
-      </Navbar>
-    </header>
-  </>
+                <NavLink href='/request' name='Requests' privileged />
+                <SubmitAlbum />
+                <Dropdown
+                  name='Admin Grounds'
+                  privileged
+                  items={[
+                    { name: 'Manage Albums', href: '/admin/1' },
+                    { name: 'Manage Users', href: '/admin/user' },
+                    { name: 'Manage Requests', href: '/admin/request' },
+                    { name: 'Manage Submissions', href: '/admin/submission' }
+                  ]}
+                />
+              </Nav>
+            </Navbar.Collapse>
+            <SearchBar />
+          </Container>
+        </Navbar>
+      </header>
+    </>
+  )
 }
 
 const vgmQuery = gql`
-  query ($url: String!){
-    vgmdb(url: $url){
+  query ($url: String!) {
+    vgmdb(url: $url) {
       title
       subTitle
       releaseDate
@@ -398,13 +492,18 @@ const vgmQuery = gql`
 
 const submitQuery = gql`
   mutation ($title: String!, $vgmdb: String, $request: ID, $links: String!) {
-    submitAlbum (title: $title, vgmdb: $vgmdb, request: $request, links: $links) {
+    submitAlbum(
+      title: $title
+      vgmdb: $vgmdb
+      request: $request
+      links: $links
+    ) {
       id
     }
   }
 `
 
-function SubmitAlbum () {
+function SubmitAlbum() {
   const [show, setShow] = useState(false)
   const vgmdbRef = useRef(null)
   const titleRef = useRef(null)
@@ -412,34 +511,45 @@ function SubmitAlbum () {
   const [getVgmdb, { loading: loadingFetch }] = useLazyQuery(vgmQuery)
   const [submitMutation, { loading: loadingSubmit }] = useMutation(submitQuery)
 
-  async function fetchInfo () {
-    const { data } = await getVgmdb({ variables: { url: vgmdbRef.current.value } })
+  async function fetchInfo() {
+    const { data } = await getVgmdb({
+      variables: { url: vgmdbRef.current.value }
+    })
     titleRef.current.value = data?.vgmdb?.title
   }
 
-  function submit (ev) {
+  function submit(ev) {
     ev.persist()
     ev.preventDefault()
 
     const variables = serialize(ev.target, { hash: true })
-    submitMutation({ variables })
-      .then(() => {
-        toast.success('Album submitted for review!')
-        ev.target.reset()
-        setShow(false)
-      })
+    submitMutation({ variables }).then(() => {
+      toast.success('Album submitted for review!')
+      ev.target.reset()
+      setShow(false)
+    })
   }
 
   return (
     <>
-      <NavLink href='/submit' name='Submit Album' privileged onClick={() => setShow(true)} />
+      <NavLink
+        href='/submit'
+        name='Submit Album'
+        privileged
+        onClick={() => setShow(true)}
+      />
       <Modal show={show} centered onHide={() => setShow(false)}>
         <Modal.Body className='m-3'>
           <Form onSubmit={submit} style={{ color: 'black' }}>
             <Row>
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='title' >Title:</Form.Label>
-                <Form.Control required type='text' name='title' ref={titleRef} />
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='title'>Title:</Form.Label>
+                <Form.Control
+                  required
+                  type='text'
+                  name='title'
+                  ref={titleRef}
+                />
               </Form.Group>
             </Row>
             <Row className='mt-3'>
@@ -449,22 +559,42 @@ function SubmitAlbum () {
               </Form.Group>
 
               <Form.Group as={Col} className='col-auto mt-auto'>
-                <ButtonLoader color='primary' loading={loadingFetch} onClick={fetchInfo}>Fetch info</ButtonLoader>
+                <ButtonLoader
+                  color='primary'
+                  loading={loadingFetch}
+                  onClick={fetchInfo}
+                >
+                  Fetch info
+                </ButtonLoader>
               </Form.Group>
             </Row>
 
             <RequestCheck hideTag element={vgmdbRef.current} className='mt-3' />
 
             <Row className='mt-3'>
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='links'><Link style={{ color: '#0d6efd', textDecoration: 'underline' }} href="https://www.squid-board.org/">Forum Links</Link> / Download Links:</Form.Label>
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='links'>
+                  <Link
+                    style={{ color: '#0d6efd', textDecoration: 'underline' }}
+                    href='https://www.squid-board.org/'
+                  >
+                    Forum Links
+                  </Link>{' '}
+                  / Download Links:
+                </Form.Label>
                 <Form.Control required as='textarea' name='links' />
               </Form.Group>
             </Row>
 
             <Row className='mt-3'>
               <Col>
-                <SubmitButton loading={loadingSubmit} type='submit' color='primary'>Submit</SubmitButton>
+                <SubmitButton
+                  loading={loadingSubmit}
+                  type='submit'
+                  color='primary'
+                >
+                  Submit
+                </SubmitButton>
               </Col>
             </Row>
           </Form>
@@ -474,19 +604,22 @@ function SubmitAlbum () {
   )
 }
 
-function Dropdown (props) {
+function Dropdown(props) {
   const { name, items = [], privileged = false } = props
 
   const { user } = useUser()
   const t = useTranslations('header')
 
-  const pages = user?.pages.map(p => p.url) || []
-  const links = items.filter(i => !privileged || pages.includes(i.href))
+  const pages = user?.pages.map((p) => p.url) || []
+  const links = items.filter((i) => !privileged || pages.includes(i.href))
 
   if (links.length === 0) return null
 
   return (
-    <NavDropdown title={t(name)} className={classNames(styles.navLink, styles.dropMenu)}>
+    <NavDropdown
+      title={t(name)}
+      className={classNames(styles.navLink, styles.dropMenu)}
+    >
       {links.map(({ href, name }, i) => (
         <Link key={i} href={href} passHref legacyBehavior>
           <NavDropdown.Item>{t(name)}</NavDropdown.Item>
@@ -496,34 +629,41 @@ function Dropdown (props) {
   )
 }
 
-function NavLink (props) {
+function NavLink(props) {
   const { href, name, onClick, className, privileged } = props
 
   const { user } = useUser()
   const t = useTranslations('header')
 
   const title = t(name)
-  const pages = user?.pages.map(p => p.url) || []
+  const pages = user?.pages.map((p) => p.url) || []
 
   if (privileged) {
     if (!user || !pages.includes(href)) return null
   }
 
-  return onClick
-    ? <a onClick={onClick} className={classNames(styles.navLink, 'nav-link', className)}>{title}</a>
-    : (
-      <Link href={href} passHref legacyBehavior>
-        <Nav.Link className={classNames(styles.navLink, className)}>{title}</Nav.Link>
-      </Link>
-    )
+  return onClick ? (
+    <a
+      onClick={onClick}
+      className={classNames(styles.navLink, 'nav-link', className)}
+    >
+      {title}
+    </a>
+  ) : (
+    <Link href={href} passHref legacyBehavior>
+      <Nav.Link className={classNames(styles.navLink, className)}>
+        {title}
+      </Nav.Link>
+    </Link>
+  )
 }
 
-function SearchBar () {
+function SearchBar() {
   const ref = useRef(null)
   const [open, setOpen] = useState(false)
   const router = useRouter()
 
-  const onKeyDownHandler = e => {
+  const onKeyDownHandler = (e) => {
     const query = ref.current.value.trim()
     if (e.keyCode === 13 && ref.current && query.length > 0) {
       router.push({ pathname: '/search', query: { q: query } })
@@ -531,12 +671,24 @@ function SearchBar () {
     }
   }
 
-  useEffect(() => { if (open) ref.current.focus() }, [open])
+  useEffect(() => {
+    if (open) ref.current.focus()
+  }, [open])
 
   return (
     <div id={styles.search} className={classNames({ 'w-100': open })}>
-      <input ref={ref} onBlur={() => setOpen(false)} onKeyDown={onKeyDownHandler} type='text' style={{ display: open ? 'block' : 'none' }} />
-      <i className={`fas fa-${open ? 'times' : 'search'}`} style={{ cursor: 'pointer' }} onClick={() => setOpen(!open)} />
+      <input
+        ref={ref}
+        onBlur={() => setOpen(false)}
+        onKeyDown={onKeyDownHandler}
+        type='text'
+        style={{ display: open ? 'block' : 'none' }}
+      />
+      <i
+        className={`fas fa-${open ? 'times' : 'search'}`}
+        style={{ cursor: 'pointer' }}
+        onClick={() => setOpen(!open)}
+      />
     </div>
   )
 }

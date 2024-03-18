@@ -16,13 +16,13 @@ const albumClassName = 'col-6 col-md-3'
 const limit = 12
 
 const releaseQuery = gql`
-  query Released($limit: Int){
+  query Released($limit: Int) {
     released: searchAlbum(
-      limit: $limit,
-      status: ["show","coming"],
+      limit: $limit
+      status: ["show", "coming"]
       order: ["releaseDate", "createdAt"]
-    ){
-      rows{
+    ) {
+      rows {
         id
         status
         title
@@ -32,23 +32,24 @@ const releaseQuery = gql`
   }
 `
 
-async function RecentReleases () {
+async function RecentReleases() {
   const client = await getClient()
-  const { data } = await client.query({ query: releaseQuery, variables: { limit } })
+  const { data } = await client.query({
+    query: releaseQuery,
+    variables: { limit }
+  })
   const { released } = data
   const { rows } = released
 
-  return (
-    rows.map(row => (
+  return rows.map((row) => (
       <AlbumBox key={row.id} className={albumClassName} {...row} />
     ))
-  )
 }
 
 const addedQuery = gql`
-  query LastAdde ($limit: Int){
-    added: searchAlbum(limit: $limit, status: ["show"]){
-      rows{
+  query LastAdde($limit: Int) {
+    added: searchAlbum(limit: $limit, status: ["show"]) {
+      rows {
         id
         status
         title
@@ -58,20 +59,21 @@ const addedQuery = gql`
   }
 `
 
-async function LastAdded () {
+async function LastAdded() {
   const client = await getClient()
-  const { data } = await client.query({ query: addedQuery, variables: { limit } })
+  const { data } = await client.query({
+    query: addedQuery,
+    variables: { limit }
+  })
   const { added } = data
   const { rows } = added
 
-  return (
-    rows.map(row => (
+  return rows.map((row) => (
       <AlbumBox key={row.id} className={albumClassName} {...row} />
     ))
-  )
 }
 
-export default function Home (props) {
+export default function Home(props) {
   // const { params } = props
   // const { locale } = params
 
@@ -84,11 +86,15 @@ export default function Home (props) {
       <div className='col p-3 mx-3'>
         <div className='row'>
           <div className='col'>
-            <h1 className={classNames(styles.title, 'p-3')}>{t('Recent Releases')}</h1>
+            <h1 className={classNames(styles.title, 'p-3')}>
+              {t('Recent Releases')}
+            </h1>
           </div>
         </div>
         <div className='row'>
-          <Suspense fallback={<AlbumFallback count={8} className={albumClassName} />}>
+          <Suspense
+            fallback={<AlbumFallback count={8} className={albumClassName} />}
+          >
             <RecentReleases />
           </Suspense>
         </div>
@@ -109,11 +115,15 @@ export default function Home (props) {
 
         <div className='row'>
           <div className='col'>
-            <h1 className={classNames(styles.title, 'p-3')} id='last-added'>{t('Last Added')}</h1>
+            <h1 className={classNames(styles.title, 'p-3')} id='last-added'>
+              {t('Last Added')}
+            </h1>
           </div>
         </div>
         <div className='row'>
-          <Suspense fallback={<AlbumFallback count={8} className={albumClassName} />}>
+          <Suspense
+            fallback={<AlbumFallback count={8} className={albumClassName} />}
+          >
             <LastAdded />
           </Suspense>
         </div>

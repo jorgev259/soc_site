@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState, useRef } from 'react'
 import { gql, useApolloClient } from '@apollo/client'
 import { MultiSelect } from 'react-multi-select-component'

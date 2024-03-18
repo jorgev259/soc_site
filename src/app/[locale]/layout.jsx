@@ -14,7 +14,8 @@ import '@/styles/layout.scss'
 export const metadata = {
   metadataBase: new URL('https://sittingonclouds.net'),
   title: 'Sitting on Clouds',
-  description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
+  description:
+    'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
   default: {
     title: 'Sitting on Clouds'
   },
@@ -23,10 +24,9 @@ export const metadata = {
     url: '/',
     siteName: 'Sitting on Clouds',
     title: 'Sitting on Clouds — High Quality soundtrack library',
-    description: 'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
-    images: [
-      { url: '/img/assets/clouds_thumb.png', width: 250, height: 250 }
-    ]
+    description:
+      'Largest Video Game & Animation Soundtrack サウンドトラック Archive',
+    images: [{ url: '/img/assets/clouds_thumb.png', width: 250, height: 250 }]
   },
   twitter: {
     card: 'summary'
@@ -42,36 +42,39 @@ export const viewport = {
   return locales.map((locale) => ({ locale }))
 } */
 
-async function Layout (props) {
+async function Layout(props) {
   const { children, params } = props
   const { locale } = params
 
   // unstable_setRequestLocale(locale)
 
   return (
-    <html lang={locale} data-bs-theme="dark">
+    <html lang={locale} data-bs-theme='dark'>
       <body>
         <ApolloWrapper>
           <ToastContainer newestOnTop />
-          <div id="modal" />
+          <div id='modal' />
           <Header />
-          <div className='flex-grow-1 container-fluid'>
-            {children}
-          </div>
+          <div className='flex-grow-1 container-fluid'>{children}</div>
           <Footer />
         </ApolloWrapper>
-        <Script src={isDev ? '/js/bootstrap.bundle.js' : '/js/bootstrap.bundle.min.js'} />
+        <Script
+          src={
+            isDev ? '/js/bootstrap.bundle.js' : '/js/bootstrap.bundle.min.js'
+          }
+        />
       </body>
     </html>
   )
 }
 
-function Footer () {
+function Footer() {
   return (
     <Ad>
       <footer>
         <iframe
-          id='id01_62693' title='id01_62693'
+          id='id01_62693'
+          title='id01_62693'
           src='https://www.play-asia.com/38/190%2C000000%2Cnone%2C0%2C0%2C0%2C0%2CFFFFFF%2C000000%2Cleft%2C0%2C0-391-76a-707gw6-062-782i-29466-901vq93-33iframe_banner-401-4450'
         />
       </footer>

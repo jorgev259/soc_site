@@ -2,7 +2,9 @@ import Image from 'next/image'
 import classNames from 'classnames'
 import { gql } from '@apollo/client'
 // eslint-disable-next-line camelcase
-import { getTranslations/*, unstable_setRequestLocale */ } from 'next-intl/server'
+import {
+  getTranslations /*, unstable_setRequestLocale */
+} from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
 
@@ -26,7 +28,8 @@ import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentC
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 
 const metadataFields = [
-  'title', 'subTitle',
+  'title',
+  'subTitle',
   ` artists {
       slug
       name
@@ -81,7 +84,7 @@ const pageFields = `
   favorites
 `
 
-const getAlbumQuery = fields => gql`
+const getAlbumQuery = (fields) => gql`
   query GetAlbum ($id: ID!) {
     album(id: $id){
       id
@@ -90,14 +93,17 @@ const getAlbumQuery = fields => gql`
   }
 `
 
-export async function generateMetadata (context) {
+export async function generateMetadata(context) {
   const { params } = context
   const { id } = params
 
-  const { data } = await getClient().query({ query: getAlbumQuery(metadataFields), variables: { id } })
+  const { data } = await getClient().query({
+    query: getAlbumQuery(metadataFields),
+    variables: { id }
+  })
   const { album } = data
   const { title, subTitle, artists } = album
-  const description = subTitle || artists.map(a => a.name).join(' - ')
+  const description = subTitle || artists.map((a) => a.name).join(' - ')
 
   return {
     title,
@@ -106,18 +112,19 @@ export async function generateMetadata (context) {
       url: `/album/${id}`,
       title,
       description,
-      images: [
-        { url: getNextCDNUrl(id, 'album') }
-      ]
+      images: [{ url: getNextCDNUrl(id, 'album') }]
     }
   }
 }
 
-export async function generateViewport (context) {
+export async function generateViewport(context) {
   const { params } = context
   const { id } = params
 
-  const { data } = await getClient().query({ query: getAlbumQuery(viewportFields), variables: { id } })
+  const { data } = await getClient().query({
+    query: getAlbumQuery(viewportFields),
+    variables: { id }
+  })
   const { album } = data
 
   if (!album) return notFound()
@@ -128,7 +135,7 @@ export async function generateViewport (context) {
   }
 }
 
-export default function AlbumPage (context) {
+export default function AlbumPage(context) {
   const { params } = context
   const { /* locale, */ id } = params
 
@@ -138,18 +145,27 @@ export default function AlbumPage (context) {
     <div className={classNames('row', styles.container)}>
       <div className={classNames('col px-0', styles.backgroundContainer)}>
         <div>
-          <Image sizes='100vw' src={getCDNUrl(id, 'album')} alt='' aria-hidden='true' fill quality={80} />
+          <Image
+            sizes='100vw'
+            src={getCDNUrl(id, 'album')}
+            alt=''
+            aria-hidden='true'
+            fill
+            quality={80}
+          />
         </div>
       </div>
 
-      <div className={classNames('col px-0 px-md-5 pt-3 mx-auto', styles.content)}>
+      <div
+        className={classNames('col px-0 px-md-5 pt-3 mx-auto', styles.content)}
+      >
         <Content {...context} />
       </div>
     </div>
   )
 }
 
-async function Content (context) {
+async function Content(context) {
   const { params } = context
   const { id } = params
 
@@ -157,7 +173,10 @@ async function Content (context) {
   const tComment = await getTranslations('albumPage.comment')
   const { isFAU } = await getSessionInfo()
 
-  const { data } = await getClient().query({ query: getAlbumQuery(pageFields), variables: { id } })
+  const { data } = await getClient().query({
+    query: getAlbumQuery(pageFields),
+    variables: { id }
+  })
   const { album } = data
 
   if (!album) return notFound()
@@ -173,11 +192,18 @@ async function Content (context) {
             <div className='row'>
               <div className='col'>
                 <h1 className={styles.title}>{album.title}</h1>
-                <h6 className={styles.subTitle} style={{ whiteSpace: 'pre-wrap' }}>{album.subTitle}</h6>
+                <h6
+                  className={styles.subTitle}
+                  style={{ whiteSpace: 'pre-wrap' }}
+                >
+                  {album.subTitle}
+                </h6>
               </div>
             </div>
             <div className='row'>
-              <div className='col'><InfoTable album={album} /></div>
+              <div className='col'>
+                <InfoTable album={album} />
+              </div>
             </div>
             <UserButtons id={album.id} />
           </div>
@@ -189,7 +215,14 @@ async function Content (context) {
           <div className='blackBox h-100 d-flex flex-column'>
             <div className='row'>
               <div className='col'>
-                <h1 className={classNames('text-center text-uppercase', styles.title)}>{t('Tracklist')}</h1>
+                <h1
+                  className={classNames(
+                    'text-center text-uppercase',
+                    styles.title
+                  )}
+                >
+                  {t('Tracklist')}
+                </h1>
               </div>
             </div>
             <div className='row px-3 flex-grow-1 '>
@@ -207,9 +240,22 @@ async function Content (context) {
                 <div className='col col-auto px-0'>
                   <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
                 </div>
-                <div xs='auto' className='col col-auto d-flex align-items-center ps-0'>
-                  <Link href={album.vgmdb} className='ms-2' target='_blank' rel='noopener noreferrer' >
-                    <Image width={100} height={30} alt={'VGMdb'} src={vgmdbLogo} />
+                <div
+                  xs='auto'
+                  className='col col-auto d-flex align-items-center ps-0'
+                >
+                  <Link
+                    href={album.vgmdb}
+                    className='ms-2'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    <Image
+                      width={100}
+                      height={30}
+                      alt={'VGMdb'}
+                      src={vgmdbLogo}
+                    />
                   </Link>
                 </div>
               </div>
@@ -219,7 +265,8 @@ async function Content (context) {
                 <ProviderBox stores={album.stores}>
                   {t('Buy_Original')}
                 </ProviderBox>
-              </div>)}
+              </div>
+            )}
             <hr />
             <DownloadList downloads={album.downloads} />
           </div>
@@ -228,9 +275,16 @@ async function Content (context) {
 
       <div className='row'>
         <div className='col my-3'>
-          <NextIntlClientProvider messages={getMessageObject(tComment, [
-            'Comment_Login', 'Comment_Anon', 'Save comment', 'Add comment', 'Edit comment', 'Comment_error'
-          ])}>
+          <NextIntlClientProvider
+            messages={getMessageObject(tComment, [
+              'Comment_Login',
+              'Comment_Anon',
+              'Save comment',
+              'Add comment',
+              'Edit comment',
+              'Comment_error'
+            ])}
+          >
             <CommentCarrousel isFAU={isFAU} id={album.id} />
           </NextIntlClientProvider>
         </div>
@@ -241,7 +295,7 @@ async function Content (context) {
   )
 }
 
-async function UserButtons (props) {
+async function UserButtons(props) {
   const { id } = props
 
   const { session, isFAU } = await getSessionInfo()
@@ -254,58 +308,79 @@ async function UserButtons (props) {
     <>
       <div className='row mt-2'>
         <div className='col'>
-          {isFAU
-            ? <FavoriteSection id={id} />
-            : (
-              <button type="button" className="w-100 rounded-3 btn btn-outline-light" data-bs-toggle="modal" data-bs-target="#loginModal">
-                {tFav('Favorite_Login')}
-              </button>
-            )}
+          {isFAU ? (
+            <FavoriteSection id={id} />
+          ) : (
+            <button
+              type='button'
+              className='w-100 rounded-3 btn btn-outline-light'
+              data-bs-toggle='modal'
+              data-bs-target='#loginModal'
+            >
+              {tFav('Favorite_Login')}
+            </button>
+          )}
         </div>
       </div>
-      {isFAU && permissions.includes('UPDATE')
-        ? (
-          <div className='row mt-3'>
-            <div className='col'>
-              <Link href={`/admin/album/${id}`}>
-                <button type="button" className="w-100 rounded-3 btn btn-outline-light">
-                  {t('Edit this album')}
-                </button>
-              </Link>
-            </div>
+      {isFAU && permissions.includes('UPDATE') ? (
+        <div className='row mt-3'>
+          <div className='col'>
+            <Link href={`/admin/album/${id}`}>
+              <button
+                type='button'
+                className='w-100 rounded-3 btn btn-outline-light'
+              >
+                {t('Edit this album')}
+              </button>
+            </Link>
           </div>
-        )
-        : null}
+        </div>
+      ) : null}
     </>
   )
 }
 
-async function ProviderBox (props) {
+async function ProviderBox(props) {
   const { stores, children } = props
-  const filterStores = stores.filter(s => s.provider !== 'SOON')
+  const filterStores = stores.filter((s) => s.provider !== 'SOON')
 
   return (
     <div className={classNames('col', styles.stores)}>
-      <h1 className={classNames('text-center mb-0', styles.title)} style={{ fontSize: '30px' }}>{children}</h1>
+      <h1
+        className={classNames('text-center mb-0', styles.title)}
+        style={{ fontSize: '30px' }}
+      >
+        {children}
+      </h1>
 
-      {filterStores.length > 0
-        ? (<>
+      {filterStores.length > 0 ? (
+        <>
           <hr className='my-2' />
           <div className='row'>
             {filterStores.map(({ url, provider }, i) =>
-              provider === 'SOON'
-                ? null
-                : (
-                  <div md={6} key={i} className='col col-md-6 d-flex justify-content-center py-1'>
-                    <Link target='_blank' rel='noopener noreferrer' href={url}>
-                      <Image sizes='40vw' className="rounded" width={250} height={70} style={{ height: 'auto', width: '100%' }} alt={provider} src={`/img/provider/${provider}.jpg`} />
-                    </Link>
-                  </div>
-                )
+              provider === 'SOON' ? null : (
+                <div
+                  md={6}
+                  key={i}
+                  className='col col-md-6 d-flex justify-content-center py-1'
+                >
+                  <Link target='_blank' rel='noopener noreferrer' href={url}>
+                    <Image
+                      sizes='40vw'
+                      className='rounded'
+                      width={250}
+                      height={70}
+                      style={{ height: 'auto', width: '100%' }}
+                      alt={provider}
+                      src={`/img/provider/${provider}.jpg`}
+                    />
+                  </Link>
+                </div>
+              )
             )}
           </div>
-        </>)
-        : null}
+        </>
+      ) : null}
     </div>
   )
 }

@@ -3,38 +3,47 @@ import serialize from 'form-serialize'
 import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
-import SubmitButton from '@/next/components/server/SubmitButton'
+import SubmitButton from '@/next/components/common/SubmitButton'
 import { StudioSelector } from '../Selectors'
 
 const mutation = gql`
-mutation CreateAnimation($cover:Upload, $subTitle:String, $releaseDate:String!, $title:String!, $studios: [String]!){
-  createAnimation(
-    title: $title
-    subTitle: $subTitle
-    studios: $studios   
-    releaseDate: $releaseDate
-    cover: $cover
+  mutation CreateAnimation(
+    $cover: Upload
+    $subTitle: String
+    $releaseDate: String!
+    $title: String!
+    $studios: [String]!
   ) {
+    createAnimation(
+      title: $title
+      subTitle: $subTitle
+      studios: $studios
+      releaseDate: $releaseDate
+      cover: $cover
+    ) {
       id
     }
   }
 `
 
-export default function AddAnimation () {
+export default function AddAnimation() {
   const [mutate, { loading }] = useMutation(mutation)
 
-  function handleSubmitForm (e) {
+  function handleSubmitForm(e) {
     e.preventDefault()
     e.persist()
     const animation = serialize(e.target, { hash: true })
     animation.cover = e.target.elements.cover.files[0]
-    animation.releaseDate = new Date(animation.releaseDate).toISOString().substring(0, 10)
+    animation.releaseDate = new Date(animation.releaseDate)
+      .toISOString()
+      .substring(0, 10)
 
     mutate({ mutation, variables: animation })
-      .then(results => {
+      .then((results) => {
         toast.success(`Added "${animation.title}" animation succesfully!`)
         e.target.reset()
-      }).catch(err => {
+      })
+      .catch((err) => {
         console.log(err)
         toast.error(err.message, { autoclose: false })
       })
@@ -42,7 +51,9 @@ export default function AddAnimation () {
 
   return (
     <>
-      <div id='addAnim' className='mb-2 mt-3'>Add Animation</div>
+      <div id='addAnim' className='mb-2 mt-3'>
+        Add Animation
+      </div>
       <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
         <Row>
           <Col md={6}>
@@ -80,7 +91,9 @@ export default function AddAnimation () {
         </Row>
         <Row>
           <Col className='m-auto'>
-            <SubmitButton loading={loading} type='submit' color='primary'>Add Animation</SubmitButton>
+            <SubmitButton loading={loading} type='submit' color='primary'>
+              Add Animation
+            </SubmitButton>
           </Col>
         </Row>
       </Form>

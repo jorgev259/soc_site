@@ -1,3 +1,4 @@
+'use client'
 import { useEffect, useState, useRef } from 'react'
 import { Button, Col, Row, Form, FormControl } from 'react-bootstrap'
 import { SimpleSelector } from './Selectors'
@@ -43,7 +44,7 @@ export const providersDownload = [
   { value: 'MIRROR', label: 'Mirror' }
 ]
 
-export function Navigation ({ title }) {
+export function Navigation({ title }) {
   return (
     <div className='sticky-top'>
       <div className='mb-2 mt-3 text-center'>Navigation</div>
@@ -56,7 +57,9 @@ export function Navigation ({ title }) {
         <a href='#addStudio'>Add Studio</a>
         <a href='#addAnim'>Add Animation</a>
 
-        <a className='mt-3' href='#editPub'>Edit Publisher</a>
+        <a className='mt-3' href='#editPub'>
+          Edit Publisher
+        </a>
         <a href='#editPlat'>Edit Platform</a>
         <a href='#editSeries'>Edit Series</a>
         <a href='#editGame'>Edit Game</a>
@@ -67,7 +70,7 @@ export function Navigation ({ title }) {
   )
 }
 
-export function SharedForms () {
+export function SharedForms() {
   return (
     <>
       <AddPublisher />
@@ -87,19 +90,19 @@ export function SharedForms () {
   )
 }
 
-export function DiscList (props) {
+export function DiscList(props) {
   const { defaults = [{ number: 0 }] } = props
   const [keys, setKeys] = useState(defaults)
 
-  function addEmptyDisc () {
+  function addEmptyDisc() {
     const lastDisc = keys[keys.length - 1]
 
     setKeys([...keys, { number: lastDisc ? lastDisc.number + 1 : 0 }])
   }
 
-  function clearEmptyDiscs () {
+  function clearEmptyDiscs() {
     const newKeys = []
-    keys.forEach(k => {
+    keys.forEach((k) => {
       const body = document.getElementById(`discInput${k.number}`).value
       if (!body || body.length === 0) return
 
@@ -109,29 +112,39 @@ export function DiscList (props) {
     setKeys(newKeys)
   }
 
-  useEffect(() => { setKeys(defaults) }, [defaults])
+  useEffect(() => {
+    setKeys(defaults)
+  }, [defaults])
 
   return (
     <>
       <Row>
         <Col>
-          <Button className='me-2' color='primary' onClick={addEmptyDisc}>Add Disc</Button>
-          <Button color='primary' onClick={clearEmptyDiscs}>Remove empty discs</Button>
+          <Button className='me-2' color='primary' onClick={addEmptyDisc}>
+            Add Disc
+          </Button>
+          <Button color='primary' onClick={clearEmptyDiscs}>
+            Remove empty discs
+          </Button>
         </Col>
       </Row>
 
       <Row className='mt-3'>
-        {keys.map(disc => <DiscField key={disc.number} {...disc} />)}
+        {keys.map((disc) => (
+          <DiscField key={disc.number} {...disc} />
+        ))}
       </Row>
     </>
   )
 }
 
-function DiscField (props) {
+function DiscField(props) {
   const { number, body = '' } = props
   const formRef = useRef(null)
 
-  useEffect(() => { formRef.current.value = body }, [body])
+  useEffect(() => {
+    formRef.current.value = body
+  }, [body])
 
   return (
     <Col md={6} className='mb-3'>
@@ -139,7 +152,14 @@ function DiscField (props) {
         <Col md={12}>
           <Form.Group>
             <Form.Label>Disc {number + 1}:</Form.Label>
-            <FormControl ref={formRef} required name='discs[][body]' as='textarea' id={`discInput${number}`} defaultValue={body} />
+            <FormControl
+              ref={formRef}
+              required
+              name='discs[][body]'
+              as='textarea'
+              id={`discInput${number}`}
+              defaultValue={body}
+            />
           </Form.Group>
         </Col>
       </Row>
@@ -147,9 +167,11 @@ function DiscField (props) {
   )
 }
 
-export function StoreDownloads (props) {
+export function StoreDownloads(props) {
   const defaults = props.defaults || []
-  const [keys, setKeys] = useState(props.defaults ? defaults.map((d, i) => i) : [0])
+  const [keys, setKeys] = useState(
+    props.defaults ? defaults.map((d, i) => i) : [0]
+  )
 
   useEffect(() => {
     if (keys.length === 0) setKeys([0])
@@ -159,10 +181,19 @@ export function StoreDownloads (props) {
     <>
       <Row>
         <Col>
-          <Button className='me-2' color='primary' onClick={() => setKeys([...keys, keys[keys.length - 1] + 1])}>
+          <Button
+            className='me-2'
+            color='primary'
+            onClick={() => setKeys([...keys, keys[keys.length - 1] + 1])}
+          >
             Add Store link
           </Button>
-          <Button color='primary' onClick={() => setKeys(clearKeys(keys, ['storeInput']))}>Remove empty links</Button>
+          <Button
+            color='primary'
+            onClick={() => setKeys(clearKeys(keys, ['storeInput']))}
+          >
+            Remove empty links
+          </Button>
         </Col>
       </Row>
 
@@ -174,14 +205,29 @@ export function StoreDownloads (props) {
                 <Form.Group>
                   <Form.Label>Provider:</Form.Label>
                   <SimpleSelector
-                    isSingle name={`stores[${i}][provider]`} defaultValue={defaults[key] ? providers.find(e => e.value === defaults[key].provider) : providers[0]} options={providers}
+                    isSingle
+                    name={`stores[${i}][provider]`}
+                    defaultValue={
+                      defaults[key]
+                        ? providers.find(
+                            (e) => e.value === defaults[key].provider
+                          )
+                        : providers[0]
+                    }
+                    options={providers}
                   />
                 </Form.Group>
               </Col>
               <Col md={6}>
                 <Form.Group>
                   <Form.Label>Url:</Form.Label>
-                  <FormControl required name={`stores[${i}][url]`} defaultValue={defaults[key] ? defaults[key].url : ''} id={`storeInput${key}`} type='text' />
+                  <FormControl
+                    required
+                    name={`stores[${i}][url]`}
+                    defaultValue={defaults[key] ? defaults[key].url : ''}
+                    id={`storeInput${key}`}
+                    type='text'
+                  />
                 </Form.Group>
               </Col>
             </Row>
@@ -192,17 +238,17 @@ export function StoreDownloads (props) {
   )
 }
 
-function DownloadList (props) {
+function DownloadList(props) {
   const { valueList = [], length = 0, setValueList, prefix = 0 } = props
 
-  function removeItem (index) {
+  function removeItem(index) {
     const newArray = [...valueList]
     newArray.splice(index, 1)
 
     setValueList(newArray)
   }
 
-  function removeLink (i, i2) {
+  function removeLink(i, i2) {
     const newArray = [...valueList]
     const newLinks = [...newArray[i].links]
 
@@ -212,96 +258,129 @@ function DownloadList (props) {
     setValueList(newArray)
   }
 
-  function addLink (i) {
+  function addLink(i) {
     const newArray = [...valueList]
-    const newLinks = [...newArray[i].links, { id: `n${newArray[i].links.length}` }]
+    const newLinks = [
+      ...newArray[i].links,
+      { id: `n${newArray[i].links.length}` }
+    ]
 
     newArray[i] = { ...newArray[i], links: newLinks }
 
     setValueList(newArray)
   }
 
-  return (
-    valueList.map((cat, i) =>
-      <Row key={cat.id}>
-        <Col>
-          <Row className='mb-3'>
+  return valueList.map((cat, i) => (
+    <Row key={cat.id}>
+      <Col>
+        <Row className='mb-3'>
+          <Col>
+            <Form.Group className='mt-1'>
+              <Form.Label>Category {prefix + i + 1} title:</Form.Label>
+              <FormControl
+                defaultValue={cat.title}
+                required
+                name={`downloads[${i + prefix}][title]`}
+                type='text'
+              />
+            </Form.Group>
+          </Col>
+          <Col md='auto' className='mt-auto'>
+            <Form.Group>
+              <Button
+                color='primary'
+                onClick={() => removeItem(i)}
+                disabled={length === 1}
+              >
+                Remove category
+              </Button>
+            </Form.Group>
+          </Col>
+          <Col md='auto' className='mt-auto'>
+            <Form.Group>
+              <Button
+                className='me-2'
+                color='primary'
+                onClick={() => addLink(i)}
+              >
+                Add Download Link
+              </Button>
+            </Form.Group>
+          </Col>
+          <Col md='auto' className='mt-auto mb-3'>
+            <div className='form-check'>
+              <FormControl
+                defaultValue={cat.small}
+                type='checkbox'
+                name={`downloads[${i + prefix}][small]`}
+                className='form-check-input'
+              />
+              <Form.Label
+                className='form-check-label'
+                htmlFor={`downloads[${i + prefix}][small]`}
+              >
+                Small Title
+              </Form.Label>
+            </div>
+          </Col>
+        </Row>
+        {cat.links.map((link, i2) => (
+          <Row key={link.id} className='mb-3'>
             <Col>
-              <Form.Group className='mt-1'>
-                <Form.Label>Category {prefix + i + 1} title:</Form.Label>
-                <FormControl defaultValue={cat.title} required name={`downloads[${i + prefix}][title]`} type='text' />
-              </Form.Group>
+              <Row>
+                <Col md={4}>
+                  <Form.Group>
+                    <Form.Label>Provider:</Form.Label>
+                    <SimpleSelector
+                      isSingle
+                      defaultValue={providersDownload.find(
+                        (p) => p.value === link.provider
+                      )}
+                      name={`downloads[${i + prefix}][links][${i2}][provider]`}
+                      options={providersDownload}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group>
+                    <Form.Label>Url:</Form.Label>
+                    <FormControl
+                      defaultValue={link.url}
+                      required
+                      type='text'
+                      name={`downloads[${i + prefix}][links][${i2}][url]`}
+                    />
+                  </Form.Group>
+                </Col>
+                <Col md={4}>
+                  <Form.Group>
+                    <Form.Label>Direct Url:</Form.Label>
+                    <FormControl
+                      defaultValue={link.directUrl}
+                      required
+                      type='text'
+                      name={`downloads[${i + prefix}][links][${i2}][directUrl]`}
+                    />
+                  </Form.Group>
+                </Col>
+              </Row>
             </Col>
+
             <Col md='auto' className='mt-auto'>
               <Form.Group>
-                <Button color='primary' onClick={() => removeItem(i)} disabled={length === 1} >
-                  Remove category
+                <Button color='primary' onClick={() => removeLink(i, i2)}>
+                  Remove link
                 </Button>
               </Form.Group>
-            </Col>
-            <Col md='auto' className='mt-auto'>
-              <Form.Group>
-                <Button className='me-2' color='primary' onClick={() => addLink(i)}>
-                  Add Download Link
-                </Button>
-              </Form.Group>
-            </Col>
-            <Col md='auto' className='mt-auto mb-3'>
-              <div className='form-check'>
-                <FormControl defaultValue={cat.small} type='checkbox' name={`downloads[${i + prefix}][small]`} className='form-check-input' />
-                <Form.Label className='form-check-label' htmlFor={`downloads[${i + prefix}][small]`}>Small Title</Form.Label>
-              </div>
             </Col>
           </Row>
-          {cat.links.map((link, i2) =>
-            <Row key={link.id} className='mb-3'>
-              <Col>
-                <Row>
-                  <Col md={4}>
-                    <Form.Group>
-                      <Form.Label>Provider:</Form.Label>
-                      <SimpleSelector
-                        isSingle
-                        defaultValue={providersDownload.find(p => p.value === link.provider)}
-                        name={`downloads[${i + prefix}][links][${i2}][provider]`} options={providersDownload}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={4}>
-                    <Form.Group>
-                      <Form.Label>Url:</Form.Label>
-                      <FormControl
-                        defaultValue={link.url} required type='text'
-                        name={`downloads[${i + prefix}][links][${i2}][url]`}
-                      />
-                    </Form.Group>
-                  </Col>
-                  <Col md={4}>
-                    <Form.Group>
-                      <Form.Label>Direct Url:</Form.Label>
-                      <FormControl
-                        defaultValue={link.directUrl} required type='text'
-                        name={`downloads[${i + prefix}][links][${i2}][directUrl]`}
-                      />
-                    </Form.Group>
-                  </Col>
-                </Row>
-              </Col>
-
-              <Col md='auto' className='mt-auto'>
-                <Form.Group>
-                  <Button color='primary' onClick={() => removeLink(i, i2)}>Remove link</Button>
-                </Form.Group>
-              </Col>
-            </Row>
-          )}
-        </Col>
-      </Row>
-    )
-  )
+        ))}
+      </Col>
+    </Row>
+  ))
 }
 
-export function Downloads (props) {
+export function Downloads(props) {
   const { defaults = [] } = props
   const [defaultValues, setDefaultValues] = useState(defaults)
   const [newValues, setNewValues] = useState([])
@@ -310,11 +389,31 @@ export function Downloads (props) {
 
   return (
     <>
-      <DownloadList valueList={defaultValues} setValueList={setDefaultValues} length={length} />
-      <DownloadList valueList={newValues} setValueList={setNewValues} length={length} prefix={defaultValues.length} />
+      <DownloadList
+        valueList={defaultValues}
+        setValueList={setDefaultValues}
+        length={length}
+      />
+      <DownloadList
+        valueList={newValues}
+        setValueList={setNewValues}
+        length={length}
+        prefix={defaultValues.length}
+      />
       <Row className='mb-3'>
         <Col>
-          <Button className='me-2' color='primary' onClick={() => setNewValues([...newValues, { id: `n${newValues.length}`, links: [] }])} >Add Download Section</Button>
+          <Button
+            className='me-2'
+            color='primary'
+            onClick={() =>
+              setNewValues([
+                ...newValues,
+                { id: `n${newValues.length}`, links: [] }
+              ])
+            }
+          >
+            Add Download Section
+          </Button>
         </Col>
       </Row>
     </>

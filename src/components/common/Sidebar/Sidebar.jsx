@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
 import { Link } from '@/next/lib/navigation'
@@ -61,7 +61,7 @@ async function Highlight() {
 
   return (
     <div className='row mt-3 px-3'>
-      <div className={classNames(styles.section, 'col py-0')}>
+      <div className={clsx(styles.section, 'col py-0')}>
         <div className='row'>
           <h4
             className='text-center text-uppercase pt-1'
@@ -101,12 +101,12 @@ async function AlbumCount() {
     <Suspense
       fallback={
         <div
-          className={classNames(styles.section, 'mt-3 loadingAni')}
+          className={clsx(styles.section, 'mt-3 loadingAni')}
           style={{ height: '150px' }}
         />
       }
     >
-      <div className={classNames(styles.section, 'mt-3')}>
+      <div className={clsx(styles.section, 'mt-3')}>
         <h5 className='text-center text-uppercase' style={{ fontWeight: 700 }}>
           {t('Soundtrack Count')}: {data.albumCount}
         </h5>
@@ -123,7 +123,7 @@ async function AlbumCount() {
 function SidebarAd() {
   return (
     <Ad>
-      <div className={classNames(styles.ad, 'row flex-grow-1 mt-3')}>
+      <div className={clsx(styles.ad, 'row flex-grow-1 mt-3')}>
         <div className='col'>
           <iframe
             title='play-asia'
@@ -155,7 +155,7 @@ export default function Sidebar(props) {
   return (
     <div
       md={3}
-      className={classNames(
+      className={clsx(
         styles.root,
         'col p-3 ms-md-auto d-flex flex-column col-md-3'
       )}
@@ -183,7 +183,7 @@ export default function Sidebar(props) {
       </div>
 
       <div className='row px-3 mt-3'>
-        <div className={classNames(styles.section, 'col-md-12')}>
+        <div className={clsx(styles.section, 'col-md-12')}>
           <div className='row'>
             <div className='col d-flex pe-1'>
               <div className='ms-auto'>
@@ -262,7 +262,7 @@ export default function Sidebar(props) {
       <AlbumCount />
 
       {radio && (
-        <div className={classNames(styles.section, 'mt-3 p-2')}>
+        <div className={clsx(styles.section, 'mt-3 p-2')}>
           <iframe
             title='radio'
             frameBorder='0'

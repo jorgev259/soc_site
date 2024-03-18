@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { NextIntlClientProvider, useTranslations } from 'next-intl'
 import { Link } from '@/next/lib/navigation'
 import { getTranslations } from 'next-intl/server'
@@ -50,10 +50,7 @@ function LoggedIn(props) {
       <div className='col-auto ms-auto'>
         <Link
           href={`/profile/${username}`}
-          className={classNames(
-            styles.button,
-            'd-none d-sm-block btn btn-primary'
-          )}
+          className={clsx(styles.button, 'd-none d-sm-block btn btn-primary')}
         >
           {t('Profile')}
         </Link>
@@ -70,10 +67,7 @@ function LoggedOut(props) {
     <>
       <div className='col-auto ms-auto'>
         <button
-          className={classNames(
-            styles.button,
-            'd-none d-sm-block btn btn-primary'
-          )}
+          className={clsx(styles.button, 'd-none d-sm-block btn btn-primary')}
           data-bs-toggle='modal'
           data-bs-target='#registerModal'
         >
@@ -82,10 +76,7 @@ function LoggedOut(props) {
       </div>
       <div className='col-auto pe-sm-5 me-sm-4'>
         <button
-          className={classNames(
-            styles.button,
-            'd-none d-sm-block btn btn-primary'
-          )}
+          className={clsx(styles.button, 'd-none d-sm-block btn btn-primary')}
           data-bs-toggle='modal'
           data-bs-target='#loginModal'
         >

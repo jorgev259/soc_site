@@ -1,5 +1,5 @@
 import { gql } from '@apollo/client'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { NextIntlClientProvider } from 'next-intl'
 import { getTranslations } from 'next-intl/server'
 
@@ -11,8 +11,8 @@ import getSessionInfo from '@/next/lib/getSession'
 import { getMessageObject } from '@/next/lib/transl'
 
 const getScore = gql`
-  query AlbumScore ($id: ID!) {
-    album(id: $id){
+  query AlbumScore($id: ID!) {
+    album(id: $id) {
       id
       selfScore
       avgRating {
@@ -25,11 +25,14 @@ const getScore = gql`
 
 const keys = [...Array(5).keys()]
 
-export default async function StarCounter (props) {
+export default async function StarCounter(props) {
   const { albumId } = props
 
   const { isFAU } = await getSessionInfo()
-  const { data } = await getClient().query({ query: getScore, variables: { id: albumId } })
+  const { data } = await getClient().query({
+    query: getScore,
+    variables: { id: albumId }
+  })
   const t = await getTranslations('albumPage.rating')
 
   const { album = {} } = data ?? {}
@@ -38,19 +41,37 @@ export default async function StarCounter (props) {
 
   const solidScore = Math.max(selfScore, score)
 
-  const starStyles = i => classNames(
-    styles.star, 'pe-1',
-    { [styles.gold]: isFAU && selfScore > i },
-    solidScore > i ? 'fas' : 'far',
-    solidScore > i && i + 0.5 === solidScore ? 'fa-star-half-alt' : 'fa-star'
-  )
+  const starStyles = (i) =>
+    clsx(
+      styles.star,
+      'pe-1',
+      { [styles.gold]: isFAU && selfScore > i },
+      solidScore > i ? 'fas' : 'far',
+      solidScore > i && i + 0.5 === solidScore ? 'fa-star-half-alt' : 'fa-star'
+    )
 
   return (
-    <div className={classNames(styles.container, { [styles.active]: isFAU })}>
-      <NextIntlClientProvider messages={getMessageObject(t, ['Rating saved!', 'Failed to save rating'])}>
-        {keys.map(i => <Star className={starStyles(i)} key={i} position={i} albumId={albumId} isFAU={isFAU} />)}
+    <div className={clsx(styles.container, { [styles.active]: isFAU })}>
+      <NextIntlClientProvider
+        messages={getMessageObject(t, [
+          'Rating saved!',
+          'Failed to save rating'
+        ])}
+      >
+        {keys.map((i) => (
+          <Star
+            className={starStyles(i)}
+            key={i}
+            position={i}
+            albumId={albumId}
+            isFAU={isFAU}
+          />
+        ))}
       </NextIntlClientProvider>
-      <span className='ms-1'>({score} by {users} users)</span> {/* Missing translation */}
+      <span className='ms-1'>
+        ({score} by {users} users)
+      </span>{' '}
+      {/* Missing translation */}
     </div>
   )
 }

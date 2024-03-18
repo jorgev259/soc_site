@@ -2,7 +2,7 @@
 import { useRef } from 'react'
 import { gql, useLazyQuery, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { toast } from 'react-toastify'
 
 import { hideModal } from '@/next/components/common/Modal'
@@ -98,7 +98,7 @@ export default function SubmitAlbumForm() {
 
         <div className='col col-auto mt-auto'>
           <button
-            className={classNames('btn btn-primary', {
+            className={clsx('btn btn-primary', {
               'overflow-hidden position-relative loadingAnim': loadingFetch
             })}
             onClick={fetchInfo}

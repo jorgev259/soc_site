@@ -1,31 +1,46 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import Image from 'next/image'
 import { Link } from '@/next/lib/navigation'
 
 import styles from './AlbumBox.module.scss'
 
-const getImageUrl = (id, type = 'album') => `https://cdn.sittingonclouds.net/${type}/${id}.png`
+const getImageUrl = (id, type = 'album') =>
+  `https://cdn.sittingonclouds.net/${type}/${id}.png`
 
-export function AlbumFallback (props) {
+export function AlbumFallback(props) {
   const { count, ...rest } = props
-  const result = Array(count).fill(2)
+  const result = Array(count)
+    .fill(2)
     .map((_, i) => <AlbumBox key={i} {...rest} status='loading' />)
 
   return <>{result}</>
 }
 
-export default function AlbumBox (props) {
-  const { id, title, type = 'album', status, placeholder, style, className } = props
+export default function AlbumBox(props) {
+  const {
+    id,
+    title,
+    type = 'album',
+    status,
+    placeholder,
+    style,
+    className
+  } = props
   const coming = status === 'coming'
   const loading = status === 'loading'
 
   const commonContent = (
     <>
-      <div className={classNames(styles.img, 'pt-1')}>
+      <div className={clsx(styles.img, 'pt-1')}>
         <Image
-          sizes="25vw"
-          alt={title} src={getImageUrl(id, type)}
-          placeholder='blur' blurDataURL={placeholder} quality={30} fill />
+          sizes='25vw'
+          alt={title}
+          src={getImageUrl(id, type)}
+          placeholder='blur'
+          blurDataURL={placeholder}
+          quality={30}
+          fill
+        />
       </div>
       <div className='text-wrap text-center p-2'>
         {coming ? 'Coming Soon' : title}
@@ -33,13 +48,28 @@ export default function AlbumBox (props) {
     </>
   )
 
-  const content = coming
-    ? commonContent
-    : <Link href={`/${type}/${id}`}>{commonContent}</Link>
+  const content = coming ? (
+    commonContent
+  ) : (
+    <Link href={`/${type}/${id}`}>{commonContent}</Link>
+  )
 
   return (
-    <div className={classNames(styles.albumBoxContainer, styles[type], 'col px-1 mb-2', className)}>
-      <div className={classNames(styles.albumBox, { [styles.coming]: coming, loadingAnim: loading })} style={style} >
+    <div
+      className={clsx(
+        styles.albumBoxContainer,
+        styles[type],
+        'col px-1 mb-2',
+        className
+      )}
+    >
+      <div
+        className={clsx(styles.albumBox, {
+          [styles.coming]: coming,
+          loadingAnim: loading
+        })}
+        style={style}
+      >
         {loading ? null : content}
       </div>
     </div>

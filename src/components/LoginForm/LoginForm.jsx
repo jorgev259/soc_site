@@ -1,7 +1,7 @@
 'use client'
 import { useCallback } from 'react'
 import { useTranslations } from 'next-intl'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { gql, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
 
@@ -226,7 +226,7 @@ export function LogoutForm(props) {
 
   return (
     <SubmitButton
-      className={classNames(styles.button, 'd-none d-sm-block me-4')}
+      className={clsx(styles.button, 'd-none d-sm-block me-4')}
       loading={loading}
       onClick={handleLogout}
     >

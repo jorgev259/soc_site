@@ -1,18 +1,29 @@
 import { useRef, useState } from 'react'
-import { Col, Row, Form, Container, Table, InputGroup, FormControl, Modal } from 'react-bootstrap'
+import {
+  Col,
+  Row,
+  Form,
+  Container,
+  Table,
+  InputGroup,
+  FormControl,
+  Modal
+} from 'react-bootstrap'
 import { gql, /* useMutation, */ useQuery } from '@apollo/client'
 // import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import { SimpleSelector } from '@/components/Selectors'
-import Loader/*, { ButtonLoader } */ from '@/components/Loader'
+import Loader /*, { ButtonLoader } */ from '@/components/Loader'
 import { hasRolePage } from '@/components/resolvers'
 
 import styles from '@/styles/Request.module.scss'
 
 export const getServerSideProps = hasRolePage(['REQUESTS'])
-const stateOptions = ['Pending', 'Rejected', 'Accepted', 'Published'].map(label => ({ label, value: label.toLowerCase() }))
+const stateOptions = ['Pending', 'Rejected', 'Accepted', 'Published'].map(
+  (label) => ({ label, value: label.toLowerCase() })
+)
 
 const requestFields = `
   id
@@ -27,7 +38,7 @@ const requestFields = `
   }
 `
 
-export default function AlbumAdmin () {
+export default function AlbumAdmin() {
   return (
     <Container>
       <Col>
@@ -37,7 +48,7 @@ export default function AlbumAdmin () {
   )
 }
 
-function RequestModal (props) {
+function RequestModal(props) {
   const { submission, setRequest } = props
   const formRef = useRef(null)
 
@@ -91,52 +102,97 @@ function RequestModal (props) {
       <Modal.Body>
         <Form ref={formRef} style={{ color: 'black' }}>
           <Row>
-            <Form.Group as={Col} >
-              <Form.Label htmlFor='title' >Title:</Form.Label>
-              <Form.Control required type='text' name='title' defaultValue={submission?.title} />
+            <Form.Group as={Col}>
+              <Form.Label htmlFor='title'>Title:</Form.Label>
+              <Form.Control
+                required
+                type='text'
+                name='title'
+                defaultValue={submission?.title}
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
-            <Form.Group as={Col} >
+            <Form.Group as={Col}>
               <Form.Label htmlFor='link'>VGMDB:</Form.Label>
-              <Form.Control required type='text' name='link' defaultValue={submission?.vgmdb} />
+              <Form.Control
+                required
+                type='text'
+                name='link'
+                defaultValue={submission?.vgmdb}
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
-            <Form.Group as={Col} >
+            <Form.Group as={Col}>
               <Form.Label htmlFor='link'>State:</Form.Label>
-              <select className='form-control' name='state' defaultValue={submission?.state}>
-                {stateOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <select
+                className='form-control'
+                name='state'
+                defaultValue={submission?.state}
+              >
+                {stateOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
               </select>
             </Form.Group>
             <Form.Group as={Col}>
               <Form.Label htmlFor='state'>Submitter:</Form.Label>
-              <Form.Control required type='text' name='link' defaultValue={submission?.submitter.username} readOnly />
+              <Form.Control
+                required
+                type='text'
+                name='link'
+                defaultValue={submission?.submitter.username}
+                readOnly
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
             <Form.Group as={Col}>
               <Form.Label htmlFor='comment'>Links:</Form.Label>
-              <FormControl required as='textarea' name='comment' value={submission?.links} readOnly />
+              <FormControl
+                required
+                as='textarea'
+                name='comment'
+                value={submission?.links}
+                readOnly
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
             <Form.Group as={Col}>
               <Form.Label htmlFor='observations'>Observations:</Form.Label>
-              <FormControl required as='textarea' name='observations' defaultValue={submission?.observations} />
+              <FormControl
+                required
+                as='textarea'
+                name='observations'
+                defaultValue={submission?.observations}
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-4'>
             <Form.Group as={Col}>
-              <Form.Check type="checkbox" name="lossy" label="Lossy / MP3 Only" defaultChecked={submission?.lossy} />
+              <Form.Check
+                type='checkbox'
+                name='lossy'
+                label='Lossy / MP3 Only'
+                defaultChecked={submission?.lossy}
+              />
             </Form.Group>
             <Form.Group as={Col}>
-              <Form.Check type="checkbox" name="hold" label='"Hold" request bonus' defaultChecked={submission?.hold} />
+              <Form.Check
+                type='checkbox'
+                name='hold'
+                label='"Hold" request bonus'
+                defaultChecked={submission?.hold}
+              />
             </Form.Group>
           </Row>
         </Form>
@@ -146,16 +202,15 @@ function RequestModal (props) {
         <ButtonLoader loading={loadingEdit} disabled={loadingReject} variant="primary" onClick={handleEdit}>Save Changes</ButtonLoader>
   </Modal.Footer> */}
     </Modal>
-
   )
 }
 
-function RequestBoard () {
+function RequestBoard() {
   const [state, setState] = useState(['pending'])
   const [search, setSearch] = useState('')
   const [submission, setRequest] = useState()
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.persist()
     e.preventDefault()
 
@@ -171,32 +226,46 @@ function RequestBoard () {
             <Form.Group>
               <InputGroup>
                 <InputGroup.Text>&#128270;</InputGroup.Text>
-                <FormControl type='text'
+                <FormControl
+                  type='text'
                   onBlur={handleSearch}
-                  onKeyDown={e => { if (e.key === 'Enter') handleSearch(e) }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSearch(e)
+                  }}
                 />
               </InputGroup>
             </Form.Group>
           </Col>
         </Row>
         <Row className='my-3'>
-          <Col md='auto'><Form.Label htmlFor='status'>Status:</Form.Label></Col>
+          <Col md='auto'>
+            <Form.Label htmlFor='status'>Status:</Form.Label>
+          </Col>
           <Col>
             <SimpleSelector
-              onChange={e => setState(e.map(v => v.value))}
-              required name='status'
-              defaultValue={[{ label: 'Pending', value: 'pending' }]} options={stateOptions}
+              onChange={(e) => setState(e.map((v) => v.value))}
+              required
+              name='status'
+              defaultValue={[{ label: 'Pending', value: 'pending' }]}
+              options={stateOptions}
             />
           </Col>
         </Row>
 
-        {state.map(s => <RequestTable key={s} state={s} search={search.toLowerCase()} setRequest={setRequest} />)}
+        {state.map((s) => (
+          <RequestTable
+            key={s}
+            state={s}
+            search={search.toLowerCase()}
+            setRequest={setRequest}
+          />
+        ))}
       </Form>
     </>
   )
 }
 
-function RequestTable (props) {
+function RequestTable(props) {
   const { state, search, setRequest } = props
 
   const query = gql`
@@ -214,24 +283,30 @@ function RequestTable (props) {
     toast.error('Failed to fetch submissions')
   }
 
-  function Rows () {
-    return (
-      data.submissions
-        .filter(row => row?.title?.toLowerCase().includes(search) || row?.link?.toLowerCase() === search)
-        .map(submission => {
-          const { id, title, vgmdb, submitter, request } = submission
+  function Rows() {
+    return data.submissions
+      .filter(
+        (row) =>
+          row?.title?.toLowerCase().includes(search) ||
+          row?.link?.toLowerCase() === search
+      )
+      .map((submission) => {
+        const { id, title, vgmdb, submitter, request } = submission
 
-          return (
-            <tr key={id} style={{ cursor: 'pointer' }} onClick={() => setRequest(submission)}>
-              <td>{id}</td>
-              <td>{title}</td>
-              <td>{vgmdb}</td>
-              {request ? <td>✓</td> : <td />}
-              <td>{submitter.username}</td>
-            </tr>
-          )
-        })
-    )
+        return (
+          <tr
+            key={id}
+            style={{ cursor: 'pointer' }}
+            onClick={() => setRequest(submission)}
+          >
+            <td>{id}</td>
+            <td>{title}</td>
+            <td>{vgmdb}</td>
+            {request ? <td>✓</td> : <td />}
+            <td>{submitter.username}</td>
+          </tr>
+        )
+      })
   }
 
   return (
@@ -243,10 +318,15 @@ function RequestTable (props) {
       </Row>
       <Row>
         <Col style={{ height: '500px' }}>
-          <div className={classNames('overflow-auto h-100', styles.table)} >
+          <div className={clsx('overflow-auto h-100', styles.table)}>
             {loading && <Loader dev className='mx-auto' />}
             {data && (
-              <Table variant='dark' hover responsive style={{ overflowX: 'visible' }}>
+              <Table
+                variant='dark'
+                hover
+                responsive
+                style={{ overflowX: 'visible' }}
+              >
                 <thead>
                   <tr>
                     <th>ID</th>

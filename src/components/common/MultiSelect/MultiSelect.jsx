@@ -1,5 +1,5 @@
 'use client'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import styles from './MultiSelect.module.scss'
 import Loading from '../Loading'
 import { useEffect, useState } from 'react'
@@ -11,7 +11,7 @@ function Arrow(props) {
 
   return (
     <div
-      className={classNames(styles.icon, styles.arrow, {
+      className={clsx(styles.icon, styles.arrow, {
         [styles.open]: showSecondary
       })}
     >
@@ -31,10 +31,7 @@ function Cross(props) {
   }
 
   return (
-    <div
-      className={classNames(styles.icon, styles.cross)}
-      onClick={handleClick}
-    >
+    <div className={clsx(styles.icon, styles.cross)} onClick={handleClick}>
       <svg>
         <line x1='18' y1='6' x2='6' y2='18'></line>
         <line x1='6' y1='6' x2='18' y2='18'></line>
@@ -47,7 +44,7 @@ function LoadingWrapper(props) {
   const { loading } = props
 
   return (
-    <div className={classNames(styles.icon, styles.loading, 'mx-2 my-auto')}>
+    <div className={clsx(styles.icon, styles.loading, 'mx-2 my-auto')}>
       <Loading loading={loading} />
     </div>
   )
@@ -63,7 +60,7 @@ function CreateItem(props) {
 
   return (
     <div
-      className={classNames(styles.item, 'px-2 py-2')}
+      className={clsx(styles.item, 'px-2 py-2')}
       data-bs-theme='light'
       onClick={handleClick}
     >
@@ -93,11 +90,11 @@ function OptionItem(props) {
   return (
     <>
       <div
-        className={classNames(styles.item, 'px-2')}
+        className={clsx(styles.item, 'px-2')}
         data-bs-theme='light'
         onClick={handleClick}
       >
-        <div className={classNames(styles.label, 'py-2')}>
+        <div className={clsx(styles.label, 'py-2')}>
           <svg
             xmlns='http://www.w3.org/2000/svg'
             width='15'
@@ -115,10 +112,7 @@ function OptionItem(props) {
           <span className='ms-1'>{label}</span>
         </div>
         {editId ? (
-          <div
-            className={classNames(styles.edit, 'px-2')}
-            onClick={handleEditClick}
-          >
+          <div className={clsx(styles.edit, 'px-2')} onClick={handleEditClick}>
             <svg
               xmlns='http://www.w3.org/2000/svg'
               width='20'
@@ -149,7 +143,7 @@ function AllItem(props) {
 
   return (
     <div
-      className={classNames(styles.item, styles.all, 'px-2 py-2')}
+      className={clsx(styles.item, styles.all, 'px-2 py-2')}
       data-bs-theme='light'
       onClick={handleClick}
     >
@@ -189,12 +183,12 @@ function BaseSelect(props) {
   return (
     <div className={styles.container}>
       <div
-        className={classNames(styles.main, styles.box, 'px-2')}
+        className={clsx(styles.main, styles.box, 'px-2')}
         onClick={() => setSecondary(!showSecondary)}
       >
         <div className='h-100 d-flex'>
           <div
-            className={classNames(styles.label, {
+            className={clsx(styles.label, {
               [styles.empty]: isNoSelected
             })}
           >
@@ -207,7 +201,7 @@ function BaseSelect(props) {
         </div>
       </div>
       <div
-        className={classNames(
+        className={clsx(
           styles.secondary,
           styles.box,
           { [styles.show]: showSecondary },
@@ -215,7 +209,7 @@ function BaseSelect(props) {
         )}
       >
         {query || search ? (
-          <div className={classNames(styles.search, 'py-2 px-2')}>
+          <div className={clsx(styles.search, 'py-2 px-2')}>
             <input
               type='text'
               placeholder={selectText}
@@ -224,7 +218,7 @@ function BaseSelect(props) {
             <LoadingWrapper loading={loading} />
           </div>
         ) : null}
-        <div className={classNames(styles.options)}>
+        <div className={clsx(styles.options)}>
           {query && isFilter ? (
             <CreateItem name={filter} addId={addId} setItem={setItem} />
           ) : null}

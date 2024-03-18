@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
 import { getTranslations } from 'next-intl/server'
@@ -21,10 +21,7 @@ export function Dropdown(props) {
   return items.length > 0 ? (
     <li className='nav-item dropdown'>
       <a
-        className={classNames(
-          styles.dropToggle,
-          'nav-link dropdown-toggle mt-0'
-        )}
+        className={clsx(styles.dropToggle, 'nav-link dropdown-toggle mt-0')}
         href='#'
         role='button'
         data-bs-toggle='dropdown'
@@ -35,10 +32,7 @@ export function Dropdown(props) {
       <ul className='dropdown-menu'>
         {items.map(({ href, name }, i) => (
           <li key={href}>
-            <a
-              className={classNames(styles.dropItem, 'dropdown-item')}
-              href={href}
-            >
+            <a className={clsx(styles.dropItem, 'dropdown-item')} href={href}>
               {t(name)}
             </a>
           </li>
@@ -52,14 +46,14 @@ export function NavLinkWrapper(props) {
   const { href, name, onClick, className } = props
   const t = useTranslations('header')
 
-  const linkStyles = classNames(styles.navLink, 'nav-link', className)
+  const linkStyles = clsx(styles.navLink, 'nav-link', className)
 
   return onClick ? (
     <a onClick={onClick} className={linkStyles}>
       {t(name)}
     </a>
   ) : (
-    <div className={classNames(styles.navItem, 'nav-item')}>
+    <div className={clsx(styles.navItem, 'nav-item')}>
       <a className={linkStyles} href={href}>
         {t(name)}
       </a>
@@ -75,9 +69,9 @@ function SubmitAlbum() {
       <ModalTemplate id='submitAlbumModal'>
         <SubmitAlbumForm />
       </ModalTemplate>
-      <div className={classNames(styles.navItem, 'nav-item')}>
+      <div className={clsx(styles.navItem, 'nav-item')}>
         <button
-          className={classNames(styles.navLink, 'nav-link w-100 text-start')}
+          className={clsx(styles.navLink, 'nav-link w-100 text-start')}
           data-bs-toggle='modal'
           data-bs-target='#submitAlbumModal'
         >
@@ -96,10 +90,10 @@ async function MobileNav(props) {
   return isFAU ? (
     <>
       <MobileLogoutBtn>{t('Logout')}</MobileLogoutBtn>
-      <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+      <div className={clsx(styles.navItem, 'nav-item d-block d-sm-none')}>
         <Link
           href={`/profile/${username}`}
-          className={classNames(styles.navLink, 'nav-link w-100 text-start')}
+          className={clsx(styles.navLink, 'nav-link w-100 text-start')}
         >
           {t('Profile')}
         </Link>
@@ -107,18 +101,18 @@ async function MobileNav(props) {
     </>
   ) : (
     <>
-      <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+      <div className={clsx(styles.navItem, 'nav-item d-block d-sm-none')}>
         <button
-          className={classNames(styles.navLink, 'nav-link w-100 text-start')}
+          className={clsx(styles.navLink, 'nav-link w-100 text-start')}
           data-bs-toggle='modal'
           data-bs-target='#loginModal'
         >
           {t('Login')}
         </button>
       </div>
-      <div className={classNames(styles.navItem, 'nav-item d-block d-sm-none')}>
+      <div className={clsx(styles.navItem, 'nav-item d-block d-sm-none')}>
         <button
-          className={classNames(styles.navLink, 'nav-link w-100 text-start')}
+          className={clsx(styles.navLink, 'nav-link w-100 text-start')}
           data-bs-toggle='modal'
           data-bs-target='#registerModal'
         >

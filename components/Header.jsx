@@ -15,7 +15,7 @@ import {
   Form,
   ModalBody
 } from 'react-bootstrap'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useSearchParams } from 'next/navigation'
 import serialize from 'form-serialize'
 import { useMutation, useLazyQuery, useQuery, gql } from '@apollo/client'
@@ -183,10 +183,7 @@ function LoginButton(props) {
     <>
       <Col
         xs='auto'
-        className={classNames(
-          styles.login,
-          'd-none d-sm-block ms-sm-auto mb-sm-5'
-        )}
+        className={clsx(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}
       >
         <Button onClick={handleLogin} variant='primary'>
           {t(user ? 'Logout' : 'Login')}
@@ -305,10 +302,7 @@ function RegisterProfileButton(props) {
     <>
       <Col
         xs='auto'
-        className={classNames(
-          styles.login,
-          'd-none d-sm-block ms-sm-auto mb-sm-5'
-        )}
+        className={clsx(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}
       >
         {user ? (
           <Link href={`/profile/${user.username}`}>
@@ -618,7 +612,7 @@ function Dropdown(props) {
   return (
     <NavDropdown
       title={t(name)}
-      className={classNames(styles.navLink, styles.dropMenu)}
+      className={clsx(styles.navLink, styles.dropMenu)}
     >
       {links.map(({ href, name }, i) => (
         <Link key={i} href={href} passHref legacyBehavior>
@@ -645,15 +639,13 @@ function NavLink(props) {
   return onClick ? (
     <a
       onClick={onClick}
-      className={classNames(styles.navLink, 'nav-link', className)}
+      className={clsx(styles.navLink, 'nav-link', className)}
     >
       {title}
     </a>
   ) : (
     <Link href={href} passHref legacyBehavior>
-      <Nav.Link className={classNames(styles.navLink, className)}>
-        {title}
-      </Nav.Link>
+      <Nav.Link className={clsx(styles.navLink, className)}>{title}</Nav.Link>
     </Link>
   )
 }
@@ -676,7 +668,7 @@ function SearchBar() {
   }, [open])
 
   return (
-    <div id={styles.search} className={classNames({ 'w-100': open })}>
+    <div id={styles.search} className={clsx({ 'w-100': open })}>
       <input
         ref={ref}
         onBlur={() => setOpen(false)}

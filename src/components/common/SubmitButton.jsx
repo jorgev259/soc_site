@@ -1,4 +1,4 @@
-import classnames from 'classnames'
+import clsx from 'clsx'
 
 import Loading from './Loading'
 
@@ -9,7 +9,7 @@ export default function SubmitButton(props) {
     <button
       {...buttonProps}
       type='submit'
-      className={classnames('btn btn-primary', className)}
+      className={clsx('btn btn-primary', className)}
       disabled={loading}
     >
       <Loading>{children}</Loading>

@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import Portal from './Portal'
 
@@ -24,7 +24,7 @@ export default function Modal(props) {
 
   return (
     <div id={id} className='modal fade' tabIndex='-1'>
-      <div className={classNames('modal-dialog', className)}>{children}</div>
+      <div className={clsx('modal-dialog', className)}>{children}</div>
     </div>
   )
 }
@@ -36,7 +36,7 @@ export function ModalPortal(props) {
     <Portal selector='#modal'>
       <Modal
         id={id}
-        className={classNames(className, 'modal-dialog-centered')}
+        className={clsx(className, 'modal-dialog-centered')}
         {...rest}
       >
         {children}

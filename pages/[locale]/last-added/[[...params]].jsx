@@ -2,7 +2,7 @@ import { gql } from '@apollo/client'
 import { Container, Col, Row } from 'react-bootstrap'
 import { useTranslations } from 'next-intl'
 import React from 'react'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useSearchParams } from 'next/navigation'
 
 import styles from '@/styles/LastAdded.module.scss'
@@ -69,10 +69,7 @@ export default function LastAdded(props) {
 
     return (
       <ul
-        className={classNames(
-          className,
-          'pagination justify-content-center m-auto'
-        )}
+        className={clsx(className, 'pagination justify-content-center m-auto')}
       >
         {currentListIndex > 0 && (
           <>
@@ -97,7 +94,7 @@ export default function LastAdded(props) {
             <Link
               href={`/last-added/${e}`}
               scroll
-              className={classNames(
+              className={clsx(
                 styles.pageLink,
                 {
                   disabled: e === parseInt(page),

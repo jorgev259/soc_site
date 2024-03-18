@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { Link } from '@/next/lib/navigation'
 import Image from 'next/image'
 
@@ -16,13 +16,13 @@ import { useLocale } from 'next-intl'
 
 const bannerQuery = gql`
   query GetBanner {
-    config(name: "banner"){
+    config(name: "banner") {
       value
     }
   }
 `
 
-async function LogoCol (props) {
+async function LogoCol(props) {
   const client = await getClient()
   const { data } = await client.query({ query: bannerQuery })
 
@@ -32,26 +32,33 @@ async function LogoCol (props) {
 
   return (
     <>
-      <div className={classNames(styles.bgImage)}>
+      <div className={clsx(styles.bgImage)}>
         <Image
-          fill priority alt=''
+          fill
+          priority
+          alt=''
           src={`https://cdn.sittingonclouds.net/live/${banner}.png`}
           quality={50}
         />
       </div>
       <div className='col-12 col-sm-auto d-flex justify-content-center'>
-        <Link className='ps-sm-5 ms-sm-4' href="/">
-          <Image alt='SOC Logo' src={locale === 'es' ? logoES : logo} height={150} width={265} />
+        <Link className='ps-sm-5 ms-sm-4' href='/'>
+          <Image
+            alt='SOC Logo'
+            src={locale === 'es' ? logoES : logo}
+            height={150}
+            width={265}
+          />
         </Link>
       </div>
     </>
   )
 }
 
-export default async function Header (props) {
+export default async function Header(props) {
   return (
     <div className='container-fluid'>
-      <div className={classNames('row', styles.logoRow)}>
+      <div className={clsx('row', styles.logoRow)}>
         <LogoCol />
         {/* <LangSelector /> */}
         <LoginBar />

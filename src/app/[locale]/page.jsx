@@ -1,7 +1,7 @@
 import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 import { useTranslations } from 'next-intl'
-import classNames from 'classnames'
+import clsx from 'clsx'
 // eslint-disable-next-line camelcase
 // import { unstable_setRequestLocale } from 'next-intl/server'
 
@@ -82,11 +82,11 @@ export default function Home(props) {
   // unstable_setRequestLocale(locale)
 
   return (
-    <div className={classNames('row', styles.container)}>
+    <div className={clsx('row', styles.container)}>
       <div className='col p-3 mx-3'>
         <div className='row'>
           <div className='col'>
-            <h1 className={classNames(styles.title, 'p-3')}>
+            <h1 className={clsx(styles.title, 'p-3')}>
               {t('Recent Releases')}
             </h1>
           </div>
@@ -100,12 +100,12 @@ export default function Home(props) {
         </div>
         <div className='row'>
           <div className='col-md-6 mt-3 flex-grow-1'>
-            <Link href='/game' className={classNames(styles.blackButton)}>
+            <Link href='/game' className={clsx(styles.blackButton)}>
               <h4 className='px-3 py-2'>{t('More game releases')}</h4>
             </Link>
           </div>
           <div className='col-md-6 mt-3 flex-grow-1'>
-            <Link href='/anim' className={classNames(styles.blackButton)}>
+            <Link href='/anim' className={clsx(styles.blackButton)}>
               <h4 className='px-3 py-2'>{t('More animation releases')}</h4>
             </Link>
           </div>
@@ -115,7 +115,7 @@ export default function Home(props) {
 
         <div className='row'>
           <div className='col'>
-            <h1 className={classNames(styles.title, 'p-3')} id='last-added'>
+            <h1 className={clsx(styles.title, 'p-3')} id='last-added'>
               {t('Last Added')}
             </h1>
           </div>
@@ -129,7 +129,7 @@ export default function Home(props) {
         </div>
         <div className='row'>
           <div className='col-md-12'>
-            <Link href='/last-added' className={classNames(styles.blackButton)}>
+            <Link href='/last-added' className={clsx(styles.blackButton)}>
               <h2 className='py-1'>{t('More last added')}</h2>
             </Link>
           </div>

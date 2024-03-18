@@ -1,13 +1,13 @@
 'use client'
 import { useRef, useEffect } from 'react'
 import { useTranslations } from 'next-intl'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import styles from '@/styles/DownloadSection.module.scss'
 
 import { Link } from '@/next/lib/navigation'
 
-export default function DirectButton (props) {
+export default function DirectButton(props) {
   const { directUrl } = props
   const t = useTranslations('')
 
@@ -16,7 +16,10 @@ export default function DirectButton (props) {
 
   useEffect(() => {
     if (window.bootstrap) {
-      if (!directUrl) tooltipRef.current = window.bootstrap.Tooltip.getOrCreateInstance(elementRef.current)
+      if (!directUrl)
+        tooltipRef.current = window.bootstrap.Tooltip.getOrCreateInstance(
+          elementRef.current
+        )
       else {
         tooltipRef.current?.dispose()
         tooltipRef.current = null
@@ -24,11 +27,22 @@ export default function DirectButton (props) {
     }
   }, [directUrl])
 
-  return directUrl
-    ? (
-      <Link target="_blank" href={directUrl}>
-        <button className={classNames('btn btn-secondary', styles.download, styles.direct)} >{t('Direct')}</button>
-      </Link>
-    )
-    : <button ref={elementRef} className={classNames('btn btn-secondary', styles.download, styles.direct)} disabled data-bs-title={t('Become_Donator')}>{t('Direct')}</button>
+  return directUrl ? (
+    <Link target='_blank' href={directUrl}>
+      <button
+        className={clsx('btn btn-secondary', styles.download, styles.direct)}
+      >
+        {t('Direct')}
+      </button>
+    </Link>
+  ) : (
+    <button
+      ref={elementRef}
+      className={clsx('btn btn-secondary', styles.download, styles.direct)}
+      disabled
+      data-bs-title={t('Become_Donator')}
+    >
+      {t('Direct')}
+    </button>
+  )
 }

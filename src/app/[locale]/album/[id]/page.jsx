@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { gql } from '@apollo/client'
 // eslint-disable-next-line camelcase
 import {
@@ -142,8 +142,8 @@ export default function AlbumPage(context) {
   // unstable_setRequestLocale(locale)
 
   return (
-    <div className={classNames('row', styles.container)}>
-      <div className={classNames('col px-0', styles.backgroundContainer)}>
+    <div className={clsx('row', styles.container)}>
+      <div className={clsx('col px-0', styles.backgroundContainer)}>
         <div>
           <Image
             sizes='100vw'
@@ -156,9 +156,7 @@ export default function AlbumPage(context) {
         </div>
       </div>
 
-      <div
-        className={classNames('col px-0 px-md-5 pt-3 mx-auto', styles.content)}
-      >
+      <div className={clsx('col px-0 px-md-5 pt-3 mx-auto', styles.content)}>
         <Content {...context} />
       </div>
     </div>
@@ -211,15 +209,12 @@ async function Content(context) {
       </div>
       <hr />
       <div className='row'>
-        <div className={classNames('col col-12 col-lg-6', styles.trackList)}>
+        <div className={clsx('col col-12 col-lg-6', styles.trackList)}>
           <div className='blackBox h-100 d-flex flex-column'>
             <div className='row'>
               <div className='col'>
                 <h1
-                  className={classNames(
-                    'text-center text-uppercase',
-                    styles.title
-                  )}
+                  className={clsx('text-center text-uppercase', styles.title)}
                 >
                   {t('Tracklist')}
                 </h1>
@@ -345,9 +340,9 @@ async function ProviderBox(props) {
   const filterStores = stores.filter((s) => s.provider !== 'SOON')
 
   return (
-    <div className={classNames('col', styles.stores)}>
+    <div className={clsx('col', styles.stores)}>
       <h1
-        className={classNames('text-center mb-0', styles.title)}
+        className={clsx('text-center mb-0', styles.title)}
         style={{ fontSize: '30px' }}
       >
         {children}

@@ -1,6 +1,6 @@
 'use client'
 import { Suspense, useEffect, useRef, useState } from 'react'
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { gql, useSuspenseQuery, useMutation } from '@apollo/client'
 import { useTranslations } from 'next-intl'
 import serialize from 'form-serialize'
@@ -70,12 +70,8 @@ const mutateComment = gql`
   }
 `
 
-const sideBarClassnames = classNames(
-  'col',
-  sidebarStyles.section,
-  styles.comments
-)
-const albumClassnames = classNames('row mb-3', styles.comments)
+const sideBarClassnames = clsx('col', sidebarStyles.section, styles.comments)
+const albumClassnames = clsx('row mb-3', styles.comments)
 
 const modalId = 'commentForm'
 const modalSelector = `#${modalId}`
@@ -126,10 +122,7 @@ export default function CommentCarrousel(props) {
         <Suspense
           fallback={
             <div
-              className={classNames(
-                'loadingAnim position-relative',
-                albumClassnames
-              )}
+              className={clsx('loadingAnim position-relative', albumClassnames)}
             />
           }
         >
@@ -272,9 +265,7 @@ export function CommentCarrouselSidebar() {
   return (
     <div className='row mt-3 px-3'>
       <Suspense
-        fallback={
-          <div className={classNames(sideBarClassnames, 'loadingAnim')} />
-        }
+        fallback={<div className={clsx(sideBarClassnames, 'loadingAnim')} />}
       >
         <div className={sideBarClassnames}>
           <div className='row'>

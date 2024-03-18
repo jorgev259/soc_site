@@ -1,9 +1,18 @@
 import { useRef, useState } from 'react'
-import { Col, Row, Form, Container, Table, InputGroup, FormControl, Modal } from 'react-bootstrap'
+import {
+  Col,
+  Row,
+  Form,
+  Container,
+  Table,
+  InputGroup,
+  FormControl,
+  Modal
+} from 'react-bootstrap'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 import { SimpleSelector } from '@/components/Selectors'
 import Loader, { ButtonLoader } from '@/components/Loader'
@@ -12,8 +21,14 @@ import { hasRolePage } from '@/components/resolvers'
 import styles from '@/styles/Request.module.scss'
 
 export const getServerSideProps = hasRolePage(['REQUESTS'])
-const stateOptions = ['Complete', 'Pending', 'Hold'].map(label => ({ label, value: label.toLowerCase() }))
-const userOptions = ['Donators', 'Members'].map(label => ({ label, value: label === 'Donators' }))
+const stateOptions = ['Complete', 'Pending', 'Hold'].map((label) => ({
+  label,
+  value: label.toLowerCase()
+}))
+const userOptions = ['Donators', 'Members'].map((label) => ({
+  label,
+  value: label === 'Donators'
+}))
 
 const requestFields = `
   id
@@ -27,7 +42,7 @@ const requestFields = `
   comments
 `
 
-export default function AlbumAdmin () {
+export default function AlbumAdmin() {
   return (
     <Container>
       <Col>
@@ -37,11 +52,11 @@ export default function AlbumAdmin () {
   )
 }
 
-function RequestModal (props) {
+function RequestModal(props) {
   const { request, setRequest } = props
 
   const rejectMutation = gql`
-    mutation ($id: ID!, $reason: String){
+    mutation ($id: ID!, $reason: String) {
       rejectRequest(id: $id, reason: $reason)
     }
   `
@@ -52,38 +67,43 @@ function RequestModal (props) {
       }
     }
   `
-  const [rejectRequest, { loading: loadingReject }] = useMutation(rejectMutation)
+  const [rejectRequest, { loading: loadingReject }] =
+    useMutation(rejectMutation)
   const [editRequest, { loading: loadingEdit }] = useMutation(editMutation)
   const formRef = useRef(null)
 
-  function handleEdit () {
+  function handleEdit() {
     const target = formRef.current
     const variables = serialize(target, { hash: true })
     variables.id = request.id
 
-    editRequest({ variables }).then(results => {
-      toast.success('Updated request succesfully!')
-      setRequest(results.data.editRequest)
-      target.reset()
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
-    })
+    editRequest({ variables })
+      .then((results) => {
+        toast.success('Updated request succesfully!')
+        setRequest(results.data.editRequest)
+        target.reset()
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
-  function handleReject () {
+  function handleReject() {
     const target = formRef.current
     const variables = serialize(target, { hash: true })
     variables.id = request.id
 
-    rejectRequest({ variables }).then(results => {
-      toast.success('Request rejected succesfully!')
-      setRequest()
-      target.reset()
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
-    })
+    rejectRequest({ variables })
+      .then((results) => {
+        toast.success('Request rejected succesfully!')
+        setRequest()
+        target.reset()
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
   return (
@@ -91,57 +111,105 @@ function RequestModal (props) {
       <Modal.Body>
         <Form ref={formRef}>
           <Row>
-            <Form.Group as={Col} >
-              <Form.Label htmlFor='title' style={{ color: 'black' }}>Title:</Form.Label>
-              <Form.Control required type='text' name='title' defaultValue={request?.title} />
+            <Form.Group as={Col}>
+              <Form.Label htmlFor='title' style={{ color: 'black' }}>
+                Title:
+              </Form.Label>
+              <Form.Control
+                required
+                type='text'
+                name='title'
+                defaultValue={request?.title}
+              />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
-            <Form.Group as={Col} >
-              <Form.Label htmlFor='link' style={{ color: 'black' }}>Link:</Form.Label>
-              <Form.Control required type='text' name='link' defaultValue={request?.link} />
+            <Form.Group as={Col}>
+              <Form.Label htmlFor='link' style={{ color: 'black' }}>
+                Link:
+              </Form.Label>
+              <Form.Control
+                required
+                type='text'
+                name='link'
+                defaultValue={request?.link}
+              />
             </Form.Group>
             <Form.Group as={Col}>
-              <Form.Label htmlFor='state' style={{ color: 'black' }}>Status:</Form.Label>
-              <select className='form-control' name='state' defaultValue={request?.state}>
-                {stateOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+              <Form.Label htmlFor='state' style={{ color: 'black' }}>
+                Status:
+              </Form.Label>
+              <select
+                className='form-control'
+                name='state'
+                defaultValue={request?.state}
+              >
+                {stateOptions.map((o) => (
+                  <option key={o.value} value={o.value}>
+                    {o.label}
+                  </option>
+                ))}
               </select>
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
             <Form.Group as={Col}>
-              <Form.Label htmlFor='comment' style={{ color: 'black' }} defaultValue={request?.comment}>Comments:</Form.Label>
+              <Form.Label
+                htmlFor='comment'
+                style={{ color: 'black' }}
+                defaultValue={request?.comment}
+              >
+                Comments:
+              </Form.Label>
               <FormControl required as='textarea' name='comment' />
             </Form.Group>
           </Row>
 
           <Row className='mt-3'>
             <Form.Group as={Col}>
-              <Form.Label htmlFor='reason' style={{ color: 'black' }} defaultValue={request?.reason}>Reason:</Form.Label>
+              <Form.Label
+                htmlFor='reason'
+                style={{ color: 'black' }}
+                defaultValue={request?.reason}
+              >
+                Reason:
+              </Form.Label>
               <FormControl required as='textarea' name='reason' />
             </Form.Group>
           </Row>
-
         </Form>
       </Modal.Body>
       <Modal.Footer>
-        <ButtonLoader loading={loadingReject} disabled={loadingEdit} variant="danger" onClick={handleReject}>Reject</ButtonLoader>
-        <ButtonLoader loading={loadingEdit} disabled={loadingReject} variant="primary" onClick={handleEdit}>Save Changes</ButtonLoader>
+        <ButtonLoader
+          loading={loadingReject}
+          disabled={loadingEdit}
+          variant='danger'
+          onClick={handleReject}
+        >
+          Reject
+        </ButtonLoader>
+        <ButtonLoader
+          loading={loadingEdit}
+          disabled={loadingReject}
+          variant='primary'
+          onClick={handleEdit}
+        >
+          Save Changes
+        </ButtonLoader>
       </Modal.Footer>
     </Modal>
-
   )
 }
 
-function RequestBoard () {
+function RequestBoard() {
   const [state, setState] = useState(['pending'])
-  const [users, setUsers] = useState(userOptions.map(s => s.value))
+  const [users, setUsers] = useState(userOptions.map((s) => s.value))
   const [search, setSearch] = useState('')
   const [request, setRequest] = useState()
 
-  const handleSearch = e => {
+  const handleSearch = (e) => {
     e.persist()
     e.preventDefault()
 
@@ -157,42 +225,61 @@ function RequestBoard () {
             <Form.Group>
               <InputGroup>
                 <InputGroup.Text>&#128270;</InputGroup.Text>
-                <FormControl type='text'
+                <FormControl
+                  type='text'
                   onBlur={handleSearch}
-                  onKeyDown={e => { if (e.key === 'Enter') handleSearch(e) }}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') handleSearch(e)
+                  }}
                 />
               </InputGroup>
             </Form.Group>
           </Col>
         </Row>
         <Row className='my-3'>
-          <Col md='auto'><Form.Label htmlFor='status'>Status:</Form.Label></Col>
+          <Col md='auto'>
+            <Form.Label htmlFor='status'>Status:</Form.Label>
+          </Col>
           <Col>
             <SimpleSelector
-              onChange={e => setState(e.map(v => v.value))}
-              required name='status'
-              defaultValue={[{ label: 'Pending', value: 'pending' }]} options={stateOptions}
+              onChange={(e) => setState(e.map((v) => v.value))}
+              required
+              name='status'
+              defaultValue={[{ label: 'Pending', value: 'pending' }]}
+              options={stateOptions}
             />
           </Col>
         </Row>
         <Row className='my-3'>
-          <Col md='auto'><Form.Label htmlFor='status'>Users:</Form.Label></Col>
+          <Col md='auto'>
+            <Form.Label htmlFor='status'>Users:</Form.Label>
+          </Col>
           <Col>
             <SimpleSelector
-              onChange={e => setUsers(e.map(v => v.value))}
-              required name='users'
-              defaultValue={userOptions} options={userOptions}
+              onChange={(e) => setUsers(e.map((v) => v.value))}
+              required
+              name='users'
+              defaultValue={userOptions}
+              options={userOptions}
             />
           </Col>
         </Row>
 
-        {state.map(s => <RequestTable key={s} state={s} users={users} search={search.toLowerCase()} setRequest={setRequest} />)}
+        {state.map((s) => (
+          <RequestTable
+            key={s}
+            state={s}
+            users={users}
+            search={search.toLowerCase()}
+            setRequest={setRequest}
+          />
+        ))}
       </Form>
     </>
   )
 }
 
-function RequestTable (props) {
+function RequestTable(props) {
   const { state, users, search, setRequest } = props
   const isHold = state === 'hold'
 
@@ -204,33 +291,42 @@ function RequestTable (props) {
   }
 `
 
-  const { data, loading, error } = useQuery(query, { variables: { state, donator: users } })
+  const { data, loading, error } = useQuery(query, {
+    variables: { state, donator: users }
+  })
 
   if (error) {
     console.log(error)
     toast.error('Failed to fetch requests')
   }
 
-  function Rows () {
-    return (
-      data.requests
-        .filter(({ title, link }) => title?.toLowerCase().includes(search) || link?.toLowerCase() === search)
-        .map(request => {
-          const { id, title, link, user, userID, donator, reason, comments } = request
+  function Rows() {
+    return data.requests
+      .filter(
+        ({ title, link }) =>
+          title?.toLowerCase().includes(search) ||
+          link?.toLowerCase() === search
+      )
+      .map((request) => {
+        const { id, title, link, user, userID, donator, reason, comments } =
+          request
 
-          return (
-            <tr key={id} style={{ cursor: 'pointer' }} onClick={() => setRequest(request)}>
-              <td>{id}</td>
-              <td>{title}</td>
-              <td>{link}</td>
-              <td>{user || (userID ? `<@${userID}>` : 'Not Found')}</td>
-              <td style={{ textAlign: 'center' }}>{donator ? '⭐' : ''}</td>
-              {isHold && <td>{reason}</td>}
-              <td>{comments}</td>
-            </tr>
-          )
-        })
-    )
+        return (
+          <tr
+            key={id}
+            style={{ cursor: 'pointer' }}
+            onClick={() => setRequest(request)}
+          >
+            <td>{id}</td>
+            <td>{title}</td>
+            <td>{link}</td>
+            <td>{user || (userID ? `<@${userID}>` : 'Not Found')}</td>
+            <td style={{ textAlign: 'center' }}>{donator ? '⭐' : ''}</td>
+            {isHold && <td>{reason}</td>}
+            <td>{comments}</td>
+          </tr>
+        )
+      })
   }
 
   return (
@@ -242,10 +338,15 @@ function RequestTable (props) {
       </Row>
       <Row>
         <Col style={{ height: '500px' }}>
-          <div className={classNames('overflow-auto h-100', styles.table)} >
+          <div className={clsx('overflow-auto h-100', styles.table)}>
             {loading && <Loader dev className='mx-auto' />}
             {data && (
-              <Table variant='dark' hover responsive style={{ overflowX: 'visible' }}>
+              <Table
+                variant='dark'
+                hover
+                responsive
+                style={{ overflowX: 'visible' }}
+              >
                 <thead>
                   <tr>
                     <th>ID</th>

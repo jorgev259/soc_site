@@ -1,11 +1,11 @@
-import classNames from 'classnames'
+import clsx from 'clsx';
 
 import styles from './AlbumPage.module.scss'
 
 export default function Loading () {
   return (
-    <div className={classNames('row', styles.container)}>
-      <div className={classNames('col px-0 px-md-5 pt-3', styles.content, styles.loading)}>
+    <div className={clsx('row', styles.container)}>
+      <div className={clsx('col px-0 px-md-5 pt-3', styles.content, styles.loading)}>
         <div className='row px-0 px-md-5'>
           <div className='col col-12 col-lg-5 d-flex align-items-center px-lg-2 mb-3 mb-lg-0' />
           <div className='col col-12 col-lg-7'>
@@ -16,7 +16,7 @@ export default function Loading () {
         </div>
         <hr />
         <div className='row'>
-          <div className={classNames('col col-12 col-lg-6', styles.trackList)}>
+          <div className={clsx('col col-12 col-lg-6', styles.trackList)}>
             <div className='blackBox h-100 d-flex flex-column loadingAnim'>
               <div className='row px-3 flex-grow-1 '>
                 <div className='col d-flex flex-column'>

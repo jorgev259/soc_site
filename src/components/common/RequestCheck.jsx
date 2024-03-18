@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 // import { toast } from 'react-toastify'
 
 // import { RequestSelector } from './Selectors'
-import classNames from 'classnames'
+import clsx from 'clsx'
 
 const requestQuery = gql`
   query ($link: String!) {
@@ -40,7 +40,7 @@ export default function RequestCheck(props) {
 
   return (
     <>
-      <div className={classNames('row', className)}>
+      <div className={clsx('row', className)}>
         <div className='col'>
           <label className='form-label' htmlFor='request'>
             Request:

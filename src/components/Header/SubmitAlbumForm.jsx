@@ -11,7 +11,7 @@ import { Link } from '@/next/lib/navigation'
 import RequestCheck from '../common/RequestCheck'
 
 const vgmQuery = gql`
-  query ($url: String!) {
+  query VGMDB($url: String!) {
     vgmdb(url: $url) {
       title
       subTitle

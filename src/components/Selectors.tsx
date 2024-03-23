@@ -131,7 +131,7 @@ export function RequestSelector(props) {
       {...props}
       rowsFn={(data) => data.rows}
       startQuery={gql`
-        query {
+        query PendingRequests {
           searchRequests(state: ["pending"], donator: [false]) {
             rows {
               value: id
@@ -141,7 +141,7 @@ export function RequestSelector(props) {
         }
       `}
       changeQuery={gql`
-        query ($filter: String) {
+        query PendingHeldRequests($filter: String) {
           searchRequests(state: ["pending", "hold"], filter: $filter) {
             rows {
               value: id

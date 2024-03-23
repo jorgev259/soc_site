@@ -10,7 +10,7 @@ import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
 import useRefresh from '@/next/lib/useRefresh'
 
 const mutationRating = gql`
-  mutation ($albumId: ID!, $score: Int!) {
+  mutation RateAlbum($albumId: ID!, $score: Int!) {
     rateAlbum(albumId: $albumId, score: $score)
   }
 `

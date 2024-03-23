@@ -31,7 +31,8 @@
         "name": "next"
       }
     ],
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "verbatimModuleSyntax": true
   },
   "include": [
     "next-env.d.ts",

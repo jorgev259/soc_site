@@ -41,3 +41,9 @@ Desktop.ini
 
 # Typescript
 next-env.d.ts
+
+# Graphql
+src/__generated__/fragment-masking.ts
+src/__generated__/gql.ts
+src/__generated__/graphql.ts
+src/__generated__/index.ts

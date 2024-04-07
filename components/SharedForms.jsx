@@ -91,7 +91,7 @@ export function SharedForms() {
 }
 
 export function DiscList(props) {
-  const { defaults = [{ number: 0 }] } = props
+  const { defaults = [{ number: 0, tracks: [] }] } = props
   const [keys, setKeys] = useState(defaults)
 
   function addEmptyDisc() {
@@ -111,10 +111,6 @@ export function DiscList(props) {
 
     setKeys(newKeys)
   }
-
-  useEffect(() => {
-    setKeys(defaults)
-  }, [defaults])
 
   return (
     <>

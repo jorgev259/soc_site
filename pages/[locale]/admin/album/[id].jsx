@@ -69,7 +69,7 @@ const query = gql`
       }
       discs {
         number
-        body
+        tracks
       }
       related {
         value: id
@@ -213,6 +213,7 @@ function EditAlbumForm({ id, album, categories, classifications }) {
   const [currentClassifications, setClassifications] = useState(
     album.classifications || []
   )
+
   const [vgmTracklist, setVgmTracklist] = useState(album.discs || [])
 
   const [mutate, { loading }] = useMutation(mutation)

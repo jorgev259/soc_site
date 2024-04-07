@@ -5,7 +5,7 @@ import clsx from 'clsx'
 import styles from '@/styles/DownloadSection.module.scss'
 
 import { Link } from '@/next/lib/navigation'
-import DirectButton from '../../client/AlbumPage/DirectButton'
+import DirectButton from '../AlbumPage/DirectButton'
 import { getMessageObject } from '@/next/lib/transl'
 
 export default function DownloadSection(props) {

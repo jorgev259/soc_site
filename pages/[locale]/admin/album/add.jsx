@@ -17,7 +17,7 @@ import {
   StoreDownloads,
   DiscList
 } from '@/components/SharedForms'
-import SubmitButton from '@/next/components/server/SubmitButton'
+import SubmitButton from '@/next/components/common/SubmitButton'
 import { hasRolePage } from '@/components/resolvers'
 import { prepareForm } from '@/components/utils'
 import { ButtonLoader } from '@/components/Loader'

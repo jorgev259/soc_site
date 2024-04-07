@@ -20,10 +20,10 @@ import FavoriteSection from '@/next/components/AlbumPage/FavoriteSection'
 import HeroCover from '@/next/components/AlbumPage/HeroCover'
 import Related from '@/next/components/AlbumPage/Related'
 
-import TrackList from '@/next/components/client/AlbumPage/TrackList'
-import { InfoTable } from '@/next/components/server/AlbumPage/InfoTable'
-import DownloadList from '@/next/components/server/AlbumPage/DownloadSection'
-import CommentCarrousel from '@/next/components/client/CommentCarrousel/CommentCarrousel'
+import TrackList from '@/next/components/AlbumPage/TrackList'
+import { InfoTable } from '@/next/components/AlbumPage/InfoTable'
+import DownloadList from '@/next/components/AlbumPage/DownloadSection'
+import CommentCarrousel from '@/next/components/CommentCarrousel/CommentCarrousel'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 

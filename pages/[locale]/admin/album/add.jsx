@@ -3,8 +3,20 @@ import { useRef, useState } from 'react'
 import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { toast } from 'react-toastify'
 
-import { AlbumSelector, GameSelector, PlatformSelector, AnimSelector, SimpleSelector } from '@/components/Selectors'
-import { Navigation, SharedForms, Downloads, StoreDownloads, DiscList } from '@/components/SharedForms'
+import {
+  AlbumSelector,
+  GameSelector,
+  PlatformSelector,
+  AnimSelector,
+  SimpleSelector
+} from '@/components/Selectors'
+import {
+  Navigation,
+  SharedForms,
+  Downloads,
+  StoreDownloads,
+  DiscList
+} from '@/components/SharedForms'
 import SubmitButton from '@/next/components/server/SubmitButton'
 import { hasRolePage } from '@/components/resolvers'
 import { prepareForm } from '@/components/utils'
@@ -13,7 +25,7 @@ import RequestCheck from '@/components/RequestCheck'
 
 export const getServerSideProps = hasRolePage(['CREATE'])
 
-export default function AddAlbumPage () {
+export default function AddAlbumPage() {
   return (
     <Row>
       <Col xs={2}>
@@ -34,77 +46,76 @@ const queryCategories = gql`
     }
     classifications {
       name
-    }     
+    }
   }
 `
 
 const mutation = gql`
-    mutation createAlbum(
-      $title: String,
-      $subTitle: String,
-      $cover: Upload,
-      $releaseDate: String,
-      $label: String,
-      $description: String,
-      $downloads: [DownloadInput],
-      $artists: [String],
-      $categories: [String],
-      $classifications: [String],
-      $platforms: [ID],
-      $games: [String],
-      $animations: [ID],
-      $discs: [DiscInput],
-      $related: [ID],
-      $stores: [StoreInput],
-      $vgmdb: String,
-      $status: String!,
-      $request: ID
-    ){
-      createAlbum(
-        title: $title,
-        subTitle: $subTitle,
-        cover: $cover,
-        releaseDate: $releaseDate,
-        label: $label,
-        description: $description,
-        downloads: $downloads,
-        artists: $artists,
-        categories: $categories,
-        classifications: $classifications,
-        platforms: $platforms,
-        games: $games,
-        animations: $animations
-        discs: $discs,
-        related: $related,
-        stores: $stores,
-        vgmdb: $vgmdb,
-        status: $status,
-        request: $request
-      )
-      {
-        id
-      }
+  mutation createAlbum(
+    $title: String
+    $subTitle: String
+    $cover: Upload
+    $releaseDate: String
+    $label: String
+    $description: String
+    $downloads: [DownloadInput]
+    $artists: [String]
+    $categories: [String]
+    $classifications: [String]
+    $platforms: [ID]
+    $games: [String]
+    $animations: [ID]
+    $discs: [DiscInput]
+    $related: [ID]
+    $stores: [StoreInput]
+    $vgmdb: String
+    $status: String!
+    $request: ID
+  ) {
+    createAlbum(
+      title: $title
+      subTitle: $subTitle
+      cover: $cover
+      releaseDate: $releaseDate
+      label: $label
+      description: $description
+      downloads: $downloads
+      artists: $artists
+      categories: $categories
+      classifications: $classifications
+      platforms: $platforms
+      games: $games
+      animations: $animations
+      discs: $discs
+      related: $related
+      stores: $stores
+      vgmdb: $vgmdb
+      status: $status
+      request: $request
+    ) {
+      id
     }
-  `
+  }
+`
 
 const vgmQuery = gql`
-  query ($url: String!){
-    vgmdb(url: $url){
+  query ($url: String!) {
+    vgmdb(url: $url) {
       title
       subTitle
       releaseDate
       artists
       categories
       classifications
-      tracklist {
+      trackList {
         number
-        body
+        tracks
       }
     }
   }
 `
 
-function AddAlbum (props) {
+function AddAlbum(props) {
   const [currentCategories, setCategories] = useState([])
   const [currentClassifications, setClassifications] = useState([])
   const [vgmTracklist, setVgmTracklist] = useState()
@@ -120,29 +131,42 @@ function AddAlbum (props) {
   const subTitleRef = useRef(null)
   const artistsRef = useRef(null)
 
-  const [addMutation, { loading }] = useMutation(mutation, { refetchQueries: 'searchAlbum' })
+  const [addMutation, { loading }] = useMutation(mutation, {
+    refetchQueries: 'searchAlbum'
+  })
 
-  async function handleSubmitForm (e) {
+  async function handleSubmitForm(e) {
     e.persist()
     e.preventDefault()
     const data = prepareForm(e)
 
     addMutation({ variables: data })
-      .then(results => {
+      .then((results) => {
         toast.success(`Added "${data.title}" succesfully!`)
         e.target.reset()
-      }).catch(err => {
+      })
+      .catch((err) => {
         console.log(err)
         toast.error(err.message, { autoclose: false })
       })
   }
 
-  async function fetchInfo () {
-    const { data } = await getVgmdb({ variables: { url: vgmdbRef.current.value } })
+  async function fetchInfo() {
+    const { data } = await getVgmdb({
+      variables: { url: vgmdbRef.current.value }
+    })
 
     if (data?.vgmdb) {
       const { vgmdb } = data
-      const { title, subTitle, releaseDate, artists, categories, classifications, tracklist } = vgmdb
+      const {
+        title,
+        subTitle,
+        releaseDate,
+        artists,
+        categories,
+        classifications,
+        trackList
+      } = vgmdb
 
       releaseRef.current.value = releaseDate
       titleRef.current.value = title
@@ -151,13 +175,15 @@ function AddAlbum (props) {
 
       setCategories(categories)
       setClassifications(classifications)
-      setVgmTracklist(tracklist)
+      setVgmTracklist(trackList)
     }
   }
 
   return (
     <>
-      <div id='addAlbum' className='mb-2 mt-3'>Add Album</div>
+      <div id='addAlbum' className='mb-2 mt-3'>
+        Add Album
+      </div>
       <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
         <Row>
           <Col md={3}>
@@ -175,7 +201,12 @@ function AddAlbum (props) {
           <Col md={3}>
             <Form.Group>
               <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl ref={releaseRef} required type='date' name='releaseDate' />
+              <FormControl
+                ref={releaseRef}
+                required
+                type='date'
+                name='releaseDate'
+              />
             </Form.Group>
           </Col>
           <Col md={3}>
@@ -189,7 +220,16 @@ function AddAlbum (props) {
           <Col>
             <Form.Group>
               <Form.Label htmlFor='status'>Status:</Form.Label>
-              <SimpleSelector isSingle required name='status' defaultValue={{ value: 'show', label: 'Show' }} options={['Show', 'Hidden', 'Coming'].map(label => ({ label, value: label.toLowerCase() }))} />
+              <SimpleSelector
+                isSingle
+                required
+                name='status'
+                defaultValue={{ value: 'show', label: 'Show' }}
+                options={['Show', 'Hidden', 'Coming'].map((label) => ({
+                  label,
+                  value: label.toLowerCase()
+                }))}
+              />
             </Form.Group>
           </Col>
         </Row>
@@ -208,7 +248,7 @@ function AddAlbum (props) {
             </Form.Group>
           </Col>
         </Row>
-        <Row >
+        <Row>
           <Col md={6}>
             <Form.Group>
               <Form.Label htmlFor='vgmdb'>VGMdb:</Form.Label>
@@ -216,11 +256,15 @@ function AddAlbum (props) {
             </Form.Group>
           </Col>
           <Col className='mt-auto'>
-            <ButtonLoader color='primary' loading={loadingFetch} onClick={fetchInfo}>Fetch info</ButtonLoader>
+            <ButtonLoader
+              color='primary'
+              loading={loadingFetch}
+              onClick={fetchInfo}
+            >
+              Fetch info
+            </ButtonLoader>
           </Col>
-          <Col>
-
-          </Col>
+          <Col></Col>
         </Row>
         <hr className='style2 style-white' />
         <Row className='mb-3'>
@@ -234,21 +278,39 @@ function AddAlbum (props) {
             <Form.Group>
               <Form.Label htmlFor='categories'>Categories:</Form.Label>
               <SimpleSelector
-                required name='categories'
-                defaultValue={currentCategories.map(c => ({ value: c, label: c }))}
-                options={categories.map(c => ({ value: c.name, label: c.name }))}
-                onChange={values => setCategories(values.map(v => v.value))}
+                required
+                name='categories'
+                defaultValue={currentCategories.map((c) => ({
+                  value: c,
+                  label: c
+                }))}
+                options={categories.map((c) => ({
+                  value: c.name,
+                  label: c.name
+                }))}
+                onChange={(values) => setCategories(values.map((v) => v.value))}
               />
             </Form.Group>
           </Col>
           <Col md={4}>
             <Form.Group>
-              <Form.Label htmlFor='classifications'>Classifications:</Form.Label>
+              <Form.Label htmlFor='classifications'>
+                Classifications:
+              </Form.Label>
               <SimpleSelector
-                required name='classifications'
-                defaultValue={currentClassifications.map(c => ({ value: c, label: c }))}
-                options={classifications.map(c => ({ value: c.name, label: c.name }))}
-                onChange={values => setClassifications(values.map(v => v.value))}
+                required
+                name='classifications'
+                defaultValue={currentClassifications.map((c) => ({
+                  value: c,
+                  label: c
+                }))}
+                options={classifications.map((c) => ({
+                  value: c.name,
+                  label: c.name
+                }))}
+                onChange={(values) =>
+                  setClassifications(values.map((v) => v.value))
+                }
               />
             </Form.Group>
           </Col>
@@ -266,7 +328,10 @@ function AddAlbum (props) {
           <Col md={4}>
             <Form.Group>
               <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
-              <PlatformSelector categories={currentCategories} options={{ name: 'platforms' }} />
+              <PlatformSelector
+                categories={currentCategories}
+                options={{ name: 'platforms' }}
+              />
             </Form.Group>
           </Col>
           <Col md={4}>
@@ -288,34 +353,38 @@ function AddAlbum (props) {
           </Col>
         </Row>
         <hr className='style2 style-white' />
-        <DiscList defaults={vgmTracklist}/>
+        <DiscList defaults={vgmTracklist} />
         <hr className='style2 style-white' />
         <StoreDownloads />
         <hr className='style2 style-white' />
-        <Downloads defaults={[
-          {
-            title: 'MP3',
-            small: false,
-            links: [
-              { url: '', provider: 'MEGA', custom: null, directUrl: '' },
-              { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' }
-            ]
-          },
-          {
-            title: 'FLAC',
-            small: false,
-            links: [
-              { url: '', provider: 'MEGA', custom: null, directUrl: '' }
-            ]
-          }
-        ]} />
+        <Downloads
+          defaults={[
+            {
+              title: 'MP3',
+              small: false,
+              links: [
+                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' }
+              ]
+            },
+            {
+              title: 'FLAC',
+              small: false,
+              links: [
+                { url: '', provider: 'MEGA', custom: null, directUrl: '' }
+              ]
+            }
+          ]}
+        />
         <hr className='style2 style-white' />
         <RequestCheck element={vgmdbRef.current} />
         <hr className='style2 style-white' />
 
         <Row className='mb-2'>
           <Col xs='auto' className='pe-0'>
-            <SubmitButton loading={loading} type='submit' color='primary'>Add Album</SubmitButton>
+            <SubmitButton loading={loading} type='submit' color='primary'>
+              Add Album
+            </SubmitButton>
           </Col>
         </Row>
       </Form>

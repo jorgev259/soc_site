@@ -139,12 +139,12 @@ export function DiscList(props) {
 }
 
 function DiscField(props) {
-  const { number, body = '' } = props
+  const { number, tracks = [] } = props
   const formRef = useRef(null)
 
   useEffect(() => {
-    formRef.current.value = body
-  }, [body])
+    formRef.current.value = tracks.join('\n')
+  }, [tracks])
 
   return (
     <Col md={6} className='mb-3'>
@@ -158,7 +158,7 @@ function DiscField(props) {
               name='discs[][body]'
               as='textarea'
               id={`discInput${number}`}
-              defaultValue={body}
+              defaultValue={tracks.join('\n')}
             />
           </Form.Group>
         </Col>

@@ -6,9 +6,9 @@ import { toast } from 'react-toastify'
 
 import { toggleFavorite } from '@/actions/albumPage'
 
-import PendingButton from '../shared/PendingButton'
+import PendingButton from '../common/PendingButton'
 
-export default function AddFavoriteButton (props) {
+export default function AddFavoriteButton(props) {
   const { id, isFavorite } = props
 
   const t = useTranslations('')
@@ -16,7 +16,8 @@ export default function AddFavoriteButton (props) {
 
   useEffect(() => {
     if (state.ok === null) return
-    if (state.ok) toast.success(t(isFavorite ? 'Favorite_Added' : 'Favorite_Removed'))
+    if (state.ok)
+      toast.success(t(isFavorite ? 'Favorite_Added' : 'Favorite_Removed'))
     else {
       console.log(state.error)
       toast.error(t(`Favorite_Error_${isFavorite ? 'Remove' : 'Add'}`))
@@ -26,8 +27,18 @@ export default function AddFavoriteButton (props) {
   return (
     <form action={formAction}>
       <input hidden name='id' value={id} required readOnly />
-      <input hidden name='current' type='checkbox' checked={isFavorite} required readOnly />
-      <PendingButton type="submit" className="w-100 rounded-3 btn-outline-light">
+      <input
+        hidden
+        name='current'
+        type='checkbox'
+        checked={isFavorite}
+        required
+        readOnly
+      />
+      <PendingButton
+        type='submit'
+        className='w-100 rounded-3 btn-outline-light'
+      >
         {t(isFavorite ? 'Favorite_Remove' : 'Favorite_Add')}
       </PendingButton>
     </form>

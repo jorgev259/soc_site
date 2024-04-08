@@ -2,7 +2,7 @@ import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 
-import AlbumBox, { AlbumFallback } from '../common/AlbumBox/AlbumBox'
+import { AlbumBox, AlbumFallback } from '../common/AlbumBox'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3 px-0'

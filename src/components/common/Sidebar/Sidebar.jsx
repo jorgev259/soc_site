@@ -8,7 +8,7 @@ import { CommentCarrouselSidebar } from '@/next/components/CommentCarrousel'
 import Script from 'next/script'
 
 import { getClient } from '@/next/lib/ApolloSSRClient'
-import AlbumBox from '../AlbumBox'
+import { AlbumBox } from '../AlbumBox'
 import Ad from '../Ad'
 
 import styles from './Sidebar.module.scss'

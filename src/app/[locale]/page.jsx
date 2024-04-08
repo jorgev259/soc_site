@@ -9,7 +9,7 @@ import styles from './home.module.scss'
 
 import { Link } from '@/next/lib/navigation'
 import Sidebar from '@/next/components/common/Sidebar'
-import AlbumBox, { AlbumFallback } from '@/next/components/common/AlbumBox'
+import { AlbumFallback, AlbumBox } from '@/next/components/common/AlbumBox'
 import { getClient } from '@/next/lib/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3'

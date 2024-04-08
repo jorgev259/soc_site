@@ -1,11 +1,10 @@
 import clsx from 'clsx'
 import Image from 'next/image'
+
 import { Link } from '@/next/lib/navigation'
+import { getImageUrl } from '@/next/server/utils'
 
 import styles from './AlbumBox.module.scss'
-
-const getImageUrl = (id, type = 'album') =>
-  `https://cdn.sittingonclouds.net/${type}/${id}.png`
 
 export function AlbumFallback(props) {
   const { count, ...rest } = props
@@ -16,7 +15,7 @@ export function AlbumFallback(props) {
   return <>{result}</>
 }
 
-export default function AlbumBox(props) {
+export function AlbumBox(props) {
   const {
     id,
     title,

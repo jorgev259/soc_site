@@ -287,7 +287,6 @@ function EditAlbumForm({ id, album, categories, classifications }) {
               <Form.Label htmlFor='title'>Title:</Form.Label>
               <FormControl
                 ref={titleRef}
-                h
                 required
                 type='text'
                 name='title'

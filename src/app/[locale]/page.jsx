@@ -7,10 +7,10 @@ import clsx from 'clsx'
 
 import styles from './home.module.scss'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import Sidebar from '@/next/components/common/Sidebar'
 import { AlbumFallback, AlbumBox } from '@/next/components/common/AlbumBox'
-import { getClient } from '@/next/lib/ApolloSSRClient'
+import { getClient } from '@/next/utils/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3'
 const limit = 12

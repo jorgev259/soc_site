@@ -15,9 +15,9 @@ import clsx from 'clsx'
 
 import { SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
+import { isAuthedPage } from '@/next/utils/resolversPages'
 
 import styles from '@/styles/Request.module.scss'
-import { isAuthedPage } from '@/components/resolvers'
 
 const limit = 15
 const stateOptions = ['Complete', 'Pending', 'Hold'].map((label) => ({

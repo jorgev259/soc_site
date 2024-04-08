@@ -5,8 +5,8 @@ import serialize from 'form-serialize'
 import { useTranslations } from 'next-intl'
 import clsx from 'clsx'
 
-import { useRouter, Link, usePathname } from '@/next/lib/navigation'
-import useUser from './useUser'
+import { useRouter, Link, usePathname } from '@/next/utils/navigation'
+import useUser from '@/next/utils/useUser'
 import Loader, { ButtonLoader } from './Loader'
 
 import styles from '@/styles/Profile.module.scss'

@@ -4,7 +4,7 @@ import { setContext } from '@apollo/client/link/context'
 import { cookies } from 'next/headers'
 
 import { graphQLUri } from '../constants/env'
-import sessionOptions from './sessionOptions'
+import sessionOptions from '../constants/sessionOptions'
 
 const httpLink = new HttpLink({ uri: graphQLUri })
 const authLink = setContext((_, context) => {

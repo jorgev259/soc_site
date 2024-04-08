@@ -4,11 +4,11 @@ import { Row, Col } from 'react-bootstrap'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 
 import Sidebar from '@/components/Sidebar'
-import { initializeApollo } from '@/components/ApolloClient'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 
 const query = gql`
-  query publisher ($id: ID!) {
-    publisher(id: $id){
+  query publisher($id: ID!) {
+    publisher(id: $id) {
       name
       games {
         slug
@@ -25,12 +25,13 @@ export const getServerSideProps = async ({ params, req }) => {
   const { data } = await client.query({ query, variables: { id } })
   const { publisher } = data
 
-  if (publisher === null) return { redirect: { destination: '/404', permanent: false } }
+  if (publisher === null)
+    return { redirect: { destination: '/404', permanent: false } }
 
-  return { props: { publisher }/*, revalidate: 60 */ }
+  return { props: { publisher } /*, revalidate: 60 */ }
 }
 
-export default function PublisherDetail (props) {
+export default function PublisherDetail(props) {
   const { publisher } = props
 
   return (
@@ -49,7 +50,15 @@ export default function PublisherDetail (props) {
         </Row>
 
         <Row className='links-list justify-content-center py-2'>
-          <AlbumBoxList type='game' colProps={{ md: 3, xs: 6 }} items={publisher.games.map(({ slug, name, placeholder }) => ({ id: slug, title: name, placeholder }))} />
+          <AlbumBoxList
+            type='game'
+            colProps={{ md: 3, xs: 6 }}
+            items={publisher.games.map(({ slug, name, placeholder }) => ({
+              id: slug,
+              title: name,
+              placeholder
+            }))}
+          />
         </Row>
       </Col>
       <Sidebar />

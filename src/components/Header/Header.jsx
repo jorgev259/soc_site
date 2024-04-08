@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import Image from 'next/image'
 
 import logo from '@/img/assets/winterlogo.png'
@@ -11,7 +11,7 @@ import LoginBar from './LoginBar'
 
 import styles from './Header.module.scss'
 import { gql } from '@apollo/client'
-import { getClient } from '@/next/lib/ApolloSSRClient'
+import { getClient } from '@/next/utils/ApolloSSRClient'
 import { useLocale } from 'next-intl'
 
 const bannerQuery = gql`

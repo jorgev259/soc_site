@@ -2,18 +2,17 @@ import { useMemo } from 'react'
 import { ApolloClient, InMemoryCache } from '@apollo/client'
 import createUploadLink from 'apollo-upload-client/createUploadLink.mjs'
 
+import { isSSR, graphQLUri } from '../constants/env'
+
 let apolloClient
-const isSSR = typeof window === 'undefined'
-const forcedUri = process.env.FORCE_CLIENT_URI || ''
-const isGithub = process.env.GITHUB_ACTIONS
-const isDev = process.env.NODE_ENV === 'development'
-const graphQLUri = isGithub
-  ? 'https://sittingonclouds.net/api'
-  : forcedUri || (isSSR || isDev || window.origin === 'http://localhost:3000' ? 'http://localhost:3000/api' : `${window.origin}/api`)
 
-const httpLink = createUploadLink({ uri: graphQLUri, credentials: 'include', headers: { 'Apollo-Require-Preflight': true } })
+const httpLink = createUploadLink({
+  uri: graphQLUri,
+  credentials: 'include',
+  headers: { 'Apollo-Require-Preflight': true }
+})
 
-function createApolloClient () {
+function createApolloClient() {
   return new ApolloClient({
     ssrMode: isSSR,
     link: httpLink,
@@ -21,7 +20,7 @@ function createApolloClient () {
   })
 }
 
-export function initializeApollo (initialState = null) {
+export function initializeApollo(initialState = null) {
   const _apolloClient = apolloClient ?? createApolloClient()
 
   if (initialState) _apolloClient.cache.restore(initialState)
@@ -34,7 +33,7 @@ export function initializeApollo (initialState = null) {
   return _apolloClient
 }
 
-export function useApollo (initialState) {
+export function useApollo(initialState) {
   const store = useMemo(() => initializeApollo(initialState), [initialState])
   return store
 }

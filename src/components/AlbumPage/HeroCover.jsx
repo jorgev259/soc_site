@@ -2,7 +2,7 @@ import Image from 'next/image'
 
 import { ModalPortal } from '@/next/components/common/Modal'
 
-import { getCDNUrl } from '@/next/lib/getCDN'
+import { getCDNUrl } from '@/next/utils/getCDN'
 import { PLACEHOLDER } from '@/next/constants/index'
 
 import styles from './HeroCover.module.scss'

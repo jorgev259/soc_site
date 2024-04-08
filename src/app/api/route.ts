@@ -5,15 +5,18 @@ import { processRequest } from 'graphql-upload-minimal'
 import { Readable } from 'stream'
 
 import db from '@/server/sequelize/startDB'
-import sessionOptions from '@/next/lib/sessionOptions'
-import { schema } from '@/next/lib/graphql'
+import sessionOptions from '@/next/constants/sessionOptions'
+import { schema } from '@/server/utils/graphql'
 
-const server = new ApolloServer({ schema, introspection: process.env.NODE_ENV !== 'production' })
+const server = new ApolloServer({
+  schema,
+  introspection: process.env.NODE_ENV !== 'production'
+})
 const context = (req, res) => ({ db, req, res })
 // @ts-ignore
 const handler = startServerAndCreateNextHandler(server, { context })
 
-async function createGraphqlRequest (req, res) {
+async function createGraphqlRequest(req, res) {
   const readStream = Readable.fromWeb(req.body)
   // @ts-ignore
   readStream.headers = Object.fromEntries(req.headers.entries())
@@ -39,7 +42,7 @@ async function createGraphqlRequest (req, res) {
   return httpGraphQLRequest
 }
 
-async function createHttpResponse (req, res) {
+async function createHttpResponse(req, res) {
   const httpGraphQLResponse = await server.executeHTTPGraphQLRequest({
     httpGraphQLRequest: await createGraphqlRequest(req, res),
     context: async () => context(req, res)
@@ -63,18 +66,24 @@ async function createHttpResponse (req, res) {
   }
 
   const body = bodyArray.join('')
-  const response = new Response(body, { headers, status: httpGraphQLResponse.status || 200 })
+  const response = new Response(body, {
+    headers,
+    status: httpGraphQLResponse.status || 200
+  })
 
   return response
 }
 
-export async function POST (req, res) {
+export async function POST(req, res) {
   const headerStore = headers()
   const cookieStore = cookies()
   const { cookieName } = sessionOptions
 
   if (headerStore.has('authorization')) {
-    const token = (headerStore.get('authorization') ?? '').replace('Bearer ', '')
+    const token = (headerStore.get('authorization') ?? '').replace(
+      'Bearer ',
+      ''
+    )
     cookieStore.set(cookieName, token)
   }
 

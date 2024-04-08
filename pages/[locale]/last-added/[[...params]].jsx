@@ -7,10 +7,10 @@ import { useSearchParams } from 'next/navigation'
 
 import styles from '@/styles/LastAdded.module.scss'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
-import { getFullPageList, getPageList } from '@/components/utils'
-import { initializeApollo } from '@/components/ApolloClient'
+import { getFullPageList, getPageList } from '@/server/utils/pagination'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 
 const limit = 80
 const limitMD = 15

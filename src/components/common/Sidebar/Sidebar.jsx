@@ -1,13 +1,13 @@
 import clsx from 'clsx'
 import { useTranslations } from 'next-intl'
 import { gql } from '@apollo/client'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import Image from 'next/image'
 import { Suspense } from 'react'
 import { CommentCarrouselSidebar } from '@/next/components/CommentCarrousel'
 import Script from 'next/script'
 
-import { getClient } from '@/next/lib/ApolloSSRClient'
+import { getClient } from '@/next/utils/ApolloSSRClient'
 import { AlbumBox } from '../AlbumBox'
 import Ad from '../Ad'
 

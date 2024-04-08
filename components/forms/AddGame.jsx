@@ -9,7 +9,7 @@ import {
 } from '../Selectors'
 import { toast } from 'react-toastify'
 
-import { slugify } from '@/next/lib/utils'
+import { slugify } from '@/server/utils/slugify'
 import SubmitButton from '@/next/components/common/SubmitButton'
 
 const mutation = gql`

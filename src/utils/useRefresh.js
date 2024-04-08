@@ -1,11 +1,11 @@
 import { useApolloClient } from '@apollo/client'
-import { useRouter } from '@/next/lib/navigation'
+import { useRouter } from '@/next/utils/navigation'
 
-export default function useRefresh () {
+export default function useRefresh() {
   const router = useRouter()
   const client = useApolloClient()
 
-  function refresh () {
+  function refresh() {
     client.resetStore()
     router.refresh()
   }

@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import styles from './SearchBar.module.scss'
 
-import { useRouter } from '@/next/lib/navigation'
+import { useRouter } from '@/next/utils/navigation'
 
 export default function SearchBar() {
   const [open, setOpen] = useState(false)

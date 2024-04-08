@@ -5,7 +5,7 @@ import { useFormState } from 'react-dom'
 import { toast } from 'react-toastify'
 
 import { mutateFormStatus } from '@/next/actions/graphql'
-import { slugify } from '@/next/lib/utils'
+import { slugify } from '@/server/utils/slugify'
 
 import MultiSelect from '../../shared/MultiSelect/MultiSelect'
 import { ModalPortal, hideModal } from '@/next/components/server/Modal'
@@ -24,7 +24,7 @@ const startQuery = gql`
 `
 
 const changeQuery = gql`
-  query SearchStudios ($filter: String){
+  query SearchStudios($filter: String) {
     searchStudio(name: $filter, limit: 20) {
       rows {
         value: slug
@@ -65,7 +65,7 @@ const mutationDelete = `
 const addId = 'addStudioModal'
 const editId = 'editStudioModal'
 
-export default function StudioSelector () {
+export default function StudioSelector() {
   const [item, setItem] = useState()
 
   return (
@@ -73,24 +73,32 @@ export default function StudioSelector () {
       <AddStudio item={item} />
       <EditStudio item={item} />
       <MultiSelect
-        startQuery={startQuery} changeQuery={changeQuery}
-        addId={addId} editId={editId} setItem={setItem}
+        startQuery={startQuery}
+        changeQuery={changeQuery}
+        addId={addId}
+        editId={editId}
+        setItem={setItem}
       />
     </>
   )
 }
 
-function AddStudio (props) {
+function AddStudio(props) {
   const { item: name = '' } = props
 
   const [slug, setSlug] = useState(slugify(name))
   const client = useApolloClient()
-  const [state, formAction] = useFormState(mutateFormStatus.bind(null, mutationAdd), { ok: null })
+  const [state, formAction] = useFormState(
+    mutateFormStatus.bind(null, mutationAdd),
+    { ok: null }
+  )
 
   useEffect(() => {
     if (state.ok === null) return
     if (state.ok) {
-      client.refetchQueries({ include: ['SearchRecentStudios', 'SearchStudios'] })
+      client.refetchQueries({
+        include: ['SearchRecentStudios', 'SearchStudios']
+      })
       toast.success(`Added "${name}" studio succesfully!`)
       hideModal(addId)
     } else {
@@ -101,29 +109,53 @@ function AddStudio (props) {
 
   return (
     <ModalPortal id={addId}>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Add Studio</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div className='modal-content'>
+        <div className='modal-header'>
+          <h5 className='modal-title'>Add Studio</h5>
+          <button
+            type='button'
+            className='btn-close'
+            data-bs-dismiss='modal'
+            aria-label='Close'
+          ></button>
         </div>
         <form action={formAction}>
-          <div className="modal-body">
-            <div className="container-fluid">
+          <div className='modal-body'>
+            <div className='container-fluid'>
               <div className='row'>
                 <div className='col-md-6'>
-                  <label className="form-label" htmlFor='slug'>Slug:</label>
-                  <input className="form-control" type='text' name='slug' readOnly value={slug} />
+                  <label className='form-label' htmlFor='slug'>
+                    Slug:
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    name='slug'
+                    readOnly
+                    value={slug}
+                  />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label" htmlFor='name'>Name:</label>
-                  <input className="form-control" type='text' name='name' required defaultValue={name} onChange={e => setSlug(slugify(e.target.value))} />
+                  <label className='form-label' htmlFor='name'>
+                    Name:
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    name='name'
+                    required
+                    defaultValue={name}
+                    onChange={(e) => setSlug(slugify(e.target.value))}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="modal-footer">
+          <div className='modal-footer'>
             <div className='col-auto my-auto mx-1'>
-              <PendingButton type='submit' className='btn-primary'>Add studio</PendingButton>
+              <PendingButton type='submit' className='btn-primary'>
+                Add studio
+              </PendingButton>
             </div>
           </div>
         </form>
@@ -132,17 +164,22 @@ function AddStudio (props) {
   )
 }
 
-function EditStudio (props) {
+function EditStudio(props) {
   const { item = {} } = props
   const { value: slug = '', label: name = '' } = item
 
   const client = useApolloClient()
-  const [state, formAction] = useFormState(mutateFormStatus.bind(null, mutationUpdate), { ok: null })
+  const [state, formAction] = useFormState(
+    mutateFormStatus.bind(null, mutationUpdate),
+    { ok: null }
+  )
 
   useEffect(() => {
     if (state.ok === null) return
     if (state.ok) {
-      client.refetchQueries({ include: ['SearchRecentStudios', 'SearchStudios'] })
+      client.refetchQueries({
+        include: ['SearchRecentStudios', 'SearchStudios']
+      })
       toast.success('Updated studio succesfully!')
       hideModal(editId)
     } else {
@@ -153,32 +190,55 @@ function EditStudio (props) {
 
   return (
     <ModalPortal id={editId}>
-      <div className="modal-content">
-        <div className="modal-header">
-          <h5 className="modal-title">Edit &quot;{name}&quot;</h5>
-          <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      <div className='modal-content'>
+        <div className='modal-header'>
+          <h5 className='modal-title'>Edit &quot;{name}&quot;</h5>
+          <button
+            type='button'
+            className='btn-close'
+            data-bs-dismiss='modal'
+            aria-label='Close'
+          ></button>
         </div>
         <form action={formAction}>
-          <div className="modal-body">
-            <div className="container-fluid">
+          <div className='modal-body'>
+            <div className='container-fluid'>
               <div className='row'>
                 <div className='col-md-6'>
-                  <label className="form-label" htmlFor='slug'>Slug:</label>
-                  <input className="form-control" type='text' name='slug' readOnly value={slug} />
+                  <label className='form-label' htmlFor='slug'>
+                    Slug:
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    name='slug'
+                    readOnly
+                    value={slug}
+                  />
                 </div>
                 <div className='col-md-6'>
-                  <label className="form-label" htmlFor='name'>Name:</label>
-                  <input className="form-control" type='text' name='name' required defaultValue={name} />
+                  <label className='form-label' htmlFor='name'>
+                    Name:
+                  </label>
+                  <input
+                    className='form-control'
+                    type='text'
+                    name='name'
+                    required
+                    defaultValue={name}
+                  />
                 </div>
               </div>
             </div>
           </div>
-          <div className="modal-footer">
+          <div className='modal-footer'>
             <div className='col-auto my-auto mx-1'>
               <DeleteStudio slug={slug} />
             </div>
             <div className='col-auto my-auto mx-1'>
-              <PendingButton type='submit' className='btn-primary'>Save Changes</PendingButton>
+              <PendingButton type='submit' className='btn-primary'>
+                Save Changes
+              </PendingButton>
             </div>
           </div>
         </form>
@@ -187,7 +247,7 @@ function EditStudio (props) {
   )
 }
 
-function DeleteStudio (props) {
+function DeleteStudio(props) {
   const { slug } = props
   const formData = new FormData()
   formData.append('slug', slug)
@@ -195,15 +255,17 @@ function DeleteStudio (props) {
   const client = useApolloClient()
   const [loading, setLoading] = useState(false)
 
-  function handleDelete () {
+  function handleDelete() {
     setLoading(true)
     mutateFormStatus(mutationDelete, {}, formData)
       .then(() => {
-        client.refetchQueries({ include: ['SearchRecentStudios', 'SearchStudios'] })
+        client.refetchQueries({
+          include: ['SearchRecentStudios', 'SearchStudios']
+        })
         toast.success('Deleted studio succesfully!')
         hideModal(editId)
       })
-      .catch(error => {
+      .catch((error) => {
         console.log(error)
         toast.error('Failed to delete studio')
       })
@@ -211,6 +273,12 @@ function DeleteStudio (props) {
   }
 
   return (
-    <LoadingButton onClick={handleDelete} className='btn-primary' loading={loading}>Delete Studio</LoadingButton>
+    <LoadingButton
+      onClick={handleDelete}
+      className='btn-primary'
+      loading={loading}
+    >
+      Delete Studio
+    </LoadingButton>
   )
 }

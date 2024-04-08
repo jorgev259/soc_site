@@ -9,36 +9,37 @@ import { toast } from 'react-toastify'
 import Head from 'next/head'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
-import { initializeApollo } from '@/components/ApolloClient'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 import { BasicCommentCarrousel } from '@/components/CommentsCarrousel'
 import { ButtonLoader } from '@/components/Loader'
-import useUser from '@/components/useUser'
+import useUser from '@/next/utils/useUser'
 
 const query = gql`
-    query ($username: String!) {
-      user(username: $username){
-        username
-        createdAt
-        placeholder
-        imgUrl
-        comments {
-          text
-          album {
-            id
-            title
-          }
-        }
-        favorites {
+  query ($username: String!) {
+    user(username: $username) {
+      username
+      createdAt
+      placeholder
+      imgUrl
+      comments {
+        text
+        album {
           id
           title
-          releaseDate
-          createdAt
-          placeholder
         }
       }
-    }`
+      favorites {
+        id
+        title
+        releaseDate
+        createdAt
+        placeholder
+      }
+    }
+  }
+`
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const { params } = context
   const { username } = params
 
@@ -46,7 +47,8 @@ export async function getServerSideProps (context) {
   const { data } = await client.query({ query, variables: { username } })
   const { user } = data
 
-  if (user === null) return { redirect: { destination: '/404', permanent: false } }
+  if (user === null)
+    return { redirect: { destination: '/404', permanent: false } }
 
   return { props: { userProfile: user } }
 }
@@ -62,7 +64,7 @@ export async function getServerSideProps (context) {
   )
 } */
 
-export default function Profile (props) {
+export default function Profile(props) {
   const { user } = useUser()
   const { userProfile } = props
   const { comments, favorites, imgUrl, placeholder, username } = userProfile
@@ -70,7 +72,10 @@ export default function Profile (props) {
 
   const [showProfile, setProfile] = useState(false)
 
-  let floatDuration = DateTime.now().diff(DateTime.fromMillis(userProfile.createdAt), ['years', 'months'])
+  let floatDuration = DateTime.now().diff(
+    DateTime.fromMillis(userProfile.createdAt),
+    ['years', 'months']
+  )
   Object.entries(floatDuration.values).forEach(([name, value]) => {
     floatDuration = floatDuration.set({ [name]: Math.floor(value) })
   })
@@ -79,16 +84,31 @@ export default function Profile (props) {
     <>
       <Head>
         <meta key='url' property='og:url' content={`/profile/${username}`} />
-        <meta key='desc' property='og:description' content={`${username}'s awesome cloud`}/>
+        <meta
+          key='desc'
+          property='og:description'
+          content={`${username}'s awesome cloud`}
+        />
         <meta key='image' property='og:image' content={imgUrl} />
       </Head>
-      {user?.username === username && <EditProfile setProfile={setProfile} showProfile={showProfile} />}
+      {user?.username === username && (
+        <EditProfile setProfile={setProfile} showProfile={showProfile} />
+      )}
       <Container>
         {/* <Explosion username={username} /> */}
         <Row className='mt-3'>
           <Col xs='auto' className='blackblock'>
-            <div className='p-1 position-relative' style={{ height: '200px', width: '200px' }}>
-              <Image style={{ borderRadius: '25px' }} layout='fill' alt={'placeholder'} src={imgUrl} blurDataURL={placeholder} />
+            <div
+              className='p-1 position-relative'
+              style={{ height: '200px', width: '200px' }}
+            >
+              <Image
+                style={{ borderRadius: '25px' }}
+                layout='fill'
+                alt={'placeholder'}
+                src={imgUrl}
+                blurDataURL={placeholder}
+              />
               {/* <img className='position-absolute' src='/img/assets/hat.png' style={{ height: '150px', width: '150px', top: '-70px', left: '25px', transform: 'rotate(10deg)' }}/>} */}
             </div>
           </Col>
@@ -107,7 +127,13 @@ export default function Profile (props) {
             {user?.username === userProfile.username && (
               <Row className='mt-3'>
                 <Col className='d-flex justify-content-center'>
-                  <Button onClick={() => setProfile(true)} className='rounded-3' variant="outline-light">Edit Account</Button>
+                  <Button
+                    onClick={() => setProfile(true)}
+                    className='rounded-3'
+                    variant='outline-light'
+                  >
+                    Edit Account
+                  </Button>
                 </Col>
               </Row>
             )}
@@ -119,7 +145,13 @@ export default function Profile (props) {
         <hr className='style2 style-white' />
         <Row>
           <Col>
-            <h1 style={{ fontSize: '45px' }} className='text-center homeTitle py-2' id='last-releases'>Favorites</h1>
+            <h1
+              style={{ fontSize: '45px' }}
+              className='text-center homeTitle py-2'
+              id='last-releases'
+            >
+              Favorites
+            </h1>
           </Col>
         </Row>
         <Row className='justify-content-center'>
@@ -131,17 +163,27 @@ export default function Profile (props) {
 }
 
 const userMutation = gql`
-  mutation updateUser($username: String, $password: String, $email: String, $pfp: Upload){
-    updateUser(username: $username, password: $password, email: $email, pfp: $pfp)
+  mutation updateUser(
+    $username: String
+    $password: String
+    $email: String
+    $pfp: Upload
+  ) {
+    updateUser(
+      username: $username
+      password: $password
+      email: $email
+      pfp: $pfp
+    )
   }
 `
 
-function EditProfile (props) {
+function EditProfile(props) {
   const { showProfile, setProfile } = props
   const { user, refetch } = useUser()
   const [mutateUser, { loading: loadingUser }] = useMutation(userMutation)
 
-  const handleUpdateUser = ev => {
+  const handleUpdateUser = (ev) => {
     ev.preventDefault()
 
     const variables = serialize(ev.target, { hash: true })
@@ -153,7 +195,7 @@ function EditProfile (props) {
         refetch()
         setProfile(false)
       })
-      .catch(err => {
+      .catch((err) => {
         if (process.env.NODE_ENV === 'development') console.log(err)
         toast.error('Failed to update user')
       })
@@ -165,31 +207,55 @@ function EditProfile (props) {
         <Modal.Body className='m-3'>
           <Form onSubmit={handleUpdateUser}>
             <Row>
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='username' style={{ color: 'black' }}>Username:</Form.Label>
-                <Form.Control type='text' name='username' value={user?.username} readOnly/>
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='username' style={{ color: 'black' }}>
+                  Username:
+                </Form.Label>
+                <Form.Control
+                  type='text'
+                  name='username'
+                  value={user?.username}
+                  readOnly
+                />
               </Form.Group>
 
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='email' style={{ color: 'black' }}>Email:</Form.Label>
-                <Form.Control type='text' name='email' defaultValue={user?.email} />
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='email' style={{ color: 'black' }}>
+                  Email:
+                </Form.Label>
+                <Form.Control
+                  type='text'
+                  name='email'
+                  defaultValue={user?.email}
+                />
               </Form.Group>
             </Row>
             <Row className='mt-3'>
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='password' style={{ color: 'black' }}>Password (empty to keep it unchanged):</Form.Label>
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='password' style={{ color: 'black' }}>
+                  Password (empty to keep it unchanged):
+                </Form.Label>
                 <Form.Control type='password' name='password' />
               </Form.Group>
             </Row>
             <Row className='mt-3'>
-              <Form.Group as={Col} >
-                <Form.Label htmlFor='pfp' style={{ color: 'black' }}>Profile pic:</Form.Label>
+              <Form.Group as={Col}>
+                <Form.Label htmlFor='pfp' style={{ color: 'black' }}>
+                  Profile pic:
+                </Form.Label>
                 <Form.Control type='file' name='pfp' />
               </Form.Group>
             </Row>
             <Row className='mt-4'>
               <Col md={6} className='mx-auto'>
-                <ButtonLoader loading={loadingUser} type='submit' className='w-100' color='primary'>Update User</ButtonLoader>
+                <ButtonLoader
+                  loading={loadingUser}
+                  type='submit'
+                  className='w-100'
+                  color='primary'
+                >
+                  Update User
+                </ButtonLoader>
               </Col>
             </Row>
           </Form>

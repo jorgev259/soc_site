@@ -10,11 +10,11 @@ import { notFound } from 'next/navigation'
 
 import styles from './AlbumPage.module.scss'
 
-import { Link } from '@/next/lib/navigation'
-import { getClient } from '@/next/lib/ApolloSSRClient'
-import { getNextCDNUrl, getCDNUrl } from '@/next/lib/getCDN'
-import getSessionInfo from '@/next/lib/getSession'
-import { getMessageObject } from '@/next/lib/transl'
+import { Link } from '@/next/utils/navigation'
+import { getClient } from '@/next/utils/ApolloSSRClient'
+import { getNextCDNUrl, getCDNUrl } from '@/next/utils/getCDN'
+import getSessionInfo from '@/next/utils/getSession'
+import { getMessageObject } from '@/next/utils/transl'
 
 import FavoriteSection from '@/next/components/AlbumPage/FavoriteSection'
 import HeroCover from '@/next/components/AlbumPage/HeroCover'

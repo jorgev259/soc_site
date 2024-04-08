@@ -3,7 +3,7 @@ import { useEffect, useState, useRef } from 'react'
 import { Button, Col, Row, Form, FormControl } from 'react-bootstrap'
 import { SimpleSelector } from './Selectors'
 
-import { clearKeys } from './utils'
+import { clearKeys } from '@/next/utils/form'
 
 import AddPublisher from './forms/AddPublisher'
 import AddSeries from './forms/AddSeries'

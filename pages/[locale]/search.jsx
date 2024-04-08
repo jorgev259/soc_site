@@ -9,8 +9,8 @@ import { useSearchParams } from 'next/navigation'
 
 import styles from '@/styles/Search.module.scss'
 
-import { Link } from '@/next/lib/navigation'
-import { getImageUrl } from '@/components/utils'
+import { Link } from '@/next/utils/navigation'
+import { getImageUrl } from '@/server/utils/getCDN'
 import Loader from '@/components/Loader'
 
 const limit = 30

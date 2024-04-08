@@ -1,11 +1,13 @@
 import { Col } from 'react-bootstrap'
 import clsx from 'clsx'
 import Image from 'next/legacy/image'
-import { Link } from '@/next/lib/navigation'
 
 import styles from '@/styles/AlbumBoxes.module.scss'
 
-import { PLACEHOLDER, getImageUrl } from './utils'
+import { Link } from '@/next/utils/navigation'
+import { getImageUrl } from '@/server/utils/getCDN'
+
+import { PLACEHOLDER } from '@/next/constants'
 
 export default function AlbumBox(props) {
   const {

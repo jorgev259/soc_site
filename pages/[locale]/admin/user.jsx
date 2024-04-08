@@ -1,35 +1,48 @@
 import { useRef, createRef, useMemo, useState } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
-import { Button, Col, Row, Container, Table, Form, Modal, InputGroup, FormControl } from 'react-bootstrap'
+import {
+  Button,
+  Col,
+  Row,
+  Container,
+  Table,
+  Form,
+  Modal,
+  InputGroup,
+  FormControl
+} from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import serialize from 'form-serialize'
 
 import { SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
-import { hasRolePage } from '@/components/resolvers'
+import { hasRolePage } from '@/next/utils/resolversPages'
 
 export const getServerSideProps = hasRolePage(['MANAGE_USER'])
 
-export default function AdminUser () {
-  const { data, refetch } = useQuery(gql`
-    query users($search: String!){
-      users(search: $search){
-        username
+export default function AdminUser() {
+  const { data, refetch } = useQuery(
+    gql`
+      query users($search: String!) {
+        users(search: $search) {
+          username
+          roles {
+            name
+          }
+        }
+
         roles {
           name
+          permissions
         }
-      }
 
-      roles {
-        name
         permissions
       }
+    `,
+    { variables: { search: '' } }
+  )
 
-      permissions
-    }
-  `, { variables: { search: '' } })
-
-  function handleSearch (e) {
+  function handleSearch(e) {
     e.persist()
     e.preventDefault()
     const search = e.target.value
@@ -54,7 +67,7 @@ export default function AdminUser () {
           </Row>
           <Row className='mt-2'>
             <Col>
-              <Table variant='dark' hover >
+              <Table variant='dark' hover>
                 <thead>
                   <tr>
                     <th>Username</th>
@@ -63,9 +76,15 @@ export default function AdminUser () {
                   </tr>
                 </thead>
                 <tbody>
-                  {data && data.users.map(props => (
-                    <UserRow key={props.username} {...props} roleList={data.roles} refetch={refetch}/>
-                  ))}
+                  {data &&
+                    data.users.map((props) => (
+                      <UserRow
+                        key={props.username}
+                        {...props}
+                        roleList={data.roles}
+                        refetch={refetch}
+                      />
+                    ))}
                 </tbody>
               </Table>
             </Col>
@@ -75,7 +94,7 @@ export default function AdminUser () {
 
       <Row className='site-form blackblock mt-3'>
         <Col>
-          <Table variant='dark' hover >
+          <Table variant='dark' hover>
             <thead>
               <tr>
                 <th>Role</th>
@@ -84,9 +103,14 @@ export default function AdminUser () {
               </tr>
             </thead>
             <tbody>
-              {data && data.roles.map(props => (
-                <RoleRow key={props.name} {...props} permissionList={data.permissions} />
-              ))}
+              {data &&
+                data.roles.map((props) => (
+                  <RoleRow
+                    key={props.name}
+                    {...props}
+                    permissionList={data.permissions}
+                  />
+                ))}
             </tbody>
           </Table>
         </Col>
@@ -128,51 +152,70 @@ export default function AdminUser () {
   )
 }
 
-function UserRow (props) {
+function UserRow(props) {
   const { username, roles, roleList, refetch } = props
   const [update, { loading }] = useMutation(gql`
-  mutation updateUserRoles($username: String!, $roles: [String]!){
-    updateUserRoles(username: $username, roles: $roles)
-  }
+    mutation updateUserRoles($username: String!, $roles: [String]!) {
+      updateUserRoles(username: $username, roles: $roles)
+    }
   `)
   const [remove, { removeLoading }] = useMutation(gql`
-  mutation DeleteUser($username: String!){
-    deleteUser(username: $username)
-  }
+    mutation DeleteUser($username: String!) {
+      deleteUser(username: $username)
+    }
   `)
 
   const [deleteModal, setDeleteModal] = useState(false)
 
-  const handleUpdate = roles => {
+  const handleUpdate = (roles) => {
     update({
-      variables: { username, roles: roles.map(r => r.value) }
-    }).then(results => {
-      toast.success('Updated user succesfully!')
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
+      variables: { username, roles: roles.map((r) => r.value) }
     })
+      .then((results) => {
+        toast.success('Updated user succesfully!')
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
-  function handleDelete () {
-    remove({ variables: { username } }).then(results => {
-      toast.success(`Deleted user "${username}" succesfully`)
-      refetch()
-    }).catch(err => {
-      console.log(err)
-      toast.error(`Failed to delete user "${username}"`)
-    }).finally(() => setDeleteModal(!deleteModal))
+  function handleDelete() {
+    remove({ variables: { username } })
+      .then((results) => {
+        toast.success(`Deleted user "${username}" succesfully`)
+        refetch()
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(`Failed to delete user "${username}"`)
+      })
+      .finally(() => setDeleteModal(!deleteModal))
   }
 
   return (
     <>
-      <Modal centered show={deleteModal} toggle={() => setDeleteModal(!deleteModal)}>
+      <Modal
+        centered
+        show={deleteModal}
+        toggle={() => setDeleteModal(!deleteModal)}
+      >
         <Modal.Body className='m-3' style={{ color: 'black' }}>
-          <Row><Col>{`Delete user "${username}"?`}</Col></Row>
+          <Row>
+            <Col>{`Delete user "${username}"?`}</Col>
+          </Row>
           <Row className='mt-2'>
             <Col>
-              <Button color='primary' className='mx-2' onClick={handleDelete}>{removeLoading ? <Loader dev /> : 'Yes'}</Button>
-              <Button color='primary' className='mx-2' onClick={() => setDeleteModal(!deleteModal)}>No</Button>
+              <Button color='primary' className='mx-2' onClick={handleDelete}>
+                {removeLoading ? <Loader dev /> : 'Yes'}
+              </Button>
+              <Button
+                color='primary'
+                className='mx-2'
+                onClick={() => setDeleteModal(!deleteModal)}
+              >
+                No
+              </Button>
             </Col>
           </Row>
         </Modal.Body>
@@ -183,98 +226,138 @@ function UserRow (props) {
         <td>
           <SimpleSelector
             loading={loading}
-            onChange={result => handleUpdate(result)}
-            defaultValue={roles.map(({ name }) => ({ label: name, value: name }))}
+            onChange={(result) => handleUpdate(result)}
+            defaultValue={roles.map(({ name }) => ({
+              label: name,
+              value: name
+            }))}
             options={roleList.map(({ name }) => ({ label: name, value: name }))}
           />
         </td>
         <td>
-          <Button className='me-2' onClick={() => setDeleteModal(!deleteModal)}>Remove</Button>
+          <Button className='me-2' onClick={() => setDeleteModal(!deleteModal)}>
+            Remove
+          </Button>
         </td>
       </tr>
     </>
   )
 }
 
-function RoleRow ({ name, permissions, permissionList }) {
+function RoleRow({ name, permissions, permissionList }) {
   const nameRef = useRef(null)
-  const permRefs = useMemo(() => Array(permissionList.length).fill().map(() => createRef()), [permissionList])
+  const permRefs = useMemo(
+    () =>
+      Array(permissionList.length)
+        .fill()
+        .map(() => createRef()),
+    [permissionList]
+  )
 
   const [deleteRole] = useMutation(gql`
-  mutation DeleteRole($name:String!){
-    deleteRole(name: $name)
-  }
+    mutation DeleteRole($name: String!) {
+      deleteRole(name: $name)
+    }
   `)
 
   const [updateRole] = useMutation(gql`
-  mutation UpdateRole($key: String!, $name:String!, $permissions:[String]!){
-    updateRole(key: $key, name: $name, permissions: $permissions){
-      name
+    mutation UpdateRole(
+      $key: String!
+      $name: String!
+      $permissions: [String]!
+    ) {
+      updateRole(key: $key, name: $name, permissions: $permissions) {
+        name
+      }
     }
-  }
   `)
 
-  function handleDelete () {
-    deleteRole({ variables: { name } }).then(results => {
-      toast.success(`Removed "${name}" role succesfully!`)
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
-    })
+  function handleDelete() {
+    deleteRole({ variables: { name } })
+      .then((results) => {
+        toast.success(`Removed "${name}" role succesfully!`)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
-  function handleUpdate () {
+  function handleUpdate() {
     const permissions = []
     permRefs.forEach((p, i) => {
       if (p.current.checked) permissions.push(permissionList[i])
     })
 
-    updateRole({ variables: { key: name, name: nameRef.current.value, permissions } }).then(results => {
-      toast.success(`Updated "${name}" role succesfully!`)
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
+    updateRole({
+      variables: { key: name, name: nameRef.current.value, permissions }
     })
+      .then((results) => {
+        toast.success(`Updated "${name}" role succesfully!`)
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
   return (
     <tr>
-      <td><input style={{ width: '100%' }} ref={nameRef} type='text' className='m-auto' defaultValue={name} /></td>
+      <td>
+        <input
+          style={{ width: '100%' }}
+          ref={nameRef}
+          type='text'
+          className='m-auto'
+          defaultValue={name}
+        />
+      </td>
       {permissionList.map((p, i) => (
         <td key={p}>
-          <input ref={permRefs[i]} type='checkbox' className='m-auto' defaultChecked={permissions.includes(p)} />
+          <input
+            ref={permRefs[i]}
+            type='checkbox'
+            className='m-auto'
+            defaultChecked={permissions.includes(p)}
+          />
         </td>
       ))}
       <td>
-        <Button className='me-2' onClick={handleUpdate}>Save</Button>
+        <Button className='me-2' onClick={handleUpdate}>
+          Save
+        </Button>
         <Button onClick={handleDelete}>Remove</Button>
       </td>
     </tr>
   )
 }
 
-function AddRole () {
+function AddRole() {
   const [create] = useMutation(gql`
-  mutation CreateRole($name:String!, $permissions: [String]!){
-    createRole(name: $name, permissions: $permissions) {
-      name
+    mutation CreateRole($name: String!, $permissions: [String]!) {
+      createRole(name: $name, permissions: $permissions) {
+        name
+      }
     }
-  }
   `)
 
-  function handleSubmitForm (e) {
+  function handleSubmitForm(e) {
     e.preventDefault()
     e.persist()
     const variables = serialize(e.target, { hash: true })
     variables.permissions = []
 
-    create({ variables }).then(results => {
-      toast.success(`Added "${e.target.elements.name.value}" role succesfully!`)
-      e.target.reset()
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
-    })
+    create({ variables })
+      .then((results) => {
+        toast.success(
+          `Added "${e.target.elements.name.value}" role succesfully!`
+        )
+        e.target.reset()
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
   return (
@@ -288,7 +371,9 @@ function AddRole () {
             </Form.Group>
           </Col>
           <Col className='mb-3 mt-auto'>
-            <Button type='submit' color='primary'>Add Role</Button>
+            <Button type='submit' color='primary'>
+              Add Role
+            </Button>
           </Col>
         </Row>
       </Form>

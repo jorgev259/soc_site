@@ -2,7 +2,7 @@
 import clsx from 'clsx'
 
 import styles from './NavigationBar.module.scss'
-import useLogout from '@/next/lib/useLogout'
+import useLogout from '@/next/utils/useLogout'
 
 export default function MobileLogoutBtn(props) {
   const { children } = props

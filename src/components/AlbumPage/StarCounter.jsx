@@ -6,9 +6,9 @@ import { getTranslations } from 'next-intl/server'
 import styles from './StarCounter.module.scss'
 
 import Star from './Star'
-import { getClient } from '@/next/lib/ApolloSSRClient'
-import getSessionInfo from '@/next/lib/getSession'
-import { getMessageObject } from '@/next/lib/transl'
+import { getClient } from '@/next/utils/ApolloSSRClient'
+import getSessionInfo from '@/next/utils/getSession'
+import { getMessageObject } from '@/next/utils/transl'
 
 const getScore = gql`
   query AlbumScore($id: ID!) {

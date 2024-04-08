@@ -6,16 +6,16 @@ import Image from 'next/legacy/image'
 import { gql, useMutation } from '@apollo/client'
 import { toast } from 'react-toastify'
 
-import { useRouter } from '@/next/lib/navigation'
+import { useRouter } from '@/next/utils/navigation'
 
 const bigNono = { redirect: { permanent: false, destination: '/500' } }
 const mutation = gql`
-  mutation updatePass($key: String!, $pass: String!){
+  mutation updatePass($key: String!, $pass: String!) {
     updatePass(key: $key, pass: $pass)
   }
 `
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const { query } = context
   const { key } = query
   if (!key) return bigNono
@@ -30,7 +30,7 @@ export async function getServerSideProps (context) {
   /* else */ return { props: { qKey: key } }
 }
 
-export default function Forgor ({ qKey }) {
+export default function Forgor({ qKey }) {
   const key = qKey
   const [mutate, { loading }] = useMutation(mutation)
   const router = useRouter()
@@ -39,16 +39,17 @@ export default function Forgor ({ qKey }) {
   const p2 = useRef(null)
   const [isInvalid, setInvalid] = useState(false)
 
-  const checkInvalid = () => setInvalid(p1?.current?.value !== p2?.current?.value)
+  const checkInvalid = () =>
+    setInvalid(p1?.current?.value !== p2?.current?.value)
 
-  const submit = ev => {
+  const submit = (ev) => {
     ev.preventDefault()
     mutate({ variables: { key, pass: p1.current.value } })
       .then(() => {
         toast.success('Password changed succesfully!')
         router.push('/')
       })
-      .catch(err => {
+      .catch((err) => {
         if (process.env.NODE_ENV === 'development') console.log(err)
         toast.error('Failed to change password')
       })
@@ -56,24 +57,51 @@ export default function Forgor ({ qKey }) {
 
   return (
     <Col>
-      <Form onSubmit={submit} className='site-form grayblock mx-auto my-5' style={{ maxWidth: '500px' }} >
+      <Form
+        onSubmit={submit}
+        className='site-form grayblock mx-auto my-5'
+        style={{ maxWidth: '500px' }}
+      >
         <Row>
           <Col md={6}>
             <Form.Group>
-              <Form.Label htmlFor='username' style={{ color: 'black' }}>New password:</Form.Label>
-              <Form.Control required type='password' name='password' ref={p1} onChange={checkInvalid} />
+              <Form.Label htmlFor='username' style={{ color: 'black' }}>
+                New password:
+              </Form.Label>
+              <Form.Control
+                required
+                type='password'
+                name='password'
+                ref={p1}
+                onChange={checkInvalid}
+              />
             </Form.Group>
           </Col>
           <Col md={6}>
             <Form.Group>
-              <Form.Label htmlFor='password' style={{ color: 'black' }}>Repeat new password:</Form.Label>
-              <Form.Control required type='password' name='password' isInvalid={isInvalid} ref={p2} onChange={checkInvalid} />
+              <Form.Label htmlFor='password' style={{ color: 'black' }}>
+                Repeat new password:
+              </Form.Label>
+              <Form.Control
+                required
+                type='password'
+                name='password'
+                isInvalid={isInvalid}
+                ref={p2}
+                onChange={checkInvalid}
+              />
             </Form.Group>
           </Col>
         </Row>
         <Row className='mt-3'>
           <Col md={4} className='mx-auto'>
-            <Button type='submit' className='w-100' color='primary'>{loading ? <Image {...loader} alt='loading' /> : 'Change password'}</Button>
+            <Button type='submit' className='w-100' color='primary'>
+              {loading ? (
+                <Image {...loader} alt='loading' />
+              ) : (
+                'Change password'
+              )}
+            </Button>
           </Col>
         </Row>
       </Form>

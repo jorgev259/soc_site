@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 
 import { hideModal } from '@/next/components/common/Modal'
 import SubmitButton from '@/next/components/common/SubmitButton'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import RequestCheck from '../common/RequestCheck'
 
 const vgmQuery = gql`

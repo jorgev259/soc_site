@@ -18,8 +18,8 @@ import {
   DiscList
 } from '@/components/SharedForms'
 import SubmitButton from '@/next/components/common/SubmitButton'
-import { hasRolePage } from '@/components/resolvers'
-import { prepareForm } from '@/components/utils'
+import { hasRolePage } from '@/next/utils/resolversPages'
+import { prepareForm } from '@/next/utils/form'
 import { ButtonLoader } from '@/components/Loader'
 import RequestCheck from '@/components/RequestCheck'
 

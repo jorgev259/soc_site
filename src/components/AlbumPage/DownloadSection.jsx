@@ -4,9 +4,9 @@ import clsx from 'clsx'
 
 import styles from '@/styles/DownloadSection.module.scss'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import DirectButton from '../AlbumPage/DirectButton'
-import { getMessageObject } from '@/next/lib/transl'
+import { getMessageObject } from '@/next/utils/transl'
 
 export default function DownloadSection(props) {
   const { downloads = [] } = props

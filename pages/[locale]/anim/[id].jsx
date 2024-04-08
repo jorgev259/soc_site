@@ -9,8 +9,8 @@ import { useTranslations } from 'next-intl'
 import styles from '@/styles/Album.module.scss'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
-import { getImageUrl } from '@/components/utils'
-import { initializeApollo } from '@/components/ApolloClient'
+import { getImageUrl } from '@/server/utils/getCDN'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 
 const query = gql`
   query animation($id: ID) {

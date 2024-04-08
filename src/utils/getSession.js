@@ -2,17 +2,19 @@
 import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 
-import sessionOptions from './sessionOptions'
+import sessionOptions from '../constants/sessionOptions'
 
-export const getSession = () => getIronSession(cookies(), sessionOptions)
-export async function getUser (db) {
+export const getSession = () =>
+  getIronSession(cookies(), sessionOptions)
+
+export async function getUser(db) {
   const session = await getSession()
   const { username = null } = session
 
   return username ? db.models.user.findByPk(username) : null
 }
 
-export default async function getSessionInfo () {
+export default async function getSessionInfo() {
   const session = await getSession()
   const { username } = session
   const isFAU = username !== undefined

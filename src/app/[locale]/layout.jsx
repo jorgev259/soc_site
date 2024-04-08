@@ -7,7 +7,7 @@ import Header from '@/next/components/Header'
 import { ApolloWrapper } from '@/next/components/common/ApolloClientProvider'
 import Ad from '@/next/components/common/Ad'
 import { isDev } from '@/next/constants/env'
-// import { locales } from '@/next/lib/navigation'
+// import { locales } from '@/next/utils/navigation'
 
 import '@/styles/layout.scss'
 

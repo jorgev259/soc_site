@@ -3,11 +3,11 @@ import { gql } from '@apollo/client'
 import moment from 'moment'
 import Head from 'next/head'
 import Image from 'next/legacy/image'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import clsx from 'clsx'
 
-import { initializeApollo } from '@/components/ApolloClient'
-import { getImageUrl } from '@/components/utils'
+import { initializeApollo } from '@/next/utils/ApolloClient'
+import { getImageUrl } from '@/server/utils/getCDN'
 
 import AlbumBoxStyles from '@/styles/AlbumBoxes.module.scss'
 

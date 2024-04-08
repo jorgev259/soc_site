@@ -9,8 +9,8 @@ import styles from './LoginForm.module.scss'
 
 import SubmitButton from '@/next/components/common/SubmitButton'
 import { hideModal, showModal } from '@/next/components/common/Modal'
-import useRefresh from '@/next/lib/useRefresh'
-import useLogout from '@/next/lib/useLogout'
+import useRefresh from '@/next/utils/useRefresh'
+import useLogout from '@/next/utils/useLogout'
 
 const registerMutation = gql`
   mutation Register($username: String!, $email: String!, $pfp: Upload) {

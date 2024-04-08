@@ -8,7 +8,7 @@ import { toast } from 'react-toastify'
 
 import styles from './CommentCarrousel.module.scss'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import sidebarStyles from '@/next/components/common/Sidebar/Sidebar.module.scss'
 import {
   ModalTemplate,

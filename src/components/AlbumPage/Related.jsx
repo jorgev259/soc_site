@@ -3,7 +3,7 @@ import { gql } from '@apollo/client'
 import { Suspense } from 'react'
 
 import { AlbumBox, AlbumFallback } from '../common/AlbumBox'
-import { getClient } from '@/next/lib/ApolloSSRClient'
+import { getClient } from '@/next/utils/ApolloSSRClient'
 
 const albumClassName = 'col-6 col-md-3 px-0'
 const getRelatedQuery = gql`

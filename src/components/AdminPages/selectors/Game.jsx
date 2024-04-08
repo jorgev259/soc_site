@@ -5,7 +5,7 @@ import { gql, useApolloClient } from '@apollo/client'
 import { toast } from 'react-toastify'
 
 import { mutateFormStatus } from '@/next/actions/graphql'
-import { slugify } from '@/next/lib/utils'
+import { slugify } from '@/server/utils/slugify'
 
 import MultiSelect from '@/next/components/common/MultiSelect'
 import { ModalPortal, hideModal } from '../../common/Modal'

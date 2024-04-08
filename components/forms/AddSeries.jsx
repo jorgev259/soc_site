@@ -5,7 +5,7 @@ import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
 import SubmitButton from '@/next/components/common/SubmitButton'
-import { slugify } from '@/next/lib/utils'
+import { slugify } from '@/server/utils/slugify'
 
 const mutation = gql`
   mutation CreateSeries($slug: String!, $name: String!, $cover: Upload!) {

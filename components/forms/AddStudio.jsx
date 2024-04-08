@@ -4,43 +4,43 @@ import { Button, Col, Row, Form, FormControl } from 'react-bootstrap'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
-import { slugify } from '@/next/lib/utils'
+import { slugify } from '@/server/utils/slugify'
 
 const mutation = gql`
-mutation CreateStudio($slug:String!, $name:String!){
-  createStudio(
-    name: $name
-    slug: $slug
-  ) {
-    slug
-    name
+  mutation CreateStudio($slug: String!, $name: String!) {
+    createStudio(name: $name, slug: $slug) {
+      slug
+      name
+    }
   }
-}
-
 `
 
-export default function AddStudio () {
+export default function AddStudio() {
   const [slug, setSlug] = useState('')
   const [mutate] = useMutation(mutation)
 
-  function handleSubmitForm (e) {
+  function handleSubmitForm(e) {
     e.preventDefault()
     e.persist()
 
     const data = serialize(e.target, { hash: true })
 
-    mutate({ mutation, variables: data }).then(results => {
-      toast.success(`Added "${data.name}" studio succesfully!`)
-      e.target.reset()
-    }).catch(err => {
-      console.log(err)
-      toast.error(err.message, { autoclose: false })
-    })
+    mutate({ mutation, variables: data })
+      .then((results) => {
+        toast.success(`Added "${data.name}" studio succesfully!`)
+        e.target.reset()
+      })
+      .catch((err) => {
+        console.log(err)
+        toast.error(err.message, { autoclose: false })
+      })
   }
 
   return (
     <>
-      <div id='addStudio' className='mb-2 mt-3'>Add Studio</div>
+      <div id='addStudio' className='mb-2 mt-3'>
+        Add Studio
+      </div>
       <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
         <Row>
           <Col md={6}>
@@ -52,13 +52,19 @@ export default function AddStudio () {
           <Col md={6}>
             <Form.Group>
               <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl type='text' name='name' onChange={e => setSlug(slugify(e.target.value))} />
+              <FormControl
+                type='text'
+                name='name'
+                onChange={(e) => setSlug(slugify(e.target.value))}
+              />
             </Form.Group>
           </Col>
         </Row>
         <Row>
           <Col className='m-auto'>
-            <Button type='submit' color='primary'>Add Studio</Button>
+            <Button type='submit' color='primary'>
+              Add Studio
+            </Button>
           </Col>
         </Row>
       </Form>

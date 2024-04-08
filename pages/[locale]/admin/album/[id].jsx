@@ -18,11 +18,12 @@ import {
   Downloads
 } from '@/components/SharedForms'
 import SubmitButton from '@/next/components/common/SubmitButton'
-import useUser from '@/components/useUser'
-import { initializeApollo } from '@/components/ApolloClient'
-import { prepareForm } from '@/components/utils'
 import RequestCheck from '@/components/RequestCheck'
 import { ButtonLoader } from '@/components/Loader'
+
+import useUser from '@/next/utils/useUser'
+import { initializeApollo } from '@/next/utils/ApolloClient'
+import { prepareForm } from '@/next/utils/form'
 
 const capitalize = (s) => {
   if (typeof s !== 'string') return ''

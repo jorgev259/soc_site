@@ -16,7 +16,7 @@ import clsx from 'clsx'
 
 import { SimpleSelector } from '@/components/Selectors'
 import Loader, { ButtonLoader } from '@/components/Loader'
-import { hasRolePage } from '@/components/resolvers'
+import { hasRolePage } from '@/next/utils/resolversPages'
 
 import styles from '@/styles/Request.module.scss'
 

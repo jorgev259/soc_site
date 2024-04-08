@@ -1,35 +1,35 @@
 import { gql } from '@apollo/client'
 import { Container, Col, Row } from 'react-bootstrap'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import { useTranslations } from 'next-intl'
 
-import { initializeApollo } from '@/components/ApolloClient'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps(context) {
   const client = initializeApollo()
   const { data } = await client.query({
     query: gql`
-    query {
+      query {
         result: searchAlbum(
-            limit: 40,
-            order: ["releaseDate", "createdAt"],
-            categories: ["Animation"]
-        ){
-            rows { 
-                id
-                title
-                placeholder
-            }
+          limit: 40
+          order: ["releaseDate", "createdAt"]
+          categories: ["Animation"]
+        ) {
+          rows {
+            id
+            title
+            placeholder
+          }
         }
-    }`
-
+      }
+    `
   })
 
   return { props: { ...data.result } }
 }
 
-function Button (props) {
+function Button(props) {
   const { name, href } = props
   const t = useTranslations('common')
 
@@ -44,7 +44,7 @@ function Button (props) {
   )
 }
 
-export default function GameHome (props) {
+export default function GameHome(props) {
   const { rows } = props
   const t = useTranslations('common')
 
@@ -58,7 +58,9 @@ export default function GameHome (props) {
         <Col md={12}>
           <Row className='p-3'>
             <Col md={12}>
-              <h1 className='text-center homeTitle' id='last-releases'>{t('Latest Animation Releases')}</h1>
+              <h1 className='text-center homeTitle' id='last-releases'>
+                {t('Latest Animation Releases')}
+              </h1>
             </Col>
           </Row>
 

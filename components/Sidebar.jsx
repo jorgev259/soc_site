@@ -11,11 +11,11 @@ import kofi from '@/img/assets/ko-fi-donate-button.png'
 import yt from '@/img/assets/yt.png'
 import twitter from '@/img/assets/twitter.png'
 
-import { Link, useRouter } from '@/next/lib/navigation'
+import { Link, useRouter } from '@/next/utils/navigation'
 import { skipAds } from './utils'
 import Loader from './Loader'
 import AlbumBox from './AlbumBoxes'
-import useUser from './useUser'
+import useUser from '@/next/utils/useUser'
 import { useTranslations } from 'next-intl'
 import { CommentCarrouselSidebar } from './CommentsCarrousel'
 

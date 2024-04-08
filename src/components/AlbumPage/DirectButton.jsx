@@ -5,7 +5,7 @@ import clsx from 'clsx'
 
 import styles from '@/styles/DownloadSection.module.scss'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 
 export default function DirectButton(props) {
   const { directUrl } = props

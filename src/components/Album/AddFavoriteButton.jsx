@@ -5,17 +5,17 @@ import { useState } from 'react'
 import { toast } from 'react-toastify'
 
 import Loading from '@/next/components/server/Loading'
-import useRefresh from '@/next/lib/useRefresh'
+import useRefresh from '@/next/utils/useRefresh'
 
 const favoriteQuery = gql`
-  query IsFavorite ($id: ID!) {
-    album(id: $id){
-        isFavorite
+  query IsFavorite($id: ID!) {
+    album(id: $id) {
+      isFavorite
     }
   }
 `
 
-const favoriteTemplate = query => gql`
+const favoriteTemplate = (query) => gql`
   mutation ${query}Favorite ($id: String!) {
     ${query}Favorite(albumId: $id)
   }
@@ -23,23 +23,31 @@ const favoriteTemplate = query => gql`
 const addFavorite = favoriteTemplate('add')
 const removeFavorite = favoriteTemplate('remove')
 
-export default function AddFavoriteButton (props) {
+export default function AddFavoriteButton(props) {
   const { id, t } = props
 
   const [loadingMutate, setLoading] = useState(false)
-  const { data, loading: loadingQuery } = useQuery(favoriteQuery, { variables: { id } })
+  const { data, loading: loadingQuery } = useQuery(favoriteQuery, {
+    variables: { id }
+  })
   const client = useApolloClient()
   const refresh = useRefresh()
 
   const loading = loadingQuery || loadingMutate
   const isFavorite = data?.album?.isFavorite ?? false
 
-  function submitFavorite () {
+  function submitFavorite() {
     setLoading(true)
 
-    client.mutate({ mutation: isFavorite ? removeFavorite : addFavorite, variables: { id } })
-      .then(() => toast.success(t[isFavorite ? 'Favorite_Removed' : 'Favorite_Added']))
-      .catch(err => {
+    client
+      .mutate({
+        mutation: isFavorite ? removeFavorite : addFavorite,
+        variables: { id }
+      })
+      .then(() =>
+        toast.success(t[isFavorite ? 'Favorite_Removed' : 'Favorite_Added'])
+      )
+      .catch((err) => {
         console.log(err)
         toast.error('Query failed')
       })
@@ -50,7 +58,12 @@ export default function AddFavoriteButton (props) {
   }
 
   return (
-    <button type="button" disabled={loading} className="w-100 rounded-3 btn btn-outline-light" onClick={submitFavorite}>
+    <button
+      type='button'
+      disabled={loading}
+      className='w-100 rounded-3 btn btn-outline-light'
+      onClick={submitFavorite}
+    >
       <Loading loading={loading}>
         {t[isFavorite ? 'Favorite_Remove' : 'Favorite_Add']}
       </Loading>

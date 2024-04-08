@@ -7,7 +7,7 @@ import { toast } from 'react-toastify'
 import styles from './StarCounter.module.scss'
 
 import { useQuery } from '@apollo/experimental-nextjs-app-support/ssr'
-import useRefresh from '@/next/lib/useRefresh'
+import useRefresh from '@/next/utils/useRefresh'
 
 const mutationRating = gql`
   mutation RateAlbum($albumId: ID!, $score: Int!) {

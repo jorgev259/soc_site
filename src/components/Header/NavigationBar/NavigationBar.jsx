@@ -10,9 +10,9 @@ import SearchBar from '@/next/components/SearchBar'
 import { ModalTemplate } from '@/next/components/common/Modal'
 import SubmitAlbumForm from '@/next/components/Header/SubmitAlbumForm'
 
-import { Link } from '@/next/lib/navigation'
-import { getClient } from '@/next/lib/ApolloSSRClient'
-import getSessionInfo from '@/next/lib/getSession'
+import { Link } from '@/next/utils/navigation'
+import { getClient } from '@/next/utils/ApolloSSRClient'
+import getSessionInfo from '@/next/utils/getSession'
 
 export function Dropdown(props) {
   const { name, items = [] } = props

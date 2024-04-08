@@ -1,6 +1,6 @@
 'use client'
 import { useLocale } from 'next-intl'
-import { usePathname, useRouter } from '@/next/lib/navigation'
+import { usePathname, useRouter } from '@/next/utils/navigation'
 import clsx from 'clsx'
 
 import styles from './LangSelector.module.scss'

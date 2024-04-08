@@ -1,8 +1,8 @@
 import clsx from 'clsx'
 import Image from 'next/image'
 
-import { Link } from '@/next/lib/navigation'
-import { getImageUrl } from '@/next/server/utils'
+import { Link } from '@/next/utils/navigation'
+import { getImageUrl } from '@/server/utils/getCDN'
 
 import styles from './AlbumBox.module.scss'
 

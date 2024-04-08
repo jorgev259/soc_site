@@ -17,11 +17,12 @@ import clsx from 'clsx'
 import { gql, useQuery, useMutation } from '@apollo/client'
 import { useSearchParams } from 'next/navigation'
 
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import { AlbumSelector, SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
-import { hasRolePage } from '@/components/resolvers'
-import { getFullPageList, getPageList } from '@/components/utils'
+
+import { hasRolePage } from '@/next/utils/resolversPages'
+import { getFullPageList, getPageList } from '@/server/utils/pagination'
 
 export const getServerSideProps = hasRolePage(['CREATE', 'UPDATE'])
 

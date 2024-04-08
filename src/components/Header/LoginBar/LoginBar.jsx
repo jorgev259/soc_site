@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { NextIntlClientProvider, useTranslations } from 'next-intl'
-import { Link } from '@/next/lib/navigation'
+import { Link } from '@/next/utils/navigation'
 import { getTranslations } from 'next-intl/server'
 
 import styles from './LoginBar.module.scss'
@@ -12,8 +12,8 @@ import {
   RegisterForm
 } from '@/next/components/LoginForm'
 import { ModalTemplate } from '@/next/components/common/Modal'
-import getSessionInfo from '@/next/lib/getSession'
-import { getMessageObject } from '@/next/lib/transl'
+import getSessionInfo from '@/next/utils/getSession'
+import { getMessageObject } from '@/next/utils/transl'
 
 export default async function LoginBar(props) {
   const t = await getTranslations('login')

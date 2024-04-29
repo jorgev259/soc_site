@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { gql, useQuery } from '@apollo/client'
 import { useEffect, useRef } from 'react'
 import Image from 'next/image'
+import { useTranslations } from 'next-intl'
 
 import styles from '@/styles/Sidebar.module.scss'
 
@@ -12,11 +13,10 @@ import yt from '@/img/assets/yt.png'
 import twitter from '@/img/assets/twitter.png'
 
 import { Link, useRouter } from '@/next/utils/navigation'
-import { skipAds } from './utils'
+import { skipAds } from '@/server/utils/skipAds'
 import Loader from './Loader'
 import AlbumBox from './AlbumBoxes'
 import useUser from '@/next/utils/useUser'
-import { useTranslations } from 'next-intl'
 import { CommentCarrouselSidebar } from './CommentsCarrousel'
 
 function GetLucky() {

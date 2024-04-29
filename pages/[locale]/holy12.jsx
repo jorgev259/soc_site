@@ -1,10 +1,10 @@
 import { gql } from '@apollo/client'
 import { Container, Col, Row } from 'react-bootstrap'
+import { useTranslations } from 'next-intl'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 import { initializeApollo } from '@/next/utils/ApolloClient'
-import { getRandomInt } from '@/components/utils'
-import { useTranslations } from 'next-intl'
+import { getRandomInt } from '@/next/utils/form'
 
 const limit = 12
 // const euphoriaIndex = titles.findIndex(t => t === 'Best romantic dinner BGM')

@@ -23,7 +23,8 @@ export function AlbumBox(props) {
     status,
     placeholder,
     style,
-    className
+    className,
+    linkProps
   } = props
   const coming = status === 'coming'
   const loading = status === 'loading'
@@ -50,7 +51,9 @@ export function AlbumBox(props) {
   const content = coming ? (
     commonContent
   ) : (
-    <Link href={`/${type}/${id}`}>{commonContent}</Link>
+    <Link href={`/${type}/${id}`} {...linkProps}>
+      {commonContent}
+    </Link>
   )
 
   return (

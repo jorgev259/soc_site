@@ -55,7 +55,7 @@ async function Layout(props) {
           <ToastContainer newestOnTop />
           <div id='modal' />
           <Header />
-          <div className='flex-grow-1 container-fluid'>{children}</div>
+          <div className='flex-grow-1 container-fluid px-0'>{children}</div>
           <Footer />
         </ApolloWrapper>
         <Script

@@ -86,7 +86,7 @@ export default function Home(props) {
       <div className='col p-3 mx-3'>
         <div className='row'>
           <div className='col'>
-            <h1 className={clsx(styles.title, 'p-3')}>
+            <h1 className='headerTitle text-center p-3'>
               {t('Recent Releases')}
             </h1>
           </div>
@@ -115,7 +115,7 @@ export default function Home(props) {
 
         <div className='row'>
           <div className='col'>
-            <h1 className={clsx(styles.title, 'p-3')} id='last-added'>
+            <h1 className='headerTitle text-center p-3' id='last-added'>
               {t('Last Added')}
             </h1>
           </div>

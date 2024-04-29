@@ -23,24 +23,24 @@ body {
 }
 
 body {
-    display: flex;
-    flex-direction: column;
-    background-color: $green-bg;
+  display: flex;
+  flex-direction: column;
+  background-color: $green-bg;
 }
 
 footer {
-    padding: 10px;
-    background-color: rgb(var(--bs-dark-rgb)) !important;
-    width: 100%;
+  padding: 10px;
+  background-color: rgb(var(--bs-dark-rgb)) !important;
+  width: 100%;
 
-    iframe {
-        border-style: none; 
-        border-width: 0;
+  iframe {
+    border-style: none;
+    border-width: 0;
     border-color: #ffffff;
-        padding: 0; 
-        height: 220px; 
-        width: 100%;
-    }
+    padding: 0;
+    height: 220px;
+    width: 100%;
+  }
 }
 
 .loadingAnim {
@@ -50,18 +50,26 @@ footer {
 
 .loadingAnim:after {
   content: '';
-    transform: translateX(-100%) rotate(140deg);
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    position: absolute;
-    animation: loadingSlide 1.55s infinite;
+  transform: translateX(-100%) rotate(140deg);
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  position: absolute;
+  animation: loadingSlide 1.55s infinite;
   background: linear-gradient(
     to right,
     rgba(255, 255, 255, 0) 0%,
     rgba(255, 255, 255, 0.4) 40%
   );
+}
+
+.headerTitle {
+  font-weight: 700;
+  font-size: 55px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  font-family: 'Rubik', sans-serif;
 }
 
 @keyframes loadingSlide {
@@ -74,9 +82,9 @@ footer {
 }
 
 .blackBox {
-    background-color: rgba(17, 17, 17, 0.9);
-    border: 2px solid rgba(17, 17, 17, 0.9);
-    border-radius: 25px;
-    box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.72);
-    padding: 10px;
+  background-color: rgba(17, 17, 17, 0.9);
+  border: 2px solid rgba(17, 17, 17, 0.9);
+  border-radius: 25px;
+  box-shadow: 0px 0px 9px 1px rgba(0, 0, 0, 0.72);
+  padding: 10px;
 }

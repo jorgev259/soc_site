@@ -1,25 +1,9 @@
 .discTabRow {
-  :global(.col):not(:last-child) {
-    padding-right: 0px;
-  }
-
-  :global(.col):not(:first-child) {
-    padding-left: 0px;
-  }
-
-
-  .discTab {
-    border-width: 2px;
-
-    & {
-      transform: translateY(2px);
-    }
-  }
-
-  .discTab:disabled {
-    color: white;
+  button:disabled {
+    color: var(--bs-btn-hover-color);
+    background-color: var(--bs-btn-hover-bg);
+    border-color: var(--bs-btn-hover-border-color);
     opacity: 1;
-    border-bottom-width: 0px;
   }
 }
 

@@ -10,20 +10,13 @@ export default function TrackList(props) {
 
   return (
     <>
-      <div className={clsx('row', styles.discTabRow)}>
+      <div className={clsx('row g-0', styles.discTabRow)}>
         {discs.length > 1
           ? discs.map(({ number }, i) => (
               <div key={number} className='col'>
                 <button
                   type='button'
-                  className={clsx(
-                    styles.discTab,
-                    'w-100 btn btn-outline-light rounded-0 py-2'
-                  )}
-                  style={{
-                    borderRightStyle:
-                      discs.length - 1 === i ? 'solid' : 'hidden'
-                  }}
+                  className='w-100 btn btn-outline-light rounded-0'
                   disabled={current === number}
                   onClick={() => setCurrent(number)}
                 >

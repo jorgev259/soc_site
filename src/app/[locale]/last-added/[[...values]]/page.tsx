@@ -58,7 +58,11 @@ export default async function Page({
           />
         ))}
       </div>
-      <Nav page={page} fullPageList={fullPageList} />
+      <div className='row'>
+        <div className='col px-0'>
+          <Nav page={page} fullPageList={fullPageList} />
+        </div>
+      </div>
     </>
   )
 }
@@ -68,7 +72,7 @@ function Nav(props: { page: number; fullPageList: number[] }) {
   const listProps = { fullPageList, page }
 
   return (
-    <nav aria-label='Last added page navigation w-100 mb-0'>
+    <nav aria-label='Last added page navigation' className='w-100 mb-0'>
       <PageList
         className='d-flex d-md-none'
         currentLimit={limitXS}

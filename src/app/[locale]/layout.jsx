@@ -54,8 +54,11 @@ async function Layout(props) {
         <ApolloWrapper>
           <ToastContainer newestOnTop />
           <div id='modal' />
+
           <Header />
-          <div className='flex-grow-1 container-fluid px-0'>{children}</div>
+          <main>
+            <div className='container-fluid'>{children}</div>
+          </main>
           <Footer />
         </ApolloWrapper>
         <Script
@@ -70,16 +73,17 @@ async function Layout(props) {
 
 function Footer() {
   return (
-    <Ad>
-      <footer>
+    <footer>
+      <Ad>
         <iframe
           id='id01_62693'
           title='id01_62693'
           src='https://www.play-asia.com/38/190%2C000000%2Cnone%2C0%2C0%2C0%2C0%2CFFFFFF%2C000000%2Cleft%2C0%2C0-391-76a-707gw6-062-782i-29466-901vq93-33iframe_banner-401-4450'
         />
-      </footer>
-      <Script src='/js/footerAd.js' />
-    </Ad>
+
+        <Script src='/js/footerAd.js' />
+      </Ad>
+    </footer>
   )
 }
 

@@ -57,17 +57,19 @@ async function LogoCol(props) {
 
 export default async function Header(props) {
   return (
-    <div className='container-fluid'>
-      <div className={clsx('row', styles.logoRow)}>
-        <LogoCol />
-        {/* <LangSelector /> */}
-        <LoginBar />
-      </div>
-      <div className='row'>
-        <div className='col px-0'>
-          <NavigationBar />
+    <header>
+      <div className='container-fluid'>
+        <div className={clsx('row', styles.logoRow)}>
+          <LogoCol />
+          {/* <LangSelector /> */}
+          <LoginBar />
+        </div>
+        <div className='row'>
+          <div className='col px-0'>
+            <NavigationBar />
+          </div>
         </div>
       </div>
-    </div>
+    </header>
   )
 }

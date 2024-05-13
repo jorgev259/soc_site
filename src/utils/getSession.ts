@@ -3,9 +3,10 @@ import { getIronSession } from 'iron-session'
 import { cookies } from 'next/headers'
 
 import sessionOptions from '../constants/sessionOptions'
+import type { SessionData } from '../server/types'
 
 export const getSession = () =>
-  getIronSession(cookies(), sessionOptions)
+  getIronSession<SessionData>(cookies(), sessionOptions)
 
 export async function getUser(db) {
   const session = await getSession()

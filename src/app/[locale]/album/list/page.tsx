@@ -1,12 +1,11 @@
 import { DateTime } from 'luxon'
-import clsx from 'clsx'
 import { Fragment } from 'react'
 
 import { Link } from '@/next/utils/navigation'
 import { getClient } from '@/next/utils/ApolloSSRClient'
 import { gql } from '@/next/__generated__'
 
-import style from '@/styles/letter.module.scss'
+import LetterList from '@/next/components/common/LetterList'
 
 const query = gql(`
   query AlbumList {
@@ -40,15 +39,7 @@ export default async function AlbumList() {
     <div className='bg-dark col p-3'>
       <div className='row mb-4'>
         <div className='col'>
-          {letters.map((letter) => (
-            <Link
-              key={letter}
-              className={clsx(style.letter, 'btn btn-secondary p-2 m-1')}
-              href={`#${letter}`}
-            >
-              <h2>{letter}</h2>
-            </Link>
-          ))}
+          <LetterList letters={letters} />
         </div>
       </div>
       {letters.map((letter) => (

@@ -1,7 +1,10 @@
-import { AuthenticationError, ForbiddenError } from 'apollo-server-errors'
 import { getIronSession } from 'iron-session'
 
 import sessionOptions from '@/next/constants/sessionOptions'
+import {
+  AuthenticationError,
+  ForbiddenError
+} from '@/next/server/utils/graphQLErrors'
 
 const getSession = (req, res) => getIronSession(req, res, sessionOptions)
 
@@ -13,7 +16,7 @@ export const isAuthedPages = (next) => (root, args, context, info) => {
 const hasPermPages = (perm) => (next) => async (root, args, context, info) => {
   const roles = await context.user.getRoles()
   const permissions = roles.map((r) => r.permissions).flat()
-  if (!permissions.includes(perm)) throw new ForbiddenError()
+  if (!permissions.includes(perm)) throw ForbiddenError()
 
   return next(root, args, context, info)
 }

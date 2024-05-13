@@ -16,6 +16,7 @@ const documents = {
     "\n  mutation AddFavorite($id: String!) {\n    addFavorite(albumId: $id)\n  }\n": types.AddFavoriteDocument,
     "\n  mutation RemoveFavorite($id: String!) {\n    removeFavorite(albumId: $id)\n  }\n": types.RemoveFavoriteDocument,
     "\n  mutation RateAlbum($id: ID!, $score: Int!) {\n    rateAlbum(albumId: $id, score: $score)\n  }\n": types.RateAlbumDocument,
+    "\n  query AlbumList {\n    albums {\n      id\n      title\n      releaseDate\n      categories {\n        name\n      }\n    }\n  }\n": types.AlbumListDocument,
     "\n  query SearchAlbum($limit: Int, $page: Int) {\n    searchAlbum(limit: $limit, page: $page, status: [\"show\", \"coming\"]) {\n      rows {\n        id\n        status\n        title\n        placeholder\n      }\n      count\n    }\n  }\n": types.SearchAlbumDocument,
     "\n        query PendingRequests {\n          searchRequests(state: [\"pending\"], donator: [false]) {\n            rows {\n              value: id\n              label: title\n            }\n          }\n        }\n      ": types.PendingRequestsDocument,
     "\n        query PendingHeldRequests($filter: String) {\n          searchRequests(state: [\"pending\", \"hold\"], filter: $filter) {\n            rows {\n              value: id\n              label: title\n            }\n          }\n        }\n      ": types.PendingHeldRequestsDocument,
@@ -47,6 +48,10 @@ export function gql(source: "\n  mutation RemoveFavorite($id: String!) {\n    re
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  mutation RateAlbum($id: ID!, $score: Int!) {\n    rateAlbum(albumId: $id, score: $score)\n  }\n"): (typeof documents)["\n  mutation RateAlbum($id: ID!, $score: Int!) {\n    rateAlbum(albumId: $id, score: $score)\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query AlbumList {\n    albums {\n      id\n      title\n      releaseDate\n      categories {\n        name\n      }\n    }\n  }\n"): (typeof documents)["\n  query AlbumList {\n    albums {\n      id\n      title\n      releaseDate\n      categories {\n        name\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

@@ -364,14 +364,26 @@ function AddAlbum(props) {
               small: false,
               links: [
                 { url: '', provider: 'MEGA', custom: null, directUrl: '' },
-                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' }
+                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
               ]
             },
             {
               title: 'FLAC',
               small: false,
               links: [
-                { url: '', provider: 'MEGA', custom: null, directUrl: '' }
+                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
+              ]
+            },
+            {
+              title: 'FLAC Hi-Res',
+              small: false,
+              links: [
+                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
               ]
             }
           ]}

@@ -74,7 +74,8 @@ const resolvers = {
       )
       const outLinks = filterLinks.length === 0 ? links : filterLinks
 
-      return outLinks.filter((link) => link.provider !== 'TERABOX')
+      // return outLinks.filter((link) => link.provider !== 'TERABOX')
+      return outLinks
     }
   },
 

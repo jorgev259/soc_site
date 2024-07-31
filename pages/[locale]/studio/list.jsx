@@ -4,7 +4,8 @@ import classname from 'classnames'
 import { Link } from '@/next/utils/navigation'
 
 import { initializeApollo } from '@/next/utils/ApolloClient'
-import style from '@/styles/letter.module.scss'
+
+import style from '@/styles/LetterList.module.scss'
 
 export async function getServerSideProps() {
   const client = initializeApollo()

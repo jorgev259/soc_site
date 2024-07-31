@@ -3,8 +3,9 @@ import { Row, Col, Button } from 'react-bootstrap'
 import classname from 'classnames'
 import { Link } from '@/next/utils/navigation'
 
-import { initializeApollo } from '@/next/utils/ApolloClient'
-import style from '@/styles/letter.module.scss'
+import { initializeApollo } from '@/utils/ApolloClient'
+
+import style from '@/styles/LetterList.module.scss'
 
 export async function getServerSideProps() {
   const client = initializeApollo()

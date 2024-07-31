@@ -2,13 +2,30 @@
   "compilerOptions": {
     "baseUrl": ".",
     "paths": {
-      "@/components/*": ["components/*"],
-      "@/locales/*": ["locales/*"],
-      "@/next/*":["src/*"],
-      "@/server/*":["src/server/*"],
-      "@/actions/*":["src/actions/*"],
-      "@/img/*": ["public/img/*"],
-      "@/styles/*": ["styles/*"]
+      "@/components/*": [
+        "components/*"
+      ],
+      "@/components_pages/*": [
+        "components/*"
+      ],
+      "@/locales/**": [
+        "locales/**"
+      ],
+      "@/next/*": [
+        "src/*"
+      ],
+      "@/server/*": [
+        "src/server/*"
+      ],
+      "@/actions/*": [
+        "src/actions/*"
+      ],
+      "@/img/*": [
+        "public/img/*"
+      ],
+      "@/styles/*": [
+        "styles/*"
+      ]
     },
     "lib": [
       "dom",

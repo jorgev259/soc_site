@@ -3,7 +3,7 @@ import { Row, Col, Button } from 'react-bootstrap'
 import classname from 'classnames'
 import { Link } from '@/next/utils/navigation'
 
-import { initializeApollo } from '@/utils/ApolloClient'
+import { initializeApollo } from '@/next/utils/ApolloClient'
 
 import style from '@/styles/LetterList.module.scss'
 

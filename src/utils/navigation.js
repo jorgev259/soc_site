@@ -1,5 +1,5 @@
 import { createSharedPathnamesNavigation } from 'next-intl/navigation'
-import locales from '@/locales/langs.json'
+import locales from '../../locales/langs.json'
 
 export { locales }
 export const localePrefix = 'as-needed'

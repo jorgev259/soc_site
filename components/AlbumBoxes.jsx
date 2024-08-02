@@ -1,4 +1,3 @@
-import { Col } from 'react-bootstrap'
 import clsx from 'clsx'
 import Image from 'next/legacy/image'
 
@@ -64,7 +63,7 @@ export function AlbumBoxList(props) {
   const { items, type, width, height, style, colProps = {}, quality } = props
 
   return items.map((albumProps) => (
-    <Col
+    <div
       {...colProps}
       key={albumProps.id}
       className={clsx(styles.albumBoxContainer, styles[type], 'px-1 mb-2')}
@@ -77,6 +76,6 @@ export function AlbumBoxList(props) {
         height={height}
         quality={quality}
       />
-    </Col>
+    </div>
   ))
 }

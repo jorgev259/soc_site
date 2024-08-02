@@ -1,16 +1,4 @@
 import { useState } from 'react'
-import {
-  Button,
-  Col,
-  Row,
-  Form,
-  Container,
-  Table,
-  Modal,
-  ModalBody,
-  InputGroup,
-  FormControl
-} from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import moment from 'moment'
 import clsx from 'clsx'
@@ -30,8 +18,8 @@ const limit = 10
 
 export default function AlbumAdmin() {
   return (
-    <Container fluid className='d-flex'>
-      <Col xs={2} className='pe-3'>
+    <div className='container-fluid d-flex'>
+      <div className='col-2 pe-3'>
         <div className='sticky-top'>
           <div className='mb-2 mt-3 text-center'>Navigation</div>
           <div className='py-2 site-form blackblock d-flex flex-column'>
@@ -40,18 +28,18 @@ export default function AlbumAdmin() {
             <a href='#addGame'>Edit banner</a>
           </div>
         </div>
-      </Col>
-      <Col xs={10}>
+      </div>
+      <div className='col-10'>
         <AlbumTable />
-        <Row>
+        <div className='row'>
           <Highlight />
           <Banner />
-        </Row>
-        <Row>
+        </div>
+        <div className='row'>
           <SelectBanner />
-        </Row>
-      </Col>
-    </Container>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -135,27 +123,26 @@ function AlbumTable() {
 
     return (
       <>
-        <Modal centered show={modal} onHide={() => setModal(false)}>
-          <ModalBody className='m-3' style={{ color: 'black' }}>
-            <Row>
-              <Col>{`Delete the album "${title}" (ID: ${id})?`}</Col>
-            </Row>
-            <Row className='mt-2'>
-              <Col>
-                <Button color='primary' className='mx-2' onClick={handleDelete}>
+        <div className='modal centered show' onHide={() => setModal(false)}>
+          <div className='modal-body m-3' style={{ color: 'black' }}>
+            <div className='row'>
+              <div className='col'>{`Delete the album "${title}" (ID: ${id})?`}</div>
+            </div>
+            <div className='row mt-2'>
+              <div className='col'>
+                <button className='btn btn-primary mx-2' onClick={handleDelete}>
                   {loadingMutation ? <Loader dev /> : 'Yes'}
-                </Button>
-                <Button
-                  color='primary'
-                  className='mx-2'
+                </button>
+                <button
+                  className='btn btn-primary mx-2'
                   onClick={() => setModalData(!modal)}
                 >
                   No
-                </Button>
-              </Col>
-            </Row>
-          </ModalBody>
-        </Modal>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
 
         {searchAlbum.rows &&
           searchAlbum.rows.map(({ id, title, createdAt, updatedAt }) => (
@@ -174,14 +161,15 @@ function AlbumTable() {
                 </td>
               </Link>
               <td>
-                <Button
+                <button
+                  className='btn btn-danger'
                   onClick={() => {
                     setModalData({ id, title })
                     setModal(true)
                   }}
                 >
                   Remove
-                </Button>
+                </button>
               </td>
             </tr>
           ))}
@@ -199,7 +187,7 @@ function AlbumTable() {
     )
 
     return (
-      <Col xs='auto' className='pagination mx-auto page-bar'>
+      <div className='col-auto pagination mx-auto page-bar'>
         {currentList && (
           <>
             {currentListIndex > 0 && (
@@ -238,7 +226,7 @@ function AlbumTable() {
             )}
           </>
         )}
-      </Col>
+      </div>
     )
   }
 
@@ -248,29 +236,33 @@ function AlbumTable() {
   }))
 
   return (
-    <Form className='site-form blackblock mt-5'>
-      <Row className='my-3'>
-        <Col xs='auto'>
-          <Form.Group>
+    <form className='site-form blackblock mt-5'>
+      <div className='row my-3'>
+        <div className='col-auto'>
+          <div className='form-group'>
             <Link href='/admin/album/add' passHref legacyBehavior>
-              <Button variant='primary'>Add Album</Button>
+              <button className='btn btn-primary'>Add Album</button>
             </Link>
-          </Form.Group>
-        </Col>
-        <Col>
-          <Form.Group>
-            <InputGroup>
-              <InputGroup.Text>&#128270;</InputGroup.Text>
-              <FormControl type='text' onChange={handleSearch} />
-            </InputGroup>
-          </Form.Group>
-        </Col>
-      </Row>
-      <Row className='my-3'>
-        <Col md='auto'>
-          <Form.Label htmlFor='status'>Status:</Form.Label>
-        </Col>
-        <Col>
+          </div>
+        </div>
+        <div className='col'>
+          <div className='form-group'>
+            <div className='input-group'>
+              <div className='input-group-text'>&#128270;</div>
+              <input
+                className='form-control'
+                type='text'
+                onChange={handleSearch}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className='row my-3'>
+        <div className='col-md-auto'>
+          <label htmlFor='status'>Status:</label>
+        </div>
+        <div className='col'>
           <SimpleSelector
             onChange={(e) => setStatus(e.map((v) => v.value))}
             required
@@ -278,11 +270,11 @@ function AlbumTable() {
             defaultValue={statusOptions}
             options={statusOptions}
           />
-        </Col>
-      </Row>
-      <Row>
-        <Col>
-          <Table variant='dark' hover>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col'>
+          <table className='table table-dark table-hover'>
             <thead>
               <tr>
                 <th>Title</th>
@@ -292,12 +284,12 @@ function AlbumTable() {
               </tr>
             </thead>
             <tbody>{data && <Rows />}</tbody>
-          </Table>
+          </table>
           {loading && <Loader dev />}
-        </Col>
-      </Row>
-      <Row>{data && <NavRows />}</Row>
-    </Form>
+        </div>
+      </div>
+      <div className='row'>{data && <NavRows />}</div>
+    </form>
   )
 }
 
@@ -342,9 +334,9 @@ function Highlight() {
   }
 
   return (
-    <Col md={6}>
+    <div className='col-md-6'>
       <div className='mt-3 site-form blackblock p-3'>
-        <Form.Label>Highlight album:</Form.Label>
+        <label>Highlight album:</label>
         <AlbumSelector
           options={{
             isSingle: true,
@@ -354,7 +346,7 @@ function Highlight() {
           }}
         />
       </div>
-    </Col>
+    </div>
   )
 }
 
@@ -383,16 +375,16 @@ function Banner() {
   }
 
   return (
-    <Col md={6} className='mt-3 site-form blackblock p-3'>
-      <Form.Group>
-        <Form.Label htmlFor='banner'>Upload Banner:</Form.Label>
+    <div className='col-md-6 mt-3 site-form blackblock p-3'>
+      <div className='form-group'>
+        <label htmlFor='banner'>Upload Banner:</label>
         {loading ? (
           <Loader dev />
         ) : (
-          <FormControl type='file' onChange={handleUpload} />
+          <input className='form-control' type='file' onChange={handleUpload} />
         )}
-      </Form.Group>
-    </Col>
+      </div>
+    </div>
   )
 }
 
@@ -429,7 +421,7 @@ function SelectBanner() {
   }
 
   return (
-    <Col md={12}>
+    <div className='col-md-12'>
       <div className='p-0 my-3 site-form blackblock position-relative'>
         {(loading || loadingQuery) && (
           <div className='p-0 position-absolute h-100 w-100'>
@@ -441,7 +433,7 @@ function SelectBanner() {
           </div>
         )}
         <div className='p-3'>
-          <Form.Label>Available banners:</Form.Label>
+          <label>Available banners:</label>
           {data?.banners.map((b) => (
             <div
               key={b}
@@ -458,6 +450,6 @@ function SelectBanner() {
           ))}
         </div>
       </div>
-    </Col>
+    </div>
   )
 }

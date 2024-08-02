@@ -1,21 +1,10 @@
 import { useRef, useState } from 'react'
-import {
-  Col,
-  Row,
-  Form,
-  Container,
-  Table,
-  InputGroup,
-  FormControl,
-  Modal
-} from 'react-bootstrap'
-import { gql, /* useMutation, */ useQuery } from '@apollo/client'
-// import serialize from 'form-serialize'
+import { gql, useQuery } from '@apollo/client'
 import { toast } from 'react-toastify'
 import clsx from 'clsx'
 
-import { SimpleSelector } from '@/components/Selectors'
-import Loader /*, { ButtonLoader } */ from '@/components/Loader'
+import { SimpleSelector } from '@/components_pages/Selectors'
+import Loader from '@/components_pages/Loader'
 import { hasRolePage } from '@/next/utils/resolversPages'
 
 import styles from '@/styles/Request.module.scss'
@@ -40,11 +29,11 @@ const requestFields = `
 
 export default function AlbumAdmin() {
   return (
-    <Container>
-      <Col>
+    <div className='container'>
+      <div className='col'>
         <RequestBoard />
-      </Col>
-    </Container>
+      </div>
+    </div>
   )
 }
 
@@ -98,36 +87,38 @@ function RequestModal(props) {
   } */
 
   return (
-    <Modal show={submission} onHide={() => setRequest()} centered>
-      <Modal.Body>
-        <Form ref={formRef} style={{ color: 'black' }}>
-          <Row>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='title'>Title:</Form.Label>
-              <Form.Control
+    <div className='modal centered show' onHide={() => setRequest()}>
+      <div className='modal-body'>
+        <form ref={formRef} style={{ color: 'black' }}>
+          <div className='row'>
+            <div className='form-group col'>
+              <label htmlFor='title'>Title:</label>
+              <input
                 required
                 type='text'
                 name='title'
                 defaultValue={submission?.title}
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='link'>VGMDB:</Form.Label>
-              <Form.Control
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label htmlFor='link'>VGMDB:</label>
+              <input
                 required
                 type='text'
                 name='link'
                 defaultValue={submission?.vgmdb}
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='link'>State:</Form.Label>
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label htmlFor='state'>State:</label>
               <select
                 className='form-control'
                 name='state'
@@ -139,69 +130,76 @@ function RequestModal(props) {
                   </option>
                 ))}
               </select>
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='state'>Submitter:</Form.Label>
-              <Form.Control
+            </div>
+            <div className='form-group col'>
+              <label htmlFor='submitter'>Submitter:</label>
+              <input
                 required
                 type='text'
-                name='link'
+                name='submitter'
                 defaultValue={submission?.submitter.username}
                 readOnly
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='comment'>Links:</Form.Label>
-              <FormControl
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label htmlFor='links'>Links:</label>
+              <textarea
                 required
-                as='textarea'
-                name='comment'
+                name='links'
                 value={submission?.links}
                 readOnly
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='observations'>Observations:</Form.Label>
-              <FormControl
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label htmlFor='observations'>Observations:</label>
+              <textarea
                 required
-                as='textarea'
                 name='observations'
                 defaultValue={submission?.observations}
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-4'>
-            <Form.Group as={Col}>
-              <Form.Check
+          <div className='row mt-4'>
+            <div className='form-group col'>
+              <input
                 type='checkbox'
                 name='lossy'
-                label='Lossy / MP3 Only'
                 defaultChecked={submission?.lossy}
+                className='form-check-input'
               />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Check
+              <label className='form-check-label' htmlFor='lossy'>
+                Lossy / MP3 Only
+              </label>
+            </div>
+            <div className='form-group col'>
+              <input
                 type='checkbox'
                 name='hold'
-                label='"Hold" request bonus'
                 defaultChecked={submission?.hold}
+                className='form-check-input'
               />
-            </Form.Group>
-          </Row>
-        </Form>
-      </Modal.Body>
-      {/* <Modal.Footer>
+              <label className='form-check-label' htmlFor='hold'>
+                &quot;Hold&quot; request bonus
+              </label>
+            </div>
+          </div>
+        </form>
+      </div>
+      {/* <div className='modal-footer'>
         <ButtonLoader loading={loadingReject} disabled={loadingEdit} variant="danger" onClick={handleReject}>Reject</ButtonLoader>
         <ButtonLoader loading={loadingEdit} disabled={loadingReject} variant="primary" onClick={handleEdit}>Save Changes</ButtonLoader>
-  </Modal.Footer> */}
-    </Modal>
+      </div> */}
+    </div>
   )
 }
 
@@ -220,28 +218,29 @@ function RequestBoard() {
   return (
     <>
       <RequestModal submission={submission} setRequest={setRequest} />
-      <Form className='site-form blackblock mt-5 py-4'>
-        <Row className='mb-3'>
-          <Col>
-            <Form.Group>
-              <InputGroup>
-                <InputGroup.Text>&#128270;</InputGroup.Text>
-                <FormControl
+      <form className='site-form blackblock mt-5 py-4'>
+        <div className='row mb-3'>
+          <div className='col'>
+            <div className='form-group'>
+              <div className='input-group'>
+                <div className='input-group-text'>&#128270;</div>
+                <input
                   type='text'
                   onBlur={handleSearch}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSearch(e)
                   }}
+                  className='form-control'
                 />
-              </InputGroup>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='my-3'>
-          <Col md='auto'>
-            <Form.Label htmlFor='status'>Status:</Form.Label>
-          </Col>
-          <Col>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='row my-3'>
+          <div className='col-md-auto'>
+            <label htmlFor='status'>Status:</label>
+          </div>
+          <div className='col'>
             <SimpleSelector
               onChange={(e) => setState(e.map((v) => v.value))}
               required
@@ -249,8 +248,8 @@ function RequestBoard() {
               defaultValue={[{ label: 'Pending', value: 'pending' }]}
               options={stateOptions}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         {state.map((s) => (
           <RequestTable
@@ -260,7 +259,7 @@ function RequestBoard() {
             setRequest={setRequest}
           />
         ))}
-      </Form>
+      </form>
     </>
   )
 }
@@ -311,20 +310,18 @@ function RequestTable(props) {
 
   return (
     <>
-      <Row className='mt-4'>
-        <Col>
+      <div className='row mt-4'>
+        <div className='col'>
           <h3 className='text-capitalize'>{state}</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ height: '500px' }}>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col' style={{ height: '500px' }}>
           <div className={clsx('overflow-auto h-100', styles.table)}>
             {loading && <Loader dev className='mx-auto' />}
             {data && (
-              <Table
-                variant='dark'
-                hover
-                responsive
+              <table
+                className='table table-dark table-hover table-responsive'
                 style={{ overflowX: 'visible' }}
               >
                 <thead>
@@ -339,11 +336,11 @@ function RequestTable(props) {
                 <tbody>
                   <Rows />
                 </tbody>
-              </Table>
+              </table>
             )}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   )
 }

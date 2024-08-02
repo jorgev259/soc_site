@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Row, FormControl, Form, Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import serialize from 'form-serialize'
 import { PlatformSelector } from '../Selectors'
@@ -52,7 +51,7 @@ export default function EditPlatform() {
 
     mutate({ variables })
       .then((results) => {
-        toast.success(`${verb} platform succesfully!`)
+        toast.success(`${verb} platform successfully!`)
         target.reset()
       })
       .catch((err) => {
@@ -67,11 +66,11 @@ export default function EditPlatform() {
         Edit Platform
       </div>
       <div className='site-form blackblock'>
-        <Form ref={formRef}>
-          <Row>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='key'>Platform:</Form.Label>
+        <form ref={formRef}>
+          <div className='row'>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='key'>Platform:</label>
                 <PlatformSelector
                   categories={categories.map((c) => c.name)}
                   options={{
@@ -83,22 +82,23 @@ export default function EditPlatform() {
                     loading: loadingInfo
                   }}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='name'>Name:</Form.Label>
-                <FormControl
+              </div>
+            </div>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='name'>Name:</label>
+                <input
                   type='text'
                   name='name'
+                  className='form-control'
                   required
                   defaultValue={data && data.platform.name}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='type'>Type:</Form.Label>
+              </div>
+            </div>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='type'>Type:</label>
                 <select className='form-control' name='type'>
                   {categories.map((c) => (
                     <option
@@ -110,11 +110,11 @@ export default function EditPlatform() {
                     </option>
                   ))}
                 </select>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs='auto' className='my-auto mx-1'>
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateUpdate, 'Edited')}
@@ -122,8 +122,8 @@ export default function EditPlatform() {
               >
                 Save Changes
               </SubmitButton>
-            </Col>
-            <Col xs='auto' className='my-auto mx-1'>
+            </div>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateDelete, 'Deleted')}
@@ -131,9 +131,9 @@ export default function EditPlatform() {
               >
                 Delete Platform
               </SubmitButton>
-            </Col>
-          </Row>
-        </Form>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   )

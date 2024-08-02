@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Container, Col, Row } from 'react-bootstrap'
 import { Link } from '@/next/utils/navigation'
 
 import { initializeApollo } from '@/next/utils/ApolloClient'
@@ -30,38 +29,38 @@ export async function getServerSideProps() {
 
 function Button({ name, href }) {
   return (
-    <Col md={3} className='mt-3  flex-grow-1'>
+    <div className='col-md-3 mt-3 flex-grow-1'>
       <Link href={href}>
         <h4 className='text-center blackButton px-3 py-2'>{name}</h4>
       </Link>
-    </Col>
+    </div>
   )
 }
 
 export default function GameHome({ rows }) {
   return (
-    <Container>
-      <Row>
+    <div className='container'>
+      <div className='row'>
         <Button name='List' href='/game/list'></Button>
         <Button name='Platforms' href='/platform/list'></Button>
         <Button name='Publishers' href='/publisher/list'></Button>
         <Button name='Series' href='/series/list'></Button>
-      </Row>
-      <Row>
-        <Col md={12}>
-          <Row className='p-3'>
-            <Col md={12}>
+      </div>
+      <div className='row'>
+        <div className='col-md-12'>
+          <div className='row p-3'>
+            <div className='col-md-12'>
               <h1 className='text-center homeTitle' id='last-releases'>
                 LATEST GAME RELEASES
               </h1>
-            </Col>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='links-list justify-content-center'>
+          <div className='row links-list justify-content-center'>
             <AlbumBoxList colProps={{ xs: 6, md: 3 }} items={rows} />
-          </Row>
-        </Col>
-      </Row>
-    </Container>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

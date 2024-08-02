@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Button, Col, Row, Form, FormControl } from 'react-bootstrap'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
@@ -41,33 +40,40 @@ export default function AddStudio() {
       <div id='addStudio' className='mb-2 mt-3'>
         Add Studio
       </div>
-      <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='slug'>Slug:</Form.Label>
-              <FormControl type='text' name='slug' readOnly value={slug} />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl
+      <form className='site-form blackblock' onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='slug'>Slug:</label>
+              <input
+                type='text'
+                name='slug'
+                className='form-control'
+                readOnly
+                value={slug}
+              />
+            </div>
+          </div>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <input
                 type='text'
                 name='name'
+                className='form-control'
                 onChange={(e) => setSlug(slugify(e.target.value))}
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='m-auto'>
-            <Button type='submit' color='primary'>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col m-auto'>
+            <button type='submit' className='btn btn-primary'>
               Add Studio
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

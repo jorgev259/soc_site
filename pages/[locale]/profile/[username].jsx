@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Container, Col, Row, Modal, Form, Button } from 'react-bootstrap'
 import { DateTime } from 'luxon'
 import Image from 'next/legacy/image'
 // import ConfettiExplosion from 'react-confetti-explosion'
@@ -94,10 +93,10 @@ export default function Profile(props) {
       {user?.username === username && (
         <EditProfile setProfile={setProfile} showProfile={showProfile} />
       )}
-      <Container>
+      <div className='container'>
         {/* <Explosion username={username} /> */}
-        <Row className='mt-3'>
-          <Col xs='auto' className='blackblock'>
+        <div className='row mt-3'>
+          <div className='col-auto blackblock'>
             <div
               className='p-1 position-relative'
               style={{ height: '200px', width: '200px' }}
@@ -111,40 +110,39 @@ export default function Profile(props) {
               />
               {/* <img className='position-absolute' src='/img/assets/hat.png' style={{ height: '150px', width: '150px', top: '-70px', left: '25px', transform: 'rotate(10deg)' }}/>} */}
             </div>
-          </Col>
-          <Col className='blackblock ms-3 my-0 d-flex justify-content-center flex-column'>
-            <Row>
-              <Col md={12}>
+          </div>
+          <div className='col blackblock ms-3 my-0 d-flex justify-content-center flex-column'>
+            <div className='row'>
+              <div className='col-md-12'>
                 <h1 className='text-center album-title'>{username}</h1>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-1'>Floating for:</span>
                 <span>{floatDuration.toHuman()}</span>
-              </Col>
-            </Row>
+              </div>
+            </div>
             {user?.username === userProfile.username && (
-              <Row className='mt-3'>
-                <Col className='d-flex justify-content-center'>
-                  <Button
+              <div className='row mt-3'>
+                <div className='col d-flex justify-content-center'>
+                  <button
                     onClick={() => setProfile(true)}
-                    className='rounded-3'
-                    variant='outline-light'
+                    className='btn btn-outline-light rounded-3'
                   >
                     Edit Account
-                  </Button>
-                </Col>
-              </Row>
+                  </button>
+                </div>
+              </div>
             )}
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         <BasicCommentCarrousel comments={comments} />
 
         <hr className='style2 style-white' />
-        <Row>
-          <Col>
+        <div className='row'>
+          <div className='col'>
             <h1
               style={{ fontSize: '45px' }}
               className='text-center homeTitle py-2'
@@ -152,12 +150,12 @@ export default function Profile(props) {
             >
               Favorites
             </h1>
-          </Col>
-        </Row>
-        <Row className='justify-content-center'>
+          </div>
+        </div>
+        <div className='row justify-content-center'>
           <AlbumBoxList colProps={{ md: 3, xs: 6 }} items={albumList} />
-        </Row>
-      </Container>
+        </div>
+      </div>
     </>
   )
 }
@@ -203,64 +201,85 @@ function EditProfile(props) {
 
   return (
     <>
-      <Modal show={showProfile} centered onHide={() => setProfile(false)}>
-        <Modal.Body className='m-3'>
-          <Form onSubmit={handleUpdateUser}>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='username' style={{ color: 'black' }}>
-                  Username:
-                </Form.Label>
-                <Form.Control
-                  type='text'
-                  name='username'
-                  value={user?.username}
-                  readOnly
-                />
-              </Form.Group>
+      <div
+        className={`modal ${showProfile ? 'show' : ''}`}
+        style={{ display: showProfile ? 'block' : 'none' }}
+        tabIndex='-1'
+      >
+        <div className='modal-dialog modal-centered'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              <form onSubmit={handleUpdateUser}>
+                <div className='row'>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label htmlFor='username' style={{ color: 'black' }}>
+                        Username:
+                      </label>
+                      <input
+                        type='text'
+                        name='username'
+                        value={user?.username}
+                        readOnly
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
 
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='email' style={{ color: 'black' }}>
-                  Email:
-                </Form.Label>
-                <Form.Control
-                  type='text'
-                  name='email'
-                  defaultValue={user?.email}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='mt-3'>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='password' style={{ color: 'black' }}>
-                  Password (empty to keep it unchanged):
-                </Form.Label>
-                <Form.Control type='password' name='password' />
-              </Form.Group>
-            </Row>
-            <Row className='mt-3'>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='pfp' style={{ color: 'black' }}>
-                  Profile pic:
-                </Form.Label>
-                <Form.Control type='file' name='pfp' />
-              </Form.Group>
-            </Row>
-            <Row className='mt-4'>
-              <Col md={6} className='mx-auto'>
-                <ButtonLoader
-                  loading={loadingUser}
-                  type='submit'
-                  className='w-100'
-                  color='primary'
-                >
-                  Update User
-                </ButtonLoader>
-              </Col>
-            </Row>
-          </Form>
-        </Modal.Body>
-      </Modal>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label htmlFor='email' style={{ color: 'black' }}>
+                        Email:
+                      </label>
+                      <input
+                        type='text'
+                        name='email'
+                        defaultValue={user?.email}
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label htmlFor='password' style={{ color: 'black' }}>
+                        Password (empty to keep it unchanged):
+                      </label>
+                      <input
+                        type='password'
+                        name='password'
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='col'>
+                    <div className='form-group'>
+                      <label htmlFor='pfp' style={{ color: 'black' }}>
+                        Profile pic:
+                      </label>
+                      <input type='file' name='pfp' className='form-control' />
+                    </div>
+                  </div>
+                </div>
+                <div className='row mt-4'>
+                  <div className='col-md-6 mx-auto'>
+                    <ButtonLoader
+                      loading={loadingUser}
+                      type='submit'
+                      className='btn btn-primary w-100'
+                    >
+                      Update User
+                    </ButtonLoader>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

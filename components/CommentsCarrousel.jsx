@@ -1,4 +1,3 @@
-import { Col, Button, Modal, Form, Row, FormControl } from 'react-bootstrap'
 import { useEffect, useRef, useState } from 'react'
 import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client'
 import serialize from 'form-serialize'
@@ -16,16 +15,15 @@ function SideButton(props) {
   const { side, onClick } = props
 
   return (
-    <Col xs={'auto'}>
-      <Button
+    <div className='col-auto'>
+      <button
         onClick={onClick}
-        className='h-100 rounded-3'
-        variant='outline-light'
+        className='h-100 rounded-3 btn btn-outline-light'
         style={{ fontSize: '30px' }}
       >
         <span className={`fas fa-angle-${side}`} />
-      </Button>
-    </Col>
+      </button>
+    </div>
   )
 }
 
@@ -48,10 +46,10 @@ export function BasicCommentCarrousel(props) {
 
   return (
     <>
-      <Row>
-        <Col className='m-2'>
+      <div className='row'>
+        <div className='col m-2'>
           <div className='blackblock'>
-            <Row>
+            <div className='row'>
               {comments.length > 1 && (
                 <SideButton
                   side='left'
@@ -64,7 +62,7 @@ export function BasicCommentCarrousel(props) {
                   }
                 />
               )}
-              <Col className='py-3' style={{ fontSize: '18px' }}>
+              <div className='col py-3' style={{ fontSize: '18px' }}>
                 {current.text}
                 <br />
                 <div className='mt-2'>
@@ -93,14 +91,14 @@ export function BasicCommentCarrousel(props) {
                     </span>
                   )}
                 </div>
-              </Col>
+              </div>
               {comments.length > 1 && (
                 <SideButton side='right' onClick={plusIndex} />
               )}
-            </Row>
+            </div>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   )
 }
@@ -181,51 +179,63 @@ export default function CommentCarrousel(props) {
 
   return (
     <>
-      <Modal show={show} centered onHide={() => setShow(false)}>
-        <Modal.Body className='m-3'>
-          <Form onSubmit={submit} style={{ color: 'black' }}>
-            <Row>
-              <Form.Group as={Col}>
-                <FormControl
-                  required
-                  as='textarea'
-                  name='text'
-                  maxLength={300}
-                  onChange={(ev) => setDefaultValue(ev.target.value)}
-                  defaultValue={defaultValue}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='mt-2'>
-              <Form.Group as={Col}>
-                <Form.Check
-                  type='checkbox'
-                  label={t('Comment_Anon')}
-                  name='anon'
-                  defaultChecked={selfComment ? selfComment.anon : false}
-                />
-              </Form.Group>
-            </Row>
-            <Row className='mt-2'>
-              <Col className='mx-auto'>
-                <ButtonLoader
-                  loading={loadingComment}
-                  type='submit'
-                  color='primary'
-                >
-                  {t('Save comment')}
-                </ButtonLoader>
-              </Col>
-            </Row>
-          </Form>
-        </Modal.Body>
-      </Modal>
+      <div
+        className={`modal ${show ? 'show' : ''}`}
+        style={{ display: show ? 'block' : 'none' }}
+        tabIndex='-1'
+      >
+        <div className='modal-dialog modal-dialog-centered'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              <form onSubmit={submit} style={{ color: 'black' }}>
+                <div className='row'>
+                  <div className='form-group col'>
+                    <textarea
+                      required
+                      className='form-control'
+                      name='text'
+                      maxLength={300}
+                      onChange={(ev) => setDefaultValue(ev.target.value)}
+                      defaultValue={defaultValue}
+                    />
+                  </div>
+                </div>
+                <div className='row mt-2'>
+                  <div className='form-group col'>
+                    <input
+                      type='checkbox'
+                      className='form-check-input'
+                      id='anon'
+                      name='anon'
+                      defaultChecked={selfComment ? selfComment.anon : false}
+                    />
+                    <label className='form-check-label' htmlFor='anon'>
+                      {t('Comment_Anon')}
+                    </label>
+                  </div>
+                </div>
+                <div className='row mt-2'>
+                  <div className='col mx-auto'>
+                    <ButtonLoader
+                      loading={loadingComment}
+                      type='submit'
+                      color='primary'
+                    >
+                      {t('Save comment')}
+                    </ButtonLoader>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Row>
-        <Col className='m-2'>
+      <div className='row'>
+        <div className='col m-2'>
           <div className='blackblock'>
             {current && (
-              <Row>
+              <div className='row'>
                 {comments.length > 1 && (
                   <SideButton
                     side='left'
@@ -238,7 +248,7 @@ export default function CommentCarrousel(props) {
                     }
                   />
                 )}
-                <Col className='py-3' style={{ fontSize: '18px' }}>
+                <div className='col py-3' style={{ fontSize: '18px' }}>
                   {current.text}
                   <br />
                   <div className='mt-2'>
@@ -267,43 +277,41 @@ export default function CommentCarrousel(props) {
                       </span>
                     )}
                   </div>
-                </Col>
+                </div>
                 {comments.length > 1 && (
                   <SideButton side='right' onClick={plusIndex} />
                 )}
-              </Row>
+              </div>
             )}
 
             {albumId && (
-              <Row className='mt-3 justify-content-center'>
+              <div className='row mt-3 justify-content-center'>
                 {user ? (
-                  <Col xs={3}>
-                    <Button
+                  <div className='col-3'>
+                    <button
                       onClick={() => (user ? setShow(true) : null)}
-                      className='w-100 rounded-3'
-                      variant='outline-light'
+                      className='w-100 rounded-3 btn btn-outline-light'
                       style={{ fontSize: '18px' }}
                     >
                       {t(selfComment ? 'Edit comment' : 'Add comment')}
-                    </Button>
-                  </Col>
+                    </button>
+                  </div>
                 ) : (
-                  <Col xs='4'>
-                    <Button
+                  <div className='col-4'>
+                    <button
                       onClick={() => router.replace(`${pathname}?login`)}
-                      className='w-100 rounded-3'
-                      variant='outline-light'
+                      className='w-100 rounded-3 btn btn-outline-light'
                       style={{ fontSize: '18px' }}
                     >
                       {t('Comment_Login')}
-                    </Button>
-                  </Col>
+                    </button>
+                  </div>
                 )}
-              </Row>
+              </div>
             )}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   )
 }
@@ -341,14 +349,14 @@ export function CommentCarrouselSidebar(props) {
 
   return (
     <>
-      <Row className='mt-3 px-3'>
-        <Col className={clsx(stylesSidebar.socials, '')}>
+      <div className='row mt-3 px-3'>
+        <div className={clsx(stylesSidebar.socials, 'col')}>
           {loading ? (
             <Loader className='mx-auto' size={100} />
           ) : current ? (
             <>
-              <Row>
-                <Col className='pb-3' style={{ fontSize: '18px' }}>
+              <div className='row'>
+                <div className='col pb-3' style={{ fontSize: '18px' }}>
                   {current.text}
                   <br />
                   <div className='mt-2'>
@@ -377,9 +385,9 @@ export function CommentCarrouselSidebar(props) {
                       </span>
                     )}
                   </div>
-                </Col>
-              </Row>
-              <Row className='d-flex justify-content-between'>
+                </div>
+              </div>
+              <div className='row d-flex justify-content-between'>
                 <SideButton
                   side='left'
                   onClick={() =>
@@ -390,17 +398,17 @@ export function CommentCarrouselSidebar(props) {
                     )
                   }
                 />
-                <Col className='d-flex align-items-center justify-content-center'>
+                <div className='col d-flex align-items-center justify-content-center'>
                   <div>
                     {currentIndex + 1} / {comments.length}
                   </div>
-                </Col>
+                </div>
                 <SideButton side='right' onClick={plusIndex} />
-              </Row>
+              </div>
             </>
           ) : null}
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   )
 }

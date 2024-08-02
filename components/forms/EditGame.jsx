@@ -1,7 +1,8 @@
 import { useEffect, useRef } from 'react'
 import { gql, useMutation, useLazyQuery } from '@apollo/client'
 import serialize from 'form-serialize'
-import { Col, Row, Form, FormControl } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+
 import {
   SeriesSelector,
   PublisherSelector,
@@ -9,7 +10,6 @@ import {
   GameSelector
 } from '../Selectors'
 import SubmitButton from '@/next/components/common/SubmitButton'
-import { toast } from 'react-toastify'
 
 const query = gql`
   query Game($slug: String!) {
@@ -96,11 +96,11 @@ export default function EditGame() {
       <div id='editGame' className='mb-2 mt-3'>
         Edit Game
       </div>
-      <Form className='site-form blackblock' ref={formRef}>
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='slug'>Game:</Form.Label>
+      <form className='site-form blackblock' ref={formRef}>
+        <div className='row'>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='slug'>Game:</label>
               <GameSelector
                 options={{
                   isSingle: true,
@@ -110,35 +110,37 @@ export default function EditGame() {
                   onChange: (row) => getGame({ variables: { slug: row.value } })
                 }}
               />
-            </Form.Group>
-          </Col>
+            </div>
+          </div>
 
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <input
                 type='text'
                 name='name'
+                className='form-control'
                 defaultValue={data && data.game.name}
               />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='releaseDate'>Release Date:</label>
+              <input
                 type='date'
                 name='releaseDate'
+                className='form-control'
                 defaultValue={data && data.game.releaseDate}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
         {data && (
-          <Row>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='series'>Series:</Form.Label>
+          <div className='row'>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='series'>Series:</label>
                 <SeriesSelector
                   options={{
                     loading,
@@ -146,11 +148,11 @@ export default function EditGame() {
                     defaultValue: data?.game.series
                   }}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='publishers'>Publishers:</Form.Label>
+              </div>
+            </div>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='publishers'>Publishers:</label>
                 <PublisherSelector
                   options={{
                     loading,
@@ -158,11 +160,11 @@ export default function EditGame() {
                     defaultValue: data?.game.publishers
                   }}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={4}>
-              <Form.Group>
-                <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
+              </div>
+            </div>
+            <div className='col-md-4'>
+              <div className='form-group'>
+                <label htmlFor='platforms'>Platforms:</label>
                 <PlatformSelector
                   categories={['Game']}
                   options={{
@@ -170,20 +172,25 @@ export default function EditGame() {
                     defaultValue: data?.game.platforms
                   }}
                 />
-              </Form.Group>
-            </Col>
-          </Row>
+              </div>
+            </div>
+          </div>
         )}
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs='auto' className='my-auto mx-1'>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='cover'>Cover:</label>
+              <input
+                name='cover'
+                type='file'
+                className='form-control'
+                accept='image/*'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-xs-auto my-auto mx-1'>
             <SubmitButton
               type='button'
               onClick={() => handleSubmitForm(mutateUpdate, 'Edited')}
@@ -191,8 +198,8 @@ export default function EditGame() {
             >
               Save Changes
             </SubmitButton>
-          </Col>
-          <Col xs='auto' className='my-auto mx-1'>
+          </div>
+          <div className='col-xs-auto my-auto mx-1'>
             <SubmitButton
               type='button'
               onClick={() => handleSubmitForm(mutateDelete, 'Deleted')}
@@ -200,9 +207,9 @@ export default function EditGame() {
             >
               Delete Game
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

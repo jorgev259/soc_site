@@ -71,10 +71,8 @@ async function Highlight() {
           </h4>
         </div>
         <div className='row'>
-          <Suspense
-            fallback={<AlbumBox className='col-xs-12' status='loading' />}
-          >
-            <AlbumBox className='col-xs-12' {...data?.highlight} />
+          <Suspense fallback={<AlbumBox className='col-12' status='loading' />}>
+            <AlbumBox className='col-12' {...data?.highlight} />
           </Suspense>
         </div>
       </div>

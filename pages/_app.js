@@ -10,7 +10,6 @@ import '@/styles/anim.css'
 import 'react-toastify/dist/ReactToastify.css'
 
 import Head from 'next/head'
-import { Container } from 'react-bootstrap'
 import { ToastContainer } from 'react-toastify'
 import { useEffect, useRef } from 'react'
 import { ApolloProvider } from '@apollo/client'
@@ -121,9 +120,9 @@ function MyApp(context) {
 
       <ApolloProvider client={client}>
         <Header />
-        <Container fluid className='flex-grow-1'>
+        <div className='container-fluid flex-grow-1'>
           <Component {...pageProps} />
-        </Container>
+        </div>
         <FooterAd />
       </ApolloProvider>
     </NextIntlClientProvider>

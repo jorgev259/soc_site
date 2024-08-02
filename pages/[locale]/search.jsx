@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react'
 import { gql, useLazyQuery } from '@apollo/client'
-import { Row, Col, Nav, Container } from 'react-bootstrap'
 import clsx from 'clsx'
 import Image from 'next/legacy/image'
 import { toast } from 'react-toastify'
@@ -92,26 +91,25 @@ export default function Search() {
   if (!search) return null
 
   return (
-    <Row className='h-100 bg-dark'>
-      <Col>
-        <Container>
-          <Row>
-            <Col
-              md={12}
-              className='my-1 px-4 py-3'
+    <div className='row h-100 bg-dark'>
+      <div className='col'>
+        <div className='container'>
+          <div className='row'>
+            <div
+              className='col-md-12 my-1 px-4 py-3'
               style={{ backgroundColor: '#33353e' }}
             >
               <h2 className='searchTitle'>
                 {t('Search Results for')}: {search}
               </h2>
-            </Col>
-          </Row>
+            </div>
+          </div>
           {loading && (
-            <Row>
-              <Col>
+            <div className='row'>
+              <div className='col'>
                 <Loader className='mx-auto my-2' />
-              </Col>
-            </Row>
+              </div>
+            </div>
           )}
 
           {data &&
@@ -128,9 +126,9 @@ export default function Search() {
                   />
                 )
             )}
-        </Container>
-      </Col>
-    </Row>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -181,36 +179,38 @@ function SearchSection(props) {
 
   return count > 0 ? (
     <>
-      <Row className='mb-1 mt-4'>
-        <Col md='auto'>
+      <div className='row mb-1 mt-4'>
+        <div className='col-md-auto'>
           <h2>
             {title} ({count > limit ? `${start + 1} - ${end}` : count})
           </h2>
-        </Col>
+        </div>
         {count > limit && (
-          <Col md='auto'>
-            <Nav>
+          <div className='col-md-auto'>
+            <nav>
               {Array.from(Array(Math.ceil(count / limit)), (x, i) => (
-                <Nav.Link
+                <a
                   disabled={page === i}
                   key={i}
                   onClick={() => setPage(i)}
-                  className='py-0 px-2'
+                  className='nav-link py-0 px-2'
                 >
                   <h2>{i + 1}</h2>
-                </Nav.Link>
+                </a>
               ))}
-            </Nav>
-          </Col>
+            </nav>
+          </div>
         )}
-      </Row>
-      <Row>
+      </div>
+      <div className='row'>
         {items.map((item) => (
-          <Col key={item.id} md={6}>
+          <div key={item.id} className='col-md-6'>
             <Link href={`/${type}/${item.id}`} className={styles.a}>
-              <Row className={clsx(styles.result, 'mx-1 d-flex flex-row mb-3')}>
+              <div
+                className={clsx(styles.result, 'row mx-1 d-flex flex-row mb-3')}
+              >
                 {type && (
-                  <Col md='auto' className={clsx(styles.cover, 'px-0')}>
+                  <div className={clsx(styles.cover, 'col-md-auto px-0')}>
                     <Image
                       objectFit='contain'
                       alt={item.title}
@@ -220,19 +220,19 @@ function SearchSection(props) {
                       placeholder={'blur'}
                       blurDataURL={item.placeholder}
                     />
-                  </Col>
+                  </div>
                 )}
-                <Col className='p-2 px-4 my-auto'>
+                <div className='col p-2 px-4 my-auto'>
                   <h2>{item.title}</h2>
                   {item.releaseDate && (
                     <p className='card-text mt-2'>{item.releaseDate}</p>
                   )}
-                </Col>
-              </Row>
+                </div>
+              </div>
             </Link>
-          </Col>
+          </div>
         ))}
-      </Row>
+      </div>
     </>
   ) : null
 }

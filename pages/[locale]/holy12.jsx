@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Container, Col, Row } from 'react-bootstrap'
 import { useTranslations } from 'next-intl'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
@@ -35,9 +34,9 @@ export default function Holy12(props) {
 
   return (
     <>
-      <Container>
-        <Row>
-          <Col className='py-3'>
+      <div className='container'>
+        <div className='row'>
+          <div className='col py-3'>
             <div>
               <h3
                 className='text-center homeTitle'
@@ -46,12 +45,12 @@ export default function Holy12(props) {
                 {title}
               </h3>
             </div>
-          </Col>
-        </Row>
-        <Row className='justify-content-center px-1 px-md-5'>
+          </div>
+        </div>
+        <div className='row justify-content-center px-1 px-md-5'>
           <AlbumBoxList colProps={{ xs: 6, md: 3 }} items={rows} />
-        </Row>
-      </Container>
+        </div>
+      </div>
     </>
   )
 }

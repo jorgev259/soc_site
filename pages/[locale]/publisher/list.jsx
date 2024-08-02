@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Row, Col, Button } from 'react-bootstrap'
 import classname from 'classnames'
 import { Link } from '@/next/utils/navigation'
 
@@ -35,43 +34,42 @@ export async function getServerSideProps() {
 
 export default function PublisherList({ letters, publishers }) {
   return (
-    <Row className='blackbg h-100 px-0'>
-      <Col className='p-2'>
-        <Row className='mt-2'>
-          <Col>
+    <div className='row blackbg h-100 px-0'>
+      <div className='col p-2'>
+        <div className='row mt-2'>
+          <div className='col'>
             {letters.map((letter) => (
-              <Button
+              <a
                 key={letter}
-                md='auto'
                 className={classname(style.letter, 'm-1 p-2')}
                 href={`#${letter}`}
               >
                 <h2>{letter}</h2>
-              </Button>
+              </a>
             ))}
-          </Col>
-        </Row>
+          </div>
+        </div>
         {letters.map((letter) => (
-          <div ID={letter} key={letter}>
+          <div id={letter} key={letter}>
             <hr className='style2 style-white' />
             <h2 className='text-center album-title text-capitalize'>
               {letter.toUpperCase()}
             </h2>
-            <Row className='pb-3 pl-2'>
+            <div className='row pb-3 pl-2'>
               {publishers[letter].map(({ id, name }) => (
-                <Col key={id} xs={3} className='d-flex flex-column'>
+                <div key={id} className='col-3 d-flex flex-column'>
                   <Link
                     href={`/publisher/${id}`}
                     className='listItem mt-2 link'
                   >
                     {name}
                   </Link>
-                </Col>
+                </div>
               ))}
-            </Row>
+            </div>
           </div>
         ))}
-      </Col>
-    </Row>
+      </div>
+    </div>
   )
 }

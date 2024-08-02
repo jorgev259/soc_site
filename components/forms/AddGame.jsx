@@ -1,14 +1,13 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
 import serialize from 'form-serialize'
-import { Col, Row, Form, FormControl } from 'react-bootstrap'
+import { toast } from 'react-toastify'
+
 import {
   SeriesSelector,
   PublisherSelector,
   PlatformSelector
 } from '../Selectors'
-import { toast } from 'react-toastify'
-
 import { slugify } from '@/server/utils/slugify'
 import SubmitButton from '@/next/components/common/SubmitButton'
 
@@ -53,7 +52,7 @@ export default function AddGame() {
 
     mutate({ mutation, variables: game })
       .then((results) => {
-        toast.success(`Added "${game.name}" game succesfully!`)
+        toast.success(`Added "${game.name}" game successfully!`)
         e.target.reset()
       })
       .catch((err) => {
@@ -67,70 +66,82 @@ export default function AddGame() {
       <div id='addGame' className='mb-2 mt-3'>
         Add Game
       </div>
-      <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='slug'>Slug:</Form.Label>
-              <FormControl type='text' name='slug' readOnly value={slug} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl
+      <form className='site-form blackblock' onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='slug'>Slug:</label>
+              <input
+                type='text'
+                name='slug'
+                readOnly
+                value={slug}
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <input
                 type='text'
                 name='name'
                 onChange={(e) => setSlug(slugify(e.target.value))}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl type='date' name='releaseDate' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='series'>Series:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='releaseDate'>Release Date:</label>
+              <input type='date' name='releaseDate' className='form-control' />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='series'>Series:</label>
               <SeriesSelector options={{ name: 'series' }} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='publishers'>Publishers:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='publishers'>Publishers:</label>
               <PublisherSelector options={{ name: 'publishers' }} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='platforms'>Platforms:</label>
               <PlatformSelector
                 categories={['Game']}
                 options={{ name: 'platforms' }}
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='m-auto'>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='cover'>Cover:</label>
+              <input
+                name='cover'
+                type='file'
+                accept='image/*'
+                className='form-control'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col m-auto'>
             <SubmitButton loading={loading} type='submit' color='primary'>
               Add Game
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

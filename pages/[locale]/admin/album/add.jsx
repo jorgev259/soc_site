@@ -1,5 +1,4 @@
-import { Col, Row, Form, FormControl } from 'react-bootstrap'
-import { useRef, useState } from 'react'
+import { useState, useRef } from 'react'
 import { gql, useQuery, useMutation, useLazyQuery } from '@apollo/client'
 import { toast } from 'react-toastify'
 
@@ -27,15 +26,15 @@ export const getServerSideProps = hasRolePage(['CREATE'])
 
 export default function AddAlbumPage() {
   return (
-    <Row>
-      <Col xs={2}>
+    <div className='row'>
+      <div className='col-2'>
         <Navigation title='Add' />
-      </Col>
-      <Col xs={10}>
+      </div>
+      <div className='col-10'>
         <AddAlbum />
         <SharedForms />
-      </Col>
-    </Row>
+      </div>
+    </div>
   )
 }
 
@@ -184,42 +183,53 @@ function AddAlbum(props) {
       <div id='addAlbum' className='mb-2 mt-3'>
         Add Album
       </div>
-      <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
-        <Row>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='title'>Title:</Form.Label>
-              <FormControl ref={titleRef} required type='text' name='title' />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='subTitle'>Sub Title:</Form.Label>
-              <FormControl ref={subTitleRef} as='textarea' name='subTitle' />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl
+      <form className='site-form blackblock' onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label htmlFor='title'>Title:</label>
+              <input
+                ref={titleRef}
+                required
+                type='text'
+                name='title'
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label htmlFor='subTitle'>Sub Title:</label>
+              <textarea
+                ref={subTitleRef}
+                name='subTitle'
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label htmlFor='releaseDate'>Release Date:</label>
+              <input
                 ref={releaseRef}
                 required
                 type='date'
                 name='releaseDate'
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='label'>Label:</Form.Label>
-              <FormControl type='text' name='label' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='mb-3'>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='status'>Status:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label htmlFor='label'>Label:</label>
+              <input type='text' name='label' className='form-control' />
+            </div>
+          </div>
+        </div>
+        <div className='row mb-3'>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='status'>Status:</label>
               <SimpleSelector
                 isSingle
                 required
@@ -230,32 +240,43 @@ function AddAlbum(props) {
                   value: label.toLowerCase()
                 }))}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
-        <Row className='mb-3'>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='title'>Description:</Form.Label>
-              <FormControl as='textarea' name='description' />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl required name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='vgmdb'>VGMdb:</Form.Label>
-              <FormControl ref={vgmdbRef} name='vgmdb' type='text' />
-            </Form.Group>
-          </Col>
-          <Col className='mt-auto'>
+        <div className='row mb-3'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='title'>Description:</label>
+              <textarea name='description' className='form-control' />
+            </div>
+          </div>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='cover'>Cover:</label>
+              <input
+                required
+                name='cover'
+                type='file'
+                accept='image/*'
+                className='form-control'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='vgmdb'>VGMdb:</label>
+              <input
+                ref={vgmdbRef}
+                name='vgmdb'
+                type='text'
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col mt-auto'>
             <ButtonLoader
               color='primary'
               loading={loadingFetch}
@@ -263,20 +284,24 @@ function AddAlbum(props) {
             >
               Fetch info
             </ButtonLoader>
-          </Col>
-          <Col></Col>
-        </Row>
+          </div>
+          <div className='col'></div>
+        </div>
         <hr className='style2 style-white' />
-        <Row className='mb-3'>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='artists'>Artists:</Form.Label>
-              <FormControl ref={artistsRef} name='artists' as='textarea' />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='categories'>Categories:</Form.Label>
+        <div className='row mb-3'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='artists'>Artists:</label>
+              <textarea
+                ref={artistsRef}
+                name='artists'
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='categories'>Categories:</label>
               <SimpleSelector
                 required
                 name='categories'
@@ -290,13 +315,11 @@ function AddAlbum(props) {
                 }))}
                 onChange={(values) => setCategories(values.map((v) => v.value))}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='classifications'>
-                Classifications:
-              </Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='classifications'>Classifications:</label>
               <SimpleSelector
                 required
                 name='classifications'
@@ -312,46 +335,46 @@ function AddAlbum(props) {
                   setClassifications(values.map((v) => v.value))
                 }
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row />
+            </div>
+          </div>
+        </div>
 
         <hr className='style2 style-white' />
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='games'>Games:</Form.Label>
+
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='games'>Games:</label>
               <GameSelector options={{ name: 'games' }} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='platforms'>Platforms:</label>
               <PlatformSelector
                 categories={currentCategories}
                 options={{ name: 'platforms' }}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='animations'>Animations:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='animations'>Animations:</label>
               <AnimSelector options={{ name: 'animations' }} />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
         <hr className='style2 style-white' />
 
-        <Row>
-          <Col md={12}>
-            <Form.Group>
-              <Form.Label htmlFor='related'>Related albums:</Form.Label>
+        <div className='row'>
+          <div className='col-md-12'>
+            <div className='form-group'>
+              <label htmlFor='related'>Related albums:</label>
               <AlbumSelector options={{ name: 'related' }} />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
         <hr className='style2 style-white' />
         <DiscList defaults={vgmTracklist} />
         <hr className='style2 style-white' />
@@ -392,14 +415,14 @@ function AddAlbum(props) {
         <RequestCheck element={vgmdbRef.current} />
         <hr className='style2 style-white' />
 
-        <Row className='mb-2'>
-          <Col xs='auto' className='pe-0'>
+        <div className='row mb-2'>
+          <div className='col-auto pe-0'>
             <SubmitButton loading={loading} type='submit' color='primary'>
               Add Album
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

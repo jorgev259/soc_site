@@ -1,4 +1,3 @@
-import { Container, Col, Row } from 'react-bootstrap'
 import { gql } from '@apollo/client'
 import moment from 'moment'
 import Head from 'next/head'
@@ -57,7 +56,7 @@ export const getServerSideProps = async ({ params, req }) => {
 function AlbumBox(props) {
   const { id, title, coming = false, placeholder } = props
   return (
-    <Col xs={12} md={6} className='py-0 px-2 mb-3'>
+    <div className='col-12 col-md-6 py-0 px-2 mb-3'>
       <div
         className={clsx(AlbumBoxStyles.albumBox, 'd-flex m-0 w-100 h-100')}
         style={{
@@ -69,8 +68,8 @@ function AlbumBox(props) {
         }}
       >
         <Link href={coming ? '' : `/album/${id}`}>
-          <Row>
-            <Col xs={3}>
+          <div className='row'>
+            <div className='col-3'>
               <div className='position-relative w-100 h-100'>
                 <Image
                   layout='responsive'
@@ -82,16 +81,16 @@ function AlbumBox(props) {
                   src={getImageUrl(id, 'album')}
                 />
               </div>
-            </Col>
-            <Col>
+            </div>
+            <div className='col'>
               <div className='text-wrap my-auto px-1 py-2'>
                 {coming ? 'Coming Soon' : title}
               </div>
-            </Col>
-          </Row>
+            </div>
+          </div>
         </Link>
       </div>
-    </Col>
+    </div>
   )
 }
 
@@ -126,7 +125,7 @@ export default function SeriesDetail(props) {
     })
 
   return (
-    <Container>
+    <div className='container'>
       <Head>
         <title>{seriesOne.name}</title>
         <meta key='url' property='og:url' content={`/series/${slug}`} />
@@ -135,8 +134,8 @@ export default function SeriesDetail(props) {
         <meta key='image' property='og:image' content={imageUrl} />
       </Head>
 
-      <Row className='mt-3'>
-        <Col xs={12} md={4}>
+      <div className='row mt-3'>
+        <div className='col-12 col-md-4'>
           <div
             className='logoBox blackblock p-2 position-relative w-100'
             style={{ height: '150px' }}
@@ -152,19 +151,16 @@ export default function SeriesDetail(props) {
               />
             </div>
           </div>
-        </Col>
-        <Col
-          md={8}
-          className='mt-3 mt-md-0 my-0 d-flex justify-content-center flex-column'
-        >
+        </div>
+        <div className='col-md-8 mt-3 mt-md-0 my-0 d-flex justify-content-center flex-column'>
           <div className='blackblock'>
-            <Row>
-              <Col md={12}>
+            <div className='row'>
+              <div className='col-md-12'>
                 <h1 className='text-center album-title'>{seriesOne.name}</h1>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-2'>First Release:</span>
                 <span>
                   {' '}
@@ -176,11 +172,11 @@ export default function SeriesDetail(props) {
                     {gameList[0].name}
                   </a>
                 </span>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       <hr className='style2 style-white' />
       {various && various.length > 0 ? (
@@ -202,7 +198,7 @@ export default function SeriesDetail(props) {
               year={moment(releaseDate).year()}
             />
           ))}
-    </Container>
+    </div>
   )
 }
 
@@ -211,18 +207,23 @@ function AlbumList(props) {
   return (
     <>
       <div className='blackblock justify-content-center m-2'>
-        <Row>
+        <div className='row'>
           {year ? (
-            <Col md={2}>
+            <div className='col-md-2'>
               <h3 className='text-center album-title'>{year}</h3>
-            </Col>
+            </div>
           ) : null}
-          <Col md={year ? 9 : 12}>
+
+          <div className='col-md-9'>
             <h3 className='album-title'>
-              {slug ? <a href={`/game/${slug}`}>{name}</a> : name}
+              {slug ? (
+                <a href={`/game/${slug}`}>{name}</a>
+              ) : (
+                <span className='ms-2'>{name}</span>
+              )}
             </h3>
-          </Col>
-        </Row>
+          </div>
+        </div>
       </div>
 
       <div className='w-100 d-flex flex-wrap justify-content-center'>

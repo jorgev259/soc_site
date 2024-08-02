@@ -1,7 +1,6 @@
 import { Fragment } from 'react'
 import Head from 'next/head'
 import { gql } from '@apollo/client'
-import { Container, Col, Row } from 'react-bootstrap'
 import { DateTime } from 'luxon'
 import Image from 'next/legacy/image'
 
@@ -80,7 +79,7 @@ export default function GameDetail(props) {
   })
 
   return (
-    <Container>
+    <div className='container'>
       <Head>
         <title>{name}</title>
         <meta key='url' property='og:url' content={`/game/${slug}`} />
@@ -94,8 +93,8 @@ export default function GameDetail(props) {
         <meta key='image' property='og:image' content={imageUrl} />
       </Head>
 
-      <Row className='mt-3'>
-        <Col xs={12} md={4}>
+      <div className='row mt-3'>
+        <div className='col-12 col-md-4'>
           <div
             className='logoBox blackblock p-3 position-relative w-100'
             style={{ height: '250px' }}
@@ -111,19 +110,16 @@ export default function GameDetail(props) {
               />
             </div>
           </div>
-        </Col>
-        <Col
-          md={8}
-          className='mt-3 mt-md-0 my-0 d-flex justify-content-center flex-column'
-        >
+        </div>
+        <div className='col-md-8 mt-3 mt-md-0 my-0 d-flex justify-content-center flex-column'>
           <div className='blackblock'>
-            <Row>
-              <Col md={12}>
+            <div className='row'>
+              <div className='col-md-12'>
                 <h1 className='text-center album-title'>{name}</h1>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-2'>Release Date:</span>
                 <span>
                   {DateTime.fromISO(releaseDate)
@@ -134,10 +130,10 @@ export default function GameDetail(props) {
                       year: 'numeric'
                     })}
                 </span>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-2'>Publishers:</span>
                 <span>
                   {publishers.map(({ id, name }, i) => (
@@ -152,10 +148,10 @@ export default function GameDetail(props) {
                     </Fragment>
                   ))}
                 </span>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-2'>Platforms:</span>
                 <span>
                   {platforms.map(({ id, name }, i) => (
@@ -170,10 +166,10 @@ export default function GameDetail(props) {
                     </Fragment>
                   ))}
                 </span>
-              </Col>
-            </Row>
-            <Row className='my-1'>
-              <Col className='d-flex justify-content-center'>
+              </div>
+            </div>
+            <div className='row my-1'>
+              <div className='col d-flex justify-content-center'>
                 <span className='fw-bold me-2'>Series:</span>
                 <span>
                   {series.map(({ slug, name }, i) => (
@@ -189,18 +185,18 @@ export default function GameDetail(props) {
                     </Fragment>
                   ))}
                 </span>
-              </Col>
-            </Row>
+              </div>
+            </div>
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
 
       <hr className='style2 style-white' />
       {albums.map((items, i) => (
-        <Row key={i} className='justify-content-center'>
+        <div key={i} className='row justify-content-center'>
           <AlbumBoxList colProps={{ md: 3, xs: 6 }} items={items} />
-        </Row>
+        </div>
       ))}
-    </Container>
+    </div>
   )
 }

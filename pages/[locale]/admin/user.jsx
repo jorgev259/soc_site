@@ -1,16 +1,5 @@
 import { useRef, createRef, useMemo, useState } from 'react'
 import { gql, useQuery, useMutation } from '@apollo/client'
-import {
-  Button,
-  Col,
-  Row,
-  Container,
-  Table,
-  Form,
-  Modal,
-  InputGroup,
-  FormControl
-} from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import serialize from 'form-serialize'
 
@@ -52,22 +41,26 @@ export default function AdminUser() {
   }
 
   return (
-    <Container>
-      <Row className='site-form blackblock mt-3'>
-        <Col>
-          <Row>
-            <Col>
-              <Form.Group>
-                <InputGroup>
-                  <InputGroup.Text>&#128270;</InputGroup.Text>
-                  <FormControl onChange={handleSearch} />
-                </InputGroup>
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row className='mt-2'>
-            <Col>
-              <Table variant='dark' hover>
+    <div className='container'>
+      <div className='row site-form blackblock mt-3'>
+        <div className='col'>
+          <div className='row'>
+            <div className='col'>
+              <div className='form-group'>
+                <div className='input-group'>
+                  <div className='input-group-text'>&#128270;</div>
+                  <input
+                    type='text'
+                    className='form-control'
+                    onChange={handleSearch}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='row mt-2'>
+            <div className='col'>
+              <table className='table table-dark table-hover'>
                 <thead>
                   <tr>
                     <th>Username</th>
@@ -86,15 +79,15 @@ export default function AdminUser() {
                       />
                     ))}
                 </tbody>
-              </Table>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Row className='site-form blackblock mt-3'>
-        <Col>
-          <Table variant='dark' hover>
+      <div className='row site-form blackblock mt-3'>
+        <div className='col'>
+          <table className='table table-dark table-hover'>
             <thead>
               <tr>
                 <th>Role</th>
@@ -112,43 +105,43 @@ export default function AdminUser() {
                   />
                 ))}
             </tbody>
-          </Table>
-        </Col>
-      </Row>
+          </table>
+        </div>
+      </div>
 
       <AddRole />
 
-      {/* <Form className='site-form blackblock mt-3' onSubmit={handleCreate}>
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='username'>Username:</Form.Label>
-              <FormControl required type='text' name='username' />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='email'>Email:</Form.Label>
-              <FormControl required type='text' name='email' />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='roles'>Roles:</Form.Label>
+      {/* <form className='site-form blackblock mt-3' onSubmit={handleCreate}>
+        <div className='row'>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='username'>Username:</label>
+              <input required type='text' name='username' className='form-control' />
+            </div>
+          </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='email'>Email:</label>
+              <input required type='text' name='email' className='form-control' />
+            </div>
+          </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='roles'>Roles:</label>
               <SimpleSelector
                 options={data ? data.roles.map(({ name }) => ({ label: name, value: name })) : []}
                 name='roles'
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='m-auto'>
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col m-auto'>
             <ButtonLoader text='Add User' loading={loading} type='submit' color='primary' />
-          </Col>
-        </Row>
-              </Form> */}
-    </Container>
+          </div>
+        </div>
+      </form> */}
+    </div>
   )
 }
 
@@ -195,31 +188,37 @@ function UserRow(props) {
 
   return (
     <>
-      <Modal
-        centered
-        show={deleteModal}
-        toggle={() => setDeleteModal(!deleteModal)}
+      <div
+        className={`modal ${deleteModal ? 'show' : ''}`}
+        style={{ display: deleteModal ? 'block' : 'none' }}
+        tabIndex='-1'
       >
-        <Modal.Body className='m-3' style={{ color: 'black' }}>
-          <Row>
-            <Col>{`Delete user "${username}"?`}</Col>
-          </Row>
-          <Row className='mt-2'>
-            <Col>
-              <Button color='primary' className='mx-2' onClick={handleDelete}>
-                {removeLoading ? <Loader dev /> : 'Yes'}
-              </Button>
-              <Button
-                color='primary'
-                className='mx-2'
-                onClick={() => setDeleteModal(!deleteModal)}
-              >
-                No
-              </Button>
-            </Col>
-          </Row>
-        </Modal.Body>
-      </Modal>
+        <div className='modal-dialog modal-centered'>
+          <div className='modal-content'>
+            <div className='modal-body m-3' style={{ color: 'black' }}>
+              <div className='row'>
+                <div className='col'>{`Delete user "${username}"?`}</div>
+              </div>
+              <div className='row mt-2'>
+                <div className='col'>
+                  <button
+                    className='btn btn-primary mx-2'
+                    onClick={handleDelete}
+                  >
+                    {removeLoading ? <Loader dev /> : 'Yes'}
+                  </button>
+                  <button
+                    className='btn btn-primary mx-2'
+                    onClick={() => setDeleteModal(!deleteModal)}
+                  >
+                    No
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       <tr>
         <td>{username}</td>
@@ -235,9 +234,12 @@ function UserRow(props) {
           />
         </td>
         <td>
-          <Button className='me-2' onClick={() => setDeleteModal(!deleteModal)}>
+          <button
+            className='btn btn-primary me-2'
+            onClick={() => setDeleteModal(!deleteModal)}
+          >
             Remove
-          </Button>
+          </button>
         </td>
       </tr>
     </>
@@ -323,10 +325,12 @@ function RoleRow({ name, permissions, permissionList }) {
         </td>
       ))}
       <td>
-        <Button className='me-2' onClick={handleUpdate}>
+        <button className='btn btn-primary me-2' onClick={handleUpdate}>
           Save
-        </Button>
-        <Button onClick={handleDelete}>Remove</Button>
+        </button>
+        <button className='btn btn-danger' onClick={handleDelete}>
+          Remove
+        </button>
       </td>
     </tr>
   )
@@ -362,21 +366,26 @@ function AddRole() {
 
   return (
     <div className='site-form blackblock mt-3 p-3'>
-      <Form onSubmit={handleSubmitForm}>
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl type='text' name='name' required />
-            </Form.Group>
-          </Col>
-          <Col className='mb-3 mt-auto'>
-            <Button type='submit' color='primary'>
+      <form onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <input
+                type='text'
+                name='name'
+                required
+                className='form-control'
+              />
+            </div>
+          </div>
+          <div className='col mb-3 mt-auto'>
+            <button type='submit' className='btn btn-primary'>
               Add Role
-            </Button>
-          </Col>
-        </Row>
-      </Form>
+            </button>
+          </div>
+        </div>
+      </form>
     </div>
   )
 }

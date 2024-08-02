@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Row, Col } from 'react-bootstrap'
 
 import { initializeApollo } from '@/next/utils/ApolloClient'
 import { getImageUrl } from '@/server/utils/getCDN'
@@ -39,17 +38,17 @@ export async function getServerSideProps({ params, req }) {
 
 export default function Studio({ name, animations }) {
   return (
-    <Row className='blackbg h-100 px-0'>
-      <Col className='p-3'>
-        <Row>
-          <Col xs={12}>
+    <div className='row blackbg h-100 px-0'>
+      <div className='col p-3'>
+        <div className='row'>
+          <div className='col-12'>
             <div className='divider' />
             <h2 className='animationLetter text-center py-2 m-0'>{name}</h2>
             <div className='divider' />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
-        <Row className='links-list justify-content-center py-2'>
+        <div className='row links-list justify-content-center py-2'>
           <AlbumBoxList
             type='anim'
             height={150}
@@ -57,10 +56,10 @@ export default function Studio({ name, animations }) {
             colProps={{ md: 2, xs: 6 }}
             items={animations}
           />
-        </Row>
-      </Col>
+        </div>
+      </div>
 
       <Sidebar />
-    </Row>
+    </div>
   )
 }

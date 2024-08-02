@@ -1,5 +1,4 @@
 import { useRef, useState } from 'react'
-import { Row, FormControl, Form, Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import { StudioSelector } from '../Selectors'
 import SubmitButton from '@/next/components/common/SubmitButton'
@@ -29,7 +28,7 @@ export default function EditStudio() {
     const target = formRef.current
     mutate({ variables: serialize(target, { hash: true }) })
       .then((results) => {
-        toast.success(`${verb} studio succesfully!`)
+        toast.success(`${verb} studio successfully!`)
         target.reset()
       })
       .catch((err) => {
@@ -44,11 +43,11 @@ export default function EditStudio() {
         Edit Studio
       </div>
       <div className='site-form blackblock'>
-        <Form ref={formRef}>
-          <Row>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label htmlFor='slug'>Studio:</Form.Label>
+        <form ref={formRef}>
+          <div className='row'>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label htmlFor='slug'>Studio:</label>
                 <StudioSelector
                   options={{
                     isSingle: true,
@@ -57,22 +56,23 @@ export default function EditStudio() {
                     onChange: (row) => setName(row.label)
                   }}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label htmlFor='name'>Name:</Form.Label>
-                <FormControl
+              </div>
+            </div>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label htmlFor='name'>Name:</label>
+                <input
                   type='text'
                   name='name'
                   required
+                  className='form-control'
                   defaultValue={defaultName}
                 />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs='auto' className='my-auto mx-1'>
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateUpdate, 'Edited')}
@@ -80,8 +80,8 @@ export default function EditStudio() {
               >
                 Save Changes
               </SubmitButton>
-            </Col>
-            <Col xs='auto' className='my-auto mx-1'>
+            </div>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateDelete, 'Deleted')}
@@ -89,9 +89,9 @@ export default function EditStudio() {
               >
                 Delete Studio
               </SubmitButton>
-            </Col>
-          </Row>
-        </Form>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   )

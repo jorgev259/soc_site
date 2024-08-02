@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { gql, useMutation } from '@apollo/client'
-import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
 
@@ -29,7 +28,7 @@ export default function AddSeries() {
 
     mutate({ mutation, variables: data })
       .then((results) => {
-        toast.success(`Added "${data.name}" series succesfully!`)
+        toast.success(`Added "${data.name}" series successfully!`)
         e.target.reset()
       })
       .catch((err) => {
@@ -43,39 +42,51 @@ export default function AddSeries() {
       <div id='addSeries' className='mb-2 mt-3'>
         Add Series
       </div>
-      <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='slug'>Slug:</Form.Label>
-              <FormControl type='text' name='slug' readOnly value={slug} />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Name:</Form.Label>
-              <FormControl
+      <form className='site-form blackblock' onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='slug'>Slug:</label>
+              <input
+                type='text'
+                name='slug'
+                className='form-control'
+                readOnly
+                value={slug}
+              />
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='name'>Name:</label>
+              <input
                 type='text'
                 name='name'
+                className='form-control'
                 onChange={(e) => setSlug(slugify(e.target.value))}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col className='m-auto'>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='cover'>Cover:</label>
+              <input
+                name='cover'
+                type='file'
+                className='form-control'
+                accept='image/*'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col m-auto'>
             <SubmitButton loading={loading} type='submit'>
               Add Series
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

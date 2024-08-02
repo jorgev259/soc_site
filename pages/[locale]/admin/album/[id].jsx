@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
 import { gql, useLazyQuery, useMutation, useQuery } from '@apollo/client'
-import { Col, Row, Form, FormControl, Container } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 import {
@@ -122,7 +121,7 @@ export const getServerSideProps = async ({ params }) => {
     return { redirect: { destination: '/404', permanent: false } }
 
   return {
-    props: { id, album, categories, classifications } /*, revalidate: 60 */
+    props: { id, album, categories, classifications }
   }
 }
 
@@ -195,17 +194,17 @@ const vgmQuery = gql`
 
 export default function EditAlbum(props) {
   return (
-    <Container fluid>
-      <Row>
-        <Col xs={2}>
+    <div className='container-fluid'>
+      <div className='row'>
+        <div className='col-2'>
           <Navigation title='Edit' />
-        </Col>
-        <Col xs={10}>
+        </div>
+        <div className='col-10'>
           <EditAlbumForm {...props} />
           <SharedForms />
-        </Col>
-      </Row>
-    </Container>
+        </div>
+      </div>
+    </div>
   )
 }
 
@@ -279,60 +278,63 @@ function EditAlbumForm({ id, album, categories, classifications }) {
   return (
     <>
       <div id='addAlbum' className='mb-2 mt-3'>
-        Editing {`"${album.title}"`} ({album.id})
+        Editing &quot;{album.title}&quot; ({album.id})
       </div>
-      <Form className='site-form blackblock' onSubmit={handleSubmitForm}>
-        <Row>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='title'>Title:</Form.Label>
-              <FormControl
+      <form className='site-form blackblock' onSubmit={handleSubmitForm}>
+        <div className='row'>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label for='title'>Title:</label>
+              <input
                 ref={titleRef}
                 required
                 type='text'
                 name='title'
                 defaultValue={album.title}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='subTitle'>Sub Title:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label for='subTitle'>Sub Title:</label>
+              <textarea
                 ref={subTitleRef}
-                as='textarea'
                 name='subTitle'
                 defaultValue={album.subTitle}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label for='releaseDate'>Release Date:</label>
+              <input
                 ref={releaseRef}
                 required
                 type='date'
                 name='releaseDate'
                 defaultValue={album.releaseDate}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={3}>
-            <Form.Group>
-              <Form.Label htmlFor='label'>Label:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-3'>
+            <div className='form-group'>
+              <label for='label'>Label:</label>
+              <input
                 type='text'
                 name='label'
                 defaultValue={album.label}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='mb-3'>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='status'>Status:</Form.Label>
+            </div>
+          </div>
+        </div>
+        <div className='row mb-3'>
+          <div className='col'>
+            <div className='form-group'>
+              <label for='status'>Status:</label>
               <SimpleSelector
                 isSingle
                 required
@@ -346,40 +348,46 @@ function EditAlbumForm({ id, album, categories, classifications }) {
                   value: label.toLowerCase()
                 }))}
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='mb-3'>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='title'>Description:</Form.Label>
-              <FormControl
-                as='textarea'
+            </div>
+          </div>
+        </div>
+        <div className='row mb-3'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label for='title'>Description:</label>
+              <textarea
                 name='description'
                 defaultValue={album.description}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='vgmdb'>VGMdb:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label for='cover'>Cover:</label>
+              <input
+                name='cover'
+                type='file'
+                accept='image/*'
+                className='form-control-file'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label for='vgmdb'>VGMdb:</label>
+              <input
                 ref={vgmdbRef}
                 defaultValue={album.vgmdb}
                 name='vgmdb'
                 type='text'
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col className='mt-auto'>
+            </div>
+          </div>
+          <div className='col mt-auto'>
             <ButtonLoader
               color='primary'
               loading={loadingFetch}
@@ -387,25 +395,25 @@ function EditAlbumForm({ id, album, categories, classifications }) {
             >
               Fetch info
             </ButtonLoader>
-          </Col>
-          <Col></Col>
-        </Row>
+          </div>
+          <div className='col'></div>
+        </div>
         <hr className='style2 style-white' />
-        <Row className='mb-3'>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='artists'>Artists:</Form.Label>
-              <FormControl
+        <div className='row mb-3'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='artists'>Artists:</label>
+              <textarea
                 ref={artistsRef}
                 name='artists'
-                as='textarea'
                 defaultValue={album.artists.map((a) => a.name).join(',')}
+                className='form-control'
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='categories'>Categories:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='categories'>Categories:</label>
               <SimpleSelector
                 defaultValue={album.categories}
                 required
@@ -413,13 +421,11 @@ function EditAlbumForm({ id, album, categories, classifications }) {
                 options={categories}
                 onChange={(values) => setCategories(values)}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='classifications'>
-                Classifications:
-              </Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='classifications'>Classifications:</label>
               <SimpleSelector
                 required
                 name='classifications'
@@ -427,51 +433,51 @@ function EditAlbumForm({ id, album, categories, classifications }) {
                 options={classifications}
                 onChange={(values) => setClassifications(values)}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
         <hr className='style2 style-white' />
 
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='games'>Games:</Form.Label>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='games'>Games:</label>
               <GameSelector
                 options={{ defaultValue: album.games, name: 'games' }}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='platforms'>Platforms:</Form.Label>
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='platforms'>Platforms:</label>
               <PlatformSelector
                 categories={currentCategories.map((c) => c.value)}
                 options={{ defaultValue: album.platforms, name: 'platforms' }}
               />
-            </Form.Group>
-          </Col>
+            </div>
+          </div>
 
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='animations'>Animations:</Form.Label>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label for='animations'>Animations:</label>
               <AnimSelector
                 options={{ defaultValue: album.animations, name: 'animations' }}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
         <hr className='style2 style-white' />
-        <Row>
-          <Col md={12}>
-            <Form.Group>
-              <Form.Label htmlFor='related'>Related albums:</Form.Label>
+        <div className='row'>
+          <div className='col-md-12'>
+            <div className='form-group'>
+              <label for='related'>Related albums:</label>
               <AlbumSelector
                 options={{ defaultValue: album.related, name: 'related' }}
               />
-            </Form.Group>
-          </Col>
-        </Row>
+            </div>
+          </div>
+        </div>
 
         <hr className='style2 style-white' />
         <DiscList defaults={vgmTracklist} />
@@ -483,14 +489,14 @@ function EditAlbumForm({ id, album, categories, classifications }) {
 
         {data && <Downloads defaults={data.downloads} />}
 
-        <Row>
-          <Col className='m-auto'>
+        <div className='row'>
+          <div className='col m-auto'>
             <SubmitButton loading={loading} type='submit' color='primary'>
               Save Changes
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

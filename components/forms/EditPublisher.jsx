@@ -1,5 +1,4 @@
 import { useRef } from 'react'
-import { Row, FormControl, Form, Col } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 import serialize from 'form-serialize'
 import { gql, useMutation } from '@apollo/client'
@@ -30,7 +29,7 @@ export default function EditPublisher() {
     const target = formRef.current
     mutate({ variables: serialize(target, { hash: true }) })
       .then((results) => {
-        toast.success(`${verb} publisher succesfully!`)
+        toast.success(`${verb} publisher successfully!`)
         target.reset()
       })
       .catch((err) => {
@@ -45,25 +44,30 @@ export default function EditPublisher() {
         Edit Publisher
       </div>
       <div className='site-form blackblock'>
-        <Form ref={formRef}>
-          <Row>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label htmlFor='id'>Publisher:</Form.Label>
+        <form ref={formRef}>
+          <div className='row'>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label htmlFor='id'>Publisher:</label>
                 <PublisherSelector
                   options={{ isSingle: true, required: true, name: 'id' }}
                 />
-              </Form.Group>
-            </Col>
-            <Col md={6}>
-              <Form.Group>
-                <Form.Label htmlFor='name'>Name:</Form.Label>
-                <FormControl type='text' name='name' required />
-              </Form.Group>
-            </Col>
-          </Row>
-          <Row>
-            <Col xs='auto' className='my-auto mx-1'>
+              </div>
+            </div>
+            <div className='col-md-6'>
+              <div className='form-group'>
+                <label htmlFor='name'>Name:</label>
+                <input
+                  type='text'
+                  name='name'
+                  className='form-control'
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div className='row'>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateUpdate, 'Edited')}
@@ -71,8 +75,8 @@ export default function EditPublisher() {
               >
                 Save Changes
               </SubmitButton>
-            </Col>
-            <Col xs='auto' className='my-auto mx-1'>
+            </div>
+            <div className='col-xs-auto my-auto mx-1'>
               <SubmitButton
                 type='button'
                 onClick={() => handleSubmitForm(mutateDelete, 'Deleted')}
@@ -80,9 +84,9 @@ export default function EditPublisher() {
               >
                 Delete Publisher
               </SubmitButton>
-            </Col>
-          </Row>
-        </Form>
+            </div>
+          </div>
+        </form>
       </div>
     </div>
   )

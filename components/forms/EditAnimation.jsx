@@ -1,7 +1,6 @@
 import { useEffect, useRef } from 'react'
 import { gql, useMutation, useLazyQuery } from '@apollo/client'
 import serialize from 'form-serialize'
-import { Col, Row, Form, FormControl } from 'react-bootstrap'
 import { AnimSelector, StudioSelector } from '../Selectors'
 import SubmitButton from '@/next/components/common/SubmitButton'
 import { toast } from 'react-toastify'
@@ -83,11 +82,11 @@ export default function AddAnimation() {
       <div id='editAnim' className='mb-2 mt-3'>
         Edit Animation
       </div>
-      <Form className='site-form blackblock' ref={formRef}>
-        <Row>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Animation:</Form.Label>
+      <form className='site-form blackblock' ref={formRef}>
+        <div className='row'>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='name'>Animation:</label>
               <AnimSelector
                 options={{
                   isSingle: true,
@@ -96,60 +95,68 @@ export default function AddAnimation() {
                   onChange: (row) => getAnim({ variables: { id: row.value } })
                 }}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Title:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='name'>Title:</label>
+              <input
                 type='text'
                 name='title'
+                className='form-control'
                 defaultValue={data && data.animation.title}
               />
-            </Form.Group>
-          </Col>
-          <Col md={4}>
-            <Form.Group>
-              <Form.Label htmlFor='name'>Sub-title:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+          <div className='col-md-4'>
+            <div className='form-group'>
+              <label htmlFor='name'>Sub-title:</label>
+              <input
                 type='text'
                 name='subTitle'
+                className='form-control'
                 defaultValue={data && data.animation.subTitle}
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='releaseDate'>Release Date:</Form.Label>
-              <FormControl
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='releaseDate'>Release Date:</label>
+              <input
                 type='date'
                 name='releaseDate'
+                className='form-control'
                 defaultValue={data && data.animation.releaseDate}
               />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='studios'>Studios:</Form.Label>
+            </div>
+          </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='studios'>Studios:</label>
               <StudioSelector
                 options={{
                   name: 'studios',
                   defaultValue: data?.animation.studios ?? []
                 }}
               />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group>
-              <Form.Label htmlFor='cover'>Cover:</Form.Label>
-              <FormControl name='cover' type='file' accept='image/*' />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row>
-          <Col xs='auto' className='my-auto mx-1'>
+            </div>
+          </div>
+          <div className='col'>
+            <div className='form-group'>
+              <label htmlFor='cover'>Cover:</label>
+              <input
+                name='cover'
+                type='file'
+                className='form-control'
+                accept='image/*'
+              />
+            </div>
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-xs-auto my-auto mx-1'>
             <SubmitButton
               type='button'
               onClick={() => handleSubmitForm(mutateUpdate, 'Edited')}
@@ -157,8 +164,8 @@ export default function AddAnimation() {
             >
               Save Changes
             </SubmitButton>
-          </Col>
-          <Col xs='auto' className='my-auto mx-1'>
+          </div>
+          <div className='col-xs-auto my-auto mx-1'>
             <SubmitButton
               type='button'
               onClick={() => handleSubmitForm(mutateDelete, 'Deleted')}
@@ -166,9 +173,9 @@ export default function AddAnimation() {
             >
               Delete Animation
             </SubmitButton>
-          </Col>
-        </Row>
-      </Form>
+          </div>
+        </div>
+      </form>
     </>
   )
 }

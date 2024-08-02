@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Row, Col } from 'react-bootstrap'
 
 import { AlbumBoxList } from '@/components/AlbumBoxes'
 
@@ -35,21 +34,21 @@ export default function PublisherDetail(props) {
   const { publisher } = props
 
   return (
-    <Row className='blackbg h-100 px-0'>
-      <Col className='p-3'>
-        <Row>
-          <Col />
-        </Row>
+    <div className='row blackbg h-100 px-0'>
+      <div className='col p-3'>
+        <div className='row'>
+          <div className='col' />
+        </div>
 
-        <Row className='mt-3'>
-          <Col xs={12}>
+        <div className='row mt-3'>
+          <div className='col-12'>
             <div className='divider' />
             <h2 className='text-center py-2 m-0'>{publisher.name}</h2>
             <div className='divider' />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
-        <Row className='links-list justify-content-center py-2'>
+        <div className='row links-list justify-content-center py-2'>
           <AlbumBoxList
             type='game'
             colProps={{ md: 3, xs: 6 }}
@@ -59,9 +58,9 @@ export default function PublisherDetail(props) {
               placeholder
             }))}
           />
-        </Row>
-      </Col>
+        </div>
+      </div>
       <Sidebar />
-    </Row>
+    </div>
   )
 }

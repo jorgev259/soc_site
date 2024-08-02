@@ -1,14 +1,4 @@
 import { useRef, useState } from 'react'
-import {
-  Col,
-  Row,
-  Form,
-  Container,
-  Table,
-  InputGroup,
-  FormControl,
-  Modal
-} from 'react-bootstrap'
 import { gql, useMutation, useQuery } from '@apollo/client'
 import serialize from 'form-serialize'
 import { toast } from 'react-toastify'
@@ -44,11 +34,11 @@ const requestFields = `
 
 export default function AlbumAdmin() {
   return (
-    <Container>
-      <Col>
+    <div className='container'>
+      <div className='col'>
         <RequestBoard />
-      </Col>
-    </Container>
+      </div>
+    </div>
   )
 }
 
@@ -79,7 +69,7 @@ function RequestModal(props) {
 
     editRequest({ variables })
       .then((results) => {
-        toast.success('Updated request succesfully!')
+        toast.success('Updated request successfully!')
         setRequest(results.data.editRequest)
         target.reset()
       })
@@ -96,7 +86,7 @@ function RequestModal(props) {
 
     rejectRequest({ variables })
       .then((results) => {
-        toast.success('Request rejected succesfully!')
+        toast.success('Request rejected successfully!')
         setRequest()
         target.reset()
       })
@@ -107,39 +97,41 @@ function RequestModal(props) {
   }
 
   return (
-    <Modal show={request} onHide={() => setRequest()} centered>
-      <Modal.Body>
-        <Form ref={formRef}>
-          <Row>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='title' style={{ color: 'black' }}>
+    <div className='modal centered show' onHide={() => setRequest()}>
+      <div className='modal-body'>
+        <form ref={formRef}>
+          <div className='row'>
+            <div className='form-group col'>
+              <label htmlFor='title' style={{ color: 'black' }}>
                 Title:
-              </Form.Label>
-              <Form.Control
+              </label>
+              <input
                 required
                 type='text'
                 name='title'
                 defaultValue={request?.title}
+                className='form-control'
               />
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='link' style={{ color: 'black' }}>
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label htmlFor='link' style={{ color: 'black' }}>
                 Link:
-              </Form.Label>
-              <Form.Control
+              </label>
+              <input
                 required
                 type='text'
                 name='link'
                 defaultValue={request?.link}
+                className='form-control'
               />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Label htmlFor='state' style={{ color: 'black' }}>
+            </div>
+            <div className='form-group col'>
+              <label htmlFor='state' style={{ color: 'black' }}>
                 Status:
-              </Form.Label>
+              </label>
               <select
                 className='form-control'
                 name='state'
@@ -151,41 +143,41 @@ function RequestModal(props) {
                   </option>
                 ))}
               </select>
-            </Form.Group>
-          </Row>
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label
                 htmlFor='comment'
                 style={{ color: 'black' }}
                 defaultValue={request?.comment}
               >
                 Comments:
-              </Form.Label>
-              <FormControl required as='textarea' name='comment' />
-            </Form.Group>
-          </Row>
+              </label>
+              <textarea required name='comment' className='form-control' />
+            </div>
+          </div>
 
-          <Row className='mt-3'>
-            <Form.Group as={Col}>
-              <Form.Label
+          <div className='row mt-3'>
+            <div className='form-group col'>
+              <label
                 htmlFor='reason'
                 style={{ color: 'black' }}
                 defaultValue={request?.reason}
               >
                 Reason:
-              </Form.Label>
-              <FormControl required as='textarea' name='reason' />
-            </Form.Group>
-          </Row>
-        </Form>
-      </Modal.Body>
-      <Modal.Footer>
+              </label>
+              <textarea required name='reason' className='form-control' />
+            </div>
+          </div>
+        </form>
+      </div>
+      <div className='modal-footer'>
         <ButtonLoader
           loading={loadingReject}
           disabled={loadingEdit}
-          variant='danger'
+          className='btn btn-danger'
           onClick={handleReject}
         >
           Reject
@@ -193,13 +185,13 @@ function RequestModal(props) {
         <ButtonLoader
           loading={loadingEdit}
           disabled={loadingReject}
-          variant='primary'
+          className='btn btn-primary'
           onClick={handleEdit}
         >
           Save Changes
         </ButtonLoader>
-      </Modal.Footer>
-    </Modal>
+      </div>
+    </div>
   )
 }
 
@@ -219,28 +211,29 @@ function RequestBoard() {
   return (
     <>
       <RequestModal request={request} setRequest={setRequest} />
-      <Form className='site-form blackblock mt-5 py-4'>
-        <Row className='mb-3'>
-          <Col>
-            <Form.Group>
-              <InputGroup>
-                <InputGroup.Text>&#128270;</InputGroup.Text>
-                <FormControl
+      <form className='site-form blackblock mt-5 py-4'>
+        <div className='row mb-3'>
+          <div className='col'>
+            <div className='form-group'>
+              <div className='input-group'>
+                <div className='input-group-text'>&#128270;</div>
+                <input
                   type='text'
                   onBlur={handleSearch}
                   onKeyDown={(e) => {
                     if (e.key === 'Enter') handleSearch(e)
                   }}
+                  className='form-control'
                 />
-              </InputGroup>
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='my-3'>
-          <Col md='auto'>
-            <Form.Label htmlFor='status'>Status:</Form.Label>
-          </Col>
-          <Col>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='row my-3'>
+          <div className='col-md-auto'>
+            <label htmlFor='status'>Status:</label>
+          </div>
+          <div className='col'>
             <SimpleSelector
               onChange={(e) => setState(e.map((v) => v.value))}
               required
@@ -248,13 +241,13 @@ function RequestBoard() {
               defaultValue={[{ label: 'Pending', value: 'pending' }]}
               options={stateOptions}
             />
-          </Col>
-        </Row>
-        <Row className='my-3'>
-          <Col md='auto'>
-            <Form.Label htmlFor='status'>Users:</Form.Label>
-          </Col>
-          <Col>
+          </div>
+        </div>
+        <div className='row my-3'>
+          <div className='col-md-auto'>
+            <label htmlFor='status'>Users:</label>
+          </div>
+          <div className='col'>
             <SimpleSelector
               onChange={(e) => setUsers(e.map((v) => v.value))}
               required
@@ -262,8 +255,8 @@ function RequestBoard() {
               defaultValue={userOptions}
               options={userOptions}
             />
-          </Col>
-        </Row>
+          </div>
+        </div>
 
         {state.map((s) => (
           <RequestTable
@@ -274,7 +267,7 @@ function RequestBoard() {
             setRequest={setRequest}
           />
         ))}
-      </Form>
+      </form>
     </>
   )
 }
@@ -331,20 +324,18 @@ function RequestTable(props) {
 
   return (
     <>
-      <Row className='mt-4'>
-        <Col>
+      <div className='row mt-4'>
+        <div className='col'>
           <h3 className='text-capitalize'>{state}</h3>
-        </Col>
-      </Row>
-      <Row>
-        <Col style={{ height: '500px' }}>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col' style={{ height: '500px' }}>
           <div className={clsx('overflow-auto h-100', styles.table)}>
             {loading && <Loader dev className='mx-auto' />}
             {data && (
-              <Table
-                variant='dark'
-                hover
-                responsive
+              <table
+                className='table table-dark table-hover table-responsive'
                 style={{ overflowX: 'visible' }}
               >
                 <thead>
@@ -362,11 +353,11 @@ function RequestTable(props) {
                 <tbody>
                   <Rows />
                 </tbody>
-              </Table>
+              </table>
             )}
           </div>
-        </Col>
-      </Row>
+        </div>
+      </div>
     </>
   )
 }

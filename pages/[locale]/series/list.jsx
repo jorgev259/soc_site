@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Row, Col, Button } from 'react-bootstrap'
 import classname from 'classnames'
 import Image from 'next/image'
 import { Link } from '@/next/utils/navigation'
@@ -39,25 +38,23 @@ export async function getServerSideProps() {
 
 export default function SeriesList({ series, letters, seriesList }) {
   return (
-    <Row className='blackbg h-100 px-0'>
-      <Col className='p-2'>
-        <Row className='my-2'>
-          <Col>
+    <div className='row blackbg h-100 px-0'>
+      <div className='col p-2'>
+        <div className='row my-2'>
+          <div className='col'>
             {letters.map((letter) => (
-              <Button
+              <a
                 key={letter}
-                variant='secondary'
-                md='auto'
-                className={classname(style.letter, 'p-2 m-1')}
+                className={classname(style.letter, 'btn btn-secondary p-2 m-1')}
                 href={`#${letter}`}
               >
                 <h2>{letter}</h2>
-              </Button>
+              </a>
             ))}
-          </Col>
-        </Row>
-        <Row className='mt-4'>
-          <Col xs='auto' className='px-4'>
+          </div>
+        </div>
+        <div className='row mt-4'>
+          <div className='col-auto px-4'>
             {letters.map((letter) => (
               <div id={letter} key={letter} className='mt-4 d-flex flex-column'>
                 <h2 className='text-center album-title text-capitalize'>
@@ -74,14 +71,13 @@ export default function SeriesList({ series, letters, seriesList }) {
                 ))}
               </div>
             ))}
-          </Col>
-          <Col className='px-4'>
-            <Row>
+          </div>
+          <div className='col px-4'>
+            <div className='row'>
               {seriesList.map(({ slug, placeholder }) => (
-                <Col
+                <div
                   key={slug}
-                  className='position-relative'
-                  xs={4}
+                  className='position-relative col-4'
                   style={{ height: '150px' }}
                 >
                   <Link
@@ -99,12 +95,12 @@ export default function SeriesList({ series, letters, seriesList }) {
                       blurDataURL={placeholder}
                     />
                   </Link>
-                </Col>
+                </div>
               ))}
-            </Row>
-          </Col>
-        </Row>
-      </Col>
-    </Row>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }

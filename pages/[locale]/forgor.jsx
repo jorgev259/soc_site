@@ -1,10 +1,10 @@
 import { useRef, useState } from 'react'
-import { Col, Form, Row, Button } from 'react-bootstrap'
 import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
 import Image from 'next/legacy/image'
 // import { DateTime } from 'luxon'
 import { gql, useMutation } from '@apollo/client'
 import { toast } from 'react-toastify'
+import clsx from 'clsx'
 
 import { useRouter } from '@/next/utils/navigation'
 
@@ -56,55 +56,56 @@ export default function Forgor({ qKey }) {
   }
 
   return (
-    <Col>
-      <Form
+    <div className='col'>
+      <form
         onSubmit={submit}
         className='site-form grayblock mx-auto my-5'
         style={{ maxWidth: '500px' }}
       >
-        <Row>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='username' style={{ color: 'black' }}>
+        <div className='row'>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='username' style={{ color: 'black' }}>
                 New password:
-              </Form.Label>
-              <Form.Control
+              </label>
+              <input
                 required
                 type='password'
                 name='password'
                 ref={p1}
+                className='form-control'
                 onChange={checkInvalid}
               />
-            </Form.Group>
-          </Col>
-          <Col md={6}>
-            <Form.Group>
-              <Form.Label htmlFor='password' style={{ color: 'black' }}>
+            </div>
+          </div>
+          <div className='col-md-6'>
+            <div className='form-group'>
+              <label htmlFor='password' style={{ color: 'black' }}>
                 Repeat new password:
-              </Form.Label>
-              <Form.Control
+              </label>
+              <input
                 required
                 type='password'
                 name='password'
-                isInvalid={isInvalid}
+                className={clsx('form-control', { 'is-invalid': isInvalid })}
                 ref={p2}
                 onChange={checkInvalid}
               />
-            </Form.Group>
-          </Col>
-        </Row>
-        <Row className='mt-3'>
-          <Col md={4} className='mx-auto'>
-            <Button type='submit' className='w-100' color='primary'>
+            </div>
+          </div>
+        </div>
+        <div className='row mt-3'>
+          <div className='col-md-4 mx-auto'>
+            <button type='submit' className='btn btn-primary w-100'>
               {loading ? (
                 <Image {...loader} alt='loading' />
               ) : (
                 'Change password'
               )}
-            </Button>
-          </Col>
-        </Row>
-      </Form>
-    </Col>
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   )
 }

@@ -1,5 +1,4 @@
 import { gql } from '@apollo/client'
-import { Col, Row, Container } from 'react-bootstrap'
 import { Fragment } from 'react'
 import Image from 'next/legacy/image'
 import clsx from 'clsx'
@@ -76,7 +75,7 @@ export default function Page(props) {
           backgroundImage: `url("${fullImage(id, 100)}"), linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8))`
         }}
       />
-      <Row className='h-100'>
+      <div className='row h-100'>
         <Head>
           <title>{title}</title>
           <meta key='color' name='theme-color' content={headerColor}></meta>
@@ -93,10 +92,10 @@ export default function Page(props) {
           />
           <meta key='image' property='og:image' content={imageUrl} />
         </Head>
-        <Col className={'px-5 pt-3'}>
-          <Container className='px-5'>
-            <Row>
-              <Col lg={3} className='blackblock py-3'>
+        <div className='col px-5 pt-3'>
+          <div className='container px-5'>
+            <div className='row'>
+              <div className='col-lg-3 blackblock py-3'>
                 <Image
                   layout='responsive'
                   width={100}
@@ -140,20 +139,20 @@ export default function Page(props) {
                     </tr>
                   </tbody>
                 </table>
-              </Col>
-              <Col>
-                <Row>
+              </div>
+              <div className='col'>
+                <div className='row'>
                   <AlbumBoxList
                     colProps={{ xs: 6, md: 3 }}
                     items={albums}
                     style={{ height: 'fit-content' }}
                   />
-                </Row>
-              </Col>
-            </Row>
-          </Container>
-        </Col>
-      </Row>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }

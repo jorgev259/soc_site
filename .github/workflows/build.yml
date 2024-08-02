@@ -1,15 +1,18 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       IRONCLAD: ${{ secrets.IRONCLAD }}
@@ -21,15 +24,20 @@ jobs:
           submodules: true
 
       - uses: fregante/setup-git-user@v1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '>=20.16.0'
           cache: 'npm'
 
-      - name: Prepare repository
-        run: |
-          git checkout -b dist origin/dist
-          git merge main
+      - name: NextJS build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Update locales
         run: |
@@ -38,6 +46,12 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -m 'Update locales'
 
+      - name: Prepare repository
+        run: |
+          git checkout -b dist
+          git push --set-upstream origin dist
+          git merge main
+
       - name: Install dependencies
         run: |
           npm install --omit=dev --force
@@ -45,10 +59,14 @@ jobs:
       - name: Build server and website
         run: |
           npm run build
-          node prepareCI
+
+      - name: Prepare dist branch
+        run: |
+          rm .gitignore
+          cp .gitignore_dist .gitignore
 
       - name: Push from main to dist branch.
         run: |
           git add -A
           git diff-index --quiet HEAD || git commit -m 'Deploy ${{ github.sha }}'
-          git push 
+          git push

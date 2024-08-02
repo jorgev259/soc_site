@@ -61,12 +61,18 @@ export default function AlbumBox(props) {
 
 export function AlbumBoxList(props) {
   const { items, type, width, height, style, colProps = {}, quality } = props
+  const { xs, md } = colProps
 
   return items.map((albumProps) => (
     <div
       {...colProps}
       key={albumProps.id}
-      className={clsx(styles.albumBoxContainer, styles[type], 'px-1 mb-2')}
+      className={clsx(
+        styles.albumBoxContainer,
+        styles[type],
+        { [`col-${xs}`]: !!xs, [`col-md-${md}`]: !!md },
+        'col px-1 mb-2'
+      )}
     >
       <AlbumBox
         {...albumProps}

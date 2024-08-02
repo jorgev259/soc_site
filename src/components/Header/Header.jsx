@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { Link } from '@/next/utils/navigation'
 import Image from 'next/image'
+import { getLocale } from 'next-intl/server'
 
 import logo from '@/img/assets/winterlogo.png'
 import logoES from '@/img/assets/logo_es.png'
@@ -12,7 +13,6 @@ import LoginBar from './LoginBar'
 import styles from './Header.module.scss'
 import { gql } from '@apollo/client'
 import { getClient } from '@/next/utils/ApolloSSRClient'
-import { useLocale } from 'next-intl'
 
 const bannerQuery = gql`
   query GetBanner {
@@ -22,11 +22,10 @@ const bannerQuery = gql`
   }
 `
 
-async function LogoCol(props) {
+async function LogoCol() {
   const client = await getClient()
   const { data } = await client.query({ query: bannerQuery })
-
-  const { locale } = useLocale()
+  const locale = await getLocale()
 
   const banner = data.config.value
 

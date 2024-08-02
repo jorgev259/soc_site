@@ -2,9 +2,7 @@ import Image from 'next/image'
 import clsx from 'clsx'
 import { gql } from '@apollo/client'
 // eslint-disable-next-line camelcase
-import {
-  getTranslations /*, unstable_setRequestLocale */
-} from 'next-intl/server'
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
 
@@ -26,6 +24,7 @@ import DownloadList from '@/next/components/AlbumPage/DownloadSection'
 import CommentCarrousel from '@/next/components/CommentCarrousel/CommentCarrousel'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
+import type { PageContext } from '@/next/types'
 
 const metadataFields = [
   'title',
@@ -93,7 +92,9 @@ const getAlbumQuery = (fields) => gql`
   }
 `
 
-export async function generateMetadata(context) {
+type Context = PageContext<{ id: string }>
+
+export async function generateMetadata(context: Context) {
   const { params } = context
   const { id } = params
 
@@ -117,7 +118,7 @@ export async function generateMetadata(context) {
   }
 }
 
-export async function generateViewport(context) {
+export async function generateViewport(context: Context) {
   const { params } = context
   const { id } = params
 
@@ -135,11 +136,11 @@ export async function generateViewport(context) {
   }
 }
 
-export default function AlbumPage(context) {
+export default function AlbumPage(context: Context) {
   const { params } = context
-  const { /* locale, */ id } = params
+  const { locale, id } = params
 
-  // unstable_setRequestLocale(locale)
+  unstable_setRequestLocale(locale)
 
   return (
     <div className={clsx('row', styles.container)}>
@@ -235,10 +236,7 @@ async function Content(context) {
                 <div className='col col-auto px-0'>
                   <span style={{ fontSize: '21px' }}>{'Check album at'}:</span>
                 </div>
-                <div
-                  xs='auto'
-                  className='col col-auto d-flex align-items-center ps-0'
-                >
+                <div className='col-auto d-flex align-items-center ps-0'>
                   <Link
                     href={album.vgmdb}
                     className='ms-2'
@@ -317,7 +315,7 @@ async function UserButtons(props) {
           )}
         </div>
       </div>
-      {isFAU && permissions.includes('UPDATE') ? (
+      {isFAU && permissions?.includes('UPDATE') ? (
         <div className='row mt-3'>
           <div className='col'>
             <Link href={`/admin/album/${id}`}>
@@ -355,9 +353,8 @@ async function ProviderBox(props) {
             {filterStores.map(({ url, provider }, i) =>
               provider === 'SOON' ? null : (
                 <div
-                  md={6}
                   key={i}
-                  className='col col-md-6 d-flex justify-content-center py-1'
+                  className='col-md-6 d-flex justify-content-center py-1'
                 >
                   <Link target='_blank' rel='noopener noreferrer' href={url}>
                     <Image

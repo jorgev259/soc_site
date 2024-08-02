@@ -6,6 +6,7 @@ import { getClient } from '@/next/utils/ApolloSSRClient'
 
 import { AlbumBox } from '@/next/components/common/AlbumBox'
 import { Link } from '@/next/utils/navigation'
+import type { PageContext } from '@/next/types'
 
 const rowLimit = 52
 
@@ -26,12 +27,13 @@ const query = gql(`
   }
 `)
 
-export default async function Page({
-  params
-}: {
-  params: { values?: string[] }
-}) {
-  const page = parseInt((params?.values ?? [])[0] ?? '1')
+export default async function Page(
+  context: PageContext<{ values?: string[] }>
+) {
+  const { params } = context
+  const { values } = params
+
+  const page = parseInt((values ?? [])[0] ?? '1')
 
   const client = await getClient()
   const { data } = await client.query({

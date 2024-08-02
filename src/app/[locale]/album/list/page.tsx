@@ -1,11 +1,14 @@
 import { DateTime } from 'luxon'
 import { Fragment } from 'react'
+// eslint-disable-next-line camelcase
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 import { Link } from '@/next/utils/navigation'
 import { getClient } from '@/next/utils/ApolloSSRClient'
 import { gql } from '@/next/__generated__'
 
 import LetterList from '@/next/components/common/LetterList'
+import type { PageContext } from '@/next/types'
 
 const query = gql(`
   query AlbumList {
@@ -20,7 +23,14 @@ const query = gql(`
   }
 `)
 
-export default async function AlbumList() {
+export const dynamic = 'force-dynamic'
+
+export default async function AlbumList(context: PageContext) {
+  const { params } = context
+  const { locale } = params
+
+  unstable_setRequestLocale(locale)
+
   const client = await getClient()
   const { data } = await client.query({ query })
   const { albums } = data

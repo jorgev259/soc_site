@@ -1,4 +1,4 @@
-const withNextIntl = require('next-intl/plugin')('./i18n.js')
+const withNextIntl = require('next-intl/plugin')('./i18n.ts')
 
 module.exports = withNextIntl({
   eslint: { ignoreDuringBuilds: true },

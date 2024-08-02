@@ -1,15 +1,16 @@
 import { ToastContainer } from 'react-toastify'
 import Script from 'next/script'
 // eslint-disable-next-line camelcase
-// import { unstable_setRequestLocale } from 'next-intl/server'
+import { unstable_setRequestLocale } from 'next-intl/server'
 
 import Header from '@/next/components/Header'
 import { ApolloWrapper } from '@/next/components/common/ApolloClientProvider'
 import Ad from '@/next/components/common/Ad'
 import { isDev } from '@/next/constants/env'
-// import { locales } from '@/next/utils/navigation'
+import { locales } from '@/next/utils/navigation'
 
 import '@/styles/layout.scss'
+import type { LayoutContext } from '@/next/types'
 
 export const metadata = {
   metadataBase: new URL('https://sittingonclouds.net'),
@@ -38,15 +39,17 @@ export const viewport = {
   colorScheme: 'dark'
 }
 
-/* export function generateStaticParams () {
+export function generateStaticParams() {
   return locales.map((locale) => ({ locale }))
-} */
+}
 
-async function Layout(props) {
-  const { children, params } = props
+export const dynamic = 'force-dynamic'
+
+async function Layout(context: LayoutContext) {
+  const { children, params } = context
   const { locale } = params
 
-  // unstable_setRequestLocale(locale)
+  unstable_setRequestLocale(locale)
 
   return (
     <html lang={locale} data-bs-theme='dark'>

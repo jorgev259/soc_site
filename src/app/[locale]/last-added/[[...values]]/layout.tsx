@@ -1,7 +1,13 @@
-import { getTranslations } from 'next-intl/server'
-import type { ReactNode } from 'react'
+import type { LayoutContext } from '@/next/types'
+// eslint-disable-next-line camelcase
+import { unstable_setRequestLocale, getTranslations } from 'next-intl/server'
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export default async function Layout(context: LayoutContext) {
+  const { children, params } = context
+  const { locale } = params
+
+  unstable_setRequestLocale(locale)
+
   const t = await getTranslations('header')
 
   return (

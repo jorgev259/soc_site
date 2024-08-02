@@ -1,18 +1,22 @@
 name: CI
 
 on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
   workflow_dispatch:
 
-concurrency: 
+concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
     env:
       IRONCLAD: ${{ secrets.IRONCLAD }}
+      SSH_DEPLOY_KEY: ${{secrets.SSH_DEPLOY_KEY}}
 
     steps:
       - uses: actions/checkout@v2
@@ -21,15 +25,20 @@ jobs:
           submodules: true
 
       - uses: fregante/setup-git-user@v1
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v4
         with:
-          node-version: '16'
+          node-version: '>=20.16.0'
           cache: 'npm'
 
-      - name: Prepare repository
-        run: |
-          git checkout -b dist origin/dist
-          git merge main
+      - name: NextJS build cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.npm
+            ${{ github.workspace }}/.next/cache
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**/*.js', '**/*.jsx', '**/*.ts', '**/*.tsx') }}
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-
 
       - name: Update locales
         run: |
@@ -45,10 +54,25 @@ jobs:
       - name: Build server and website
         run: |
           npm run build
-          node prepareCI
 
-      - name: Push from main to dist branch.
-        run: |
-          git add -A
-          git diff-index --quiet HEAD || git commit -m 'Deploy ${{ github.sha }}'
-          git push 
+      - name: Tailscale
+        uses: tailscale/github-action@v2
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:soc
+
+      - name: Deploy
+        uses: easingthemes/ssh-deploy@main
+        with:
+          SSH_PRIVATE_KEY: ${{ secrets.DEPLOY_SSH_KEY }}
+          SOURCE: .next/
+          REMOTE_HOST: ${{ secrets.DEPLOY_HOST }}
+          REMOTE_USER: ${{ secrets.DEPLOY_USER }}
+          TARGET: /home/soc/site/.next
+          SCRIPT BEFORE: |
+            git pull
+            npm install --omit=dev --force
+          SCRIPT_AFTER: |
+            pm2 flush site
+            pm2 restart site

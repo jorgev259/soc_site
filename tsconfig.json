@@ -8,8 +8,8 @@
       "@/components_pages/*": [
         "components/*"
       ],
-      "@/locales/**": [
-        "locales/**"
+      "@/locales/*": [
+        "locales/*"
       ],
       "@/next/*": [
         "src/*"

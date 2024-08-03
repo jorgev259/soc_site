@@ -60,7 +60,7 @@ jobs:
         with:
           oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
           oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
-          tags: tag:soc
+          tags: tag:behemoth
 
       - name: Deploy
         uses: easingthemes/ssh-deploy@main

@@ -96,100 +96,117 @@ function RequestModal(props) {
       })
   }
 
+  const show = !!request
+
   return (
-    <div className='modal centered show' onHide={() => setRequest()}>
-      <div className='modal-body'>
-        <form ref={formRef}>
-          <div className='row'>
-            <div className='form-group col'>
-              <label htmlFor='title' style={{ color: 'black' }}>
-                Title:
-              </label>
-              <input
-                required
-                type='text'
-                name='title'
-                defaultValue={request?.title}
-                className='form-control'
-              />
-            </div>
-          </div>
+    <div
+      className='modal'
+      sclassName={clsx('modal', { show })}
+      tabIndex='-1'
+      style={{ display: show ? 'block' : 'none' }}
+    >
+      <div className='modal-dialog modal-dialog-centered'>
+        <div className='modal-content'>
+          <div className='modal-body'>
+            <form ref={formRef}>
+              <div className='row'>
+                <div className='form-group col'>
+                  <label htmlFor='title' style={{ color: 'black' }}>
+                    Title:
+                  </label>
+                  <input
+                    required
+                    type='text'
+                    name='title'
+                    defaultValue={request?.title}
+                    className='form-control'
+                  />
+                </div>
+              </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label htmlFor='link' style={{ color: 'black' }}>
-                Link:
-              </label>
-              <input
-                required
-                type='text'
-                name='link'
-                defaultValue={request?.link}
-                className='form-control'
-              />
-            </div>
-            <div className='form-group col'>
-              <label htmlFor='state' style={{ color: 'black' }}>
-                Status:
-              </label>
-              <select
-                className='form-control'
-                name='state'
-                defaultValue={request?.state}
-              >
-                {stateOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
-            </div>
-          </div>
+              <div className='row mt-3'>
+                <div className='form-group col'>
+                  <label htmlFor='link' style={{ color: 'black' }}>
+                    Link:
+                  </label>
+                  <input
+                    required
+                    type='text'
+                    name='link'
+                    defaultValue={request?.link}
+                    className='form-control'
+                  />
+                </div>
+                <div className='form-group col'>
+                  <label htmlFor='state' style={{ color: 'black' }}>
+                    Status:
+                  </label>
+                  <select
+                    className='form-control'
+                    name='state'
+                    defaultValue={request?.state}
+                  >
+                    {stateOptions.map((o) => (
+                      <option key={o.value} value={o.value}>
+                        {o.label}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label
-                htmlFor='comment'
-                style={{ color: 'black' }}
-                defaultValue={request?.comment}
-              >
-                Comments:
-              </label>
-              <textarea required name='comment' className='form-control' />
-            </div>
-          </div>
+              <div className='row mt-3'>
+                <div className='form-group col'>
+                  <label
+                    htmlFor='comment'
+                    style={{ color: 'black' }}
+                    defaultValue={request?.comment}
+                  >
+                    Comments:
+                  </label>
+                  <textarea required name='comment' className='form-control' />
+                </div>
+              </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label
-                htmlFor='reason'
-                style={{ color: 'black' }}
-                defaultValue={request?.reason}
-              >
-                Reason:
-              </label>
-              <textarea required name='reason' className='form-control' />
-            </div>
+              <div className='row mt-3'>
+                <div className='form-group col'>
+                  <label
+                    htmlFor='reason'
+                    style={{ color: 'black' }}
+                    defaultValue={request?.reason}
+                  >
+                    Reason:
+                  </label>
+                  <textarea required name='reason' className='form-control' />
+                </div>
+              </div>
+            </form>
           </div>
-        </form>
-      </div>
-      <div className='modal-footer'>
-        <ButtonLoader
-          loading={loadingReject}
-          disabled={loadingEdit}
-          className='btn btn-danger'
-          onClick={handleReject}
-        >
-          Reject
-        </ButtonLoader>
-        <ButtonLoader
-          loading={loadingEdit}
-          disabled={loadingReject}
-          className='btn btn-primary'
-          onClick={handleEdit}
-        >
-          Save Changes
-        </ButtonLoader>
+          <div className='modal-footer'>
+            <button
+              className='btn btn-primary me-auto'
+              onClick={() => setRequest()}
+            >
+              Close
+            </button>
+            <ButtonLoader
+              loading={loadingReject}
+              disabled={loadingEdit}
+              className='btn btn-danger'
+              onClick={handleReject}
+            >
+              Reject
+            </ButtonLoader>
+            <ButtonLoader
+              loading={loadingEdit}
+              disabled={loadingReject}
+              className='btn btn-primary'
+              onClick={handleEdit}
+            >
+              Save Changes
+            </ButtonLoader>
+          </div>
+        </div>
       </div>
     </div>
   )

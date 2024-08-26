@@ -18,12 +18,13 @@ import ReactGA from 'react-ga'
 import { Settings } from 'luxon'
 import App from 'next/app'
 import { NextIntlClientProvider } from 'next-intl'
-// import Script from 'next/script'
+import Script from 'next/script'
 
 import { useApollo } from '@/next/utils/ApolloClient'
 import useUser from '@/next/utils/useUser'
 import { skipAds } from '@/server/utils/skipAds'
 import Header from '@/components/Header'
+import { isDev } from '@/next/constants/env'
 
 // import SpookyGhosts from '../components/SpookyGhosts'
 
@@ -125,6 +126,9 @@ function MyApp(context) {
         </div>
         <FooterAd />
       </ApolloProvider>
+      <Script
+        src={isDev ? '/js/bootstrap.bundle.js' : '/js/bootstrap.bundle.min.js'}
+      />
     </NextIntlClientProvider>
   )
 }

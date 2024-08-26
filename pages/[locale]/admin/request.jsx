@@ -97,6 +97,7 @@ function RequestModal(props) {
   }
 
   const show = !!request
+  if (!show) return null
 
   return (
     <div
@@ -118,7 +119,7 @@ function RequestModal(props) {
                     required
                     type='text'
                     name='title'
-                    defaultValue={request?.title}
+                    defaultValue={request.title}
                     className='form-control'
                   />
                 </div>
@@ -133,7 +134,7 @@ function RequestModal(props) {
                     required
                     type='text'
                     name='link'
-                    defaultValue={request?.link}
+                    defaultValue={request.link}
                     className='form-control'
                   />
                 </div>
@@ -144,7 +145,7 @@ function RequestModal(props) {
                   <select
                     className='form-control'
                     name='state'
-                    defaultValue={request?.state}
+                    defaultValue={request.state}
                   >
                     {stateOptions.map((o) => (
                       <option key={o.value} value={o.value}>
@@ -160,7 +161,7 @@ function RequestModal(props) {
                   <label
                     htmlFor='comment'
                     style={{ color: 'black' }}
-                    defaultValue={request?.comment}
+                    defaultValue={request.comment}
                   >
                     Comments:
                   </label>
@@ -173,7 +174,7 @@ function RequestModal(props) {
                   <label
                     htmlFor='reason'
                     style={{ color: 'black' }}
-                    defaultValue={request?.reason}
+                    defaultValue={request.reason}
                   >
                     Reason:
                   </label>

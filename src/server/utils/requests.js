@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-import { getNextCDNUrl } from '@/next/utils/getCDN'
+import { getCDNUrl } from '@/next/utils/getCDN'
 
 async function postWebhook(album, userText = '') {
   const url = `https://www.sittingonclouds.net/album/${album.id}`
@@ -12,10 +12,8 @@ async function postWebhook(album, userText = '') {
       type: 'rich',
       description: album.subTitle || artists.map((a) => a.name).join(' - '),
       url,
-      color: album.headerColor,
-      thumbnail: {
-        url: getNextCDNUrl(album.id, 'album')
-      }
+      color: Number(album.headerColor),
+      thumbnail: { url: getCDNUrl(album.id, 'album') }
     }
   ]
   const payload = { content, embeds }

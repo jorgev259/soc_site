@@ -3,18 +3,6 @@ import styles from '@/styles/Header.module.scss'
 
 import { useEffect, useState, useRef } from 'react'
 import Image from 'next/legacy/image'
-import {
-  Row,
-  Col,
-  Container,
-  Button,
-  Navbar,
-  Nav,
-  NavDropdown,
-  Modal,
-  Form,
-  ModalBody
-} from 'react-bootstrap'
 import clsx from 'clsx'
 import { useSearchParams } from 'next/navigation'
 import serialize from 'form-serialize'
@@ -59,21 +47,23 @@ function ForgorForm(props) {
   }
 
   return showForgorMessage ? (
-    <Row>
-      <Col style={{ color: 'black' }}>{t('Email_Sent')}</Col>
-    </Row>
+    <div className='row'>
+      <div className='col' style={{ color: 'black' }}>
+        {t('Email_Sent')}
+      </div>
+    </div>
   ) : (
-    <Form onSubmit={handleForgor}>
-      <Row>
-        <Form.Group as={Col}>
-          <Form.Label htmlFor='username' style={{ color: 'black' }}>
+    <form onSubmit={handleForgor}>
+      <div className='row'>
+        <div className='col'>
+          <label htmlFor='username' style={{ color: 'black' }}>
             {t('Username or email')}:
-          </Form.Label>
-          <Form.Control required type='text' name='key' />
-        </Form.Group>
-      </Row>
-      <Row className='mt-4'>
-        <Col md={6} className='mx-auto'>
+          </label>
+          <input required type='text' name='key' className='form-control' />
+        </div>
+      </div>
+      <div className='row mt-4'>
+        <div className='col-md-6 mx-auto'>
           <ButtonLoader
             loading={loadingForgor}
             type='submit'
@@ -82,9 +72,9 @@ function ForgorForm(props) {
           >
             {t('Recover password')}
           </ButtonLoader>
-        </Col>
-      </Row>
-    </Form>
+        </div>
+      </div>
+    </form>
   )
 }
 
@@ -171,66 +161,84 @@ function LoginButton(props) {
 
   if (navMobile) {
     return (
-      <NavLink
-        onClick={handleLogin}
-        name={user ? 'Logout' : 'Login'}
-        className='d-block d-sm-none'
-      />
+      <NavLink onClick={handleLogin} className='d-block d-sm-none'>
+        {t(user ? 'Logout' : 'Login')}
+      </NavLink>
     )
   }
 
   return (
     <>
-      <Col
-        xs='auto'
-        className={clsx(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}
+      <div
+        className={clsx(
+          styles.login,
+          'col-auto d-none d-sm-block ms-sm-auto mb-sm-5'
+        )}
       >
-        <Button onClick={handleLogin} variant='primary'>
+        <button onClick={handleLogin} className='btn btn-primary'>
           {t(user ? 'Logout' : 'Login')}
-        </Button>
-      </Col>
-      <Modal show={show} centered onHide={() => setUrl(false)}>
-        <Modal.Body className='m-3'>
-          {showForgor ? (
-            <ForgorForm />
-          ) : (
-            <Form onSubmit={submit}>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label htmlFor='username' style={{ color: 'black' }}>
-                    {t('Username')}:
-                  </Form.Label>
-                  <Form.Control required type='text' name='username' />
-                </Form.Group>
+        </button>
+      </div>
+      <div
+        className={clsx('modal', { show, 'd-block': show })}
+        tabIndex='-1'
+        role='dialog'
+      >
+        <div className='modal-dialog' role='document'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              {showForgor ? (
+                <ForgorForm />
+              ) : (
+                <form onSubmit={submit}>
+                  <div className='row'>
+                    <div className='col'>
+                      <label htmlFor='username' style={{ color: 'black' }}>
+                        {t('Username')}:
+                      </label>
+                      <input
+                        required
+                        type='text'
+                        name='username'
+                        className='form-control'
+                      />
+                    </div>
 
-                <Form.Group as={Col}>
-                  <Form.Label htmlFor='password' style={{ color: 'black' }}>
-                    {t('Password')}:
-                  </Form.Label>
-                  <Form.Control required type='password' name='password' />
-                </Form.Group>
-              </Row>
-              <Row className='mt-4'>
-                <Col md={4} className='mx-auto'>
-                  <SubmitButton
-                    loading={loadingLogin}
-                    type='submit'
-                    className='w-100'
-                    color='primary'
-                  >
-                    {t('Login')}
-                  </SubmitButton>
-                </Col>
-              </Row>
-              {/* <Row className='mt-2'>
-                  <Col md={6} className='mx-auto'>
-                    <Button onClick={() => setForgor(true)} className='w-100' color='primary'>{t('Recover password')}</Button>
-                  </Col>
-            </Row> */}
-            </Form>
-          )}
-        </Modal.Body>
-      </Modal>
+                    <div className='col'>
+                      <label htmlFor='password' style={{ color: 'black' }}>
+                        {t('Password')}:
+                      </label>
+                      <input
+                        required
+                        type='password'
+                        name='password'
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
+                  <div className='row mt-4'>
+                    <div className='col-md-4 mx-auto'>
+                      <SubmitButton
+                        loading={loadingLogin}
+                        type='submit'
+                        className='w-100'
+                        color='primary'
+                      >
+                        {t('Login')}
+                      </SubmitButton>
+                    </div>
+                  </div>
+                  {/* <div className='row mt-2'>
+                      <div className='col-md-6 mx-auto'>
+                        <button onClick={() => setForgor(true)} className='btn btn-primary w-100'>{t('Recover password')}</button>
+                      </div>
+                  </div> */}
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
@@ -284,11 +292,9 @@ function RegisterProfileButton(props) {
 
   if (navMobile) {
     return user ? (
-      <NavLink
-        href={`/profile/${user.username}`}
-        name='Profile'
-        className='d-block d-sm-none'
-      />
+      <NavLink href={`/profile/${user.username}`} className='d-block d-sm-none'>
+        {t('Profile')}
+      </NavLink>
     ) : (
       <NavLink
         onClick={() => setRegister(true)}
@@ -300,77 +306,116 @@ function RegisterProfileButton(props) {
 
   return (
     <>
-      <Col
-        xs='auto'
-        className={clsx(styles.login, 'd-none d-sm-block ms-sm-auto mb-sm-5')}
-      >
+      <div className={clsx('col-auto ms-auto mb-sm-5', styles.login)}>
         {user ? (
-          <Link href={`/profile/${user.username}`}>
-            <Button variant='primary'>{t('Profile')}</Button>
+          <Link href={`/profile/${user.username}`} className='btn btn-primary'>
+            {t('Profile')}
           </Link>
         ) : (
-          <Button
-            onClick={() => setRegister(true)}
-            className='me-0'
-            variant='primary'
-          >
+          <button className='btn btn-primary' onClick={() => setRegister(true)}>
             {t('Register')}
-          </Button>
+          </button>
         )}
-      </Col>
-      <Modal show={showSuccess} centered onHide={() => setSuccess(false)}>
-        <ModalBody style={{ color: 'black' }}>{t('Email_Sent')}</ModalBody>
-      </Modal>
-      <Modal show={showRegister} centered onHide={() => setRegister(false)}>
-        <Modal.Body className='m-3'>
-          {showForgor ? (
-            <ForgorForm defaultValue={true} />
-          ) : (
-            <Form onSubmit={submitRegister}>
-              <Row>
-                <Form.Group as={Col}>
-                  <Form.Label htmlFor='username' style={{ color: 'black' }}>
-                    Username:
-                  </Form.Label>
-                  <Form.Control required type='text' name='username' />
-                </Form.Group>
+      </div>
+      <div
+        className={clsx('modal', {
+          show: showRegister,
+          'd-block': showRegister
+        })}
+        tabIndex='-1'
+        role='dialog'
+      >
+        <div className='modal-dialog' role='document'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              {showForgor ? (
+                <ForgorForm defaultValue={true} />
+              ) : (
+                <form onSubmit={submitRegister}>
+                  <div className='row'>
+                    <div className='col'>
+                      <label htmlFor='username' style={{ color: 'black' }}>
+                        {t('Username')}:
+                      </label>
+                      <input
+                        required
+                        type='text'
+                        name='username'
+                        className='form-control'
+                      />
+                    </div>
 
-                <Form.Group as={Col}>
-                  <Form.Label htmlFor='email' style={{ color: 'black' }}>
-                    Email:
-                  </Form.Label>
-                  <Form.Control required type='text' name='email' />
-                </Form.Group>
-              </Row>
-              <Row className='mt-3'>
-                <Form.Group as={Col}>
-                  <Form.Label htmlFor='pfp' style={{ color: 'black' }}>
-                    Profile pic:
-                  </Form.Label>
-                  <Form.Control type='file' name='pfp' />
-                </Form.Group>
-              </Row>
-              <Row className='mt-4'>
-                <Col md={4} className='mx-auto'>
-                  <SubmitButton
-                    loading={loadingRegister}
-                    type='submit'
-                    className='w-100'
-                    color='primary'
+                    <div className='col'>
+                      <label htmlFor='email' style={{ color: 'black' }}>
+                        {t('Email')}:
+                      </label>
+                      <input
+                        required
+                        type='email'
+                        name='email'
+                        className='form-control'
+                      />
+                    </div>
+                  </div>
+                  <div className='row mt-4'>
+                    <div className='col'>
+                      <label htmlFor='pfp' style={{ color: 'black' }}>
+                        {t('Profile Picture')}:
+                      </label>
+                      <input type='file' name='pfp' className='form-control' />
+                    </div>
+                  </div>
+
+                  <div className='row mt-4'>
+                    <div className='col-md-6 mx-auto'>
+                      <SubmitButton
+                        loading={loadingRegister}
+                        type='submit'
+                        className='w-100'
+                        color='primary'
+                      >
+                        {t('Register')}
+                      </SubmitButton>
+                    </div>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+      <div
+        className={clsx('modal', { show: showSuccess, 'd-block': showSuccess })}
+        tabIndex='-1'
+        role='dialog'
+      >
+        <div className='modal-dialog' role='document'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              <div className='row'>
+                <div className='col' style={{ color: 'black' }}>
+                  {t('Success')}
+                </div>
+              </div>
+              <div className='row mt-4'>
+                <div className='col-md-4 mx-auto'>
+                  <button
+                    className='btn btn-primary w-100'
+                    onClick={() => setSuccess(false)}
                   >
-                    Register
-                  </SubmitButton>
-                </Col>
-              </Row>
-            </Form>
-          )}
-        </Modal.Body>
-      </Modal>
+                    {t('Close')}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </>
   )
 }
 
-export default function Header() {
+export default function Header(props) {
   const router = useRouter()
 
   const queryHeader = gql`
@@ -396,9 +441,9 @@ export default function Header() {
               : {}
           }
         >
-          <Container>
-            <Row className='h-100'>
-              <Col className='my-auto'>
+          <div className='container'>
+            <div className='row h-100'>
+              <div className='col my-auto'>
                 <Link href='/'>
                   <Image
                     alt='SOC Logo'
@@ -407,20 +452,35 @@ export default function Header() {
                     width={265}
                   />
                 </Link>
-              </Col>
-
+              </div>
               {/* <LangSelector /> */}
               <RegisterProfileButton />
               <LoginButton />
-            </Row>
-          </Container>
+            </div>
+          </div>
         </div>
 
-        <Navbar expand='sm' bg='dark' variant='dark' className='py-md-0'>
-          <Container>
-            <Navbar.Toggle aria-controls='responsive-navbar-nav' />
-            <Navbar.Collapse id='responsive-navbar-nav'>
-              <Nav className='me-auto d-flex align-items-center'>
+        <nav
+          data-bs-theme='dark'
+          className='navbar navbar-expand-sm bg-dark py-md-0'
+        >
+          <div className='container'>
+            <button
+              className='navbar-toggler'
+              type='button'
+              data-bs-toggle='collapse'
+              data-bs-target='#responsive-navbar-nav'
+              aria-controls='responsive-navbar-nav'
+              aria-expanded='false'
+              aria-label='Toggle navigation'
+            >
+              <span className='navbar-toggler-icon'></span>
+            </button>
+            <div
+              className='collapse navbar-collapse'
+              id='responsive-navbar-nav'
+            >
+              <ul className='navbar-nav me-auto d-flex align-items-center'>
                 <RegisterProfileButton navMobile />
                 <LoginButton navMobile />
                 <NavLink href='/' name='Home' />
@@ -457,11 +517,11 @@ export default function Header() {
                     { name: 'Manage Submissions', href: '/admin/submission' }
                   ]}
                 />
-              </Nav>
-            </Navbar.Collapse>
+              </ul>
+            </div>
             <SearchBar />
-          </Container>
-        </Navbar>
+          </div>
+        </nav>
       </header>
     </>
   )
@@ -532,68 +592,96 @@ function SubmitAlbum() {
         privileged
         onClick={() => setShow(true)}
       />
-      <Modal show={show} centered onHide={() => setShow(false)}>
-        <Modal.Body className='m-3'>
-          <Form onSubmit={submit} style={{ color: 'black' }}>
-            <Row>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='title'>Title:</Form.Label>
-                <Form.Control
-                  required
-                  type='text'
-                  name='title'
-                  ref={titleRef}
+      <div
+        className={`modal ${show ? 'show' : ''}`}
+        tabIndex='-1'
+        style={{ display: show ? 'block' : 'none' }}
+      >
+        <div className='modal-dialog modal-dialog-centered'>
+          <div className='modal-content'>
+            <div className='modal-body m-3'>
+              <form onSubmit={submit} style={{ color: 'black' }}>
+                <div className='row'>
+                  <div className='form-group col'>
+                    <label htmlFor='title'>Title:</label>
+                    <input
+                      required
+                      type='text'
+                      name='title'
+                      ref={titleRef}
+                      className='form-control'
+                    />
+                  </div>
+                </div>
+                <div className='row mt-3'>
+                  <div className='form-group col'>
+                    <label htmlFor='vgmdb'>VGMdb:</label>
+                    <input
+                      ref={vgmdbRef}
+                      name='vgmdb'
+                      type='text'
+                      className='form-control'
+                    />
+                  </div>
+                  <div className='form-group col-auto mt-auto'>
+                    <ButtonLoader
+                      color='primary'
+                      loading={loadingFetch}
+                      onClick={fetchInfo}
+                    >
+                      Fetch info
+                    </ButtonLoader>
+                  </div>
+                </div>
+
+                <RequestCheck
+                  hideTag
+                  element={vgmdbRef.current}
+                  className='mt-3'
                 />
-              </Form.Group>
-            </Row>
-            <Row className='mt-3'>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='vgmdb'>VGMdb:</Form.Label>
-                <Form.Control ref={vgmdbRef} name='vgmdb' type='text' />
-              </Form.Group>
 
-              <Form.Group as={Col} className='col-auto mt-auto'>
-                <ButtonLoader
-                  color='primary'
-                  loading={loadingFetch}
-                  onClick={fetchInfo}
-                >
-                  Fetch info
-                </ButtonLoader>
-              </Form.Group>
-            </Row>
+                <div className='row mt-3'>
+                  <div className='form-group col'>
+                    <label htmlFor='links'>
+                      <a
+                        style={{
+                          color: '#0d6efd',
+                          textDecoration: 'underline'
+                        }}
+                        href='https://www.squid-board.org/'
+                      >
+                        Forum Links
+                      </a>{' '}
+                      / Download Links:
+                    </label>
+                    <textarea
+                      required
+                      name='links'
+                      className='form-control'
+                    ></textarea>
+                  </div>
+                </div>
 
-            <RequestCheck hideTag element={vgmdbRef.current} className='mt-3' />
-
-            <Row className='mt-3'>
-              <Form.Group as={Col}>
-                <Form.Label htmlFor='links'>
-                  <Link
-                    style={{ color: '#0d6efd', textDecoration: 'underline' }}
-                    href='https://www.squid-board.org/'
-                  >
-                    Forum Links
-                  </Link>{' '}
-                  / Download Links:
-                </Form.Label>
-                <Form.Control required as='textarea' name='links' />
-              </Form.Group>
-            </Row>
-
-            <Row className='mt-3'>
-              <Col>
-                <SubmitButton
-                  loading={loadingSubmit}
-                  type='submit'
-                  color='primary'
-                >
-                  Submit
-                </SubmitButton>
-              </Col>
-            </Row>
-          </Form>
-        </Modal.Body>
-      </Modal>
+                <div className='row mt-3'>
+                  <div className='col'>
+                    <SubmitButton
+                      loading={loadingSubmit}
+                      type='submit'
+                      color='primary'
+                    >
+                      Submit
+                    </SubmitButton>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div
+          className='modal-backdrop show'
+          onClick={() => setShow(false)}
+        ></div>
+      </div>
     </>
   )
 }
@@ -610,16 +698,26 @@ function Dropdown(props) {
   if (links.length === 0) return null
 
   return (
-    <NavDropdown
-      title={t(name)}
-      className={clsx(styles.navLink, styles.dropMenu)}
-    >
-      {links.map(({ href, name }, i) => (
-        <Link key={i} href={href} passHref legacyBehavior>
-          <NavDropdown.Item>{t(name)}</NavDropdown.Item>
-        </Link>
-      ))}
-    </NavDropdown>
+    <li className={clsx('dropdown nav-item', styles.navLink, styles.dropMenu)}>
+      <button
+        className='nav-link dropdown-toggle'
+        href='#'
+        role='button'
+        data-bs-toggle='dropdown'
+        aria-expanded='false'
+      >
+        {t(name)}
+      </button>
+      <ul className='dropdown-menu'>
+        {links.map(({ href, name }, i) => (
+          <li key={i}>
+            <Link href={href} passHref legacyBehavior>
+              <a className='dropdown-item'>{t(name)}</a>
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </li>
   )
 }
 
@@ -645,7 +743,7 @@ function NavLink(props) {
     </a>
   ) : (
     <Link href={href} passHref legacyBehavior>
-      <Nav.Link className={clsx(styles.navLink, className)}>{title}</Nav.Link>
+      <a className={clsx('nav-link', styles.navLink, className)}>{title}</a>
     </Link>
   )
 }

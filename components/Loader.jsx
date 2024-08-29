@@ -1,6 +1,5 @@
 import Image from 'next/legacy/image'
 import clsx from 'clsx'
-import { Button } from 'react-bootstrap'
 
 import loader from 'svg-loaders/svg-smil-loaders/oval.svg'
 import styles from '@/styles/Search.module.scss'
@@ -31,7 +30,11 @@ export const ButtonLoader = (props) => {
   delete buttonProps.loading
 
   return (
-    <Button style={{ position: 'relative' }} {...buttonProps}>
+    <button
+      style={{ position: 'relative' }}
+      {...buttonProps}
+      className={clsx('btn btn-primary', buttonProps.className)}
+    >
       {loading && (
         <div
           className='h-100 w-100'
@@ -51,6 +54,6 @@ export const ButtonLoader = (props) => {
       <div style={{ visibility: loading ? 'hidden' : 'visible' }}>
         {children}
       </div>
-    </Button>
+    </button>
   )
 }

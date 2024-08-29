@@ -1,6 +1,5 @@
 import { useApolloClient, gql } from '@apollo/client'
 import { useEffect, useState } from 'react'
-import { Col, Form, Row } from 'react-bootstrap'
 import { toast } from 'react-toastify'
 
 // import { RequestSelector } from './Selectors'
@@ -39,17 +38,17 @@ export default function RequestCheck(props) {
 
   return (
     <>
-      <Row className={className}>
-        <Form.Group as={Col}>
-          <Form.Label htmlFor='request'>Request:</Form.Label>
-        </Form.Group>
-      </Row>
-      <Row>
-        <Col>
+      <div className={className}>
+        <div className='form-group'>
+          <label htmlFor='request'>Request:</label>
+        </div>
+      </div>
+      <div className='row'>
+        <div className='col'>
           {/* <RequestSelector options={{ isSingle: true, name: 'request', defaultValue: selected }} onChange={setSelected} /> */}
-        </Col>
+        </div>
         {!hideTag ? (
-          <Col className='d-flex align-items-center ps-0'>
+          <div className='col d-flex align-items-center ps-0'>
             {selected && (
               <span className=''>
                 {selected.state === 'complete'
@@ -57,9 +56,9 @@ export default function RequestCheck(props) {
                   : 'Request found!'}
               </span>
             )}
-          </Col>
+          </div>
         ) : null}
-      </Row>
+      </div>
     </>
   )
 }

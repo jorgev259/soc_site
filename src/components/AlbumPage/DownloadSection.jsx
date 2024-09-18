@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { NextIntlClientProvider, useTranslations } from 'next-intl'
 import clsx from 'clsx'
-import Image from 'next/image'
+
 import styles from '@/styles/DownloadSection.module.scss'
 
 import { Link } from '@/next/utils/navigation'
@@ -24,59 +24,37 @@ export default function DownloadSection(props) {
             </div>
           </div>
           {links.map((link) => {
-            const { id: linkId, url, provider, directUrl, url2 } = link
+            const { id: linkId, url, url2, provider, directUrl } = link
 
             return (
               <Fragment key={linkId}>
-                {/* <div className='row mt-2'>
+                <div className='row mt-2'>
                   <div md={12}>
                     <h5 className='col col-md-12 text-center'>{provider}</h5>
                   </div>
-                </div> */}
-                <div className='d-flex mx-auto mb-3'>
-                  <Image
-                    sizes='40vw'
-                    className='rounded'
-                    width={30}
-                    height={30}
-                    alt={provider}
-                    src={`/img/provider/${provider}.png`}
-                  />
-                  {/* {url2&&(
-                    <div className='mx-2 w-100'>
-                      <Link target='_blank' href={url2}>
-                        <button
-                          className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
-                        >
-                          <Image
-                            className='rounded'
-                            width={15}
-                            height={15}
-                            alt='fly'
-                            src={`/img/provider/fly.png`}
-                          />
-                          {t('Download')}
-                        </button>
-                      </Link>
-                    </div>
-                  )} */}
-                  <div className='mx-2 w-100'>
+                </div>
+                <div className='row mx-auto mb-3'>
+                  <div className='col mx-auto py-2'>
                     <Link target='_blank' href={url}>
                       <button
-                        className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
+                        className={clsx('btn btn-secondary', styles.download)}
                       >
-                      <Image
-                        className='rounded mr-1'
-                        width={15}
-                        height={15}
-                        alt='ouo'
-                        src={`/img/provider/ouo.png`}
-                      />
                         {t('Download')}
                       </button>
                     </Link>
                   </div>
-                  <div className='mx-2 w-100'>
+                  {url2 ? (
+                    <div className='col mx-auto py-2'>
+                      <Link target='_blank' href={url2}>
+                        <button
+                          className={clsx('btn btn-secondary', styles.download)}
+                        >
+                          {t('Alt Download')}
+                        </button>
+                      </Link>
+                    </div>
+                  ) : null}
+                  <div className='col py-2'>
                     <NextIntlClientProvider
                       messages={getMessageObject(t, [
                         'Become_Donator',

@@ -49,6 +49,7 @@ type Link {
   provider: String
   custom: String
   url: String
+  url2: String
   directUrl: String
 }
 

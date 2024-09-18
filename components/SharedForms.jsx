@@ -348,9 +348,9 @@ function DownloadList(props) {
                     />
                   </Form.Group>
                 </Col>
-                {/* <Col md={3}>
+                <Col md={3}>
                   <Form.Group>
-                    <Form.Label>Url2:</Form.Label>
+                    <Form.Label>Url 2:</Form.Label>
                     <FormControl
                       defaultValue={link.url2}
                       required
@@ -358,7 +358,7 @@ function DownloadList(props) {
                       name={`downloads[${i + prefix}][links][${i2}][url2]`}
                     />
                   </Form.Group>
-                </Col> */}
+                </Col>
                 <Col md={3}>
                   <Form.Group>
                     <Form.Label>Direct Url:</Form.Label>

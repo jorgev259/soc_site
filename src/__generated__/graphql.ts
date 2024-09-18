@@ -154,6 +154,7 @@ export type Link = {
   id: Scalars['ID']['output'];
   provider?: Maybe<Scalars['String']['output']>;
   url?: Maybe<Scalars['String']['output']>;
+  url2?: Maybe<Scalars['String']['output']>;
 };
 
 export type LinkInput = {

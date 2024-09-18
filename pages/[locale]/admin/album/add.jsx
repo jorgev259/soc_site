@@ -386,27 +386,27 @@ function AddAlbum(props) {
               title: 'MP3',
               small: false,
               links: [
-                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
-                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
-                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
+                { url: '', url2: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'TERABOX', custom: null, directUrl: '' }
               ]
             },
             {
               title: 'FLAC',
               small: false,
               links: [
-                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
-                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
-                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
+                { url: '', url2: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'TERABOX', custom: null, directUrl: '' }
               ]
             },
             {
               title: 'FLAC Hi-Res',
               small: false,
               links: [
-                { url: '', provider: 'MEGA', custom: null, directUrl: '' },
-                { url: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
-                { url: '', provider: 'TERABOX', custom: null, directUrl: '' }
+                { url: '', url2: '', provider: 'MEGA', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'MEDIAFIRE', custom: null, directUrl: '' },
+                { url: '', url2: '', provider: 'TERABOX', custom: null, directUrl: '' }
               ]
             }
           ]}

@@ -89,6 +89,15 @@ const resolvers = {
         : link.url
     },
 
+    // url2: async (link) => {
+    //   const download = await link.getDownload()
+    //   const links = await download.getL                                                                                     inks()
+
+    //   return links.every((link) => link.url2.includes('adshrink.it'))
+    //     ? link.directUrl
+    //     : link.url2
+    // },
+
     directUrl: async (link, args, { db }) => {
       const download = await link.getDownload()
       const links = await download.getLinks()

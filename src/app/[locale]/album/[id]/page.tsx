@@ -5,7 +5,8 @@ import { gql } from '@apollo/client'
 import { getTranslations, unstable_setRequestLocale } from 'next-intl/server'
 import { NextIntlClientProvider } from 'next-intl'
 import { notFound } from 'next/navigation'
-
+import kofi from '@/img/assets/ko-fi-donate-button.png'
+import discord from '@/img/assets/discord.png'
 import styles from './AlbumPage.module.scss'
 
 import { Link } from '@/next/utils/navigation'
@@ -76,6 +77,7 @@ const pageFields = `
     links {
       id
       url
+      url2
       provider
       directUrl
     }
@@ -199,6 +201,7 @@ async function Content(context) {
                 </h6>
               </div>
             </div>
+            {album.description}
             <div className='row'>
               <div className='col'>
                 <InfoTable album={album} />
@@ -262,6 +265,74 @@ async function Content(context) {
             )}
             <hr />
             <DownloadList downloads={album.downloads} />
+
+            <div className='d-flex align-items-center'>
+              <div>
+                <h4>Consider Donating to get access to direct links</h4><br />
+                <span>After donating, if the donation e-mail is the same as the donation it should be avaible in a few hours.
+                   If not contact us on <a href='https://discord.gg/AQc9vwGM' target='_blank' rel='noopener noreferrer'>Discord</a>
+                </span>
+              </div>
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://ko-fi.com/sittingonclouds'
+              >
+                <Image
+                  style={{
+                    height: 'auto',
+                    width: 'auto',
+                    maxHeight: '100px',
+                    maxWidth: '100%'
+                  }}
+                  alt='Support me on Ko-fi'
+                  src={kofi}
+                />
+              </a>
+            </div>
+
+            <div className='d-flex align-items-center'>
+              <div>
+                <h4>Broken Link? Contact us</h4>
+              </div>
+              <a
+                className='d-flex justify-content-center px-1'
+                href='https://discord.gg/x23SFbE'
+                target='_blank'
+                rel='noopener noreferrer'
+              >
+                <Image
+                  alt='Join our Discord!'
+                  style={{
+                    height: 'auto',
+                    width: 'auto',
+                    maxHeight: '100px',
+                    maxWidth: '100%',
+                    borderRadius: '10px'
+                  }}
+                  src={discord}
+                />
+              </a>
+            </div>
+
+            <div className='d-flex align-items-center'>
+              <Image
+                alt='Join our Discord!'
+                style={{
+                  height: 'auto',
+                  width: 'auto',
+                  maxHeight: '100px',
+                  maxWidth: '100%',
+                  borderRadius: '10px'
+                }}
+                src={`/img/provider/fly_guide.png`}
+              />
+            </div>
+
+            <div className='d-flex align-items-center'>
+              <span>MediaFire Permission Denied? <a href='https://www.youtube.com/watch?v=d6-hcbEozAQ'></a>Check this guide</span>
+            </div>
+            
           </div>
         </div>
       </div>
@@ -349,12 +420,12 @@ async function ProviderBox(props) {
       {filterStores.length > 0 ? (
         <>
           <hr className='my-2' />
-          <div className='row'>
+          <div className='d-flex flex-wrap'>
             {filterStores.map(({ url, provider }, i) =>
               provider === 'SOON' ? null : (
                 <div
                   key={i}
-                  className='col-md-6 d-flex justify-content-center py-1'
+                  className='d-flex justify-content-center py-1 mx-2'
                 >
                   <Link target='_blank' rel='noopener noreferrer' href={url}>
                     <Image

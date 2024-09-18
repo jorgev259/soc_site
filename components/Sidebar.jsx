@@ -121,6 +121,8 @@ export default function Sidebar(props) {
               <a
                 className='d-flex justify-content-center px-1'
                 href='https://discord.gg/x23SFbE'
+                target='_blank'
+                rel='noopener noreferrer'
               >
                 <Image
                   alt='Join our Discord!'

@@ -39,7 +39,7 @@ export const providersDownload = [
   { value: 'SOON', label: 'SOON' },
   { value: 'MEGA', label: 'MEGA' },
   { value: 'MEDIAFIRE', label: 'MediaFire' },
-  { value: 'GOOGLEDRIVE', label: 'Google Drive' },
+  { value: 'ICEDRIVE', label: 'Ice Drive' },
   { value: 'TERABOX', label: 'TeraBox' },
   { value: 'MIRROR', label: 'Mirror' }
 ]
@@ -324,7 +324,7 @@ function DownloadList(props) {
           <Row key={link.id} className='mb-3'>
             <Col>
               <Row>
-                <Col md={4}>
+                <Col md={3}>
                   <Form.Group>
                     <Form.Label>Provider:</Form.Label>
                     <SimpleSelector
@@ -337,7 +337,7 @@ function DownloadList(props) {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                <Col md={3}>
                   <Form.Group>
                     <Form.Label>Url:</Form.Label>
                     <FormControl
@@ -348,7 +348,18 @@ function DownloadList(props) {
                     />
                   </Form.Group>
                 </Col>
-                <Col md={4}>
+                {/* <Col md={3}>
+                  <Form.Group>
+                    <Form.Label>Url2:</Form.Label>
+                    <FormControl
+                      defaultValue={link.url2}
+                      required
+                      type='text'
+                      name={`downloads[${i + prefix}][links][${i2}][url2]`}
+                    />
+                  </Form.Group>
+                </Col> */}
+                <Col md={3}>
                   <Form.Group>
                     <Form.Label>Direct Url:</Form.Label>
                     <FormControl

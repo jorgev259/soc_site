@@ -49,27 +49,67 @@ function DownloadList(props) {
             </div>
           </div>
           {links.map((link) => {
-            const { id: linkId, url, provider, directUrl } = link
+            const { id: linkId, url, url2, provider, directUrl } = link
 
             return (
               <Fragment key={linkId}>
-                <div className='row mt-2'>
+                {/* <div className='row mt-2'>
                   <div md={12}>
                     <h5 className='col col-md-12 text-center'>{provider}</h5>
                   </div>
-                </div>
-                <div className='row mx-auto mb-3'>
-                  <div className='col col-6 mx-auto py-2'>
-                    <button
-                      target='_blank'
-                      className={clsx('btn btn-secondary', styles.download)}
-                      href={url}
-                    >
-                      {t('Download')}
-                    </button>
+                </div> */}
+                <div className='d-flex mx-auto mb-3'>
+                  <Image
+                    sizes='40vw'
+                    className='rounded'
+                    width={30}
+                    height={30}
+                    alt={provider}
+                    src={`/img/provider/${provider}.png`}
+                  />
+                  {/* {url2&&(
+                    <div className='mx-2 w-100'>
+                      <Link target='_blank' href={url2}>
+                        <button
+                          className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
+                        >
+                          <Image
+                            className='rounded'
+                            width={15}
+                            height={15}
+                            alt='fly'
+                            src={`/img/provider/fly.png`}
+                          />
+                          {t('Download')}
+                        </button>
+                      </Link>
+                    </div>
+                  )} */}
+                  <div className='mx-2 w-100'>
+                    <Link target='_blank' href={url}>
+                      <button
+                        className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
+                      >
+                      <Image
+                        className='rounded mr-1'
+                        width={15}
+                        height={15}
+                        alt='ouo'
+                        src={`/img/provider/ouo.png`}
+                      />
+                        {t('Download')}
+                      </button>
+                    </Link>
                   </div>
-                  <div className='col py-2'>
-                    <DirectButton directUrl={directUrl} />
+                  <div className='mx-2 w-100'>
+                    <NextIntlClientProvider
+                      messages={getMessageObject(t, [
+                        'Become_Donator',
+                        'Direct'
+                      ])}
+                    >
+                      <DirectButton directUrl={directUrl} />
+                    </NextIntlClientProvider>
                   </div>
                 </div>
               </Fragment>

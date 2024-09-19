@@ -38,7 +38,6 @@ export default function DownloadSection(props) {
                   </div>
                 </div> */}
                 <div className='d-flex align-items-center'>
-
                   <Image
                     className='rounded'
                     width={30}
@@ -46,14 +45,19 @@ export default function DownloadSection(props) {
                     alt={provider}
                     src={`/img/provider/${provider}.png`}
                   />
-                  <div 
-                    className={'download-div w-100 align-items-center mx-auto mb-2'}
+                  <div
+                    className={
+                      'download-div w-100 align-items-center mx-auto mb-2'
+                    }
                   >
-                    {url2&&(
-                      <div className='mx-1 w-100'>
+                    {url2 && (
+                      <div className='col mx-1'>
                         <Link target='_blank' href={url2}>
                           <button
-                            className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
+                            className={clsx(
+                              'd-flex justify-content-center align-items-center btn btn-secondary',
+                              styles.download
+                            )}
                           >
                             <Image
                               className='rounded'
@@ -70,7 +74,10 @@ export default function DownloadSection(props) {
                     <div className='mx-1 w-100'>
                       <Link target='_blank' href={url}>
                         <button
-                          className={clsx('d-flex justify-content-center align-items-center btn btn-secondary', styles.download)}
+                          className={clsx(
+                            'd-flex justify-content-center align-items-center btn btn-secondary',
+                            styles.download
+                          )}
                         >
                           <Image
                             className='rounded mr-1'

@@ -289,8 +289,17 @@ async function Content(context) {
               </div>
               <div className='col-md-8'>
                 <h4>Consider Donating to get access to no ads</h4>
-                <span>After donating, if the donation e-mail is the same as the donation it should be avaible in a few hours.
-                   If not contact us on <a href='https://discord.gg/AQc9vwGM' target='_blank' rel='noopener noreferrer'>Discord</a>
+                <span>
+                  After donating, if the donation e-mail is the same as the
+                  donation it should be avaible in a few hours. If not contact
+                  us on{' '}
+                  <a
+                    href='https://discord.gg/AQc9vwGM'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                  >
+                    Discord
+                  </a>
                 </span>
               </div>
             </div>
@@ -315,7 +324,7 @@ async function Content(context) {
                   src={discord}
                 />
               </a>
-            </h4>     
+            </h4>
             <hr />
             <Image
               alt='Fly Guide'
@@ -330,9 +339,13 @@ async function Content(context) {
             />
             <hr />
             <div>
-              <span>MediaFire Permission Denied? <a href='https://www.youtube.com/watch?v=d6-hcbEozAQ'>Check this guide</a></span>
+              <span>
+                MediaFire Permission Denied?{' '}
+                <a href='https://www.youtube.com/watch?v=d6-hcbEozAQ'>
+                  Check this guide
+                </a>
+              </span>
             </div>
-
           </div>
         </div>
       </div>
@@ -423,17 +436,14 @@ async function ProviderBox(props) {
           <div className='d-flex justify-content-center flex-wrap'>
             {filterStores.map(({ url, provider }, i) =>
               provider === 'SOON' ? null : (
-                <div
-                  key={i}
-                  className='m-1'
-                >
+                <div key={i} className='m-1'>
                   <Link target='_blank' rel='noopener noreferrer' href={url}>
                     <Image
                       sizes='40vw'
                       className='rounded'
                       width={130}
                       height={50}
-                      style={{ height: 'auto', width: "130px" }}
+                      style={{ height: 'auto', width: '130px' }}
                       alt={provider}
                       src={`/img/provider/${provider}.jpg`}
                     />

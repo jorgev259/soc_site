@@ -32,47 +32,19 @@ export default function DownloadSection(props) {
 
             return (
               <Fragment key={linkId}>
-                {/* <div className='row mt-2'>
-                  <div md={12}>
-                    <h5 className='col col-md-12 text-center'>{provider}</h5>
+                <div className='row d-flex gap-2 my-2'>
+                  <div className='col-auto'>
+                    <Image
+                      className='rounded'
+                      width={30}
+                      height={30}
+                      alt={provider}
+                      src={`/img/provider/${provider}.png`}
+                    />
                   </div>
-                </div> */}
-                <div className='d-flex align-items-center'>
-                  <Image
-                    className='rounded'
-                    width={30}
-                    height={30}
-                    alt={provider}
-                    src={`/img/provider/${provider}.png`}
-                  />
-                  <div
-                    className={
-                      'download-div w-100 align-items-center mx-auto mb-2'
-                    }
-                  >
-                    {url2 && (
-                      <div className='col mx-1'>
-                        <Link target='_blank' href={url2}>
-                          <button
-                            className={clsx(
-                              'd-flex justify-content-center align-items-center btn btn-secondary',
-                              styles.download
-                            )}
-                          >
-                            <Image
-                              className='rounded'
-                              width={20}
-                              height={20}
-                              alt='fly'
-                              src={fly}
-                            />
-                            {t('Download')}
-                          </button>
-                        </Link>
-                      </div>
-                    )}
-                    <div className='mx-1 w-100'>
-                      <Link target='_blank' href={url}>
+                  {url2 && (
+                    <div className='col'>
+                      <Link target='_blank' href={url2}>
                         <button
                           className={clsx(
                             'd-flex justify-content-center align-items-center btn btn-secondary',
@@ -80,26 +52,45 @@ export default function DownloadSection(props) {
                           )}
                         >
                           <Image
-                            className='rounded mr-1'
-                            width={15}
-                            height={15}
-                            alt='ouo'
-                            src={ouo}
+                            className='rounded'
+                            width={20}
+                            height={20}
+                            alt='fly'
+                            src={fly}
                           />
                           {t('Download')}
                         </button>
                       </Link>
                     </div>
-                    <div className='mx-1 w-100'>
-                      <NextIntlClientProvider
-                        messages={getMessageObject(t, [
-                          'Become_Donator',
-                          'Direct'
-                        ])}
+                  )}
+                  <div className='col'>
+                    <Link target='_blank' href={url}>
+                      <button
+                        className={clsx(
+                          'd-flex justify-content-center align-items-center btn btn-secondary',
+                          styles.download
+                        )}
                       >
-                        <DirectButton directUrl={directUrl} />
-                      </NextIntlClientProvider>
-                    </div>
+                        <Image
+                          className='rounded mr-1'
+                          width={15}
+                          height={15}
+                          alt='ouo'
+                          src={ouo}
+                        />
+                        {t('Download')}
+                      </button>
+                    </Link>
+                  </div>
+                  <div className='col'>
+                    <NextIntlClientProvider
+                      messages={getMessageObject(t, [
+                        'Become_Donator',
+                        'Direct'
+                      ])}
+                    >
+                      <DirectButton directUrl={directUrl} />
+                    </NextIntlClientProvider>
                   </div>
                 </div>
               </Fragment>

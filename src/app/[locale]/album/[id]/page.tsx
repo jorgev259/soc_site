@@ -288,11 +288,9 @@ async function Content(context) {
                 </a>
               </div>
               <div className='col-md-8'>
-                <h4>Consider Donating to get access to no ads</h4>
+                <h4>{t('donation_title')}</h4>
                 <span>
-                  After donating, if the donation e-mail is the same as the
-                  donation it should be avaible in a few hours. If not contact
-                  us on{' '}
+                  {t('donation_info')}{' '}
                   <a
                     href='https://discord.gg/AQc9vwGM'
                     target='_blank'
@@ -305,7 +303,7 @@ async function Content(context) {
             </div>
             <hr />
             <h4 className='w-100 text-center d-flex justify-centent-center align-items-center'>
-              Broken Link? Contact us at
+              {t('broken_link')}{' '}
               <a
                 className='d-flex justify-content-center px-1'
                 href='https://discord.gg/x23SFbE'
@@ -340,9 +338,9 @@ async function Content(context) {
             <hr />
             <div>
               <span>
-                MediaFire Permission Denied?{' '}
+                {t('mediafire_permission')}{' '}
                 <a href='https://www.youtube.com/watch?v=d6-hcbEozAQ'>
-                  Check this guide
+                  {t('mediafire_permission_guide')}
                 </a>
               </span>
             </div>

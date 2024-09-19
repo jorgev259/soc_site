@@ -94,3 +94,30 @@ footer {
   width: 100%;
   background-color: white;
 }
+
+.container-fluid,
+.container-xxl,
+.container-xl,
+.container-lg,
+.container-md,
+.container-sm {
+  --bs-gutter-x: 0 !important;
+  --bs-gutter-y: 0;
+  width: 100%;
+  padding-right: calc(var(--bs-gutter-x) * 0.5);
+  padding-left: calc(var(--bs-gutter-x) * 0.5);
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+
+.download-div {
+  display: flex;
+  @media only screen and (max-device-width: 641px) {
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+}

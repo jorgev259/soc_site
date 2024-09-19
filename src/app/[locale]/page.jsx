@@ -83,7 +83,7 @@ export default function Home(props) {
 
   return (
     <div className={clsx('row', styles.container)}>
-      <div className='col p-3 mx-3'>
+      <div className='col mx-1'>
         <div className='row'>
           <div className='col'>
             <h1 className='headerTitle text-center p-3'>

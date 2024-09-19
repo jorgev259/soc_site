@@ -40,7 +40,6 @@ export function AlbumBox(props) {
           blurDataURL={placeholder}
           quality={30}
           fill
-          id='w-100'
         />
       </div>
       <div className='text-wrap text-center p-2'>

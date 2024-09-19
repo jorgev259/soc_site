@@ -1,69 +1,69 @@
-@import "~bootstrap/scss/functions";
-@import "~bootstrap/scss/variables";
-@import "~bootstrap/scss/mixins";
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/variables';
+@import '~bootstrap/scss/mixins';
 
 .container {
-    min-height: 100%;
-    position: relative;
+  min-height: 100%;
+  position: relative;
 
-    .backgroundContainer {
-        position: fixed;
-        top: 0;
-        height: 100vh;
-        width: 100vw;
-        z-index: -1;
+  .backgroundContainer {
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    width: 100vw;
+    z-index: -1;
 
-        div {
-            height: 100%;
-            width: 100%;
-            position: relative;
+    div {
+      height: 100%;
+      width: 100%;
+      position: relative;
 
-            img {
-                object-fit: cover;
-                object-position: top;
-            }
-        }
+      img {
+        object-fit: cover;
+        object-position: top;
+      }
+    }
+  }
+
+  .content.loading {
+    background-blend-mode: unset;
+    background-image: unset;
+  }
+
+  .content {
+    max-width: 1400px;
+    background-blend-mode: overlay;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8));
+    z-index: 1;
+
+    .title {
+      font-weight: 700;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+      font-family: 'Rubik', sans-serif;
+      text-align: center;
     }
 
-    .content.loading {
-      background-blend-mode: unset;
-      background-image:  unset;
+    .subTitle {
+      text-align: center;
+      white-space: pre-wrap;
     }
 
-    .content {
-      max-width: 1400px;
-      background-blend-mode: overlay;
-      background-image:  linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8));
-        z-index: 1;
-
-        .title {
-            font-weight: 700;
-            text-shadow: 0 0 10px rgba(0,0,0,.5);
-            font-family: "Rubik",sans-serif;
-            text-align: center;
-        } 
-        
-        .subTitle {
-            text-align: center;
-            white-space: pre-wrap;
-        }
-
-        .trackList {
-          @include media-breakpoint-down(lg) {
-            height: 450px;
-          }
-        }
-        .stores {
-          background-color: rgba(255,43,50,.88);
-          color: #efefef;
-          font-family: "Roboto",Sans-serif;
-          font-size: 42px;
-          font-weight: 600;
-          text-transform: uppercase;
-          line-height: 1em;
-          text-shadow: 0 0 10px rgba(0,0,0,.3);
-          border-radius: 8px;
-          padding: 10px 15px;
-      }    
+    .trackList {
+      @include media-breakpoint-down(lg) {
+        height: 450px;
+      }
     }
+    .stores {
+      background-color: rgba(255, 43, 50, 0.88);
+      color: #efefef;
+      font-family: 'Roboto', Sans-serif;
+      font-size: 42px;
+      font-weight: 600;
+      text-transform: uppercase;
+      line-height: 1em;
+      text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      border-radius: 8px;
+      padding: 10px 15px;
+    }
+  }
 }

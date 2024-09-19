@@ -162,6 +162,7 @@ export type LinkInput = {
   directUrl?: InputMaybe<Scalars['String']['input']>;
   provider?: InputMaybe<Scalars['String']['input']>;
   url?: InputMaybe<Scalars['String']['input']>;
+  url2?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type Mutation = {

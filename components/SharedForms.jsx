@@ -353,7 +353,6 @@ function DownloadList(props) {
                     <Form.Label>Url 2:</Form.Label>
                     <FormControl
                       defaultValue={link.url2}
-                      required
                       type='text'
                       name={`downloads[${i + prefix}][links][${i2}][url2]`}
                     />

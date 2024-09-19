@@ -285,9 +285,9 @@ export default function CommentCarrousel(props) {
             )}
 
             {albumId && (
-              <div className='row mt-3 justify-content-center'>
+              <div className='mt-3 justify-content-center'>
                 {user ? (
-                  <div className='col-3'>
+                  <div>
                     <button
                       onClick={() => (user ? setShow(true) : null)}
                       className='w-100 rounded-3 btn btn-outline-light'
@@ -297,7 +297,7 @@ export default function CommentCarrousel(props) {
                     </button>
                   </div>
                 ) : (
-                  <div className='col-4'>
+                  <div>
                     <button
                       onClick={() => router.replace(`${pathname}?login`)}
                       className='w-100 rounded-3 btn btn-outline-light'

@@ -6,6 +6,7 @@ import clsx from 'clsx'
 import { SimpleSelector } from '@/components_pages/Selectors'
 import Loader from '@/components_pages/Loader'
 import { hasRolePage } from '@/next/utils/resolversPages'
+import { ModalPortal, showModal } from '@/next/components/common/Modal'
 
 import styles from '@/styles/Request.module.scss'
 
@@ -36,6 +37,8 @@ export default function AlbumAdmin() {
     </div>
   )
 }
+
+const REQUEST_MODAL = 'requestModal'
 
 function RequestModal(props) {
   const { submission, setRequest } = props
@@ -87,119 +90,121 @@ function RequestModal(props) {
   } */
 
   return (
-    <div className='modal centered show' onHide={() => setRequest()}>
-      <div className='modal-body'>
-        <form ref={formRef} style={{ color: 'black' }}>
-          <div className='row'>
-            <div className='form-group col'>
-              <label htmlFor='title'>Title:</label>
-              <input
-                required
-                type='text'
-                name='title'
-                defaultValue={submission?.title}
-                className='form-control'
-              />
+    <ModalPortal id='requestModal'>
+      <div className='modal-content'>
+        <div className='modal-body'>
+          <form ref={formRef} style={{ color: 'black' }}>
+            <div className='row'>
+              <div className='form-group col'>
+                <label htmlFor='title'>Title:</label>
+                <input
+                  required
+                  type='text'
+                  name='title'
+                  defaultValue={submission?.title}
+                  className='form-control'
+                />
+              </div>
             </div>
-          </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label htmlFor='link'>VGMDB:</label>
-              <input
-                required
-                type='text'
-                name='link'
-                defaultValue={submission?.vgmdb}
-                className='form-control'
-              />
+            <div className='row mt-3'>
+              <div className='form-group col'>
+                <label htmlFor='link'>VGMDB:</label>
+                <input
+                  required
+                  type='text'
+                  name='link'
+                  defaultValue={submission?.vgmdb}
+                  className='form-control'
+                />
+              </div>
             </div>
-          </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label htmlFor='state'>State:</label>
-              <select
-                className='form-control'
-                name='state'
-                defaultValue={submission?.state}
-              >
-                {stateOptions.map((o) => (
-                  <option key={o.value} value={o.value}>
-                    {o.label}
-                  </option>
-                ))}
-              </select>
+            <div className='row mt-3'>
+              <div className='form-group col'>
+                <label htmlFor='state'>State:</label>
+                <select
+                  className='form-control'
+                  name='state'
+                  defaultValue={submission?.state}
+                >
+                  {stateOptions.map((o) => (
+                    <option key={o.value} value={o.value}>
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className='form-group col'>
+                <label htmlFor='submitter'>Submitter:</label>
+                <input
+                  required
+                  type='text'
+                  name='submitter'
+                  defaultValue={submission?.submitter.username}
+                  readOnly
+                  className='form-control'
+                />
+              </div>
             </div>
-            <div className='form-group col'>
-              <label htmlFor='submitter'>Submitter:</label>
-              <input
-                required
-                type='text'
-                name='submitter'
-                defaultValue={submission?.submitter.username}
-                readOnly
-                className='form-control'
-              />
-            </div>
-          </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label htmlFor='links'>Links:</label>
-              <textarea
-                required
-                name='links'
-                value={submission?.links}
-                readOnly
-                className='form-control'
-              />
+            <div className='row mt-3'>
+              <div className='form-group col'>
+                <label htmlFor='links'>Links:</label>
+                <textarea
+                  required
+                  name='links'
+                  value={submission?.links}
+                  readOnly
+                  className='form-control'
+                />
+              </div>
             </div>
-          </div>
 
-          <div className='row mt-3'>
-            <div className='form-group col'>
-              <label htmlFor='observations'>Observations:</label>
-              <textarea
-                required
-                name='observations'
-                defaultValue={submission?.observations}
-                className='form-control'
-              />
+            <div className='row mt-3'>
+              <div className='form-group col'>
+                <label htmlFor='observations'>Observations:</label>
+                <textarea
+                  required
+                  name='observations'
+                  defaultValue={submission?.observations}
+                  className='form-control'
+                />
+              </div>
             </div>
-          </div>
 
-          <div className='row mt-4'>
-            <div className='form-group col'>
-              <input
-                type='checkbox'
-                name='lossy'
-                defaultChecked={submission?.lossy}
-                className='form-check-input'
-              />
-              <label className='form-check-label' htmlFor='lossy'>
-                Lossy / MP3 Only
-              </label>
+            <div className='row mt-4'>
+              <div className='form-group col'>
+                <input
+                  type='checkbox'
+                  name='lossy'
+                  defaultChecked={submission?.lossy}
+                  className='form-check-input'
+                />
+                <label className='form-check-label' htmlFor='lossy'>
+                  Lossy / MP3 Only
+                </label>
+              </div>
+              <div className='form-group col'>
+                <input
+                  type='checkbox'
+                  name='hold'
+                  defaultChecked={submission?.hold}
+                  className='form-check-input'
+                />
+                <label className='form-check-label' htmlFor='hold'>
+                  &quot;Hold&quot; request bonus
+                </label>
+              </div>
             </div>
-            <div className='form-group col'>
-              <input
-                type='checkbox'
-                name='hold'
-                defaultChecked={submission?.hold}
-                className='form-check-input'
-              />
-              <label className='form-check-label' htmlFor='hold'>
-                &quot;Hold&quot; request bonus
-              </label>
-            </div>
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
       {/* <div className='modal-footer'>
         <ButtonLoader loading={loadingReject} disabled={loadingEdit} variant="danger" onClick={handleReject}>Reject</ButtonLoader>
         <ButtonLoader loading={loadingEdit} disabled={loadingReject} variant="primary" onClick={handleEdit}>Save Changes</ButtonLoader>
       </div> */}
-    </div>
+    </ModalPortal>
   )
 }
 
@@ -296,7 +301,10 @@ function RequestTable(props) {
           <tr
             key={id}
             style={{ cursor: 'pointer' }}
-            onClick={() => setRequest(submission)}
+            onClick={() => {
+              setRequest(submission)
+              showModal(REQUEST_MODAL)
+            }}
           >
             <td>{id}</td>
             <td>{title}</td>

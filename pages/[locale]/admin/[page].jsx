@@ -8,6 +8,11 @@ import { useSearchParams } from 'next/navigation'
 import { Link } from '@/next/utils/navigation'
 import { AlbumSelector, SimpleSelector } from '@/components/Selectors'
 import Loader from '@/components/Loader'
+import {
+  ModalTemplate,
+  hideModal,
+  showModal
+} from '../../../src/components/common/Modal'
 
 import { hasRolePage } from '@/next/utils/resolversPages'
 import { getFullPageList, getPageList } from '@/server/utils/pagination'
@@ -42,6 +47,8 @@ export default function AlbumAdmin() {
     </div>
   )
 }
+
+const DELETE_MODAL = 'deleteAlbumModal'
 
 function AlbumTable() {
   const searchParams = useSearchParams()
@@ -102,70 +109,78 @@ function AlbumTable() {
   }
 
   function Rows() {
-    const [modal, setModal] = useState(false)
     const [modalData, setModalData] = useState({})
 
     const { searchAlbum } = data
     const { id, title } = modalData
 
-    function handleDelete() {
+    function handleDelete(ev) {
+      ev.preventDefault()
+
       deleteAlbum({ variables: { id } })
         .then((results) => {
           toast.success(`Deleted album "${title}" (${id}) succesfully`)
+          hideModal(`#${DELETE_MODAL}`)
           refetch()
         })
         .catch((err) => {
           console.log(err)
           toast.error(`Failed to delete album "${title}" (${id})`)
         })
-        .finally(() => setModalData(!modal))
+        .finally(() => setModalData(false))
     }
 
     return (
       <>
-        <div className='modal centered show' onHide={() => setModal(false)}>
-          <div className='modal-body m-3' style={{ color: 'black' }}>
-            <div className='row'>
-              <div className='col'>{`Delete the album "${title}" (ID: ${id})?`}</div>
-            </div>
-            <div className='row mt-2'>
-              <div className='col'>
-                <button className='btn btn-primary mx-2' onClick={handleDelete}>
-                  {loadingMutation ? <Loader dev /> : 'Yes'}
-                </button>
-                <button
-                  className='btn btn-primary mx-2'
-                  onClick={() => setModalData(!modal)}
-                >
-                  No
-                </button>
-              </div>
+        <ModalTemplate
+          id={DELETE_MODAL}
+          style={{ color: 'black' }}
+          data-bs-backdrop={false}
+        >
+          <div className='row'>
+            <div className='col'>{`Delete the album "${title}" (ID: ${id})?`}</div>
+          </div>
+          <div className='row mt-2'>
+            <div className='col'>
+              <button className='btn btn-primary mx-2' onClick={handleDelete}>
+                {loadingMutation ? <Loader dev /> : 'Yes'}
+              </button>
+              <button
+                className='btn btn-primary mx-2'
+                onClick={() => {
+                  setModalData(false)
+                  hideModal(`#${DELETE_MODAL}`)
+                }}
+              >
+                No
+              </button>
             </div>
           </div>
-        </div>
+        </ModalTemplate>
 
         {searchAlbum.rows &&
           searchAlbum.rows.map(({ id, title, createdAt, updatedAt }) => (
             <tr key={id}>
-              <Link href={`/admin/album/${id}`} passHref legacyBehavior>
-                <td style={{ cursor: 'pointer' }}>{title}</td>
-              </Link>
-              <Link href={`/admin/album/${id}`} passHref legacyBehavior>
-                <td style={{ cursor: 'pointer' }}>
-                  {moment(createdAt).format('DD/MM/YYYY HH:mm:ss')}
-                </td>
-              </Link>
-              <Link href={`/admin/album/${id}`} passHref legacyBehavior>
-                <td style={{ cursor: 'pointer' }}>
+              <td style={{ cursor: 'pointer' }}>
+                <Link href={`/admin/album/${id}`}>{title} </Link>
+              </td>
+              <td style={{ cursor: 'pointer' }}>
+                <Link href={`/admin/album/${id}`}>
+                  {moment(createdAt).format('DD/MM/YYYY HH:mm:ss')}{' '}
+                </Link>
+              </td>
+              <td style={{ cursor: 'pointer' }}>
+                <Link href={`/admin/album/${id}`}>
                   {moment(updatedAt).format('DD/MM/YYYY HH:mm:ss')}
-                </td>
-              </Link>
+                </Link>
+              </td>
               <td>
                 <button
                   className='btn btn-danger'
-                  onClick={() => {
+                  onClick={(ev) => {
+                    ev.preventDefault()
                     setModalData({ id, title })
-                    setModal(true)
+                    showModal(`#${DELETE_MODAL}`)
                   }}
                 >
                   Remove

@@ -120,6 +120,7 @@ function MyApp(context) {
       <ToastContainer newestOnTop />
 
       <ApolloProvider client={client}>
+        <div id='modal' />
         <Header />
         <div className='container-fluid flex-grow-1'>
           <Component {...pageProps} />

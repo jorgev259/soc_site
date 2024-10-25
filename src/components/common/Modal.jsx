@@ -7,7 +7,6 @@ const getSelector = (selector) =>
 const getElement = (selector) => document.querySelector(getSelector(selector))
 
 export function showModal(selector) {
-  console.log(selector)
   const element = getElement(selector)
   const modal = bootstrap.Modal.getOrCreateInstance(element)
   modal.show()
@@ -16,14 +15,14 @@ export function showModal(selector) {
 export function hideModal(selector) {
   const element = getElement(selector)
   const modal = bootstrap.Modal.getInstance(element)
-  modal.hide()
+  if (modal) modal.hide()
 }
 
 export default function Modal(props) {
-  const { id, children, className } = props
+  const { id, children, className, ...rest } = props
 
   return (
-    <div id={id} className='modal fade' tabIndex='-1'>
+    <div id={id} className='modal fade' tabIndex='-1' {...rest}>
       <div className={clsx('modal-dialog', className)}>{children}</div>
     </div>
   )

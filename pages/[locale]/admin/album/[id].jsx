@@ -97,6 +97,7 @@ const queryDownload = gql`
       links {
         id
         url
+        url2
         provider
         custom
         directUrl

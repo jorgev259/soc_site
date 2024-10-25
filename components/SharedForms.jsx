@@ -322,6 +322,7 @@ function DownloadList(props) {
         </Row>
         {cat.links.map((link, i2) => (
           <Row key={link.id} className='mb-3'>
+            {console.log(link)}
             <Col>
               <Row>
                 <Col md={3}>

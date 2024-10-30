@@ -39,7 +39,7 @@ export const providersDownload = [
   { value: 'SOON', label: 'SOON' },
   { value: 'MEGA', label: 'MEGA' },
   { value: 'MEDIAFIRE', label: 'MediaFire' },
-  { value: 'ICEDRIVE', label: 'Ice Drive' },
+  { value: 'RANOZ', label: 'Ranoz' },
   { value: 'TERABOX', label: 'TeraBox' },
   { value: 'MIRROR', label: 'Mirror' }
 ]

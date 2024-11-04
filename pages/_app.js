@@ -115,7 +115,6 @@ function MyApp(context) {
           property='og:image'
           content='/img/assets/clouds_thumb.png'
         />
-        <script src="https://paster.so/cdn/paster.js" defer onload="paster('user_2oOJlxGnwSb4lQdJgXo5pktongb', { whitelist: [`https://ouo.io`] })"></script>
       </Head>
       <Analytics />
       <ToastContainer newestOnTop />

@@ -172,7 +172,7 @@ export default function Sidebar(props) {
             title='radio'
             frameBorder='0'
             style={{ height: '335px', width: '100%' }}
-            src='https://www.squid-radio.net/widget'
+            src='https://radio.sittingonclouds.net/widget'
           />
         </div>
       )}

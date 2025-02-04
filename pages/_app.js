@@ -92,6 +92,10 @@ function MyApp(context) {
       messages={messages}
       locale={locale}
       timeZone='Europe/Berlin'
+      onError={(error) => {
+        if (error.code === 'MISSING_TRANSLATION') return
+        console.error(error)
+      }}
     >
       <Head>
         <title>Sitting on Clouds</title>

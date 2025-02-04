@@ -360,7 +360,7 @@ function RegisterProfileButton(props) {
                   <div className='row mt-4'>
                     <div className='col'>
                       <label htmlFor='pfp' style={{ color: 'black' }}>
-                        {t('Profile Picture')}:
+                        {t('Profile pic')}:
                       </label>
                       <input type='file' name='pfp' className='form-control' />
                     </div>
@@ -394,7 +394,7 @@ function RegisterProfileButton(props) {
             <div className='modal-body m-3'>
               <div className='row'>
                 <div className='col' style={{ color: 'black' }}>
-                  {t('Success')}
+                  {t('Email_Sent')}
                 </div>
               </div>
               <div className='row mt-4'>
@@ -403,7 +403,7 @@ function RegisterProfileButton(props) {
                     className='btn btn-primary w-100'
                     onClick={() => setSuccess(false)}
                   >
-                    {t('Close')}
+                    Close
                   </button>
                 </div>
               </div>

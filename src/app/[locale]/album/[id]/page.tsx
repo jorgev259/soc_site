@@ -26,7 +26,6 @@ import TrackList from '@/next/components/AlbumPage/TrackList'
 import { InfoTable } from '@/next/components/AlbumPage/InfoTable'
 import DownloadList from '@/next/components/AlbumPage/DownloadSection'
 import CommentCarrousel from '@/next/components/CommentCarrousel/CommentCarrousel'
-import Paster from '@/next/components/AlbumPage/Paster'
 
 import vgmdbLogo from '@/img/assets/vgmdblogo.png'
 import type { PageContext } from '@/next/types'
@@ -166,7 +165,6 @@ export default function AlbumPage(context: Context) {
       <div className={clsx('col px-0 px-md-5 pt-3 mx-auto', styles.content)}>
         <Content {...context} />
       </div>
-      <Paster />
     </div>
   )
 }

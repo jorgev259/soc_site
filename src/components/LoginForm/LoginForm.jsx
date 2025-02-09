@@ -31,7 +31,7 @@ const forgorMutation = gql`
 `
 
 export function RegisterForm(props) {
-  const t = useTranslations('')
+  const t = useTranslations('login')
   const [mutate, { loading }] = useMutation(registerMutation)
 
   const handleSubmit = useCallback(

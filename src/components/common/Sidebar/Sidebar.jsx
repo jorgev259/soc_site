@@ -256,7 +256,7 @@ export default function Sidebar(props) {
       </div>
 
       <Highlight />
-      {/* <CommentCarrouselSidebar /> */}
+      <CommentCarrouselSidebar />
       <AlbumCount />
 
       {radio && (

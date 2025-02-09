@@ -2,7 +2,7 @@ type Comment {
   id: ID!
   text: String!
   anon: Boolean!
-  album: Album!
+  album: Album
   username: String
 }
 
@@ -26,8 +26,8 @@ type UserMe {
 }
 
 type AvgRating {
-    score: Float!
-    users: Int!
+  score: Float!
+  users: Int!
 }
 
 type Query {

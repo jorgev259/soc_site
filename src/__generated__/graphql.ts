@@ -93,7 +93,7 @@ export type Classification = {
 };
 
 export type Comment = {
-  album: Album;
+  album?: Maybe<Album>;
   anon: Scalars['Boolean']['output'];
   id: Scalars['ID']['output'];
   text: Scalars['String']['output'];

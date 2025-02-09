@@ -42,7 +42,7 @@ export default function DownloadSection(props) {
                       src={`/img/provider/${provider}.png`}
                     />
                   </div>
-                  {/* {url2 && (
+                  {url2 && (
                     <div className='col'>
                       <Link target='_blank' href={url2}>
                         <button
@@ -62,7 +62,7 @@ export default function DownloadSection(props) {
                         </button>
                       </Link>
                     </div>
-                  )} */}
+                  )}
                   <div className='col'>
                     <Link target='_blank' href={url}>
                       <button

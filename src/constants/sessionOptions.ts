@@ -1,6 +1,6 @@
 const sessionOptions = {
   password: process.env.IRONCLAD as string,
-  cookieName: 'socuser',
+  cookieName: 'soc_cookie',
   cookieOptions: {
     secure: process.env.NODE_ENV === 'production'
   }

@@ -55,7 +55,9 @@ function LoggedIn(props) {
           {t('Profile')}
         </Link>
       </div>
-      <div className='col-auto pe-sm-5 me-sm-4'>{/* <LogoutForm /> */}</div>
+      <div className='col-auto pe-sm-5 me-sm-4'>
+        <LogoutForm />
+      </div>
     </>
   )
 }
